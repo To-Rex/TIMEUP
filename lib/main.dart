@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:time_up/pages/login_page.dart';
 import 'package:time_up/pages/splash_screen.dart';
 
 void main() {
@@ -31,9 +34,22 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+
 class _MyHomePageState extends State<MyHomePage> {
+
+  @override
+  void initState() {
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SplashScreen();
+    return const SplashScreen();
   }
 }

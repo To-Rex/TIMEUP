@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
-  SplashScreen({super.key});
+  const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class SplashScreen extends StatelessWidget {
             SizedBox(height: h * 0.01),
             Image(image: const AssetImage('assets/images/text.png'), height: h * 0.05),
             Expanded(child: Container()),
-            Text('Vaqtingizni tejang!'),
+            const Text('Vaqtingizni tejang!'),
             SizedBox(height: h * 0.06),
           ],
         ),
