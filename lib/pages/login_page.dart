@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:time_up/pages/verify_login.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
+
+  //phone number controller
+  final TextEditingController _controller = TextEditingController();
+  var code = '+998';
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +32,9 @@ class LoginPage extends StatelessWidget {
               color: Colors.grey[300],
             ),
             child: IntlPhoneField(
+              controller: _controller,
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.done,
               flagsButtonPadding: const EdgeInsets.only(left: 10, right: 10),
               decoration: const InputDecoration(
                 hintText: 'Telefon raqam',
@@ -57,27 +65,34 @@ class LoginPage extends StatelessWidget {
               showCursor: false,
               showDropdownIcon: false,
               initialCountryCode: 'UZ',
-              onChanged: (phone) {
-                print(phone.completeNumber);
+              onCountryChanged: (phone) {
+                print('Country code changed to: ' + phone.fullCountryCode);
+                code = phone.fullCountryCode;
               },
-
             ),
           ),
-
           SizedBox(height: h * 0.02),
           Text('Royhatdan o`tish uchun raqamingizni yozing!',
               style: TextStyle(fontSize: w * 0.04 > 20 ? 20 : w * 0.04),
               textAlign: TextAlign.center),
           SizedBox(height: h * 0.02),
-          //send
-          Container(
+          SizedBox(
             height: h * 0.06,
             width: w * 0.9,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(7),
-              color: Colors.blue,
-            ),
-            child: Center(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7),
+                ),
+              ),
+              onPressed: () {
+                print(code + _controller.text);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginVerifyPage()),
+                );
+              },
               child: Text(
                 'Yuborish',
                 style: TextStyle(
@@ -88,7 +103,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
-          ),
+          )
         ],
       ),
     ));
