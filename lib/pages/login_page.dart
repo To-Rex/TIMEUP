@@ -21,7 +21,6 @@ class LoginPage extends StatelessWidget {
               height: h * 0.05),
           SizedBox(height: h * 0.06),
           Container(
-            //height: h * 0.06,
             width: w * 0.9,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(7),
