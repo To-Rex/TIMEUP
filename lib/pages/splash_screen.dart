@@ -1,21 +1,26 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+  SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-
     return Scaffold(
       body: Center(
-        child: Container(
-          height: h * 0.5,
-          width: w * 0.5,
-          child: SvgPicture.asset('assets/svgs/logo.svg'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(child: Container()),
+            const Image(image: AssetImage('assets/images/logo.png')),
+            SizedBox(height: h * 0.01),
+            Image(image: const AssetImage('assets/images/text.png'), height: h * 0.05),
+            Expanded(child: Container()),
+            Text('Vaqtingizni tejang!'),
+            SizedBox(height: h * 0.06),
+          ],
         ),
       ),
     );
