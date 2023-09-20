@@ -70,7 +70,6 @@ class LoginUserData extends StatelessWidget {
                   controller: phoneNumberController,
                   labelText: 'Telefon raqam',
                 ),
-                //dropdown
                 SizedBox(height: h * 0.02),
                 Container(
                   height: h * 0.06,

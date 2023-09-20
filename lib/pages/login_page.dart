@@ -53,7 +53,7 @@ class LoginPage extends StatelessWidget {
             width: w * 0.9,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(7),
-              color: Colors.grey[300],
+              color: Colors.grey[200],
             ),
             child: IntlPhoneField(
               controller: _controller,
@@ -104,7 +104,7 @@ class LoginPage extends StatelessWidget {
                   width: w * 0.9,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7),
-                    color: Colors.grey[300],
+                    color: Colors.grey[200],
                   ),
                   child: TextField(
                     controller: _codeController,
