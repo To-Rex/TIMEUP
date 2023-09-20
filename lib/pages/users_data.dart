@@ -102,7 +102,7 @@ class LoginUserData extends StatelessWidget {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const SamplePage(),
+                        builder: (context) => SamplePage(),
                       ),
                     );
                   },
