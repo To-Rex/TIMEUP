@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:time_up/elements/toast.dart';
+import 'package:time_up/pages/users_data.dart';
 import 'package:timer_count_down/timer_controller.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
@@ -28,9 +29,10 @@ class LoginPage extends StatelessWidget {
   }
 
   String formatDuration(Duration duration) {
-    print(duration.inSeconds);
     return '${(duration.inSeconds ~/ 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +91,6 @@ class LoginPage extends StatelessWidget {
               showDropdownIcon: false,
               initialCountryCode: 'UZ',
               onCountryChanged: (phone) {
-                print('Country code changed to: ' + phone.fullCountryCode);
                 code = phone.fullCountryCode;
               },
             ),
@@ -181,7 +182,7 @@ class LoginPage extends StatelessWidget {
                                         startCountdown();
                                       });
                                     },
-                                    child: Text('Kod yet kelmadimi?'),
+                                    child: const Text('Kod yet kelmadimi?'),
                                   ),
                                 ],
                               ),
@@ -204,6 +205,11 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               onPressed: () {
+                if (_controller.text.isEmpty) {
+                  Toast.showToast(context, 'Telefon raqamni kiriting',
+                      Colors.red, Colors.red);
+                  return;
+                }
                 if (!nameController.onFinished.value) {
                   nameController.sendCodes();
                   if (nameController.sendCode.value) {
@@ -215,9 +221,17 @@ class LoginPage extends StatelessWidget {
                   }
                 } else {
                   if (_codeController.text == '123456') {
+                    _codeController.clear();
                     print('Tasdiqlandi');
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginUserData()),
+                    );
+                    return;
                   }else{
                     _codeController.clear();
+                    Toast.showToast(context, 'Kodni noto`g`ri kiritdingiz',
+                        Colors.red, Colors.red);
                     print('Tasdiqlanmadi');
                   }
                 }
