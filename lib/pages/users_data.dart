@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:time_up/pages/sample_page.dart';
 import '../elements/text_filds.dart';
 
 class LoginUserData extends StatelessWidget {
@@ -99,7 +99,12 @@ class LoginUserData extends StatelessWidget {
                 SizedBox(height: h * 0.02),
                 ElevatedButton(
                   onPressed: () {
-
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SamplePage(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     shadowColor: Colors.transparent,
