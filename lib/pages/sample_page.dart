@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:time_up/bottomBarPages/home.dart';
 
+import '../bottomBarPages/history.dart';
+import '../bottomBarPages/profile.dart';
+import '../bottomBarPages/search.dart';
 import '../res/getController.dart';
 
 class SamplePage extends StatelessWidget {
@@ -9,20 +13,11 @@ class SamplePage extends StatelessWidget {
   final GetController _getController = Get.put(GetController());
 
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-    ),
-    Text(
-      'Index 1: Search',
-    ),
-    Text(
-      'Index 2: History',
-    ),
-    Text(
-      'Index 3: Profile',
-    ),
-
+  static List<Widget> _widgetOptions = <Widget>[
+    HomePage(),
+    SearchPage(),
+    HistoryPage(),
+    ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
