@@ -36,7 +36,6 @@ class LoginVerifyPage extends StatelessWidget {
               image: const AssetImage('assets/images/text.png'),
               height: h * 0.05),
           SizedBox(height: h * 0.02),
-
           VerificationCode(
             textStyle: TextStyle(fontSize: 20.0, color: Colors.red[900]),
             underlineColor: Colors.red[900],
@@ -103,7 +102,6 @@ class LoginVerifyPage extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: w * 0.04 > 20 ? 20 : w * 0.04,
-                  //bold
                   fontWeight: FontWeight.bold,
                 ),
               ),
