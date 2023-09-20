@@ -3,11 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:time_up/elements/toast.dart';
+import 'package:time_up/elements/functions.dart';
 import 'package:time_up/pages/users_data.dart';
 import 'package:timer_count_down/timer_controller.dart';
 import 'package:timer_count_down/timer_count_down.dart';
-
 import '../res/getController.dart';
 
 class LoginPage extends StatelessWidget {
@@ -222,7 +221,6 @@ class LoginPage extends StatelessWidget {
                 } else {
                   if (_codeController.text == '123456') {
                     _codeController.clear();
-                    print('Tasdiqlandi');
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => LoginUserData()),
@@ -232,7 +230,6 @@ class LoginPage extends StatelessWidget {
                     _codeController.clear();
                     Toast.showToast(context, 'Kodni noto`g`ri kiritdingiz',
                         Colors.red, Colors.red);
-                    print('Tasdiqlanmadi');
                   }
                 }
               },
