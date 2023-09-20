@@ -14,6 +14,9 @@ class LoginPage extends StatelessWidget {
 
   final GetController nameController = Get.put(GetController());
   final TextEditingController _controller = TextEditingController();
+
+  //code controller
+  final TextEditingController _codeController = TextEditingController();
   var code = '+998';
 
   final int _secondsRemaining = 120;
@@ -95,7 +98,7 @@ class LoginPage extends StatelessWidget {
               ? SizedBox(
                   height: h * 0.02,
                 )
-              : SizedBox()),
+              : const SizedBox()),
           Obx(() => nameController.sendCode.value
               ? Container(
                   width: w * 0.9,
@@ -104,8 +107,8 @@ class LoginPage extends StatelessWidget {
                     color: Colors.grey[300],
                   ),
                   child: TextField(
-                    //controller: nameController.codeController,
-                    keyboardType: TextInputType.number,
+                    controller: _codeController,
+                    keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.done,
                     decoration: const InputDecoration(
                       hintText: 'Kodni kiriting',
@@ -136,7 +139,7 @@ class LoginPage extends StatelessWidget {
                     maxLength: 6,
                   ),
                 )
-              : SizedBox()),
+              : const SizedBox()),
           SizedBox(height: h * 0.02),
           Obx(
             () => nameController.sendCode.value
@@ -201,21 +204,42 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                nameController.changeFullName(_controller.text);
-                nameController.sendCodes();
-                //1 cek time out start conunt down
-                Timer(const Duration(seconds: 1), () {
-                  startCountdown();
-                });
+                if (!nameController.onFinished.value) {
+                  nameController.sendCodes();
+                  if (nameController.sendCode.value) {
+                    nameController.changeOnFinished();
+                    Timer(const Duration(seconds: 1), () {
+                      _controllerTimer.restart();
+                      startCountdown();
+                    });
+                  }
+                } else {
+                  if (_codeController.text == '123456') {
+                    print('Tasdiqlandi');
+                  }else{
+                    _codeController.clear();
+                    print('Tasdiqlanmadi');
+                  }
+                }
               },
-              child: Text(
-                'Yuborish',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: w * 0.04 > 20 ? 20 : w * 0.04,
-                  //bold
-                  fontWeight: FontWeight.bold,
-                ),
+              child: Obx(
+                () => nameController.sendCode.value
+                    ? Text(
+                        'Tasdiqlash',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: w * 0.04 > 20 ? 20 : w * 0.04,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    : Text(
+                        'Kodni yuborish',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: w * 0.04 > 20 ? 20 : w * 0.04,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
               ),
             ),
           )
