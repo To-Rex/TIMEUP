@@ -16,8 +16,6 @@ class LoginPage extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
   var code = '+998';
 
-  final int _otpLength = 6; // Adjust this based on your OTP length
-  String _otp = '';
   final int _secondsRemaining = 120;
 
   final CountdownController _controllerTimer = CountdownController();
@@ -143,33 +141,47 @@ class LoginPage extends StatelessWidget {
           Obx(
             () => nameController.sendCode.value
                 ? Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Countdown(
-                        controller: _controllerTimer,
-                        seconds: _secondsRemaining,
-                        build: (_, double time) {
-                          final formattedTime =
-                              formatDuration(Duration(seconds: time.toInt()));
-                          return Text(
-                            'Kodni qayta yuborish: $formattedTime',
-                            style: TextStyle(fontSize: 16),
-                          );
-                        },
-                        interval: Duration(seconds: 1),
-                        onFinished: () {
-                          // Handle the timer finish event here
-                        },
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7),
-                          ),
-                        ),
-                        onPressed: () {
-                          _controllerTimer.restart();
-                        },
-                        child: Text('Kod yet kelmadimi?'),
+                      Obx(
+                        () => nameController.onFinished.value
+                            ? Countdown(
+                                controller: _controllerTimer,
+                                seconds: _secondsRemaining,
+                                build: (_, double time) {
+                                  final formattedTime = formatDuration(
+                                      Duration(seconds: time.toInt()));
+                                  return Text(
+                                    'Kodni qayta yuborish: $formattedTime',
+                                    style: const TextStyle(fontSize: 16),
+                                  );
+                                },
+                                interval: const Duration(seconds: 1),
+                                onFinished: () {
+                                  nameController.changeOnFinished();
+                                },
+                              )
+                            : Row(
+                                children: [
+                                  const Text('Kodni qayta yuborish ',
+                                      style: TextStyle(fontSize: 16)),
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(7),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      nameController.changeOnFinished();
+                                      Timer(const Duration(seconds: 1), () {
+                                        startCountdown();
+                                      });
+                                    },
+                                    child: Text('Kod yet kelmadimi?'),
+                                  ),
+                                ],
+                              ),
                       ),
                     ],
                   )
@@ -192,7 +204,7 @@ class LoginPage extends StatelessWidget {
                 nameController.changeFullName(_controller.text);
                 nameController.sendCodes();
                 //1 cek time out start conunt down
-                Timer(Duration(seconds: 1), () {
+                Timer(const Duration(seconds: 1), () {
                   startCountdown();
                 });
               },
