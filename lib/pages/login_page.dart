@@ -219,7 +219,7 @@ class LoginPage extends StatelessWidget {
                     });
                   }
                 } else {
-                  if (_codeController.text == '123456') {
+                  if (_codeController.text == '111111') {
                     _codeController.clear();
                     Navigator.pushReplacement(
                       context,
