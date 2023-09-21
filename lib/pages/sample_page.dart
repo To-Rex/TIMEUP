@@ -38,13 +38,10 @@ class SamplePage extends StatelessWidget {
           ),
         )
       ),
-      body: SizedBox(
-        //width: w,
-        child: Column(
-          children: [
-            Obx(() => _widgetOptions.elementAt(_getController.index.value)),
-          ],
-        ),
+      body: Column(
+        children: [
+          Obx(() => _widgetOptions.elementAt(_getController.index.value)),
+        ],
       ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
