@@ -24,9 +24,19 @@ class SamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(
-        title: Image(image: const AssetImage('assets/images/text.png'), width: w * 0.18,),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(h * 0.1),
+        child: Container(
+          margin: EdgeInsets.only(top: h * 0.03, bottom: h * 0.01),
+          child: Row(
+            children: [
+              SizedBox(width: w * 0.04,),
+              Image(image: const AssetImage('assets/images/text.png'), width: w * 0.2, height: h * 0.05,),
+            ],
+          ),
+        )
       ),
       body: SizedBox(
         width: w,
