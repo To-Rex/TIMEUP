@@ -25,6 +25,9 @@ class SamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+        title: Image(image: const AssetImage('assets/images/text.png'), width: w * 0.18,),
+      ),
       body: SizedBox(
         width: w,
         child: Column(
