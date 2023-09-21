@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:time_up/pages/professions_list_details.dart';
 import '../res/getController.dart';
 
 class ProfessionsListElements extends StatelessWidget {
@@ -49,34 +50,37 @@ class ProfessionsListElements extends StatelessWidget {
           height: h * 0.75,
           width: w * 0.9,
           child: Expanded(
-            child: ListView(
-              children: [
-                for (var profession in professions)
-                  GestureDetector(
-                    onTap: () {
-
-                    },
-                    child: Container(
-                      height: h * 0.06,
-                      margin: EdgeInsets.only(bottom: h * 0.02),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(w * 0.02),
-                      ),
-                      child: Center(
-                        child: Text(
-                          profession,
-                          style: TextStyle(
-                            fontSize: w * 0.04,
-                            fontWeight: FontWeight.w500,
-                          ),
+              child: ListView(
+            children: [
+              for (var profession in professions)
+                GestureDetector(
+                  onTap: () {
+                    //ProfessionsListDetails
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const ProfessionsListDetails();
+                    }));
+                  },
+                  child: Container(
+                    height: h * 0.06,
+                    margin: EdgeInsets.only(bottom: h * 0.02),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(w * 0.02),
+                    ),
+                    child: Center(
+                      child: Text(
+                        profession,
+                        style: TextStyle(
+                          fontSize: w * 0.04,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                   ),
-              ],
-            )
-          ),
+                ),
+            ],
+          )),
         )
       ],
     );
