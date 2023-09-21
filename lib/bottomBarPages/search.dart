@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../elements/professions_list.dart';
+import '../pages/professions_list_elements.dart';
 import '../res/getController.dart';
 
 class SearchPage extends StatelessWidget {
@@ -52,8 +53,21 @@ class SearchPage extends StatelessWidget {
             height: h * 0.02,
           ),
           ProfessionsList(
-            professions: professions,
-          ),
+              professions: professions,
+              onTap: (profession) {
+                // Navigate to the professions list page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfessionsListElements(
+                      professions: professions,
+                      onTap: (profession){
+                        print(profession);
+                      }
+                    ),
+                  ),
+                );
+              }),
         ],
       ),
     );
