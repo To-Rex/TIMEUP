@@ -39,7 +39,7 @@ class SamplePage extends StatelessWidget {
         )
       ),
       body: SizedBox(
-        width: w,
+        //width: w,
         child: Column(
           children: [
             Obx(() => _widgetOptions.elementAt(_getController.index.value)),

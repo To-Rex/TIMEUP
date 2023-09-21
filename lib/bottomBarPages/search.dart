@@ -51,9 +51,9 @@ class SearchPage extends StatelessWidget {
           SizedBox(
             height: h * 0.02,
           ),
-          /*ProfessionsList(
+          ProfessionsList(
             professions: professions,
-          ),*/
+          ),
         ],
       ),
     );
