@@ -15,10 +15,10 @@ class ProfessionsList extends StatelessWidget {
         width: w,
         child: ListView.builder(
           itemCount: professions.length,
-          padding: EdgeInsets.all(w * 0.02),
+          padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
           itemBuilder: (context, index) {
             return Container(
-              height: h * 0.07,
+              height: h * 0.06,
               margin: EdgeInsets.only(bottom: h * 0.02),
               decoration: BoxDecoration(
                 color: Colors.grey[200],
