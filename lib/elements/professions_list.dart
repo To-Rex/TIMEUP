@@ -20,7 +20,7 @@ class ProfessionsList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          'Kasblar ro’yxati (${professions.length})',
+          'Kasblar royhati',
           style: TextStyle(
             fontSize: w * 0.05,
             fontWeight: FontWeight.w500,
