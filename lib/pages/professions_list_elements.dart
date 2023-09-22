@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:time_up/pages/professions_list_details.dart';
 import '../res/getController.dart';
 
 class ProfessionsListElements extends StatelessWidget {
