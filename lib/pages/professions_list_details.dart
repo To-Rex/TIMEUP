@@ -200,15 +200,15 @@ class ProfessionsListDetails extends StatelessWidget {
                       ),
                       const Expanded(child: SizedBox()),
                       Container(
-                          width: w * 0.2,
                           height: h * 0.05,
+                          padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
                           decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color: Colors.grey,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Center(
                             child: Text(
-                              'Bio',
+                              'Ish jadvali',
                               style: TextStyle(
                                 fontSize: w * 0.04,
                                 fontWeight: FontWeight.w500,
@@ -221,12 +221,12 @@ class ProfessionsListDetails extends StatelessWidget {
                           width: w * 0.2,
                           height: h * 0.05,
                           decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color: Colors.grey,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Center(
                             child: Text(
-                              'Bio',
+                              'Booking',
                               style: TextStyle(
                                 fontSize: w * 0.04,
                                 fontWeight: FontWeight.w500,
