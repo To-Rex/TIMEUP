@@ -50,48 +50,56 @@ class ProfessionsListUsers extends StatelessWidget {
         SizedBox(
             height: h * 0.75,
             width: w * 0.9,
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return GestureDetector(
+            child: ListView(
+              children: [
+                for (int i = 0; i < 15; i++)
+                  GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ProfessionsListDetails(),
-                        ),
-                      );
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
                     },
                     child: Column(
                       children: [
                         Row(
                           children: [
-                            Text(
-                              professions[index],
-                              style: TextStyle(
-                                fontSize: w * 0.04,
-                                fontWeight: FontWeight.w500,
+                            //circle avatar
+                            SizedBox(
+                              width: w * 0.2,
+                              height: w * 0.2,
+                              child: CircleAvatar(
+                                backgroundImage: AssetImage('assets/images/doctor.png'),
                               ),
                             ),
-                            const Expanded(child: SizedBox()),
-                            Icon(Icons.arrow_forward_ios, size: w * 0.04),
+                            SizedBox(width: w * 0.05),
+                            //name and profession
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Dr. John Doe',
+                                  style: TextStyle(
+                                    fontSize: w * 0.04,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  'Urolog',
+                                  style: TextStyle(
+                                    fontSize: w * 0.04,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
-                        const Divider(),
+                        SizedBox(height: h * 0.02),
                       ],
-                    ));
-              },
-              itemCount: professions.length,
-              cacheExtent: w * 0.1,
-              dragStartBehavior: DragStartBehavior.down,
-              prototypeItem: Container(
-                height: h * 0.04,
-                margin: EdgeInsets.only(bottom: h * 0.02),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(w * 0.02),
-                ),
-              ),
-            )),
+                    ),
+                  ),
+              ],
+            )
+        ),
       ],
     );
   }

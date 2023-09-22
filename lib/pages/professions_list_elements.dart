@@ -54,12 +54,6 @@ class ProfessionsListElements extends StatelessWidget {
                 return GestureDetector(
                     onTap: () {
                       _getController.enters.value = 2;
-                      /*Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ProfessionsListDetails(),
-                        ),
-                      );*/
                     },
                     child: Column(
                       children: [

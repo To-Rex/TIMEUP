@@ -18,6 +18,7 @@ class SamplePage extends StatelessWidget {
   ];
 
   void _onItemTapped(int index) {
+    _getController.enters.value = 0;
     _getController.changeIndex(index);
   }
 
