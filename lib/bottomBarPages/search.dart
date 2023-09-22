@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../elements/professions_list.dart';
 import '../pages/professions_list_elements.dart';
+import '../pages/professions_list_users.dart';
 import '../res/getController.dart';
 
 class SearchPage extends StatelessWidget {
@@ -36,7 +37,29 @@ class SearchPage extends StatelessWidget {
     'Texnika'
   ];
   var profession = [
-    'Stomatolog','Kardiolog','Terapevt','Nevrolog','Oftalmolog','Dermatolog','Ginekolog','Urolog','Endokrinolog','Nevrohirurg','Psixolog','Psixiater','Onkolog','Radiolog','Rentgenolog','Mikrobiolog','Parazitolog','Immunolog','Epidemiolog','Patolog','Anesteziolog','Reanimatolog','Feldsher'
+    'Stomatolog',
+    'Kardiolog',
+    'Terapevt',
+    'Nevrolog',
+    'Oftalmolog',
+    'Dermatolog',
+    'Ginekolog',
+    'Urolog',
+    'Endokrinolog',
+    'Nevrohirurg',
+    'Psixolog',
+    'Psixiater',
+    'Onkolog',
+    'Radiolog',
+    'Rentgenolog',
+    'Mikrobiolog',
+    'Parazitolog',
+    'Immunolog',
+    'Epidemiolog',
+    'Patolog',
+    'Anesteziolog',
+    'Reanimatolog',
+    'Feldsher'
   ];
 
   @override
@@ -46,7 +69,7 @@ class SearchPage extends StatelessWidget {
     return Column(
       children: [
         SizedBox(height: h * 0.02),
-        Obx(() => _getController.enterProfessionsListElements.value
+        /*Obx(() => _getController.enterProfessionsListElements.value
             ? ProfessionsListElements(
             professions: profession,
             onTap: (profession) {
@@ -56,7 +79,26 @@ class SearchPage extends StatelessWidget {
             professions: professions,
             onTap: (profession) {
               _getController.enterProfessionsListElements.value = true;
-            })),
+            })),*/
+        //_getController.enterProfessionsListElements.value = 0 ProfessionsList else ProfessionsListElements if 2 ProfessionsListUsers
+        Obx(() => _getController.enters.value == 0
+            ? ProfessionsList(
+                professions: professions,
+                onTap: (profession) {
+                  _getController.enters.value = 1;
+                })
+            : _getController.enters.value == 1
+                ? ProfessionsListElements(
+                    professions: profession,
+                    onTap: (profession) {
+                      _getController.enters.value = 2;
+                    })
+                : ProfessionsListUsers(
+                    professions: profession,
+                    onTap: (profession) {
+                      _getController.enters.value = 0;
+                    },
+                  )),
       ],
     );
   }

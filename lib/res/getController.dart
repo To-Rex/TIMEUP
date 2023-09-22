@@ -6,7 +6,7 @@ class GetController extends GetxController {
   var fullName = 'Dilshodjon Abdurahmonov'.obs;
   var sendCode = false.obs;
   var onFinished = false.obs;
-  var enterProfessionsListElements = false.obs;
+  var enters = 0.obs;
   var index = 0.obs;
 
   //bottombar index

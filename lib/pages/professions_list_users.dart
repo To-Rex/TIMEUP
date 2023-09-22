@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 import 'package:time_up/pages/professions_list_details.dart';
 import '../res/getController.dart';
 
-class ProfessionsListElements extends StatelessWidget {
+class ProfessionsListUsers extends StatelessWidget {
   final List<String> professions;
   final Function(String) onTap;
 
-  ProfessionsListElements({
+  ProfessionsListUsers({
     Key? key,
     required this.professions,
     required this.onTap,
@@ -25,7 +25,7 @@ class ProfessionsListElements extends StatelessWidget {
         SizedBox(
           child: GestureDetector(
             onTap: () {
-              _getController.enters.value = 0;
+              _getController.enters.value = 1;
             },
             child: Row(
               children: [
@@ -33,7 +33,7 @@ class ProfessionsListElements extends StatelessWidget {
                 const Icon(Icons.arrow_back_ios),
                 const Expanded(child: SizedBox()),
                 Text(
-                  'Tibbiyot Kasblar royhati',
+                  'Urolog',
                   style: TextStyle(
                     fontSize: w * 0.05,
                     fontWeight: FontWeight.w500,
@@ -54,13 +54,12 @@ class ProfessionsListElements extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                     onTap: () {
-                      _getController.enters.value = 2;
-                      /*Navigator.push(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const ProfessionsListDetails(),
                         ),
-                      );*/
+                      );
                     },
                     child: Column(
                       children: [
