@@ -7,6 +7,9 @@ import '../res/getController.dart';
 class ProfilePage extends StatelessWidget {
   ProfilePage({Key? key}) : super(key: key);
   final GetController _getController = Get.put(GetController());
+  //controller for date
+  final TextEditingController _dateController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -170,8 +173,6 @@ class ProfilePage extends StatelessWidget {
               ],
             ),
           ),
-
-          //Edit profile button
           Container(
             width: w * 0.9,
             height: h * 0.045,
@@ -195,6 +196,76 @@ class ProfilePage extends StatelessWidget {
                   )),
             ),
           ),
+          Container(
+            width: w,
+            margin: EdgeInsets.only(top: h * 0.05),
+            color: Colors.grey[200],
+            //Biografiya and Ish jadvali TabBar
+            child: Row(
+              children: [
+                Container(
+                  width: w * 0.5,
+                  color: Colors.blue,
+                  child: TextButton(
+                    onPressed: () {
+
+                    },
+                    child: const Text(
+                      'Biografiya',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: w * 0.5,
+                  child: TextButton(
+                    onPressed: () {
+
+                    },
+                    child: const Text(
+                      'Ish jadvali',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+
+              ],
+            ),
+          ),
+          ////САЛОМ МЕН ДОКТОР ИСЧАНОВ НОДИРБЕК ИСЧАНOВИЧ, МИЛЛАТИМ ЎЗБЕК, ЎЗБЕКИСТОН ФУҚАРОСИМАН, МАЪЛУМОТИМ ОЛИЙ, ТИББИЙ МУТАХАССИСЛИКЛАРИМ 10 ГА ЯҚИН. ОИЛАЛИМАН, ШИФОКОРЛАР ОИЛАСИДА ТУҒИЛГАНМАН.
+          Container(
+            width: w,
+            height: h * 0.25,
+            padding: EdgeInsets.only(
+              left: w * 0.02,
+              right: w * 0.02,
+            ),
+            margin: EdgeInsets.only(top: h * 0.02, left: w * 0.02, right: w * 0.02),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(
+                color: Colors.grey,
+              ),
+            ),
+            child: Text(
+              textAlign: TextAlign.start,
+              'САЛОМ МЕН ДОКТОР ИСЧАНОВ НОДИРБЕК ИСЧАНOВИЧ, МИЛЛАТИМ ЎЗБЕК, ЎЗБЕКИСТОН ФУҚАРОСИМАН, МАЪЛУМОТИМ ОЛИЙ, ТИББИЙ МУТАХАССИСЛИКЛАРИМ 10 ГА ЯҚИН. ОИЛАЛИМАН, ШИФОКОРЛАР ОИЛАСИДА ТУҒИЛГАНМАН.',
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w400,
+                color: Colors.black,
+              ),
+            ),
+          ),
+
         ],
       ),
     );
