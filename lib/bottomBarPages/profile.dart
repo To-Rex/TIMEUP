@@ -16,7 +16,7 @@ class ProfilePage extends StatelessWidget {
       width: w,
       child: Column(
         children: [
-          Text('Profile Page')
+
         ],
       ),
     );
