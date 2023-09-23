@@ -89,7 +89,6 @@ class ProfilePage extends StatelessWidget {
               ],
             ),
           ),
-
           Container(
             width: w * 0.9,
             margin: const EdgeInsets.only(top: 5),
@@ -256,7 +255,6 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
           ),
-
         ],
       ),
     );
