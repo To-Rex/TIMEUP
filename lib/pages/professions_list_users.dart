@@ -48,7 +48,7 @@ class ProfessionsListUsers extends StatelessWidget {
         SizedBox(height: h * 0.02),
         // List of professions taking up the remaining space
         SizedBox(
-            height: h * 0.75,
+            height: h * 0.74,
             width: w * 0.9,
             child: ListView(
               children: [

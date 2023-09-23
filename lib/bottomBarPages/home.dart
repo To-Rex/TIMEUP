@@ -15,8 +15,87 @@ class HomePage extends StatelessWidget {
     return SizedBox(
       width: w,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Home Page')
+          SizedBox(
+            height: h * 0.02,
+          ),
+          Image(
+            image: const AssetImage('assets/images/home.png'),
+            //height: h * 0.2,
+            fit: BoxFit.contain,
+            width: w,
+          ),
+          SizedBox(
+            height: h * 0.02,
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: w * 0.05,
+              ),
+              const Icon(
+                //phone
+                Icons.phone,
+                color: Colors.blue,
+              ),
+              SizedBox(
+                width: w * 0.02,
+              ),
+              const Icon(
+                Icons.location_on,
+                color: Colors.blue,
+              ),
+              SizedBox(
+                width: w * 0.02,
+              ),
+              const Icon(
+                Icons.work,
+                color: Colors.blue,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: h * 0.02,
+          ),
+          //Doctor_sobit
+          Container(
+            margin: EdgeInsets.only(left: w * 0.05),
+            child: const Text(
+              'Doctor_Sobit',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          //Urolog
+          Container(
+            margin: EdgeInsets.only(left: w * 0.05),
+            child: const Text(
+              'Urolog',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+            ),
+          ),
+          //САЛОМ МЕН ДОКТОР ИСЧАНОВ НОДИРБЕК ИСЧАНOВИЧ,\n
+          // МИЛЛАТИМ ЎЗБЕК...More
+          SizedBox(
+            height: h * 0.02,
+          ),
+          Container(
+            margin: EdgeInsets.only(left: w * 0.05),
+            child: Text(
+              'САЛОМ МЕН ДОКТОР ИСЧАНОВ НОДИРБЕК ИСЧАНOВИЧ,\nМИЛЛАТИМ ЎЗБЕК... More',
+              style: TextStyle(
+                fontSize: w * 0.03 > 15 ? 15 : w * 0.03,
+                color: Colors.black,
+              ),
+            ),
+          ),
         ],
       ),
     );

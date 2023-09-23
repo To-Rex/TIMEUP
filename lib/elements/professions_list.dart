@@ -29,7 +29,7 @@ class ProfessionsList extends StatelessWidget {
         SizedBox(height: h * 0.02),
         SizedBox(
           width: w,
-          height: h * 0.75,
+          height: h * 0.74,
           child: ListView.builder(
             itemCount: professions.length,
             padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),

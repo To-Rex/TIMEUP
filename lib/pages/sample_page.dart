@@ -30,7 +30,7 @@ class SamplePage extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(h * 0.1),
         child: Container(
-          margin: EdgeInsets.only(top: h * 0.03, bottom: h * 0.01),
+          margin: EdgeInsets.only(top: h * 0.045, bottom: h * 0.01),
           child: Row(
             children: [
               SizedBox(width: w * 0.04,),
