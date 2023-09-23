@@ -39,10 +39,9 @@ class SamplePage extends StatelessWidget {
           ),
         )
       ),
-      body: Column(
-        children: [
+      body: SingleChildScrollView(
+        child:
           Obx(() => _widgetOptions.elementAt(_getController.index.value)),
-        ],
       ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
