@@ -187,7 +187,7 @@ class ProfessionsListDetails extends StatelessWidget {
                         height: h * 0.05,
                         decoration: BoxDecoration(
                           color: Colors.blue,
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(3),
                         ),
                         child: Text(
                           'Bio',
@@ -204,7 +204,7 @@ class ProfessionsListDetails extends StatelessWidget {
                           padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
                           decoration: BoxDecoration(
                             color: Colors.grey,
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(3),
                           ),
                           child: Center(
                             child: Text(
@@ -222,7 +222,7 @@ class ProfessionsListDetails extends StatelessWidget {
                           height: h * 0.05,
                           decoration: BoxDecoration(
                             color: Colors.grey,
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(3),
                           ),
                           child: Center(
                             child: Text(
@@ -261,7 +261,7 @@ class ProfessionsListDetails extends StatelessWidget {
                     padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02,bottom: h * 0.01),
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(3),
                       border: Border.all(
                         color: Colors.grey,
                       ),
