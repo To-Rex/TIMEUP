@@ -7,6 +7,8 @@ import '../res/getController.dart';
 class HistoryPage extends StatelessWidget {
   HistoryPage({Key? key}) : super(key: key);
   final GetController _getController = Get.put(GetController());
+  //controller for date
+  final TextEditingController _dateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +61,21 @@ class HistoryPage extends StatelessWidget {
               width: w * 0.9,
               height: h * 0.07,
               child: TextField(
+                controller: _dateController,
                 decoration: InputDecoration(
-                  suffixIcon: const Icon(
-                    Icons.calendar_today,
-                    color: Colors.grey,
+                  suffixIcon:  InkWell(
+                    onTap: () {
+                      showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2025),
+                      );
+                    },
+                    child: const Icon(
+                      Icons.calendar_today,
+                      color: Colors.grey,
+                    ),
                   ),
                   hintText: 'MM / DD / YYYY',
                   hintStyle: const TextStyle(
@@ -159,9 +172,11 @@ class HistoryPage extends StatelessWidget {
                                   ),
                                 ),
                                 Divider(
-                                  color: Colors.grey,),
+                                  color: Colors.grey,
+                                ),
                                 SizedBox(
-                                  height: 5,)
+                                  height: 5,
+                                )
                               ],
                             ),
                           ),
