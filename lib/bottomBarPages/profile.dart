@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
-import '../res/getController.dart';
 
 class ProfilePage extends StatelessWidget {
-  ProfilePage({Key? key}) : super(key: key);
-  final GetController _getController = Get.put(GetController());
-  //controller for date
-  final TextEditingController _dateController = TextEditingController();
-
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -255,7 +247,7 @@ class ProfilePage extends StatelessWidget {
                 color: Colors.grey,
               ),
             ),
-            child: Text(
+            child: const Text(
               textAlign: TextAlign.start,
               'САЛОМ МЕН ДОКТОР ИСЧАНОВ НОДИРБЕК ИСЧАНOВИЧ, МИЛЛАТИМ ЎЗБЕК, ЎЗБЕКИСТОН ФУҚАРОСИМАН, МАЪЛУМОТИМ ОЛИЙ, ТИББИЙ МУТАХАССИСЛИКЛАРИМ 10 ГА ЯҚИН. ОИЛАЛИМАН, ШИФОКОРЛАР ОИЛАСИДА ТУҒИЛГАНМАН.',
               style: TextStyle(
