@@ -6,7 +6,7 @@ class VerifySms {
 
   VerifySms.fromJson(Map<String, dynamic> json) {
     res = json['res'] != null ? Res.fromJson(json['res']) : null;
-    status = json['status'];
+    status = json['status'] ? json['status'] : false;
   }
 
   Map<String, dynamic> toJson() {
@@ -32,8 +32,8 @@ class Res {
   Res({this.register, this.token, this.user});
 
   Res.fromJson(Map<String, dynamic> json) {
-    register = json['Register'];
-    token = json['Token'];
+    register = json['Register'] ?? false;
+    token = json['Token'] ?? '';
     user = json['User'];
   }
 
