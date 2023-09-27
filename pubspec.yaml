@@ -41,6 +41,7 @@ dependencies:
   intl_phone_field: ^3.2.0
   flutter_verification_code: ^1.1.7
   timer_count_down: ^2.2.2
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:

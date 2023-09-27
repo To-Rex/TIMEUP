@@ -15,7 +15,6 @@ class LoginPage extends StatelessWidget {
   final GetController nameController = Get.put(GetController());
   final TextEditingController _controller = TextEditingController();
 
-  //code controller
   final TextEditingController _codeController = TextEditingController();
   var code = '+998';
 
@@ -69,9 +68,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 counterText: '',
                 counter: null,
-                //counter false
                 semanticCounterText: null,
-                //counter false
                 errorStyle: TextStyle(
                   color: Colors.red,
                   fontSize: 12,
@@ -218,6 +215,7 @@ class LoginPage extends StatelessWidget {
                       startCountdown();
                     });
                   }
+
                 } else {
                   if (_codeController.text == '111111') {
                     _codeController.clear();
