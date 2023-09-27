@@ -27,6 +27,10 @@ class GetController extends GetxController {
     onFinished.value = !onFinished.value;
   }
 
+  void changeFinish() {
+    onFinished.value = false;
+  }
+
   changeCode(String newCode) {
     code.value = newCode;
   }

@@ -19,7 +19,7 @@ class LoginPage extends StatelessWidget {
   final TextEditingController _codeController = TextEditingController();
   var code = '+998';
 
-  final int _secondsRemaining = 10;
+  final int _secondsRemaining = 120;
 
   final CountdownController _controllerTimer = CountdownController();
 
@@ -58,6 +58,12 @@ class LoginPage extends StatelessWidget {
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.done,
               flagsButtonPadding: const EdgeInsets.only(left: 10, right: 10),
+              onChanged: (phone) {
+                nameController.changeFinish();
+                nameController.sendCode.value = false;
+                nameController.code.value = '';
+                _codeController.clear();
+              },
               decoration: const InputDecoration(
                 hintText: 'Telefon raqam',
                 hintStyle: TextStyle(color: Colors.black54),
@@ -108,6 +114,31 @@ class LoginPage extends StatelessWidget {
                         : _codeController..text = nameController.code.value,
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.done,
+                    onChanged: (value) {
+                      if (value.length == 6) {
+                        var phone = code + _controller.text;
+                        var codes = _codeController.text;
+                        ApiController()
+                            .verifySms(phone, codes)
+                            .then((value) => {
+                                  if (value.status == true){
+                                      _codeController.clear(),
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => LoginUserData()),
+                                      ),
+                                    } else {
+                                      _codeController.clear(),
+                                      Toast.showToast(
+                                          context,
+                                          'Kodni noto`g`ri kiritdingiz',
+                                          Colors.red,
+                                          Colors.red),
+                                    }
+                                });
+                      }
+                    },
                     decoration: const InputDecoration(
                       hintText: 'Kodni kiriting',
                       hintStyle: TextStyle(color: Colors.black54),
@@ -175,6 +206,7 @@ class LoginPage extends StatelessWidget {
                                     ),
                                     onPressed: () {
                                       nameController.changeOnFinished();
+                                      _codeController.clear();
                                       Timer(const Duration(seconds: 1), () {
                                         startCountdown();
                                       });
@@ -220,9 +252,7 @@ class LoginPage extends StatelessWidget {
                   }
                   ApiController().sendSms(code + _controller.text)
                       .then((value) => nameController.changeCode(value));
-                  print(nameController.code.value);
                 } else {
-                  Toast.showToast(context, nameController.code.value, Colors.red, Colors.red);
                   if (_codeController.text == nameController.code.value) {
                     var phone = code + _controller.text;
                     var codes = _codeController.text;
@@ -231,25 +261,16 @@ class LoginPage extends StatelessWidget {
                         .then((value) => {
                               if (value.status == true){
                                   _codeController.clear(),
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginUserData()),
-                                  ),
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUserData()),),
                                 } else {
                                   _codeController.clear(),
-                                  Toast.showToast(
-                                      context,
-                                      'Kodni noto`g`ri kiritdingiz',
-                                      Colors.red,
-                                      Colors.red),
+                                  Toast.showToast(context, 'Kodni noto`g`ri kiritdingiz', Colors.red, Colors.red),
                                 }
                             });
                     return;
                   } else {
                     _codeController.clear();
-                    Toast.showToast(context, 'Kodni noto`g`ri kiritdingiz',
-                        Colors.red, Colors.red);
+                    Toast.showToast(context, 'Kodni noto`g`ri kiritdingiz', Colors.red, Colors.red);
                   }
                 }
               },
