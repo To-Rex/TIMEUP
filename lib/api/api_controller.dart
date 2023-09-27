@@ -55,8 +55,6 @@ class ApiController extends GetxController {
   }
 
   Future<VerifySms> verifySms(phoneNumber,code) async {
-    print('======$phoneNumber');
-    print('======$code');
     var response = await http.post(
       Uri.parse(url + verifyUrl),
       body: jsonEncode({

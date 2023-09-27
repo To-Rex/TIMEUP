@@ -19,7 +19,7 @@ class LoginPage extends StatelessWidget {
   final TextEditingController _codeController = TextEditingController();
   var code = '+998';
 
-  final int _secondsRemaining = 120;
+  final int _secondsRemaining = 10;
 
   final CountdownController _controllerTimer = CountdownController();
 
@@ -178,6 +178,8 @@ class LoginPage extends StatelessWidget {
                                       Timer(const Duration(seconds: 1), () {
                                         startCountdown();
                                       });
+                                      ApiController().sendSms(code + _controller.text)
+                                          .then((value) => nameController.changeCode(value));
                                     },
                                     child: const Text('Kod yet kelmadimi?'),
                                   ),
@@ -224,11 +226,10 @@ class LoginPage extends StatelessWidget {
                   if (_codeController.text == nameController.code.value) {
                     var phone = code + _controller.text;
                     var codes = _codeController.text;
-                    print(phone + ' ' + codes);
                     ApiController()
                         .verifySms(phone, codes)
                         .then((value) => {
-                              if (value == 200){
+                              if (value.status == true){
                                   _codeController.clear(),
                                   Navigator.pushReplacement(
                                     context,
@@ -236,7 +237,7 @@ class LoginPage extends StatelessWidget {
                                         builder: (context) => LoginUserData()),
                                   ),
                                 } else {
-                                  //_codeController.clear(),
+                                  _codeController.clear(),
                                   Toast.showToast(
                                       context,
                                       'Kodni noto`g`ri kiritdingiz',
