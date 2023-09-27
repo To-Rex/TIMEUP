@@ -216,7 +216,7 @@ class LoginPage extends StatelessWidget {
                       startCountdown();
                     });
                   }
-                  ApiController().sendSms(code + _controller.text);
+                  ApiController().sendSms(code + _controller.text).then((value) => print(value));
                 } else {
                   if (_codeController.text == '111111') {
                     _codeController.clear();

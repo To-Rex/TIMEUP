@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:time_up/models/last_send_sms.dart';
@@ -13,6 +14,18 @@ class ApiController extends GetxController {
   var smsUrl = 'sms/send';
   //{{host}}/api/v1/sms/last-sent-sms
   var lastSmsUrl = 'sms/last-sent-sms';
+
+  //showToast error
+  void showToastError(String message) {
+    Get.snackbar(
+      'Xatolik',
+      message,
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+      snackPosition: SnackPosition.BOTTOM,
+    );
+  }
+
 
   Future<String> sendSms(String phoneNumber) async {
     var response = await http.post(
@@ -35,7 +48,6 @@ class ApiController extends GetxController {
         "phone_number": phoneNumber,
       },
     );
-    print(response.body);
     return LastSendSms.fromJson(jsonDecode(response.body));
   }
 
