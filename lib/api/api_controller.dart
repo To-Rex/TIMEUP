@@ -14,6 +14,8 @@ class ApiController extends GetxController {
   var smsUrl = 'sms/send';
   //{{host}}/api/v1/sms/last-sent-sms
   var lastSmsUrl = 'sms/last-sent-sms';
+  //{{host}}/api/v1/sms/verify
+  var verifyUrl = 'sms/verify';
 
   //showToast error
   void showToastError(String message) {
@@ -49,6 +51,21 @@ class ApiController extends GetxController {
       },
     );
     return LastSendSms.fromJson(jsonDecode(response.body));
+  }
+
+  Future<String> verifySms(String phoneNumber, String code) async {
+    var response = await http.post(
+      Uri.parse(url + verifyUrl),
+      body: {
+        "phone_number": phoneNumber,
+        "code": code,
+      },
+    );
+    if (response.statusCode == 200) {
+      return 'success';
+    } else {
+      return 'error';
+    }
   }
 
 
