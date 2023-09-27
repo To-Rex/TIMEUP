@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:time_up/models/last_send_sms.dart';
 
 import '../models/send_sms.dart';
+import '../models/verify_sms.dart';
 
 class ApiController extends GetxController {
   //{{host}}/api/v1/sms/send
@@ -53,7 +54,7 @@ class ApiController extends GetxController {
     return LastSendSms.fromJson(jsonDecode(response.body));
   }
 
-  Future<String> verifySms(String phoneNumber, String code) async {
+  Future<VerifySms> verifySms(String phoneNumber, String code) async {
     var response = await http.post(
       Uri.parse(url + verifyUrl),
       body: {
@@ -62,9 +63,9 @@ class ApiController extends GetxController {
       },
     );
     if (response.statusCode == 200) {
-      return 'success';
+      return VerifySms.fromJson(jsonDecode(response.body));
     } else {
-      return 'error';
+      return VerifySms();
     }
   }
 

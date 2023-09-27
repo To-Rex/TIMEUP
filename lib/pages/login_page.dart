@@ -105,7 +105,8 @@ class LoginPage extends StatelessWidget {
                   child: TextField(
                     controller: nameController.code.value == null
                         ? _codeController
-                        : _codeController..text = nameController.code.value,
+                        : _codeController
+                      ..text = nameController.code.value,
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.done,
                     decoration: const InputDecoration(
@@ -223,11 +224,20 @@ class LoginPage extends StatelessWidget {
                   Toast.showToast(context, nameController.code.value,
                       Colors.red, Colors.red);
                   if (_codeController.text == nameController.code.value) {
-                    _codeController.clear();
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginUserData()),
-                    );
+                    ApiController()
+                        .verifySms(
+                            code + _controller.text, _codeController.text)
+                        .then((value) => {
+                              if (value.status == true)
+                                {
+                                  _codeController.clear(),
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginUserData()),
+                                  ),
+                                }
+                            });
                     return;
                   } else {
                     _codeController.clear();
