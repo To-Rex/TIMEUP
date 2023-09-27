@@ -9,10 +9,9 @@ class ApiController extends GetxController {
   //{{host}}/api/v1/sms/send
   var url = 'http://16.16.182.36:443/api/v1/';
   var smsUrl = 'sms/send';
+  //{{host}}/api/v1/sms/last-sent-sms
+  var lastSmsUrl = 'sms/last-sent-sms';
 
-  //post {
-//     "phone_number": "+998901234567"
-// }
   Future<int> sendSms(String phoneNumber) async {
     var response = await http.post(
       Uri.parse(url + smsUrl),
@@ -23,4 +22,14 @@ class ApiController extends GetxController {
     print(response.body);
     return 100;
   }
+
+  Future<SendSms> getLastSms() async {
+    var response = await http.get(
+      Uri.parse(url + lastSmsUrl),
+    );
+    print(response.body);
+    return sendSmsFromJson(response.body);
+  }
+
+
 }
