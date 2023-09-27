@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +10,8 @@ import '../models/verify_sms.dart';
 
 class ApiController extends GetxController {
   //{{host}}/api/v1/sms/send
-  var url = 'http://16.16.182.36:443/api/v1/';
+  //var url = 'http://16.16.182.36:443/api/v1/';
+  var url = 'https://timeup-production.up.railway.app/api/v1/';
   var smsUrl = 'sms/send';
   //{{host}}/api/v1/sms/last-sent-sms
   var lastSmsUrl = 'sms/last-sent-sms';
@@ -54,19 +54,33 @@ class ApiController extends GetxController {
     return LastSendSms.fromJson(jsonDecode(response.body));
   }
 
-  Future<VerifySms> verifySms(String phoneNumber, String code) async {
+  Future<VerifySms> verifySms(phoneNumber,code) async {
+    print('======$phoneNumber');
+    print('======$code');
     var response = await http.post(
       Uri.parse(url + verifyUrl),
-      body: {
-        "phone_number": phoneNumber,
-        "code": code,
+      body: jsonEncode({
+        "phone_number": phoneNumber.toString(),
+        "code": code.toString()
+      }),
+      headers: {
+        "Content-Type": "application/json"
       },
     );
+    print(response.body);
+    var verifySms = VerifySms.fromJson(jsonDecode(response.body));
     if (response.statusCode == 200) {
-      return VerifySms.fromJson(jsonDecode(response.body));
+      return verifySms;
     } else {
-      return VerifySms();
+      return VerifySms(
+          res: Resurs(
+              register: false,
+              token: ''
+          ),
+          status: false
+      );
     }
+
   }
 
 

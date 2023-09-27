@@ -105,8 +105,7 @@ class LoginPage extends StatelessWidget {
                   child: TextField(
                     controller: nameController.code.value == null
                         ? _codeController
-                        : _codeController
-                      ..text = nameController.code.value,
+                        : _codeController..text = nameController.code.value,
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.done,
                     decoration: const InputDecoration(
@@ -217,25 +216,32 @@ class LoginPage extends StatelessWidget {
                       startCountdown();
                     });
                   }
-                  ApiController()
-                      .sendSms(code + _controller.text)
+                  ApiController().sendSms(code + _controller.text)
                       .then((value) => nameController.changeCode(value));
+                  print(nameController.code.value);
                 } else {
-                  Toast.showToast(context, nameController.code.value,
-                      Colors.red, Colors.red);
+                  Toast.showToast(context, nameController.code.value, Colors.red, Colors.red);
                   if (_codeController.text == nameController.code.value) {
+                    var phone = code + _controller.text;
+                    var codes = _codeController.text;
+                    print(phone + ' ' + codes);
                     ApiController()
-                        .verifySms(
-                            code + _controller.text, _codeController.text)
+                        .verifySms(phone, codes)
                         .then((value) => {
-                              if (value.status == true)
-                                {
+                              if (value == 200){
                                   _codeController.clear(),
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => LoginUserData()),
                                   ),
+                                } else {
+                                  //_codeController.clear(),
+                                  Toast.showToast(
+                                      context,
+                                      'Kodni noto`g`ri kiritdingiz',
+                                      Colors.red,
+                                      Colors.red),
                                 }
                             });
                     return;
