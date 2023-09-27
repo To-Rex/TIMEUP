@@ -7,6 +7,7 @@ import 'package:time_up/elements/functions.dart';
 import 'package:time_up/pages/users_data.dart';
 import 'package:timer_count_down/timer_controller.dart';
 import 'package:timer_count_down/timer_count_down.dart';
+import '../api/api_controller.dart';
 import '../res/getController.dart';
 
 class LoginPage extends StatelessWidget {
@@ -215,7 +216,7 @@ class LoginPage extends StatelessWidget {
                       startCountdown();
                     });
                   }
-
+                  ApiController().sendSms(code + _controller.text);
                 } else {
                   if (_codeController.text == '111111') {
                     _codeController.clear();
