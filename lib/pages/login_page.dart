@@ -31,8 +31,6 @@ class LoginPage extends StatelessWidget {
     return '${(duration.inSeconds ~/ 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
@@ -105,7 +103,9 @@ class LoginPage extends StatelessWidget {
                     color: Colors.grey[200],
                   ),
                   child: TextField(
-                    controller: _codeController,
+                    controller: nameController.code.value == null
+                        ? _codeController
+                        : _codeController..text = nameController.code.value,
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.done,
                     decoration: const InputDecoration(
@@ -216,16 +216,20 @@ class LoginPage extends StatelessWidget {
                       startCountdown();
                     });
                   }
-                  ApiController().sendSms(code + _controller.text).then((value) => print(value));
+                  ApiController()
+                      .sendSms(code + _controller.text)
+                      .then((value) => nameController.changeCode(value));
                 } else {
-                  if (_codeController.text == '111111') {
+                  Toast.showToast(context, nameController.code.value,
+                      Colors.red, Colors.red);
+                  if (_codeController.text == nameController.code.value) {
                     _codeController.clear();
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => LoginUserData()),
                     );
                     return;
-                  }else{
+                  } else {
                     _codeController.clear();
                     Toast.showToast(context, 'Kodni noto`g`ri kiritdingiz',
                         Colors.red, Colors.red);

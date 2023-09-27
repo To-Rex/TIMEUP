@@ -8,6 +8,7 @@ class GetController extends GetxController {
   var onFinished = false.obs;
   var enters = 0.obs;
   var index = 0.obs;
+  var code = ''.obs;
 
   //bottombar index
   void changeIndex(int newIndex) {
@@ -24,6 +25,10 @@ class GetController extends GetxController {
 
   void changeOnFinished() {
     onFinished.value = !onFinished.value;
+  }
+
+  changeCode(String newCode) {
+    code.value = newCode;
   }
 
 }
