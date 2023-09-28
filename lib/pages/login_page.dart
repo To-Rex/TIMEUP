@@ -109,7 +109,7 @@ class LoginPage extends StatelessWidget {
                     color: Colors.grey[200],
                   ),
                   child: TextField(
-                    controller: nameController.code.value == null
+                    controller: nameController.code.value.isEmpty
                         ? _codeController
                         : _codeController..text = nameController.code.value,
                     keyboardType: TextInputType.phone,
