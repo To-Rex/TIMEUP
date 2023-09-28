@@ -237,8 +237,7 @@ class LoginPage extends StatelessWidget {
               ),
               onPressed: () {
                 if (_controller.text.isEmpty) {
-                  Toast.showToast(context, 'Telefon raqamni kiriting',
-                      Colors.red, Colors.red);
+                  Toast.showToast(context, 'Telefon raqamni kiriting', Colors.red, Colors.red);
                   return;
                 }
                 if (!nameController.onFinished.value) {
