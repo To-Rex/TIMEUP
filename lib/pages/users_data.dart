@@ -132,10 +132,9 @@ class LoginUserData extends StatelessWidget {
                       getController.image.value,
                     ).then((value) {
                       if(value.status == true){
-                        Toast.showToast(context, 'Muvaffaqiyatli ro`yxatdan o`tdingiz', Colors.green, Colors.white);
-                        Toast.showToast(context, '${value.res?.token}' , Colors.green, Colors.white);
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => SamplePage()));
                       }else{
-                        Toast.showToast(context, 'Xatolik', Colors.red, Colors.white);
+                        Toast.showToast(context, 'Exx Nimadur xato ketdi', Colors.red, Colors.white);
                       }
                     });
                   },
