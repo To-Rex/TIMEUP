@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:time_up/pages/sample_page.dart';
 import '../elements/text_filds.dart';
@@ -13,6 +14,8 @@ class LoginUserData extends StatelessWidget {
   //var caun =
   var countries = ['Uzbekistan', 'Russia', 'USA', 'China', 'Korea'];
   var dropdownValue = 'Uzbekistan';
+
+  File? imageFile;
 
   @override
   Widget build(BuildContext context) {
