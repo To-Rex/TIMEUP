@@ -133,6 +133,7 @@ class LoginUserData extends StatelessWidget {
                     ).then((value) {
                       if(value.status == true){
                         Navigator.push(context, MaterialPageRoute(builder: (context) => SamplePage()));
+                        Toast.showToast(context, '${value.res?.token}', Colors.green, Colors.white);
                       }else{
                         Toast.showToast(context, 'Exx Nimadur xato ketdi', Colors.red, Colors.white);
                       }
