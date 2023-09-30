@@ -30,26 +30,8 @@ class LoginUserData extends StatelessWidget {
   }
 
   Future<void> _cropImage(String imagePath) async {
-    final croppedImage = await ImageCropper.cropImage(
-      sourcePath: imagePath,
-      aspectRatioPresets: [CropAspectRatioPreset.square, CropAspectRatioPreset.ratio16x9, CropAspectRatioPreset.original],
-      androidUiSettings: AndroidUiSettings(
-        toolbarTitle: 'Crop Image',
-        toolbarColor: Colors.deepOrange,
-        toolbarWidgetColor: Colors.white,
-        initAspectRatio: CropAspectRatioPreset.original,
-        lockAspectRatio: false,
-      ),
-      iosUiSettings: IOSUiSettings(
-        title: 'Crop Image',
-      ),
-    );
-
-    if (croppedImage != null) {
-      setState(() {
-        _imageFile = croppedImage;
-      });
-    }
+    final croppedImage = await ImageCropper.platform
+        .cropImage(sourcePath: imagePath, aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),compressQuality: 100,compressFormat: ImageCompressFormat.jpg,);
   }
 
   @override
@@ -73,7 +55,7 @@ class LoginUserData extends StatelessWidget {
                 ),
                 SizedBox(height: h * 0.01),
                 IconButton(onPressed: (){
-                  _pickImage();
+                  _pickImage(ImageSource.gallery);
                 },
                     icon: Image.asset('assets/images/user.png'),
                 ),
