@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:time_up/pages/sample_page.dart';
 import '../elements/text_filds.dart';
 
@@ -15,7 +17,40 @@ class LoginUserData extends StatelessWidget {
   var countries = ['Uzbekistan', 'Russia', 'USA', 'China', 'Korea'];
   var dropdownValue = 'Uzbekistan';
 
-  File? imageFile;
+  File? _imageFile;
+
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedFile = await _picker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      _cropImage(pickedFile.path);
+    }
+  }
+
+  Future<void> _cropImage(String imagePath) async {
+    final croppedImage = await ImageCropper.cropImage(
+      sourcePath: imagePath,
+      aspectRatioPresets: [CropAspectRatioPreset.square, CropAspectRatioPreset.ratio16x9, CropAspectRatioPreset.original],
+      androidUiSettings: AndroidUiSettings(
+        toolbarTitle: 'Crop Image',
+        toolbarColor: Colors.deepOrange,
+        toolbarWidgetColor: Colors.white,
+        initAspectRatio: CropAspectRatioPreset.original,
+        lockAspectRatio: false,
+      ),
+      iosUiSettings: IOSUiSettings(
+        title: 'Crop Image',
+      ),
+    );
+
+    if (croppedImage != null) {
+      setState(() {
+        _imageFile = croppedImage;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +72,10 @@ class LoginUserData extends StatelessWidget {
                   'Ilovadan foydalanish uchun ma’lumotlarni toldiring',
                 ),
                 SizedBox(height: h * 0.01),
-                Container(
-                  height: h * 0.15,
-                  width: w * 0.3,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  //circular image radius 10
-                  child: Image.asset('assets/images/user.png'),
+                IconButton(onPressed: (){
+                  _pickImage();
+                },
+                    icon: Image.asset('assets/images/user.png'),
                 ),
                 Text(
                   'Upload image',
