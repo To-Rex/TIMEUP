@@ -98,7 +98,8 @@ class ApiController extends GetxController {
     String lastName,
     String userName,
     String phoneNumber,
-    String address, profilePhoto,
+    String address,
+      profilePhoto,
   ) async {
     var request = http.MultipartRequest('POST', Uri.parse(url + registerUrl));
     request.fields.addAll({
@@ -108,9 +109,10 @@ class ApiController extends GetxController {
       'phone_number': phoneNumber,
       'address': address
     });
-    request.files
-        .add(await http.MultipartFile.fromPath('profile_photo', profilePhoto));
+    request.files.add(await http.MultipartFile.fromPath('profile_photo', profilePhoto));
     http.StreamedResponse response = await request.send();
+    print(response.statusCode);
+    print(await response.stream.bytesToString());
     if (response.statusCode == 200) {
       return SendSms.fromJson(
           jsonDecode(await response.stream.bytesToString()));

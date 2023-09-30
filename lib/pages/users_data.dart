@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/pages/sample_page.dart';
 import '../elements/text_filds.dart';
 
@@ -115,11 +116,14 @@ class LoginUserData extends StatelessWidget {
                 SizedBox(height: h * 0.02),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SamplePage(),
-                      ),
+                    //ApiController().registerUser(firstName, lastName, userName, phoneNumber, address, profilePhoto)
+                    ApiController().registerUser(
+                      nameController.text,
+                      surnameController.text,
+                      nikNameController.text,
+                      phoneNumberController.text,
+                      dropdownValue,
+                      _imageFile,
                     );
                   },
                   style: ElevatedButton.styleFrom(
