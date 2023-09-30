@@ -266,28 +266,15 @@ class LoginPage extends StatelessWidget {
                     var phone = code + _controller.text;
                     var codes = _codeController.text;
                     ApiController().verifySms(phone, codes).then((value) => {
-                          if (value.status == true)
-                            {
+                          if (value.status == true){
                               _codeController.clear(),
-                              if (value.res?.token != null)
-                                {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SamplePage()),
-                                  ),
+                              if (value.res?.token != null){
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),),
                                 }
-                              else
-                                {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginUserData()),
-                                  ),
+                              else {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUserData()),),
                                 }
-                            }
-                          else
-                            {
+                            } else {
                               _codeController.clear(),
                               Toast.showToast(
                                   context,
