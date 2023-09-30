@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:time_up/api/api_controller.dart';
+import 'package:time_up/elements/functions.dart';
 import 'package:time_up/pages/sample_page.dart';
 import '../elements/text_filds.dart';
 import '../res/getController.dart';
@@ -129,7 +130,15 @@ class LoginUserData extends StatelessWidget {
                       phoneNumberController.text.toString(),
                       dropdownValue.toString(),
                       getController.image.value,
-                    );
+                    ).then((value) {
+                      if(value.status == true){
+                        //Toast.showToast(context, message, color, white)
+                        Toast.showToast(context, 'Muvaffaqiyatli ro`yxatdan o`tdingiz', Colors.green, Colors.white);
+                        Toast.showToast(context, '${value.res?.token}' , Colors.green, Colors.white);
+                      }else{
+                        Toast.showToast(context, 'Xatolik', Colors.red, Colors.white);
+                      }
+                    });
                   },
                   style: ElevatedButton.styleFrom(
                     shadowColor: Colors.transparent,

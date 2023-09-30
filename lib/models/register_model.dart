@@ -1,13 +1,13 @@
 class Register {
-  Res? res;
+  Responses? res;
   bool? status;
 
   Register({this.res, this.status});
 
   Register.fromJson(Map<String, dynamic> json) {
     res = json['res'] != null
-        ? Res.fromJson(json['res'])
-        : Res(
+        ? Responses.fromJson(json['res'])
+        : Responses(
             user: User(
                 id: 0,
                 fistName: '',
@@ -25,7 +25,7 @@ class Register {
     if (res != null) {
       data['res'] = res!.toJson();
     }else{
-      data['res'] = Res(
+      data['res'] = Responses(
           user: User(
               id: 0,
               fistName: '',
@@ -41,13 +41,13 @@ class Register {
   }
 }
 
-class Res {
+class Responses {
   User? user;
   String? token;
 
-  Res({this.user, this.token});
+  Responses({this.user, this.token});
 
-  Res.fromJson(Map<String, dynamic> json) {
+  Responses.fromJson(Map<String, dynamic> json) {
     user = json['user'] != null ? User.fromJson(json['user']) : User(
         id: 0,
         fistName: '',

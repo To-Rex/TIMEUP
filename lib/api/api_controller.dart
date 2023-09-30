@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:time_up/models/last_send_sms.dart';
+import 'package:time_up/models/register_model.dart';
 import '../models/verify_sms.dart';
 
 class ApiController extends GetxController {
@@ -74,7 +75,7 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<void> registerUser(
+  Future<Register> registerUser(
     String fistName,
     String lastName,
     userName,
@@ -90,19 +91,40 @@ class ApiController extends GetxController {
       'phone_number': phoneNumber,
       'address': address
     });
-    request.files.add(await http.MultipartFile.fromPath('profile_photo', profilePhoto));
+    request.files
+        .add(await http.MultipartFile.fromPath('profile_photo', profilePhoto));
     try {
       http.StreamedResponse response = await request.send();
       if (response.statusCode == 200) {
         final responseBody = await response.stream.bytesToString();
-        print(responseBody);
+        return Register.fromJson(jsonDecode(responseBody));
       } else {
-        print('Request failed with status: ${response.statusCode}');
-        final responseBody = await response.stream.bytesToString();
-        print('Response body: $responseBody');
+        return Register(
+            res: Responses(
+                user: User(
+                    id: 0,
+                    fistName: '',
+                    lastName: '',
+                    userName: '',
+                    phoneNumber: '',
+                    address: '',
+                    photoUrl: ''),
+                token: ''),
+            status: false);
       }
     } catch (e) {
-      print('Errorrrrrrrrrrrr: $e');
+      return Register(
+          res: Responses(
+              user: User(
+                  id: 0,
+                  fistName: '',
+                  lastName: '',
+                  userName: '',
+                  phoneNumber: '',
+                  address: '',
+                  photoUrl: ''),
+              token: ''),
+          status: false);
     }
   }
 }
