@@ -31,7 +31,7 @@ class LoginUserData extends StatelessWidget {
 
   Future<void> _cropImage(String imagePath) async {
     final croppedImage = await ImageCropper.platform
-        .cropImage(sourcePath: imagePath, aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),compressQuality: 100,compressFormat: ImageCompressFormat.jpg,);
+        .cropImage(sourcePath: imagePath, aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),compressQuality: 100,compressFormat: ImageCompressFormat.jpg,);
   }
 
   @override
