@@ -1,18 +1,15 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:time_up/models/last_send_sms.dart';
-
-import '../models/send_sms.dart';
 import '../models/verify_sms.dart';
 
 class ApiController extends GetxController {
   //{{host}}/api/v1/sms/send
   var url = 'http://16.16.182.36:443/api/v1/';
+
   //var url = 'http://timeup.jprq.live:80/api/v1/';
   //var url = 'https://timeup-production.up.railway.app/api/v1/';
   var smsUrl = 'sms/send';
@@ -77,54 +74,35 @@ class ApiController extends GetxController {
     }
   }
 
-  //var request = http.MultipartRequest('POST', Uri.parse('16.16.182.36:443/api/v1/auth/register'));
-// request.fields.addAll({
-//   'fist_name': 'Shaxzod',
-//   'last_name': 'Abdullayev',
-//   'user_name': 'username',
-//   'phone_number': '+988901234567',
-//   'address': 'Toshkent'
-// });
-// request.files.add(await http.MultipartFile.fromPath('profile_photo', '/home/abdullayev65/Downloads/go-smr.png'));
-//
-// http.StreamedResponse response = await request.send();
-//
-// if (response.statusCode == 200) {
-//   print(await response.stream.bytesToString());
-// }
-// else {
-//   print(response.reasonPhrase);
-// }
-
   Future<void> registerUser(
-      fist_name,
-      last_name,
-      user_name,
-      phone_number,
-      address,
-      profile_photo,
-      ) async {
-    print(fist_name+'\n'+last_name+'\n'+user_name+'\n'+phone_number+'\n'+address+'\n'+profile_photo);
+    String fistName,
+    String lastName,
+    userName,
+    phoneNumber,
+    address,
+    profilePhoto,
+  ) async {
     var request = http.MultipartRequest('POST', Uri.parse(url + registerUrl));
     request.fields.addAll({
-      'fist_name': 'Hoshimjon',
-      'last_name': 'Abdullayev',
-      'user_name': 'kajdadskjhajksdhkja',
-      'phone_number': '+998999999999',
+      'fist_name': fistName,
+      'last_name': lastName,
+      'user_name': userName,
+      'phone_number': phoneNumber,
       'address': address
     });
-    request.headers.addAll({
-      'Content-Type': 'multipart/form-data',
-      'Accept': 'application/json',
-    });
-    request.files.add(await http.MultipartFile.fromPath('profile_photo', profile_photo));
-    http.StreamedResponse response = await request.send();
-    print(response.statusCode);
-    print(await response.stream.bytesToString());
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-    } else {
-      print(response.reasonPhrase);
+    request.files.add(await http.MultipartFile.fromPath('profile_photo', profilePhoto));
+    try {
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        final responseBody = await response.stream.bytesToString();
+        print(responseBody);
+      } else {
+        print('Request failed with status: ${response.statusCode}');
+        final responseBody = await response.stream.bytesToString();
+        print('Response body: $responseBody');
+      }
+    } catch (e) {
+      print('Errorrrrrrrrrrrr: $e');
     }
   }
 }
