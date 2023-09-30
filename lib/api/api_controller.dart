@@ -12,8 +12,8 @@ import '../models/verify_sms.dart';
 
 class ApiController extends GetxController {
   //{{host}}/api/v1/sms/send
-  //var url = 'http://16.16.182.36:443/api/v1/';
-  var url = 'https://timeup-production.up.railway.app/api/v1/';
+  var url = 'http://16.16.182.36:443/api/v1/';
+  //var url = 'https://timeup-production.up.railway.app/api/v1/';
   var smsUrl = 'sms/send';
 
   //{{host}}/api/v1/sms/last-sent-sms
@@ -103,24 +103,23 @@ class ApiController extends GetxController {
       address,
       profile_photo,
       ) async {
-    print(profile_photo.path.toString());
-    var request = http.MultipartRequest(
-        'POST', Uri.parse('https://timeup-production.up.railway.app/api/v1/auth/register'));
+    print(profile_photo);
+    var request = http.MultipartRequest('POST', Uri.parse(url + registerUrl));
     request.fields.addAll({
-      'fist_name': 'Shaxzod',
-      'last_name': 'Abdullayev',
-      'user_name': 'username',
-      'phone_number': '+988901234567',
-      'address': 'Toshkent'
+      'fist_name': fist_name,
+      'last_name': last_name,
+      'user_name': user_name,
+      'phone_number': phone_number,
+      'address': address
     });
+    request.headers.addAll({'Content-Type': 'multipart/form-data',});
     request.files.add(await http.MultipartFile.fromPath('profile_photo', profile_photo));
     http.StreamedResponse response = await request.send();
-    //print response body
-    print(response.stream.bytesToString());
+    print(response.statusCode);
+    print(await response.stream.bytesToString());
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
-    }
-    else {
+    } else {
       print(response.reasonPhrase);
     }
   }

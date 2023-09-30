@@ -64,7 +64,7 @@ class LoginUserData extends StatelessWidget {
                   _pickImage(ImageSource.gallery);
                 },
                     /*icon: Image.asset('assets/images/user.png'),*/
-                  icon: Obx(() => getController.image.value == '' ? Image.asset('assets/images/user.png') : Image.file(File(getController.image.value))),
+                  icon: Obx(() => getController.image.value == '' ? Image.asset('assets/images/user.png') : CircleAvatar(backgroundImage: FileImage(File(getController.image.value)),radius: 50,),),
                 ),
                 Text(
                   'Upload image',
@@ -122,14 +122,13 @@ class LoginUserData extends StatelessWidget {
                 SizedBox(height: h * 0.02),
                 ElevatedButton(
                   onPressed: () {
-                    //ApiController().registerUser(firstName, lastName, userName, phoneNumber, address, profilePhoto)
                     ApiController().registerUser(
                       nameController.text,
                       surnameController.text,
                       nikNameController.text,
                       phoneNumberController.text,
                       dropdownValue,
-                      croppedImage.path,
+                      getController.image.value,
                     );
                   },
                   style: ElevatedButton.styleFrom(
