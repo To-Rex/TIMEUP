@@ -9,6 +9,7 @@ class GetController extends GetxController {
   var enters = 0.obs;
   var index = 0.obs;
   var code = ''.obs;
+  var image = ''.obs;
 
   //bottombar index
   void changeIndex(int newIndex) {
@@ -33,6 +34,10 @@ class GetController extends GetxController {
 
   changeCode(String newCode) {
     code.value = newCode;
+  }
+
+  changeImage(String newImage) {
+    image.value = newImage;
   }
 
 }

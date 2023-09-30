@@ -1,13 +1,18 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/pages/sample_page.dart';
 import '../elements/text_filds.dart';
+import '../res/getController.dart';
 
 class LoginUserData extends StatelessWidget {
   LoginUserData({super.key});
+
+  final GetController getController = Get.put(GetController());
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController surnameController = TextEditingController();
@@ -18,9 +23,8 @@ class LoginUserData extends StatelessWidget {
   var countries = ['Uzbekistan', 'Russia', 'USA', 'China', 'Korea'];
   var dropdownValue = 'Uzbekistan';
 
-  File? _imageFile;
-
   final ImagePicker _picker = ImagePicker();
+  var croppedImage;
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
@@ -31,8 +35,9 @@ class LoginUserData extends StatelessWidget {
   }
 
   Future<void> _cropImage(String imagePath) async {
-    final croppedImage = await ImageCropper.platform
+    croppedImage = await ImageCropper.platform
         .cropImage(sourcePath: imagePath, aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),compressQuality: 100,compressFormat: ImageCompressFormat.jpg,);
+    getController.changeImage(croppedImage.path);
   }
 
   @override
@@ -58,7 +63,8 @@ class LoginUserData extends StatelessWidget {
                 IconButton(onPressed: (){
                   _pickImage(ImageSource.gallery);
                 },
-                    icon: Image.asset('assets/images/user.png'),
+                    /*icon: Image.asset('assets/images/user.png'),*/
+                  icon: Obx(() => getController.image.value == '' ? Image.asset('assets/images/user.png') : Image.file(File(getController.image.value))),
                 ),
                 Text(
                   'Upload image',
@@ -123,7 +129,7 @@ class LoginUserData extends StatelessWidget {
                       nikNameController.text,
                       phoneNumberController.text,
                       dropdownValue,
-                      _imageFile,
+                      croppedImage.path,
                     );
                   },
                   style: ElevatedButton.styleFrom(

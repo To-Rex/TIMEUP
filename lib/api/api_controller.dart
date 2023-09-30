@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:time_up/models/last_send_sms.dart';
 
 import '../models/send_sms.dart';
@@ -93,31 +95,33 @@ class ApiController extends GetxController {
 //   print(response.reasonPhrase);
 // }
 
-  Future<SendSms> registerUser(
-    String firstName,
-    String lastName,
-    String userName,
-    String phoneNumber,
-    String address,
-      profilePhoto,
-  ) async {
-    var request = http.MultipartRequest('POST', Uri.parse(url + registerUrl));
+  Future<void> registerUser(
+      fist_name,
+      last_name,
+      user_name,
+      phone_number,
+      address,
+      profile_photo,
+      ) async {
+    print(profile_photo.path.toString());
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('https://timeup-production.up.railway.app/api/v1/auth/register'));
     request.fields.addAll({
-      'fist_name': firstName,
-      'last_name': lastName,
-      'user_name': userName,
-      'phone_number': phoneNumber,
-      'address': address
+      'fist_name': 'Shaxzod',
+      'last_name': 'Abdullayev',
+      'user_name': 'username',
+      'phone_number': '+988901234567',
+      'address': 'Toshkent'
     });
-    request.files.add(await http.MultipartFile.fromPath('profile_photo', profilePhoto));
+    request.files.add(await http.MultipartFile.fromPath('profile_photo', profile_photo));
     http.StreamedResponse response = await request.send();
-    print(response.statusCode);
-    print(await response.stream.bytesToString());
+    //print response body
+    print(response.stream.bytesToString());
     if (response.statusCode == 200) {
-      return SendSms.fromJson(
-          jsonDecode(await response.stream.bytesToString()));
-    } else {
-      return SendSms(res: '', status: false);
+      print(await response.stream.bytesToString());
+    }
+    else {
+      print(response.reasonPhrase);
     }
   }
 }
