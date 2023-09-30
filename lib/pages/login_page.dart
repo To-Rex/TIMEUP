@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:time_up/elements/functions.dart';
+import 'package:time_up/pages/sample_page.dart';
 import 'package:time_up/pages/users_data.dart';
 import 'package:timer_count_down/timer_controller.dart';
 import 'package:timer_count_down/timer_count_down.dart';
@@ -111,7 +112,8 @@ class LoginPage extends StatelessWidget {
                   child: TextField(
                     controller: nameController.code.value.isEmpty
                         ? _codeController
-                        : _codeController..text = nameController.code.value,
+                        : _codeController
+                      ..text = nameController.code.value,
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.done,
                     onChanged: (value) {
@@ -121,14 +123,18 @@ class LoginPage extends StatelessWidget {
                         ApiController()
                             .verifySms(phone, codes)
                             .then((value) => {
-                                  if (value.status == true){
+                                  if (value.status == true)
+                                    {
                                       _codeController.clear(),
                                       Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => LoginUserData()),
+                                            builder: (context) =>
+                                                LoginUserData()),
                                       ),
-                                    } else {
+                                    }
+                                  else
+                                    {
                                       _codeController.clear(),
                                       Toast.showToast(
                                           context,
@@ -210,8 +216,10 @@ class LoginPage extends StatelessWidget {
                                       Timer(const Duration(seconds: 1), () {
                                         startCountdown();
                                       });
-                                      ApiController().sendSms(code + _controller.text)
-                                          .then((value) => nameController.changeCode(value));
+                                      ApiController()
+                                          .sendSms(code + _controller.text)
+                                          .then((value) =>
+                                              nameController.changeCode(value));
                                     },
                                     child: const Text('Kod yet kelmadimi?'),
                                   ),
@@ -237,7 +245,8 @@ class LoginPage extends StatelessWidget {
               ),
               onPressed: () {
                 if (_controller.text.isEmpty) {
-                  Toast.showToast(context, 'Telefon raqamni kiriting', Colors.red, Colors.red);
+                  Toast.showToast(context, 'Telefon raqamni kiriting',
+                      Colors.red, Colors.red);
                   return;
                 }
                 if (!nameController.onFinished.value) {
@@ -249,27 +258,49 @@ class LoginPage extends StatelessWidget {
                       startCountdown();
                     });
                   }
-                  ApiController().sendSms(code + _controller.text)
+                  ApiController()
+                      .sendSms(code + _controller.text)
                       .then((value) => nameController.changeCode(value));
                 } else {
                   if (_codeController.text == nameController.code.value) {
                     var phone = code + _controller.text;
                     var codes = _codeController.text;
-                    ApiController()
-                        .verifySms(phone, codes)
-                        .then((value) => {
-                              if (value.status == true){
-                                  _codeController.clear(),
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUserData()),),
-                                } else {
-                                  _codeController.clear(),
-                                  Toast.showToast(context, 'Kodni noto`g`ri kiritdingiz', Colors.red, Colors.red),
+                    ApiController().verifySms(phone, codes).then((value) => {
+                          if (value.status == true)
+                            {
+                              _codeController.clear(),
+                              if (value.res?.token != null)
+                                {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SamplePage()),
+                                  ),
                                 }
-                            });
+                              else
+                                {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginUserData()),
+                                  ),
+                                }
+                            }
+                          else
+                            {
+                              _codeController.clear(),
+                              Toast.showToast(
+                                  context,
+                                  'Kodni noto`g`ri kiritdingiz',
+                                  Colors.red,
+                                  Colors.red),
+                            }
+                        });
                     return;
                   } else {
                     _codeController.clear();
-                    Toast.showToast(context, 'Kodni noto`g`ri kiritdingiz', Colors.red, Colors.red);
+                    Toast.showToast(context, 'Kodni noto`g`ri kiritdingiz',
+                        Colors.red, Colors.red);
                   }
                 }
               },

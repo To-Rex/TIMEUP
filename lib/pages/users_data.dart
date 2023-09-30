@@ -132,7 +132,6 @@ class LoginUserData extends StatelessWidget {
                       getController.image.value,
                     ).then((value) {
                       if(value.status == true){
-                        //Toast.showToast(context, message, color, white)
                         Toast.showToast(context, 'Muvaffaqiyatli ro`yxatdan o`tdingiz', Colors.green, Colors.white);
                         Toast.showToast(context, '${value.res?.token}' , Colors.green, Colors.white);
                       }else{
