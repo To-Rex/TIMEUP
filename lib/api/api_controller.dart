@@ -13,6 +13,7 @@ import '../models/verify_sms.dart';
 class ApiController extends GetxController {
   //{{host}}/api/v1/sms/send
   var url = 'http://16.16.182.36:443/api/v1/';
+  //var url = 'http://timeup.jprq.live:80/api/v1/';
   //var url = 'https://timeup-production.up.railway.app/api/v1/';
   var smsUrl = 'sms/send';
 
@@ -103,16 +104,19 @@ class ApiController extends GetxController {
       address,
       profile_photo,
       ) async {
-    print(profile_photo);
+    print(fist_name+'\n'+last_name+'\n'+user_name+'\n'+phone_number+'\n'+address+'\n'+profile_photo);
     var request = http.MultipartRequest('POST', Uri.parse(url + registerUrl));
     request.fields.addAll({
-      'fist_name': fist_name,
-      'last_name': last_name,
-      'user_name': user_name,
-      'phone_number': phone_number,
+      'fist_name': 'Hoshimjon',
+      'last_name': 'Abdullayev',
+      'user_name': 'kajdadskjhajksdhkja',
+      'phone_number': '+998999999999',
       'address': address
     });
-    request.headers.addAll({'Content-Type': 'multipart/form-data',});
+    request.headers.addAll({
+      'Content-Type': 'multipart/form-data',
+      'Accept': 'application/json',
+    });
     request.files.add(await http.MultipartFile.fromPath('profile_photo', profile_photo));
     http.StreamedResponse response = await request.send();
     print(response.statusCode);

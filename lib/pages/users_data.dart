@@ -122,14 +122,17 @@ class LoginUserData extends StatelessWidget {
                 SizedBox(height: h * 0.02),
                 ElevatedButton(
                   onPressed: () {
-                    ApiController().registerUser(
-                      nameController.text,
-                      surnameController.text,
-                      nikNameController.text,
-                      phoneNumberController.text,
-                      dropdownValue,
+                    /*ApiController().registerUser(
+                      nameController.text.toString(),
+                      surnameController.text.toString(),
+                      nikNameController.text.toString(),
+                      phoneNumberController.text.toString(),
+                      dropdownValue.toString(),
                       getController.image.value,
-                    );
+                    );*/
+                    print('name: ${nameController.text.toString()}');
+                    print('surname: ${surnameController.text.toString()}');
+                    print('nikname: ${nikNameController.text.toString()}');
                   },
                   style: ElevatedButton.styleFrom(
                     shadowColor: Colors.transparent,

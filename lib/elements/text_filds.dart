@@ -21,6 +21,7 @@ class TextFildWidget extends StatelessWidget {
         color: Colors.grey[200],
       ),
       child: TextField(
+        controller: controller,
         keyboardType: TextInputType.name,
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
