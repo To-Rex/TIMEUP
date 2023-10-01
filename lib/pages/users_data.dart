@@ -19,7 +19,6 @@ class LoginUserData extends StatelessWidget {
   final TextEditingController nikNameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
 
-  //var caun =
   var countries = ['Uzbekistan', 'Russia', 'USA', 'China', 'Korea'];
   var dropdownValue = 'Uzbekistan';
 
