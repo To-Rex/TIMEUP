@@ -269,13 +269,9 @@ class LoginPage extends StatelessWidget {
                           if (value.status == true)
                             {
                               _codeController.clear(),
-                              print('shuhsushushushsuhsu   ${value.res!.token}'),
-                              if (value.res!.token!.isNotEmpty){
-                                  Toast.showToast(
-                                      context,
-                                      '${value.res?.token}',
-                                      Colors.green,
-                                      Colors.white),
+                              print('======= ${value.res!.token} ======='),
+                              if (value.res!.token != ''){
+                                  Toast.showToast(context, '${value.res?.token}', Colors.green, Colors.white),
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(

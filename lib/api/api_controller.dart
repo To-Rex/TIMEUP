@@ -71,7 +71,7 @@ class ApiController extends GetxController {
     if (response.statusCode == 200) {
       return verifySms;
     } else {
-      return VerifySms(res: Resurs(register: false, token: ''), status: false);
+      return VerifySms(res: Resurse(register: false, token: ''), status: false);
     }
   }
 
