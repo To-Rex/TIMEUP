@@ -269,8 +269,8 @@ class LoginPage extends StatelessWidget {
                           if (value.status == true)
                             {
                               _codeController.clear(),
-                              if (value.res!.token!.isNotEmpty)
-                                {
+                              print('shuhsushushushsuhsu   ${value.res!.token}'),
+                              if (value.res!.token!.isNotEmpty){
                                   Toast.showToast(
                                       context,
                                       '${value.res?.token}',

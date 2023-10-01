@@ -37,8 +37,8 @@ class Resurs {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['Register'] = register;
-    data['Token'] = token;
+    data['Register'] = register ?? false;
+    data['Token'] = token ?? '';
     return data;
   }
 
