@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:time_up/api/api_controller.dart';
 
+import '../pages/login_page.dart';
 import '../res/getController.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -28,7 +30,8 @@ class ProfilePage extends StatelessWidget {
             height: h * 0.02,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: w * 0.05,
@@ -41,13 +44,35 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               const Expanded(child: SizedBox()),
+              Container(
+                margin: const EdgeInsets.only(right: 10),
+                child: TextButton(
+                  onPressed: () {
+                    GetStorage().remove('token');
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'Log out',
+                    style: TextStyle(
+                      fontSize: w * 0.04,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
           Container(
             width: w * 0.9,
             margin: const EdgeInsets.only(top: 15),
-            child: const Text('Sobit Boymirzayev',
-                style: TextStyle(
+            child: Text('${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res?.lastName}',
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: Colors.black,
@@ -58,213 +83,74 @@ class ProfilePage extends StatelessWidget {
             margin: const EdgeInsets.only(top: 5),
             child: Row(
               children: [
-                const Text('Urolog',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey,
-                    )),
-                SizedBox(
-                  width: w * 0.02,
-                ),
-                const Text(
-                  '8 yillik ish tajribasi',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: w * 0.9,
-            margin: const EdgeInsets.only(top: 5),
-            child: Row(
-              children: [
                 const Icon(
                   Icons.phone,
-                  size: 15,
                   color: Colors.blue,
+                  size: 20,
                 ),
                 SizedBox(
-                  width: w * 0.02,
+                  width: w * 0.01,
                 ),
-                const Text(
-                  '+998 99 999 99 99',
+                Text(
+                  '${getController.meUsers.value.res?.phoneNumber}',
                   style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
+                    fontSize: w * 0.04,
+                    fontWeight: FontWeight.w400,
                     color: Colors.black,
                   ),
                 ),
               ],
             ),
           ),
+          SizedBox(
+            height: h * 0.02,
+          ),
+          //Make business profile button
           Container(
             width: w * 0.9,
+            height: h * 0.06,
             margin: const EdgeInsets.only(top: 5),
-            child: Row(
-              children: [
-                //location
-                const Icon(
-                  Icons.location_on,
-                  size: 15,
-                  color: Colors.blue,
-                ),
-                SizedBox(
-                  width: w * 0.02,
-                ),
-                const Text(
-                  'Кибрайский район Qibray tumaniУзбекистан',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: w * 0.9,
-            margin: const EdgeInsets.only(top: 5),
-            child: Row(
-              children: [
-                //location
-                const Icon(
-                  Icons.work,
-                  size: 15,
-                  color: Colors.blue,
-                ),
-                SizedBox(
-                  width: w * 0.02,
-                ),
-                const Text(
-                  'Toshkent shahar 5 bolalar shifoxonasi',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: w * 0.9,
-            margin: const EdgeInsets.only(top: 5),
-            child: Row(
-              children: [
-                //location
-                const Icon(
-                  Icons.access_time_outlined,
-                  size: 15,
-                  color: Colors.blue,
-                ),
-                SizedBox(
-                  width: w * 0.02,
-                ),
-                const Text(
-                  'Shanba, Yakshanba',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: w * 0.9,
-            height: h * 0.045,
-            padding: EdgeInsets.only(
-              left: w * 0.05,
-            ),
-            margin: EdgeInsets.only(right: w * 0.6, top: h * 0.02),
             child: ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(3),
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: const Text('Edit profile',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                  )),
-            ),
-          ),
-          Container(
-            width: w,
-            margin: EdgeInsets.only(top: h * 0.05),
-            color: Colors.grey[200],
-            //Biografiya and Ish jadvali TabBar
-            child: Row(
-              children: [
-                Container(
-                  width: w * 0.5,
-                  color: Colors.blue,
-                  child: TextButton(
-                    onPressed: () {
-
-                    },
-                    child: const Text(
-                      'Biografiya',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
+              child: Text(
+                'Make business profile',
+                style: TextStyle(
+                  fontSize: w * 0.04,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
                 ),
-                SizedBox(
-                  width: w * 0.5,
-                  child: TextButton(
-                    onPressed: () {
-
-                    },
-                    child: const Text(
-                      'Ish jadvali',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-
-              ],
-            ),
-          ),
-          Container(
-            width: w,
-            height: h * 0.25,
-            padding: EdgeInsets.only(
-              left: w * 0.02,
-              right: w * 0.02,
-            ),
-            margin: EdgeInsets.only(top: h * 0.02, left: w * 0.02, right: w * 0.02),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(
-                color: Colors.grey,
               ),
             ),
-            child: const Text(
-              textAlign: TextAlign.start,
-              'САЛОМ МЕН ДОКТОР ИСЧАНОВ НОДИРБЕК ИСЧАНOВИЧ, МИЛЛАТИМ ЎЗБЕК, ЎЗБЕКИСТОН ФУҚАРОСИМАН, МАЪЛУМОТИМ ОЛИЙ, ТИББИЙ МУТАХАССИСЛИКЛАРИМ 10 ГА ЯҚИН. ОИЛАЛИМАН, ШИФОКОРЛАР ОИЛАСИДА ТУҒИЛГАНМАН.',
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w400,
-                color: Colors.black,
+          ),
+          SizedBox(
+            height: h * 0.01,
+          ),
+          //Edit profile button
+          Container(
+            width: w * 0.9,
+            height: h * 0.06,
+            margin: const EdgeInsets.only(top: 5),
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: Text(
+                'Edit profile',
+                style: TextStyle(
+                  fontSize: w * 0.04,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
