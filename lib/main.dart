@@ -1,12 +1,18 @@
 import 'dart:async';
-
+import 'package:get_storage/get_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:time_up/pages/login_page.dart';
+import 'package:time_up/pages/sample_page.dart';
 import 'package:time_up/pages/splash_screen.dart';
 
-void main() {
+main() async {
+  await GetStorage.init();
   runApp(const MyApp());
 }
+
+/*void main() {
+  runApp(const MyApp());
+}*/
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -28,22 +34,40 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+
   final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-
 class _MyHomePageState extends State<MyHomePage> {
+  //get token from storage
+  final box = GetStorage();
+  String? token = '';
+
+  //function for get token
+  getToken() async {
+    token = box.read('token');
+  }
 
   @override
   void initState() {
+    getToken();
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-      );
+      if (token != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => SamplePage()),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      }
+
+      //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()),);
     });
     super.initState();
   }

@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:time_up/api/api_controller.dart';
 
+import '../res/getController.dart';
+
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  ProfilePage({Key? key}) : super(key: key);
+
+
+  final GetController getController = Get.put(GetController());
+
+  getUsers() async {
+    getController.changeMeUser(await ApiController().getUserData());
+  }
 
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    ApiController().getUserData();
-    return SizedBox(
+    getUsers();
+    return Obx(() => getController.meUsers.value.status.obs.value == true
+        ? SizedBox(
       width: w,
       child: Column(
         children: [
@@ -259,6 +270,11 @@ class ProfilePage extends StatelessWidget {
           ),
         ],
       ),
-    );
+    )
+        : const Center(
+      child: CircularProgressIndicator(
+        color: Colors.blue,
+      ),
+    ));
   }
 }

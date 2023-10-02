@@ -1,5 +1,8 @@
 
 import 'package:get/get.dart';
+import 'package:time_up/models/me_user.dart';
+
+import '../api/api_controller.dart';
 
 
 class GetController extends GetxController {
@@ -10,6 +13,9 @@ class GetController extends GetxController {
   var index = 0.obs;
   var code = ''.obs;
   var image = ''.obs;
+
+  //var users = ApiController().getUserData();
+  var meUsers = MeUser().obs;
 
   //bottombar index
   void changeIndex(int newIndex) {
@@ -38,6 +44,10 @@ class GetController extends GetxController {
 
   changeImage(String newImage) {
     image.value = newImage;
+  }
+
+  void changeMeUser(MeUser newMeUser) {
+    meUsers.value = newMeUser;
   }
 
 }
