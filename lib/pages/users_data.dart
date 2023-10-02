@@ -60,7 +60,6 @@ class LoginUserData extends StatelessWidget {
                 IconButton(onPressed: (){
                   _pickImage(ImageSource.gallery);
                 },
-                    /*icon: Image.asset('assets/images/user.png'),*/
                   icon: Obx(() => getController.image.value == '' ? Image.asset('assets/images/user.png') : CircleAvatar(backgroundImage: FileImage(File(getController.image.value)),radius: 50,),),
                 ),
                 Text(
