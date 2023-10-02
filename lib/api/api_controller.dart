@@ -24,6 +24,9 @@ class ApiController extends GetxController {
   //{{host}}/api/v1/auth/register
   var registerUrl = 'auth/register';
 
+  //{{host}}/api/v1/user/me
+  var meUrl = 'user/me';
+
   //showToast error
   void showToastError(String message) {
     Get.snackbar(
@@ -127,4 +130,9 @@ class ApiController extends GetxController {
           status: false);
     }
   }
+
+  //get user info
+
+
+
 }
