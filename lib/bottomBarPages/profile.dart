@@ -131,7 +131,6 @@ class ProfilePage extends StatelessWidget {
           SizedBox(
             height: h * 0.01,
           ),
-          //Edit profile button
           Container(
             width: w * 0.9,
             height: h * 0.06,
