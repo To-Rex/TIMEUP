@@ -52,12 +52,10 @@ class LoginUserData extends StatelessWidget {
             width: w,
             child: Column(
               children: [
-                SizedBox(height: h * 0.1),
-                const Image(image: AssetImage('assets/images/logo.png')),
+                SizedBox(height: h * 0.08),
+                const Image(image: AssetImage('assets/images/text.png')),
                 SizedBox(height: h * 0.01),
-                const Text(
-                  'Ilovadan foydalanish uchun ma’lumotlarni toldiring',
-                ),
+                const Text('Ilovadan foydalanish uchun ma’lumotlarni toldiring',),
                 SizedBox(height: h * 0.01),
                 IconButton(onPressed: (){
                   _pickImage(ImageSource.gallery);

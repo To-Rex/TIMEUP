@@ -155,8 +155,7 @@ class ProfilePage extends StatelessWidget {
           ),
         ],
       ),
-    )
-        : const Center(
+    ) : const Center(
       child: CircularProgressIndicator(
         color: Colors.blue,
       ),
