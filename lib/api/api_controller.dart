@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:time_up/models/last_send_sms.dart';
 import 'package:time_up/models/register_model.dart';
 import '../models/verify_sms.dart';
+import '../models/me_user.dart';
 
 class ApiController extends GetxController {
   //{{host}}/api/v1/sms/send
@@ -132,7 +133,25 @@ class ApiController extends GetxController {
   }
 
   //get user info
-
-
-
+  Future<MeUser> getUserData() async {
+    var response = await http.get(Uri(path: url + meUrl), headers: {
+      //bearer token
+      'Authorization':
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEwMzM2MjYxMzE2LCJpYXQiOjE2OTYyNjEzMTYsInN1YiI6IjM5In0.maTMhE_GbdnvmyW-gQuag3N_j6lpnTetP3AEL_EoY-g'
+    });
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return MeUser.fromJson(jsonDecode(response.body));
+    } else {
+      return MeUser(
+          res: MeRes(
+            fistName: '',
+            lastName: '',
+            userName: '',
+            phoneNumber: '',
+            address: '',
+            photoUrl: '',
+          ),
+          status: false);
+    }
+  }
 }

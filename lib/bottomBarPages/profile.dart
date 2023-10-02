@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_up/api/api_controller.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -7,6 +8,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
+    ApiController().getUserData();
     return SizedBox(
       width: w,
       child: Column(
