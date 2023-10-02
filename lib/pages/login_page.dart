@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:get_storage/get_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -271,16 +271,9 @@ class LoginPage extends StatelessWidget {
                               _codeController.clear(),
                               if (value.res!.token != '')
                                 {
-                                  Toast.showToast(
-                                      context,
-                                      '${value.res?.token}',
-                                      Colors.green,
-                                      Colors.white),
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SamplePage()),
-                                  ),
+                                  Toast.showToast(context, '${value.res?.token}', Colors.green, Colors.white),
+                                  GetStorage().write('token', value.res?.token),
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),),
                                 }
                               else
                                 {
