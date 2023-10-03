@@ -24,11 +24,11 @@ class ProfilePage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     getController.clearMeUser();
     getUsers();
-    print(getController.meUsers.value.res?.photoUrl?.substring(33));
+
     return Obx(() => getController.meUsers.value.status.obs.value == true
         ? SizedBox(
       width: w,
-      child: Obx(() => getController.enters.value == 0
+      child: Obx(() => getController.entersUser.value == 0
         ? Column(
         children: [
           SizedBox(
@@ -128,11 +128,14 @@ class ProfilePage extends StatelessWidget {
           EditButton(
             text: 'Edit profile',
             onPressed: () {
-              getController.enters.value = 1;
+              getController.entersUser.value = 1;
             },
           ),
         ],
-      ) :EditUserPage()
+      )
+      : getController.entersUser.value == 1
+          ? EditUserPage()
+          :EditUserPage(),
       ),
 
     ) : const Center(

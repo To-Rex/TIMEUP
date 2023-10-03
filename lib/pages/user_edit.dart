@@ -17,6 +17,10 @@ class EditUserPage extends StatelessWidget {
   final TextEditingController nikNameController = TextEditingController();
   final TextEditingController adressController = TextEditingController();
 
+  getUsers() async {
+    getController.changeMeUser(await ApiController().getUserData(GetStorage().read('token')));
+  }
+
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
@@ -86,7 +90,7 @@ class EditUserPage extends StatelessWidget {
               ).then((value) {
                 if (value.status == true){
                   getController.entersUser.value = 0;
-                  print('success');
+                  getUsers();
                 }else{
                   print('error');
                 }
