@@ -5,6 +5,7 @@ import 'package:time_up/api/api_controller.dart';
 
 import '../elements/btn_users.dart';
 import '../pages/login_page.dart';
+import '../pages/user_edit.dart';
 import '../res/getController.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -123,7 +124,7 @@ class ProfilePage extends StatelessWidget {
           EditButton(
             text: 'Edit profile',
             onPressed: () {
-
+              Navigator.push(context, MaterialPageRoute(builder: (context) => EditUserPage()));
             },
           ),
         ],
