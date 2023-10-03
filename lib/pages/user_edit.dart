@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../api/api_controller.dart';
+import '../res/getController.dart';
 
 class EditUserPage extends StatelessWidget {
-  const EditUserPage({Key? key}) : super(key: key);
+  EditUserPage({Key? key}) : super(key: key);
+
+  final GetController getController = Get.put(GetController());
 
   @override
   Widget build(BuildContext context) {
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Column(
         children: [
-          //{{host}}/api/v1/media/profilephoto/image_cropper_1696326992390-1696326997.jpg
-          //networkImage('https://picsum.photos/250?image=9'),
-          Image(image: NetworkImage('http://16.16.182.36:443/api/v1/media/profilephoto/image_cropper_1696326992390-1696326997.jpg'),),
+          CircleAvatar(
+            radius: w * 0.12,
+            foregroundColor: Colors.blue,
+            backgroundImage: NetworkImage(
+                '${ApiController().url}${ getController.meUsers.value.res?.photoUrl?.substring(33)}'),
+          ),
         ],
       )
     );
