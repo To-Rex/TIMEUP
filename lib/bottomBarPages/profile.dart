@@ -15,7 +15,7 @@ class ProfilePage extends StatelessWidget {
   final GetController getController = Get.put(GetController());
 
   getUsers() async {
-    getController.changeMeUser(await ApiController().getUserData());
+    getController.changeMeUser(await ApiController().getUserData(GetStorage().read('token')));
   }
 
   @override

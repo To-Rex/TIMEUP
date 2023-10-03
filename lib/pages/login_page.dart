@@ -123,26 +123,39 @@ class LoginPage extends StatelessWidget {
                         ApiController()
                             .verifySms(phone, codes)
                             .then((value) => {
-                                  if (value.status == true)
-                                    {
-                                      _codeController.clear(),
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                LoginUserData()),
-                                      ),
-                                    }
-                                  else
-                                    {
-                                      _codeController.clear(),
-                                      Toast.showToast(
-                                          context,
-                                          'Kodni noto`g`ri kiritdingiz',
-                                          Colors.red,
-                                          Colors.red),
-                                    }
-                                });
+                          if (value.status == true)
+                            {
+                              _codeController.clear(),
+                              if (value.res!.token != '')
+                                {
+                                  Toast.showToast(context, '${value.res?.token}', Colors.green, Colors.white),
+                                  //delete token
+                                  GetStorage().remove('token'),
+                                  GetStorage().write('token', value.res?.token),
+                                  //clear verificated code
+                                  nameController.code.value = '',
+                                  _codeController.clear(),
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),),
+                                }
+                              else
+                                {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginUserData()),
+                                  ),
+                                }
+                            }
+                          else
+                            {
+                              _codeController.clear(),
+                              Toast.showToast(
+                                  context,
+                                  'Kodni noto`g`ri kiritdingiz',
+                                  Colors.red,
+                                  Colors.red),
+                            }
+                        });
                       }
                     },
                     decoration: const InputDecoration(
@@ -272,6 +285,8 @@ class LoginPage extends StatelessWidget {
                               if (value.res!.token != '')
                                 {
                                   Toast.showToast(context, '${value.res?.token}', Colors.green, Colors.white),
+                                  //delete token
+                                  GetStorage().remove('token'),
                                   GetStorage().write('token', value.res?.token),
                                   //clear verificated code
                                   nameController.code.value = '',

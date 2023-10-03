@@ -124,11 +124,11 @@ class ApiController extends GetxController {
   }
 
   //get user info
-  Future<MeUser> getUserData() async {
+  Future<MeUser> getUserData(token) async {
     var response = await http.get(Uri.parse(url + meUrl),
         headers: {
           'Authorization':
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEwMzM2MjYxMzE2LCJpYXQiOjE2OTYyNjEzMTYsInN1YiI6IjM5In0.maTMhE_GbdnvmyW-gQuag3N_j6lpnTetP3AEL_EoY-g'
+              'Bearer $token',
         });
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {

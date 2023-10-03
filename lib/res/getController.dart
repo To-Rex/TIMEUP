@@ -1,12 +1,8 @@
-
 import 'package:get/get.dart';
 import 'package:time_up/models/me_user.dart';
 
-import '../api/api_controller.dart';
-
-
 class GetController extends GetxController {
-  var fullName = 'Dilshodjon Abdurahmonov'.obs;
+  var fullName = 'Dilshodjon Haydarov'.obs;
   var sendCode = false.obs;
   var onFinished = false.obs;
   var enters = 0.obs;
@@ -17,7 +13,6 @@ class GetController extends GetxController {
   //var users = ApiController().getUserData();
   var meUsers = MeUser().obs;
 
-  //bottombar index
   void changeIndex(int newIndex) {
     index.value = newIndex;
   }
@@ -50,7 +45,6 @@ class GetController extends GetxController {
     meUsers.value = newMeUser;
   }
 
-  //clear MeUser
   void clearMeUser() {
     meUsers.value = MeUser();
   }
