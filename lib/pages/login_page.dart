@@ -273,6 +273,9 @@ class LoginPage extends StatelessWidget {
                                 {
                                   Toast.showToast(context, '${value.res?.token}', Colors.green, Colors.white),
                                   GetStorage().write('token', value.res?.token),
+                                  //clear verificated code
+                                  nameController.code.value = '',
+                                  _codeController.clear(),
                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),),
                                 }
                               else
