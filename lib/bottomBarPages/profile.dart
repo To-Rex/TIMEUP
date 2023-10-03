@@ -127,7 +127,7 @@ class ProfilePage extends StatelessWidget {
           EditButton(
             text: 'Edit profile',
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => EditUserPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const EditUserPage()));
             },
           ),
         ],
