@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:time_up/api/api_controller.dart';
 
+import '../elements/btn_users.dart';
 import '../pages/login_page.dart';
 import '../res/getController.dart';
 
@@ -27,15 +28,23 @@ class ProfilePage extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: h * 0.02,
+            height: h * 0.01,
+          ),
+          Text(
+            'Doctor_sobit',
+            style: TextStyle(
+              fontSize: w * 0.04,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(
+            height: h * 0.01,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                width: w * 0.05,
-              ),
+              SizedBox(width: w * 0.05),
               CircleAvatar(
                 radius: w * 0.12,
                 foregroundColor: Colors.blue,
@@ -106,52 +115,18 @@ class ProfilePage extends StatelessWidget {
             height: h * 0.02,
           ),
           //Make business profile button
-          Container(
-            width: w * 0.9,
-            height: h * 0.06,
-            margin: const EdgeInsets.only(top: 5),
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: Text(
-                'Make business profile',
-                style: TextStyle(
-                  fontSize: w * 0.04,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
-                ),
-              ),
-            ),
+          EditButton(
+            text: 'Make business profile',
+            onPressed: () {},
           ),
           SizedBox(
             height: h * 0.01,
           ),
-          Container(
-            width: w * 0.9,
-            height: h * 0.06,
-            margin: const EdgeInsets.only(top: 5),
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: Text(
-                'Edit profile',
-                style: TextStyle(
-                  fontSize: w * 0.04,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
-                ),
-              ),
-            ),
+          EditButton(
+            text: 'Edit profile',
+            onPressed: () {
+
+            },
           ),
         ],
       ),
