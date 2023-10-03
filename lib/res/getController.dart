@@ -50,4 +50,10 @@ class GetController extends GetxController {
     meUsers.value = newMeUser;
   }
 
+  //clear MeUser
+  void clearMeUser() {
+    meUsers.value = MeUser();
+  }
+
+
 }

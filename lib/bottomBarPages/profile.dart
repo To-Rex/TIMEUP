@@ -22,7 +22,9 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
+    getController.clearMeUser();
     getUsers();
+    print(getController.meUsers.value.res?.photoUrl?.substring(33));
     return Obx(() => getController.meUsers.value.status.obs.value == true
         ? SizedBox(
       width: w,
@@ -46,13 +48,14 @@ class ProfilePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(width: w * 0.05),
+              //network image
               CircleAvatar(
                 radius: w * 0.12,
                 foregroundColor: Colors.blue,
-                backgroundImage: const AssetImage(
-                  'assets/images/doctor.png',
-                ),
+                backgroundImage: NetworkImage(
+                    '${ApiController().url}${ getController.meUsers.value.res?.photoUrl?.substring(33)}'),
               ),
+
               const Expanded(child: SizedBox()),
               Container(
                 margin: const EdgeInsets.only(right: 10),

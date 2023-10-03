@@ -44,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //function for get token
   getToken() async {
     token = box.read('token');
+    print(token);
   }
 
   @override
