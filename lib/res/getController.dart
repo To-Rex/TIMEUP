@@ -6,6 +6,7 @@ class GetController extends GetxController {
   var sendCode = false.obs;
   var onFinished = false.obs;
   var enters = 0.obs;
+  var entersUser = 0.obs;
   var index = 0.obs;
   var code = ''.obs;
   var image = ''.obs;
@@ -48,6 +49,5 @@ class GetController extends GetxController {
   void clearMeUser() {
     meUsers.value = MeUser();
   }
-
 
 }

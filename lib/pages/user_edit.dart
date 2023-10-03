@@ -19,8 +19,9 @@ class EditUserPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Column(
+    return SizedBox(
+      width: w,
+      child: Column(
         children: [
           SizedBox(
             height: h * 0.05,
@@ -63,8 +64,7 @@ class EditUserPage extends StatelessWidget {
             controller: phoneNumberController,
             labelText: 'Phone number',
           ),
-          //take up all the space
-          const Expanded(child: SizedBox()),
+          SizedBox(height: h * 0.15),
           EditButton(
             text: 'Save data',
             onPressed: () {
@@ -73,7 +73,7 @@ class EditUserPage extends StatelessWidget {
           ),
           SizedBox(height: h * 0.05),
         ],
-      )
+      ),
     );
   }
 }

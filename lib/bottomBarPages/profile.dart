@@ -28,7 +28,8 @@ class ProfilePage extends StatelessWidget {
     return Obx(() => getController.meUsers.value.status.obs.value == true
         ? SizedBox(
       width: w,
-      child: Column(
+      child: Obx(() => getController.enters.value == 0
+        ? Column(
         children: [
           SizedBox(
             height: h * 0.01,
@@ -127,11 +128,13 @@ class ProfilePage extends StatelessWidget {
           EditButton(
             text: 'Edit profile',
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => EditUserPage()));
+              getController.enters.value = 1;
             },
           ),
         ],
+      ) :EditUserPage()
       ),
+
     ) : const Center(
       child: CircularProgressIndicator(
         color: Colors.blue,
