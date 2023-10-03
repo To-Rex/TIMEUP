@@ -129,8 +129,6 @@ class LoginPage extends StatelessWidget {
                               if (value.res!.token != '')
                                 {
                                   Toast.showToast(context, '${value.res?.token}', Colors.green, Colors.white),
-                                  //delete token
-                                  GetStorage().remove('token'),
                                   GetStorage().write('token', value.res?.token),
                                   //clear verificated code
                                   nameController.code.value = '',
@@ -285,8 +283,6 @@ class LoginPage extends StatelessWidget {
                               if (value.res!.token != '')
                                 {
                                   Toast.showToast(context, '${value.res?.token}', Colors.green, Colors.white),
-                                  //delete token
-                                  GetStorage().remove('token'),
                                   GetStorage().write('token', value.res?.token),
                                   //clear verificated code
                                   nameController.code.value = '',
