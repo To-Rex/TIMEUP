@@ -134,25 +134,18 @@ class ApiController extends GetxController {
           status: false);
     }
   }
-  //edit user info body {
-//     "fist_name": "llllllll",
-//     "last_name": "lllllllllll",
-//     "address": "Toshkent",
-//     "user_name": "gyuygyuyyy"
-// }
-
-  Future<MeUser> editUser(token,name,surName,nikName,phoneNumber) async{
+  Future<MeUser> editUser(token,name,surName,address,nikName) async{
     var response = await http.put(Uri.parse(url+editMeUrl),
-        headers: {
-          'Authorization':
-          'Bearer $token',
-        },
-        body: {
-          "fist_name": name,
-          "last_name": surName,
-          "user_name": nikName,
-          "phone_number": phoneNumber,
-        }
+      body: jsonEncode({
+        "fist_name": name,
+        "last_name": surName,
+        "address": address,
+        "user_name": nikName,
+      }),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json'
+      },
     );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -170,6 +163,5 @@ class ApiController extends GetxController {
           status: false);
     }
   }
-
 
 }

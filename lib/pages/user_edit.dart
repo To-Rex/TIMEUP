@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:time_up/elements/functions.dart';
 
 import '../api/api_controller.dart';
 import '../elements/btn_users.dart';
@@ -13,12 +15,18 @@ class EditUserPage extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController surnameController = TextEditingController();
   final TextEditingController nikNameController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController adressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
+
+    nameController.text = getController.meUsers.value.res?.lastName ?? '';
+    surnameController.text = getController.meUsers.value.res?.fistName ?? '';
+    nikNameController.text = getController.meUsers.value.res?.userName ?? '';
+    adressController.text = getController.meUsers.value.res?.address ?? '';
+
     return SizedBox(
       width: w,
       child: Column(
@@ -31,7 +39,7 @@ class EditUserPage extends StatelessWidget {
               radius: w * 0.12,
               foregroundColor: Colors.blue,
               backgroundImage: NetworkImage(
-                  '${ApiController().url}${ getController.meUsers.value.res?.photoUrl?.substring(33)}'),
+                  '${ApiController().url}${getController.meUsers.value.res?.photoUrl?.substring(33)}'),
             ),
           ),
           TextButton(
@@ -61,14 +69,28 @@ class EditUserPage extends StatelessWidget {
           ),
           SizedBox(height: h * 0.015),
           TextFildWidget(
-            controller: phoneNumberController,
-            labelText: 'Phone number',
+            controller: adressController,
+            labelText: 'Adress',
           ),
           SizedBox(height: h * 0.15),
           EditButton(
             text: 'Save data',
             onPressed: () {
-
+              ApiController()
+                  .editUser(
+                GetStorage().read('token'),
+                nameController.text,
+                surnameController.text,
+                nikNameController.text,
+                adressController.text,
+              ).then((value) {
+                if (value.status == true){
+                  getController.entersUser.value = 0;
+                  print('success');
+                }else{
+                  print('error');
+                }
+              });
             },
           ),
           SizedBox(height: h * 0.05),
