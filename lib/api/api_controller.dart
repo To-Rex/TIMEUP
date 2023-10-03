@@ -9,23 +9,14 @@ import '../models/verify_sms.dart';
 import '../models/me_user.dart';
 
 class ApiController extends GetxController {
-  //{{host}}/api/v1/sms/send
   var url = 'http://16.16.182.36:443/api/v1/';
 
   //var url = 'http://timeup.jprq.live:80/api/v1/';
   //var url = 'https://timeup-production.up.railway.app/api/v1/';
   var smsUrl = 'sms/send';
-
-  //{{host}}/api/v1/sms/last-sent-sms
   var lastSmsUrl = 'sms/last-sent-sms';
-
-  //{{host}}/api/v1/sms/verify
   var verifyUrl = 'sms/verify';
-
-  //{{host}}/api/v1/auth/register
   var registerUrl = 'auth/register';
-
-  //{{host}}/api/v1/user/me
   var meUrl = 'user/me';
 
   //showToast error
