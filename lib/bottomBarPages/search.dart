@@ -69,18 +69,6 @@ class SearchPage extends StatelessWidget {
     return Column(
       children: [
         SizedBox(height: h * 0.02),
-        /*Obx(() => _getController.enterProfessionsListElements.value
-            ? ProfessionsListElements(
-            professions: profession,
-            onTap: (profession) {
-              _getController.enterProfessionsListElements.value = false;
-            })
-            : ProfessionsList(
-            professions: professions,
-            onTap: (profession) {
-              _getController.enterProfessionsListElements.value = true;
-            })),*/
-        //_getController.enterProfessionsListElements.value = 0 ProfessionsList else ProfessionsListElements if 2 ProfessionsListUsers
         Obx(() => _getController.enters.value == 0
             ? ProfessionsList(
                 professions: professions,

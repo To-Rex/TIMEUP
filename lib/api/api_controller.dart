@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:time_up/models/last_send_sms.dart';
@@ -18,17 +16,7 @@ class ApiController extends GetxController {
   var verifyUrl = 'sms/verify';
   var registerUrl = 'auth/register';
   var meUrl = 'user/me';
-
-  //showToast error
-  void showToastError(String message) {
-    Get.snackbar(
-      'Xatolik',
-      message,
-      backgroundColor: Colors.red,
-      colorText: Colors.white,
-      snackPosition: SnackPosition.BOTTOM,
-    );
-  }
+  var editMeUrl = 'user/edit-me';
 
   Future<String> sendSms(String phoneNumber) async {
     var response = await http.post(
@@ -146,4 +134,42 @@ class ApiController extends GetxController {
           status: false);
     }
   }
+  //edit user info body {
+//     "fist_name": "llllllll",
+//     "last_name": "lllllllllll",
+//     "address": "Toshkent",
+//     "user_name": "gyuygyuyyy"
+// }
+
+  Future<MeUser> editUser(token,name,surName,nikName,phoneNumber) async{
+    var response = await http.put(Uri.parse(url+editMeUrl),
+        headers: {
+          'Authorization':
+          'Bearer $token',
+        },
+        body: {
+          "fist_name": name,
+          "last_name": surName,
+          "user_name": nikName,
+          "phone_number": phoneNumber,
+        }
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return MeUser.fromJson(jsonDecode(response.body));
+    } else {
+      return MeUser(
+          res: MeRes(
+            fistName: '',
+            lastName: '',
+            userName: '',
+            phoneNumber: '',
+            address: '',
+            photoUrl: '',
+          ),
+          status: false);
+    }
+  }
+
+
 }
