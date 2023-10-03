@@ -119,9 +119,7 @@ class ProfilePage extends StatelessWidget {
             text: 'Make business profile',
             onPressed: () {},
           ),
-          SizedBox(
-            height: h * 0.01,
-          ),
+
           EditButton(
             text: 'Edit profile',
             onPressed: () {

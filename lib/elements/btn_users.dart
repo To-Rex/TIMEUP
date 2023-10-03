@@ -12,7 +12,7 @@ class EditButton extends StatelessWidget {
     return Container(
       width: w * 0.9,
       height: h * 0.06,
-      margin: const EdgeInsets.only(top: 5),
+      margin: EdgeInsets.only(top: h * 0.013),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
