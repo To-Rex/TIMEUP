@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:time_up/models/category.dart';
 import 'package:time_up/models/me_user.dart';
 
 class GetController extends GetxController {
@@ -13,6 +14,7 @@ class GetController extends GetxController {
 
   //var users = ApiController().getUserData();
   var meUsers = MeUser().obs;
+  var category = GetCategory().obs;
 
   void changeIndex(int newIndex) {
     index.value = newIndex;
@@ -46,8 +48,16 @@ class GetController extends GetxController {
     meUsers.value = newMeUser;
   }
 
+  void changeCategory(GetCategory newCategory) {
+    category.value = newCategory;
+  }
+
   void clearMeUser() {
     meUsers.value = MeUser();
+  }
+
+  void clearCategory() {
+    category.value = GetCategory();
   }
 
 }

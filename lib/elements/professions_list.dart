@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_up/api/api_controller.dart';
 
 class ProfessionsList extends StatelessWidget {
   final List<String> professions;
@@ -11,10 +12,14 @@ class ProfessionsList extends StatelessWidget {
     required this.onTap,
   }) : super(key: key);
 
+
+
+
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
+    ApiController().getCategory();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
