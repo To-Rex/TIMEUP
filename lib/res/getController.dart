@@ -15,6 +15,7 @@ class GetController extends GetxController {
   //var users = ApiController().getUserData();
   var meUsers = MeUser().obs;
   var category = GetCategory().obs;
+  var subCategory = GetCategory().obs;
 
   void changeIndex(int newIndex) {
     index.value = newIndex;
