@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:time_up/api/api_controller.dart';
+
+import '../res/getController.dart';
 
 class ProfessionsList extends StatelessWidget {
   final List<String> professions;
   //on tap
   final Function(String) onTap;
 
-  const ProfessionsList({
+  ProfessionsList({
     Key? key,
     required this.professions,
     required this.onTap,
   }) : super(key: key);
 
-
-
+  final GetController _getController = Get.put(GetController());
 
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    ApiController().getCategory();
+    ApiController().getCategory().then((value) => _getController.changeCategory(value));
+
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,12 +40,13 @@ class ProfessionsList extends StatelessWidget {
           width: w,
           height: h * 0.74,
           child: ListView.builder(
-            itemCount: professions.length,
+            itemCount: _getController.category.value.res?.length ?? 0,
             padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  onTap(professions[index]);
+                  print(_getController.category.value.res?[index].id.toString() ?? '');
+                  onTap(_getController.category.value.res?[index].id.toString() ?? '');
                 },
                 child: Container(
                   height: h * 0.06,
@@ -52,7 +57,7 @@ class ProfessionsList extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      professions[index],
+                      _getController.category.value.res?[index].name ?? '',
                       style: TextStyle(
                         fontSize: w * 0.04,
                         fontWeight: FontWeight.w500,
