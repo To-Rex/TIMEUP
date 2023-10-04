@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:time_up/models/last_send_sms.dart';
 import 'package:time_up/models/register_model.dart';
+import '../models/category.dart';
 import '../models/verify_sms.dart';
 import '../models/me_user.dart';
 
@@ -17,6 +18,7 @@ class ApiController extends GetxController {
   var registerUrl = 'auth/register';
   var meUrl = 'user/me';
   var editMeUrl = 'user/edit-me';
+  var categoryUrl = 'category/get';
 
   Future<String> sendSms(String phoneNumber) async {
     var response = await http.post(
@@ -111,7 +113,6 @@ class ApiController extends GetxController {
     }
   }
 
-  //get user info
   Future<MeUser> getUserData(token) async {
     var response = await http.get(Uri.parse(url + meUrl),
         headers: {
@@ -161,6 +162,16 @@ class ApiController extends GetxController {
             photoUrl: '',
           ),
           status: false);
+    }
+  }
+
+  Future<GetCategory> getCategory() async {
+    var response = await http.get(Uri.parse(url + categoryUrl));
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return GetCategory.fromJson(jsonDecode(response.body));
+    } else {
+      return GetCategory(res: [], status: false);
     }
   }
 
