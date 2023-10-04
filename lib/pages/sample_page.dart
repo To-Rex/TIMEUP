@@ -20,6 +20,9 @@ class SamplePage extends StatelessWidget {
   void _onItemTapped(int index) {
     _getController.enters.value = 0;
     _getController.entersUser.value = 0;
+    _getController.clearCategory();
+    _getController.clearSubCategory();
+    _getController.clearMeUser();
     _getController.changeIndex(index);
   }
 

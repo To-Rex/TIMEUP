@@ -5,13 +5,11 @@ import 'package:time_up/api/api_controller.dart';
 import '../res/getController.dart';
 
 class ProfessionsList extends StatelessWidget {
-  final List<String> professions;
-  //on tap
-  final Function(String) onTap;
+
+  final Function(int) onTap;
 
   ProfessionsList({
     Key? key,
-    required this.professions,
     required this.onTap,
   }) : super(key: key);
 
@@ -22,8 +20,6 @@ class ProfessionsList extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     ApiController().getCategory().then((value) => _getController.changeCategory(value));
-
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,7 +32,9 @@ class ProfessionsList extends StatelessWidget {
           ),
         ),
         SizedBox(height: h * 0.02),
-        SizedBox(
+        Obx(() => _getController.category.value.res == null
+            ? const Center(child: Text('No data'))
+            : SizedBox(
           width: w,
           height: h * 0.74,
           child: ListView.builder(
@@ -46,7 +44,7 @@ class ProfessionsList extends StatelessWidget {
               return GestureDetector(
                 onTap: () {
                   print(_getController.category.value.res?[index].id.toString() ?? '');
-                  onTap(_getController.category.value.res?[index].id.toString() ?? '');
+                  onTap(_getController.category.value.res?[index].id?? 0);
                 },
                 child: Container(
                   height: h * 0.06,
@@ -68,6 +66,7 @@ class ProfessionsList extends StatelessWidget {
               );
             },
           ),
+        ),
         ),
       ],
     );

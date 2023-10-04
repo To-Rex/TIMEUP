@@ -8,34 +8,8 @@ import '../res/getController.dart';
 class SearchPage extends StatelessWidget {
   SearchPage({Key? key}) : super(key: key);
   final GetController _getController = Get.put(GetController());
+  int? index;
 
-  var professions = [
-    'Sartaroshlik',
-    'Ta’lim',
-    'Tibbiyot',
-    'Iqtisodiyot',
-    'Texnika',
-    'Ishlab chiqarish',
-    'Xizmatlar',
-    'Boshqa',
-    'Tibbiyot',
-    'Iqtisodiyot',
-    'Texnika',
-    'Ishlab chiqarish',
-    'Xizmatlar',
-    'Boshqa',
-    'Sartaroshlik',
-    'Ta’lim',
-    'Tibbiyot',
-    'Iqtisodiyot',
-    'Texnika',
-    'Ishlab chiqarish',
-    'Xizmatlar',
-    'Boshqa',
-    'Tibbiyot',
-    'Iqtisodiyot',
-    'Texnika'
-  ];
   var profession = [
     'Stomatolog',
     'Kardiolog',
@@ -71,13 +45,13 @@ class SearchPage extends StatelessWidget {
         SizedBox(height: h * 0.02),
         Obx(() => _getController.enters.value == 0
             ? ProfessionsList(
-                professions: professions,
                 onTap: (profession) {
                   _getController.enters.value = 1;
+                  index = profession;
                 })
             : _getController.enters.value == 1
                 ? ProfessionsListElements(
-                    professions: profession,
+                    index: index,
                     onTap: (profession) {
                       _getController.enters.value = 2;
                     })

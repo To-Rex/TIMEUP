@@ -53,12 +53,20 @@ class GetController extends GetxController {
     category.value = newCategory;
   }
 
+  void changeSubCategory(GetCategory newSubCategory) {
+    subCategory.value = newSubCategory;
+  }
+
   void clearMeUser() {
     meUsers.value = MeUser();
   }
 
   void clearCategory() {
     category.value = GetCategory();
+  }
+
+  void clearSubCategory() {
+    subCategory.value = GetCategory();
   }
 
 }
