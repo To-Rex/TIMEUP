@@ -19,6 +19,7 @@ class ApiController extends GetxController {
   var meUrl = 'user/me';
   var editMeUrl = 'user/edit-me';
   var categoryUrl = 'category/get';
+  var subCategoryUrl = 'category/get?parent_id=';
 
   Future<String> sendSms(String phoneNumber) async {
     var response = await http.post(
