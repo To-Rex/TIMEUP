@@ -18,7 +18,8 @@ class EditUserPage extends StatelessWidget {
   final TextEditingController adressController = TextEditingController();
 
   getUsers() async {
-    getController.changeMeUser(await ApiController().getUserData(GetStorage().read('token')));
+    getController.changeMeUser(
+        await ApiController().getUserData(GetStorage().read('token')));
   }
 
   @override
@@ -43,7 +44,7 @@ class EditUserPage extends StatelessWidget {
               radius: w * 0.12,
               foregroundColor: Colors.blue,
               backgroundImage: NetworkImage(
-                  '${ApiController().url}${getController.meUsers.value.res?.photoUrl?.substring(33)}'),
+                  '${ApiController().url}${getController.meUsers.value.res?.photoUrl?.substring(17, getController.meUsers.value.res?.photoUrl?.length)}'),
             ),
           ),
           TextButton(
@@ -87,11 +88,12 @@ class EditUserPage extends StatelessWidget {
                 surnameController.text,
                 nikNameController.text,
                 adressController.text,
-              ).then((value) {
-                if (value.status == true){
+              )
+                  .then((value) {
+                if (value.status == true) {
                   getController.entersUser.value = 0;
                   getUsers();
-                }else{
+                } else {
                   print('error');
                 }
               });
