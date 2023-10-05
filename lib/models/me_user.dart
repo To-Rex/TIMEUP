@@ -5,48 +5,16 @@ class MeUser {
   MeUser({this.res, this.status});
 
   MeUser.fromJson(Map<String, dynamic> json) {
-    res = json['res'] != null ? MeRes.fromJson(json['res']) : MeRes(
-        fistName: '',
-        lastName: '',
-        userName: '',
-        phoneNumber: '',
-        address: '',
-        photoUrl: '',
-        business: Business(
-            id: 0,
-            userId: 0,
-            workCategoryId: 0,
-            officeAddress: '',
-            officeName: '',
-            experience: 0,
-            bio: '',
-            dayOffs: ''));
-    status = json['status'] ?? false;
+    res = json['res'] != null ? MeRes.fromJson(json['res']) : null;
+    status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (res != null) {
       data['res'] = res!.toJson();
-    }else{
-      data['res'] = MeRes(
-          fistName: '',
-          lastName: '',
-          userName: '',
-          phoneNumber: '',
-          address: '',
-          photoUrl: '',
-          business: Business(
-              id: 0,
-              userId: 0,
-              workCategoryId: 0,
-              officeAddress: '',
-              officeName: '',
-              experience: 0,
-              bio: '',
-              dayOffs: '')).toJson();
     }
-    data['status'] = status ?? false;
+    data['status'] = status;
     return data;
   }
 }
@@ -72,47 +40,29 @@ class MeRes {
         this.business});
 
   MeRes.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? 0;
-    fistName = json['fist_name'] ?? '';
-    lastName = json['last_name'] ?? '';
-    userName = json['user_name'] ?? '';
-    phoneNumber = json['phone_number'] ?? '';
-    address = json['address'] ?? '';
-    photoUrl = json['photo_url'] ?? '';
+    id = json['id'];
+    fistName = json['fist_name'];
+    lastName = json['last_name'];
+    userName = json['user_name'];
+    phoneNumber = json['phone_number'];
+    address = json['address'];
+    photoUrl = json['photo_url'];
     business = json['business'] != null
         ? Business.fromJson(json['business'])
-        : Business(
-        id: 0,
-        userId: 0,
-        workCategoryId: 0,
-        officeAddress: '',
-        officeName: '',
-        experience: 0,
-        bio: '',
-        dayOffs: '');
+        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id ?? 0;
-    data['fist_name'] = fistName ?? '';
-    data['last_name'] = lastName ?? '';
-    data['user_name'] = userName ?? '';
-    data['phone_number'] = phoneNumber ?? '';
-    data['address'] = address ?? '';
-    data['photo_url'] = photoUrl ?? '';
+    data['id'] = id;
+    data['fist_name'] = fistName;
+    data['last_name'] = lastName;
+    data['user_name'] = userName;
+    data['phone_number'] = phoneNumber;
+    data['address'] = address;
+    data['photo_url'] = photoUrl;
     if (business != null) {
       data['business'] = business!.toJson();
-    }else{
-      data['business'] = Business(
-          id: 0,
-          userId: 0,
-          workCategoryId: 0,
-          officeAddress: '',
-          officeName: '',
-          experience: 0,
-          bio: '',
-          dayOffs: '').toJson();
     }
     return data;
   }
@@ -139,26 +89,26 @@ class Business {
         this.dayOffs});
 
   Business.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? 0;
-    userId = json['user_id'] ?? 0;
-    workCategoryId = json['work_category_id'] ?? 0;
-    officeAddress = json['office_address'] ?? '';
-    officeName = json['office_name'] ?? '';
-    experience = json['experience'] ?? 0;
-    bio = json['bio'] ?? '';
-    dayOffs = json['day_offs'] ?? '';
+    id = json['id'];
+    userId = json['user_id'];
+    workCategoryId = json['work_category_id'];
+    officeAddress = json['office_address'];
+    officeName = json['office_name'];
+    experience = json['experience'];
+    bio = json['bio'];
+    dayOffs = json['day_offs'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id ?? 0;
-    data['user_id'] = userId ?? 0;
-    data['work_category_id'] = workCategoryId ?? 0;
-    data['office_address'] = officeAddress ?? '';
-    data['office_name'] = officeName ?? '';
-    data['experience'] = experience ?? 0;
-    data['bio'] = bio ?? '';
-    data['day_offs'] = dayOffs ?? '';
+    data['id'] = id;
+    data['user_id'] = userId;
+    data['work_category_id'] = workCategoryId;
+    data['office_address'] = officeAddress;
+    data['office_name'] = officeName;
+    data['experience'] = experience;
+    data['bio'] = bio;
+    data['day_offs'] = dayOffs;
     return data;
   }
 }
