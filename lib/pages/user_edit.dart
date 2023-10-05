@@ -15,7 +15,7 @@ class EditUserPage extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController surnameController = TextEditingController();
   final TextEditingController nikNameController = TextEditingController();
-  final TextEditingController adressController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
 
   getUsers() async {
     getController.changeMeUser(
@@ -30,7 +30,7 @@ class EditUserPage extends StatelessWidget {
     nameController.text = getController.meUsers.value.res?.lastName ?? '';
     surnameController.text = getController.meUsers.value.res?.fistName ?? '';
     nikNameController.text = getController.meUsers.value.res?.userName ?? '';
-    adressController.text = getController.meUsers.value.res?.address ?? '';
+    addressController.text = getController.meUsers.value.res?.address ?? '';
 
     return SizedBox(
       width: w,
@@ -74,7 +74,7 @@ class EditUserPage extends StatelessWidget {
           ),
           SizedBox(height: h * 0.015),
           TextFildWidget(
-            controller: adressController,
+            controller: addressController,
             labelText: 'Adress',
           ),
           SizedBox(height: h * 0.15),
@@ -87,7 +87,7 @@ class EditUserPage extends StatelessWidget {
                 nameController.text,
                 surnameController.text,
                 nikNameController.text,
-                adressController.text,
+                addressController.text,
               )
                   .then((value) {
                 if (value.status == true) {
