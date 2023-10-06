@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:time_up/api/api_controller.dart';
 
+import '../elements/bio_business.dart';
 import '../elements/btn_business.dart';
 import '../elements/btn_users.dart';
+import '../elements/txt_business.dart';
 import '../pages/login_page.dart';
 import '../pages/user_edit.dart';
 import '../res/getController.dart';
@@ -37,7 +39,7 @@ class ProfilePage extends StatelessWidget {
                           height: h * 0.01,
                         ),
                         Text(
-                          'Doctor_sobit',
+                          getController.meUsers.value.res?.userName ?? '',
                           style: TextStyle(
                             fontSize: w * 0.04,
                             color: Colors.black,
@@ -123,109 +125,33 @@ class ProfilePage extends StatelessWidget {
                                       ],
                                     ))
                                 : const SizedBox()),
-                        Container(
-                          width: w * 0.9,
-                          margin: const EdgeInsets.only(top: 5),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.phone,
-                                color: Colors.blue,
-                                size: 20,
-                              ),
-                              SizedBox(
-                                width: w * 0.01,
-                              ),
-                              Text(
-                                '${getController.meUsers.value.res?.phoneNumber}',
-                                style: TextStyle(
-                                  fontSize: w * 0.04,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
+                        TextEditButton(
+                          text:
+                              '${getController.meUsers.value.res?.phoneNumber}',
+                          color: Colors.blue, icon: Icons.phone,
                         ),
                         Obx(() =>
                             getController.meUsers.value.res?.business != null
-                                ? Container(
-                                    width: w * 0.9,
-                                    margin: const EdgeInsets.only(top: 5),
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.location_on,
-                                          color: Colors.blue,
-                                          size: 20,
-                                        ),
-                                        SizedBox(
-                                          width: w * 0.01,
-                                        ),
-                                        Text(
-                                          '${getController.meUsers.value.res?.business?.officeAddress}',
-                                          style: TextStyle(
-                                            fontSize: w * 0.04,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                ? TextEditButton(
+                                    text:
+                                        '${getController.meUsers.value.res?.business?.officeAddress}',
+                                    color: Colors.blue, icon: Icons.location_on,
                                   )
                                 : const SizedBox()),
                         Obx(() =>
                             getController.meUsers.value.res?.business != null
-                                ? Container(
-                                    width: w * 0.9,
-                                    margin: const EdgeInsets.only(top: 5),
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.work,
-                                          color: Colors.blue,
-                                          size: 20,
-                                        ),
-                                        SizedBox(
-                                          width: w * 0.01,
-                                        ),
-                                        Text(
-                                          '${getController.meUsers.value.res?.business?.officeName}',
-                                          style: TextStyle(
-                                            fontSize: w * 0.04,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                ? TextEditButton(
+                                    text:
+                                        '${getController.meUsers.value.res?.business?.officeName}',
+                                    color: Colors.blue, icon: Icons.home,
                                   )
                                 : const SizedBox()),
                         Obx(() =>
                             getController.meUsers.value.res?.business != null
-                                ? Container(
-                                    width: w * 0.9,
-                                    margin: const EdgeInsets.only(top: 5),
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.access_time,
-                                          color: Colors.blue,
-                                          size: 20,
-                                        ),
-                                        SizedBox(
-                                          width: w * 0.01,
-                                        ),
-                                        Text(
-                                          '${getController.meUsers.value.res?.business?.dayOffs}',
-                                          style: TextStyle(
-                                            fontSize: w * 0.04,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                ? TextEditButton(
+                                    text:
+                                        '${getController.meUsers.value.res?.business?.dayOffs}',
+                                    color: Colors.blue, icon: Icons.access_time_outlined,
                                   )
                                 : const SizedBox()),
                         SizedBox(
@@ -244,13 +170,15 @@ class ProfilePage extends StatelessWidget {
                                       children: [
                                         SizedBox(
                                           width: w * 0.4,
-                                          height: h * 0.06,
-                                          child: EditButton(
+                                          height: h * 0.063,
+                                          child: BusinessEditButton(
                                             text: 'Edit profile',
                                             onPressed: () {
                                               getController.entersUser.value =
                                                   1;
                                             },
+                                            color: Colors.blue,
+                                            radius: 3,
                                           ),
                                         ),
                                       ],
@@ -295,30 +223,7 @@ class ProfilePage extends StatelessWidget {
                         Obx(() =>
                             getController.meUsers.value.res?.business == null
                                 ? const SizedBox()
-                                : Container(
-                                    width: w * 0.95,
-                                    height: h * 0.26,
-                                    margin: EdgeInsets.only(top: h * 0.02),
-                                    padding: EdgeInsets.all(w * 0.02),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Colors.grey,
-                                      ),
-                                      borderRadius: BorderRadius.circular(3),
-                                    ),
-                                    child: SingleChildScrollView(
-                                      child: Text(
-                                        getController.meUsers.value.res
-                                                ?.business?.bio ??
-                                            '',
-                                        style: TextStyle(
-                                          fontSize: w * 0.04,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                  )),
+                                : BioBusiness(text: getController.meUsers.value.res?.business?.bio ?? '')),
                       ],
                     )
                   : getController.entersUser.value == 1
