@@ -25,7 +25,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    getController.clearMeUser();
+    //getController.clearMeUser();
     getUsers();
 
     return Obx(() => getController.meUsers.value.status.obs.value == true

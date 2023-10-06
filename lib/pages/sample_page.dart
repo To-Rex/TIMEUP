@@ -22,7 +22,7 @@ class SamplePage extends StatelessWidget {
     _getController.entersUser.value = 0;
     _getController.clearCategory();
     _getController.clearSubCategory();
-    _getController.clearMeUser();
+    //_getController.clearMeUser();
     _getController.changeIndex(index);
   }
 
