@@ -8,6 +8,7 @@ import '../elements/btn_business.dart';
 import '../elements/btn_users.dart';
 import '../elements/txt_business.dart';
 import '../pages/login_page.dart';
+import '../pages/user_bussines_edit.dart';
 import '../pages/user_edit.dart';
 import '../res/getController.dart';
 
@@ -226,9 +227,10 @@ class ProfilePage extends StatelessWidget {
                                 : BioBusiness(text: getController.meUsers.value.res?.business?.bio ?? '')),
                       ],
                     )
-                  : getController.entersUser.value == 1
+                  : getController.entersUser.value == 1 &&
+                          getController.meUsers.value.res?.business == null
                       ? EditUserPage()
-                      : EditUserPage(),
+                      : EditBusinessUserPage(),
             ),
           )
         : const Center(
