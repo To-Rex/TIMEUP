@@ -31,9 +31,12 @@ class MakeBusinessPage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
 
-    fullNameController.text = getController.meUsers.value.res?.lastName ?? '';
+    fullNameController.text = getController.meUsers.value.res?.fistName ?? '';
     nikNameController.text = getController.meUsers.value.res?.userName ?? '';
+    phoneNumberController.text =
+        getController.meUsers.value.res?.phoneNumber ?? '';
     addressController.text = getController.meUsers.value.res?.address ?? '';
+
     ApiController().getRegion().then((value) {
       getController.changeRegion(value);
     });
@@ -185,9 +188,7 @@ class MakeBusinessPage extends StatelessWidget {
                               ),
                       ),
                     ),
-
                     SizedBox(height: h * 0.013),
-
                     //dropdown menu for category
                     Container(
                       width: w * 0.9,
@@ -255,7 +256,6 @@ class MakeBusinessPage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: h * 0.013),
-
                     //dropdown menu for subcategory
                     Container(
                       width: w * 0.9,
@@ -272,7 +272,7 @@ class MakeBusinessPage extends StatelessWidget {
                             icon: const Icon(Icons.arrow_drop_down,
                                 color: Colors.black),
                             iconSize: w * 0.06,
-                            value: getController.subCategoryIndex.value ?? 0,
+                            value: getController.subCategoryIndex.value,
                             hint: Padding(
                               padding: EdgeInsets.only(
                                   left: w * 0.02, right: w * 0.02),
@@ -361,12 +361,16 @@ class MakeBusinessPage extends StatelessWidget {
                       ),
                       child: TextField(
                         maxLines: 10,
+                        maxLength: 300,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'About yourself',
                           hintStyle: TextStyle(
                             fontSize: w * 0.04,
                           ),
+                        ),
+                        style: TextStyle(
+                          fontSize: w * 0.04,
                         ),
                       ),
                     ),
