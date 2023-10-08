@@ -13,6 +13,8 @@ class GetController extends GetxController {
   var index = 0.obs;
   var code = ''.obs;
   var image = ''.obs;
+  //make business profile omboarding page
+  var nextPages = 0.obs;
 
   //var users = ApiController().getUserData();
   var meUsers = MeUser().obs;

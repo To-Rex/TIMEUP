@@ -15,7 +15,8 @@ class MakeBusinessPage extends StatelessWidget {
   final TextEditingController nikNameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
-  final TextEditingController nameInstitutionController = TextEditingController();
+  final TextEditingController nameInstitutionController =
+      TextEditingController();
 
   //page controller
   final PageController pageController = PageController();
@@ -328,7 +329,8 @@ class MakeBusinessPage extends StatelessWidget {
                       width: w,
                       height: h * 0.2,
                       margin: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
-                      padding: EdgeInsets.only(right: w * 0.02, left: w * 0.02, bottom: h * 0.01),
+                      padding: EdgeInsets.only(
+                          right: w * 0.02, left: w * 0.02, bottom: h * 0.01),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Colors.grey[300]!),
@@ -345,7 +347,7 @@ class MakeBusinessPage extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: w * 0.05,top: h * 0.01),
+                      padding: EdgeInsets.only(left: w * 0.05, top: h * 0.01),
                       child: Text(
                         'Write down your days off',
                         style: TextStyle(fontSize: w * 0.03),
@@ -355,7 +357,8 @@ class MakeBusinessPage extends StatelessWidget {
                       width: w,
                       height: h * 0.25,
                       margin: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
-                      padding: EdgeInsets.only(right: w * 0.02, left: w * 0.02, bottom: h * 0.01),
+                      padding: EdgeInsets.only(
+                          right: w * 0.02, left: w * 0.02, bottom: h * 0.01),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Colors.grey[300]!),
@@ -380,9 +383,8 @@ class MakeBusinessPage extends StatelessWidget {
                         style: TextStyle(fontSize: w * 0.03),
                       ),
                     ),
-                    Container(
-                      width: w,
-                      margin: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
+                    Padding(
+                      padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
                       child: TextFildWidget(
                         controller: nikNameController,
                         labelText: '__',
@@ -407,14 +409,29 @@ class MakeBusinessPage extends StatelessWidget {
                 spacing: 8.0),
             // your preferred effect
             onDotClicked: (index) {}),
-        EditButton(
-          text: 'Next',
-          onPressed: () {
-            pageController.nextPage(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.ease,
-            );
-          },
+        Obx(
+          () => getController.nextPages.value == 1
+              ? EditButton(
+                  text: 'Save',
+                  onPressed: () {
+                    pageController.previousPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.ease,
+                    );
+                    getController.nextPages.value = 1;
+                    getController.nextPages.value = 0;
+                  },
+                )
+              : EditButton(
+                  text: 'Next',
+                  onPressed: () {
+                    pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.ease,
+                    );
+                    getController.nextPages.value = 1;
+                  },
+                ),
         ),
         SizedBox(height: h * 0.05),
       ],
