@@ -40,7 +40,6 @@ class MakeBusinessPage extends StatelessWidget {
 
     ApiController().getSubCategory(getController.categoryIndex.value).then((value) {
       getController.changeSubCategory(value);
-      print(getController.subCategoryIndex.value);
     });
 
     ApiController().getRegion().then((value) {
