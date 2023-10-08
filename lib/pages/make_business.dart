@@ -414,11 +414,7 @@ class MakeBusinessPage extends StatelessWidget {
               ? EditButton(
                   text: 'Save',
                   onPressed: () {
-                    pageController.previousPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.ease,
-                    );
-                    getController.nextPages.value = 1;
+                    getController.entersUser.value = 0;
                     getController.nextPages.value = 0;
                   },
                 )
