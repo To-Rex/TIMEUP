@@ -16,6 +16,7 @@ class MakeBusinessPage extends StatelessWidget {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController nameInstitutionController = TextEditingController();
+
   //page controller
   final PageController pageController = PageController();
 
@@ -84,7 +85,8 @@ class MakeBusinessPage extends StatelessWidget {
                           CircleAvatar(
                             radius: w * 0.11,
                             foregroundColor: Colors.blue,
-                            backgroundImage: NetworkImage('http://${getController.meUsers.value.res?.photoUrl}'),
+                            backgroundImage: NetworkImage(
+                                'http://${getController.meUsers.value.res?.photoUrl}'),
                           ),
                           const Spacer(),
                           SizedBox(width: w * 0.1)
@@ -131,7 +133,7 @@ class MakeBusinessPage extends StatelessWidget {
                         color: Colors.grey[200],
                       ),
                       child: Obx(
-                            () => DropdownButtonHideUnderline(
+                        () => DropdownButtonHideUnderline(
                           child: DropdownButton(
                             icon: const Icon(Icons.arrow_drop_down,
                                 color: Colors.black),
@@ -151,19 +153,19 @@ class MakeBusinessPage extends StatelessWidget {
                             items: getController.getRegion.value.res!
                                 .map(
                                   (e) => DropdownMenuItem(
-                                value: e,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: w * 0.02, right: w * 0.02),
-                                  child: Text(
-                                    e,
-                                    style: TextStyle(
-                                      fontSize: w * 0.04,
+                                    value: e,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          left: w * 0.02, right: w * 0.02),
+                                      child: Text(
+                                        e,
+                                        style: TextStyle(
+                                          fontSize: w * 0.04,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            )
+                                )
                                 .toList(),
                             onChanged: (value) {
                               int index = getController.getRegion.value.res!
@@ -187,7 +189,7 @@ class MakeBusinessPage extends StatelessWidget {
                         color: Colors.grey[200],
                       ),
                       child: Obx(
-                            () => DropdownButtonHideUnderline(
+                        () => DropdownButtonHideUnderline(
                           child: DropdownButton(
                             icon: const Icon(Icons.arrow_drop_down,
                                 color: Colors.black),
@@ -206,28 +208,27 @@ class MakeBusinessPage extends StatelessWidget {
                             items: getController.category.value.res!
                                 .map(
                                   (e) => DropdownMenuItem(
-                                value: e.id,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: w * 0.02, right: w * 0.02),
-                                  child: Text(
-                                    e.name!,
-                                    style: TextStyle(
-                                      fontSize: w * 0.04,
+                                    value: e.id,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          left: w * 0.02, right: w * 0.02),
+                                      child: Text(
+                                        e.name!,
+                                        style: TextStyle(
+                                          fontSize: w * 0.04,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            )
+                                )
                                 .toList(),
                             onChanged: (value) {
                               getController.changeCategoryID(value as int);
                               int index = getController.category.value.res!
-                                  .indexWhere(
-                                      (element) => element.id == value);
+                                  .indexWhere((element) => element.id == value);
                               ApiController()
                                   .getSubCategory(getController
-                                  .category.value.res![index].id!)
+                                      .category.value.res![index].id!)
                                   .then((value) {
                                 getController.changeSubCategory(value);
                               });
@@ -248,7 +249,7 @@ class MakeBusinessPage extends StatelessWidget {
                         color: Colors.grey[200],
                       ),
                       child: Obx(
-                            () => DropdownButtonHideUnderline(
+                        () => DropdownButtonHideUnderline(
                           child: DropdownButton(
                             icon: const Icon(Icons.arrow_drop_down,
                                 color: Colors.black),
@@ -267,19 +268,19 @@ class MakeBusinessPage extends StatelessWidget {
                             items: getController.subCategory.value.res!
                                 .map(
                                   (e) => DropdownMenuItem(
-                                value: e.id,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: w * 0.02, right: w * 0.02),
-                                  child: Text(
-                                    e.name!,
-                                    style: TextStyle(
-                                      fontSize: w * 0.04,
+                                    value: e.id,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          left: w * 0.02, right: w * 0.02),
+                                      child: Text(
+                                        e.name!,
+                                        style: TextStyle(
+                                          fontSize: w * 0.04,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            )
+                                )
                                 .toList(),
                             onChanged: (value) {
                               getController.changeSubCategoryID(value as int);
@@ -293,20 +294,20 @@ class MakeBusinessPage extends StatelessWidget {
                       controller: nameInstitutionController,
                       labelText: 'Name of the institution',
                     ),
-
                   ],
                 ),
               ),
               SizedBox(
                 width: w,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
                         IconButton(
                           onPressed: () {
                             pageController.previousPage(
-                              duration: const Duration(milliseconds: 500),
+                              duration: const Duration(milliseconds: 300),
                               curve: Curves.ease,
                             );
                           },
@@ -315,34 +316,102 @@ class MakeBusinessPage extends StatelessWidget {
                         const Spacer(),
                       ],
                     ),
+                    SizedBox(height: h * 0.01),
+                    Padding(
+                      padding: EdgeInsets.only(left: w * 0.05),
+                      child: Text(
+                        'About yourself',
+                        style: TextStyle(fontSize: w * 0.03),
+                      ),
+                    ),
+                    Container(
+                      width: w,
+                      height: h * 0.2,
+                      margin: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
+                      padding: EdgeInsets.only(right: w * 0.02, left: w * 0.02, bottom: h * 0.01),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.grey[300]!),
+                      ),
+                      child: TextField(
+                        maxLines: 10,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'About yourself',
+                          hintStyle: TextStyle(
+                            fontSize: w * 0.04,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: w * 0.05,top: h * 0.01),
+                      child: Text(
+                        'Write down your days off',
+                        style: TextStyle(fontSize: w * 0.03),
+                      ),
+                    ),
+                    Container(
+                      width: w,
+                      height: h * 0.25,
+                      margin: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
+                      padding: EdgeInsets.only(right: w * 0.02, left: w * 0.02, bottom: h * 0.01),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.grey[300]!),
+                      ),
+                      child: TextField(
+                        maxLines: 10,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Write down your days off',
+                          hintStyle: TextStyle(
+                            fontSize: w * 0.04,
+                          ),
+                        ),
+                      ),
+                    ),
+                    //Ish tajribangiz
+                    SizedBox(height: h * 0.01),
+                    Padding(
+                      padding: EdgeInsets.only(left: w * 0.05),
+                      child: Text(
+                        'Ish tajribangiz',
+                        style: TextStyle(fontSize: w * 0.03),
+                      ),
+                    ),
+                    Container(
+                      width: w,
+                      margin: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
+                      child: TextFildWidget(
+                        controller: nikNameController,
+                        labelText: '__',
+                      ),
+                    ),
                   ],
                 ),
               ),
-
             ],
           ),
         ),
         SmoothPageIndicator(
-            controller: pageController,  // PageController
-            count:  2,
+            controller: pageController,
+            // PageController
+            count: 2,
             axisDirection: Axis.horizontal,
-            effect:  WormEffect(
+            effect: WormEffect(
                 dotColor: Colors.grey,
                 activeDotColor: Colors.blue,
                 dotHeight: h * 0.005,
                 dotWidth: w * 0.08,
-                spacing: 8.0
-            ),  // your preferred effect
-            onDotClicked: (index){
-
-            }
-        ),
-
+                spacing: 8.0),
+            // your preferred effect
+            onDotClicked: (index) {}),
         EditButton(
           text: 'Next',
           onPressed: () {
             pageController.nextPage(
-              duration: const Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 300),
               curve: Curves.ease,
             );
           },
