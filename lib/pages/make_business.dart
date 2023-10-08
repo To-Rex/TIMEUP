@@ -12,8 +12,7 @@ class MakeBusinessPage extends StatelessWidget {
   MakeBusinessPage({Key? key}) : super(key: key);
 
   final GetController getController = Get.put(GetController());
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController surnameController = TextEditingController();
+  final TextEditingController fullNameController = TextEditingController();
   final TextEditingController nikNameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
@@ -30,8 +29,7 @@ class MakeBusinessPage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
 
-    nameController.text = getController.meUsers.value.res?.lastName ?? '';
-    surnameController.text = getController.meUsers.value.res?.fistName ?? '';
+    fullNameController.text = getController.meUsers.value.res?.lastName ?? '';
     nikNameController.text = getController.meUsers.value.res?.userName ?? '';
     addressController.text = getController.meUsers.value.res?.address ?? '';
 
@@ -54,7 +52,7 @@ class MakeBusinessPage extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: h * 0.05,
+            height: h * 0.01,
           ),
           Center(
             child: CircleAvatar(
@@ -74,21 +72,17 @@ class MakeBusinessPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: h * 0.05),
-          TextFildWidget(
-            controller: nameController,
-            labelText: 'Name',
-          ),
-          SizedBox(height: h * 0.015),
-          TextFildWidget(
-            controller: surnameController,
-            labelText: 'Surname',
-          ),
-          SizedBox(height: h * 0.015),
+          SizedBox(height: h * 0.01),
           TextFildWidget(
             controller: nikNameController,
             labelText: 'Nikname',
           ),
+          SizedBox(height: h * 0.015),
+          TextFildWidget(
+            controller: fullNameController,
+            labelText: 'Full name',
+          ),
+
           SizedBox(height: h * 0.015),
           TextFildWidget(
             controller: addressController,
@@ -259,22 +253,7 @@ class MakeBusinessPage extends StatelessWidget {
           EditButton(
             text: 'Save data',
             onPressed: () {
-              ApiController()
-                  .editUser(
-                GetStorage().read('token'),
-                nameController.text,
-                surnameController.text,
-                nikNameController.text,
-                addressController.text,
-              )
-                  .then((value) {
-                if (value.status == true) {
-                  getController.entersUser.value = 0;
-                  getUsers();
-                } else {
-                  print('error');
-                }
-              });
+
             },
           ),
           SizedBox(height: h * 0.05),
