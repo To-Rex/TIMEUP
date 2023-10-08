@@ -34,21 +34,18 @@ class MakeBusinessPage extends StatelessWidget {
     fullNameController.text = getController.meUsers.value.res?.lastName ?? '';
     nikNameController.text = getController.meUsers.value.res?.userName ?? '';
     addressController.text = getController.meUsers.value.res?.address ?? '';
-
+    ApiController().getRegion().then((value) {
+      getController.changeRegion(value);
+    });
     ApiController().getCategory().then((value) {
       getController.changeCategory(value);
       getController.categoryIndex.value = value.res![0].id!;
-    });
-
-    ApiController()
-        .getSubCategory(getController.categoryIndex.value)
-        .then((value) {
-      getController.changeSubCategory(value);
-      getController.subCategoryIndex.value = value.res![0].id!;
-    });
-
-    ApiController().getRegion().then((value) {
-      getController.changeRegion(value);
+      ApiController()
+          .getSubCategory(getController.categoryIndex.value)
+          .then((value) {
+        getController.changeSubCategory(value);
+        getController.subCategoryIndex.value = value.res![0].id!;
+      });
     });
 
     return Column(
@@ -134,47 +131,58 @@ class MakeBusinessPage extends StatelessWidget {
                         color: Colors.grey[200],
                       ),
                       child: Obx(
-                        () => DropdownButtonHideUnderline(
-                          child: DropdownButton(
-                            icon: const Icon(Icons.arrow_drop_down,
-                                color: Colors.black),
-                            iconSize: w * 0.06,
-                            value: getController.getRegion.value
-                                .res![getController.regionIndex.value],
-                            hint: Padding(
-                              padding: EdgeInsets.only(
-                                  left: w * 0.02, right: w * 0.02),
-                              child: Text(
-                                'Region',
-                                style: TextStyle(
-                                  fontSize: w * 0.04,
-                                ),
-                              ),
-                            ),
-                            items: getController.getRegion.value.res!
-                                .map(
-                                  (e) => DropdownMenuItem(
-                                    value: e,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          left: w * 0.02, right: w * 0.02),
-                                      child: Text(
-                                        e,
-                                        style: TextStyle(
-                                          fontSize: w * 0.04,
-                                        ),
+                        () => getController.getRegion.value.res != null
+                            ? DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  icon: const Icon(Icons.arrow_drop_down,
+                                      color: Colors.black),
+                                  iconSize: w * 0.06,
+                                  value: getController.getRegion.value
+                                      .res![getController.regionIndex.value],
+                                  hint: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: w * 0.02, right: w * 0.02),
+                                    child: Text(
+                                      'Region',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
                                       ),
                                     ),
                                   ),
-                                )
-                                .toList(),
-                            onChanged: (value) {
-                              int index = getController.getRegion.value.res!
-                                  .indexWhere((element) => element == value);
-                              getController.changeRegionIndex(index);
-                            },
-                          ),
-                        ),
+                                  items: getController.getRegion.value.res!
+                                      .map(
+                                        (e) => DropdownMenuItem(
+                                          value: e,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                left: w * 0.02,
+                                                right: w * 0.02),
+                                            child: Text(
+                                              e,
+                                              style: TextStyle(
+                                                fontSize: w * 0.04,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
+                                  onChanged: (value) {
+                                    int index = getController
+                                        .getRegion.value.res!
+                                        .indexWhere(
+                                            (element) => element == value);
+                                    getController.changeRegionIndex(index);
+                                  },
+                                ),
+                              )
+                            : SizedBox(
+                                width: w * 0.1,
+                                height: h * 0.1,
+                                child: const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
                       ),
                     ),
 
@@ -190,7 +198,8 @@ class MakeBusinessPage extends StatelessWidget {
                         color: Colors.grey[200],
                       ),
                       child: Obx(
-                        () => DropdownButtonHideUnderline(
+                        () => getController.category.value.res != null
+                            ?DropdownButtonHideUnderline(
                           child: DropdownButton(
                             icon: const Icon(Icons.arrow_drop_down,
                                 color: Colors.black),
@@ -214,7 +223,7 @@ class MakeBusinessPage extends StatelessWidget {
                                       padding: EdgeInsets.only(
                                           left: w * 0.02, right: w * 0.02),
                                       child: Text(
-                                        e.name!,
+                                        e.name ?? '',
                                         style: TextStyle(
                                           fontSize: w * 0.04,
                                         ),
@@ -230,10 +239,17 @@ class MakeBusinessPage extends StatelessWidget {
                               ApiController()
                                   .getSubCategory(getController
                                       .category.value.res![index].id!)
-                                  .then((value) {
-                                getController.changeSubCategory(value);
+                                  .then((values) {
+                                getController.changeSubCategory(values);
                               });
                             },
+                          ),
+                        )
+                            : SizedBox(
+                          width: w * 0.1,
+                          height: h * 0.1,
+                          child: const Center(
+                            child: CircularProgressIndicator(),
                           ),
                         ),
                       ),
@@ -250,12 +266,13 @@ class MakeBusinessPage extends StatelessWidget {
                         color: Colors.grey[200],
                       ),
                       child: Obx(
-                        () => DropdownButtonHideUnderline(
+                        () => getController.subCategory.value.res != null
+                            ?DropdownButtonHideUnderline(
                           child: DropdownButton(
                             icon: const Icon(Icons.arrow_drop_down,
                                 color: Colors.black),
                             iconSize: w * 0.06,
-                            value: getController.subCategoryIndex.value,
+                            value: getController.subCategoryIndex.value ?? 0,
                             hint: Padding(
                               padding: EdgeInsets.only(
                                   left: w * 0.02, right: w * 0.02),
@@ -274,7 +291,7 @@ class MakeBusinessPage extends StatelessWidget {
                                       padding: EdgeInsets.only(
                                           left: w * 0.02, right: w * 0.02),
                                       child: Text(
-                                        e.name!,
+                                        e.name ?? '',
                                         style: TextStyle(
                                           fontSize: w * 0.04,
                                         ),
@@ -286,6 +303,13 @@ class MakeBusinessPage extends StatelessWidget {
                             onChanged: (value) {
                               getController.changeSubCategoryID(value as int);
                             },
+                          ),
+                        )
+                            : SizedBox(
+                          width: w * 0.1,
+                          height: h * 0.1,
+                          child: const Center(
+                            child: CircularProgressIndicator(),
                           ),
                         ),
                       ),

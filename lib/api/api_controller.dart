@@ -5,6 +5,7 @@ import 'package:time_up/models/last_send_sms.dart';
 import 'package:time_up/models/register_model.dart';
 import '../models/category.dart';
 import '../models/get_region.dart';
+import '../models/sub_category.dart';
 import '../models/verify_sms.dart';
 import '../models/me_user.dart';
 
@@ -178,13 +179,13 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<GetCategory> getSubCategory(int id) async {
+  Future<GetSubCategory> getSubCategory(int id) async {
     var response = await http.get(Uri.parse(url + subCategoryUrl+id.toString()));
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return GetCategory.fromJson(jsonDecode(response.body));
+      return GetSubCategory.fromJson(jsonDecode(response.body));
     } else {
-      return GetCategory(res: [], status: false);
+      return GetSubCategory(res: [], status: false);
     }
   }
 
