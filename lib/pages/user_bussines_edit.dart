@@ -44,7 +44,7 @@ class EditBusinessUserPage extends StatelessWidget {
               radius: w * 0.12,
               foregroundColor: Colors.blue,
               backgroundImage: NetworkImage(
-                  '${ApiController().url}${getController.meUsers.value.res?.photoUrl?.substring(17, getController.meUsers.value.res?.photoUrl?.length)}'),
+                  '${ApiController().url}${getController.meUsers.value.res?.photoUrl}'),
             ),
           ),
           TextButton(
