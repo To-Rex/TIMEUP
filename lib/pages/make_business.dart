@@ -45,6 +45,10 @@ class MakeBusinessPage extends StatelessWidget {
       print(getController.subCategoryIndex.value);
     });
 
+    ApiController().getRegion().then((value) {
+      getController.changeRegion(value);
+    });
+
     return SizedBox(
       width: w,
       child: Column(

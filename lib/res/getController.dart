@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:time_up/models/category.dart';
 import 'package:time_up/models/me_user.dart';
 
+import '../models/get_region.dart';
+
 class GetController extends GetxController {
   var fullName = 'Dilshodjon Haydarov'.obs;
   var sendCode = false.obs;
@@ -18,6 +20,7 @@ class GetController extends GetxController {
   var categoryIndex = 0.obs;
   var subCategory = GetCategory().obs;
   var subCategoryIndex = 0.obs;
+  var getRegion = GetRegion().obs;
 
   void changeCategoryID(int newCategoryID) {
     categoryIndex.value = newCategoryID;
@@ -77,6 +80,14 @@ class GetController extends GetxController {
 
   void clearSubCategory() {
     subCategory.value = GetCategory();
+  }
+
+  void changeRegion(GetRegion newRegion) {
+    getRegion.value = newRegion;
+  }
+
+  void clearRegion() {
+    getRegion.value = GetRegion();
   }
 
 }
