@@ -32,7 +32,7 @@ class SamplePage extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(h * 0.1),
+        preferredSize: Size.fromHeight(h * 0.06),
         child: Container(
           margin: EdgeInsets.only(top: h * 0.045, bottom: h * 0.01),
           child: Row(

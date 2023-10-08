@@ -251,7 +251,7 @@ class MakeBusinessPage extends StatelessWidget {
             labelText: 'Name of the institution',
           ),
           EditButton(
-            text: 'Save data',
+            text: 'Next',
             onPressed: () {
 
             },
