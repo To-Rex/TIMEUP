@@ -23,6 +23,7 @@ class ApiController extends GetxController {
   var categoryUrl = 'category/get';
   var subCategoryUrl = 'category/get?parent_id=';
   var regionUrl = 'region/get';
+  var businessCreateUrl = 'business/create';
 
   Future<String> sendSms(String phoneNumber) async {
     var response = await http.post(
@@ -198,4 +199,14 @@ class ApiController extends GetxController {
       return GetRegion(res: [], status: false);
     }
   }
+
+  //Bearer token and body {
+//     "category_id": 3,
+//     "office_address": "office_address...",
+//     "office_name": "office_name..",
+//     "experience": 3,
+//     "bio": "bio...",
+//     "day_offs": " Shanba, Yakshanba"
+// } Post
+
 }

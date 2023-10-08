@@ -14,9 +14,7 @@ class MakeBusinessPage extends StatelessWidget {
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController nikNameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
-  final TextEditingController nameInstitutionController =
-      TextEditingController();
+  final TextEditingController nameInstitutionController = TextEditingController();
 
   //page controller
   final PageController pageController = PageController();
@@ -31,11 +29,9 @@ class MakeBusinessPage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
 
-    fullNameController.text = getController.meUsers.value.res?.fistName ?? '';
+    fullNameController.text = '${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res!.lastName}';
     nikNameController.text = getController.meUsers.value.res?.userName ?? '';
-    phoneNumberController.text =
-        getController.meUsers.value.res?.phoneNumber ?? '';
-    addressController.text = getController.meUsers.value.res?.address ?? '';
+    phoneNumberController.text = getController.meUsers.value.res?.phoneNumber ?? '';
 
     ApiController().getRegion().then((value) {
       getController.changeRegion(value);
@@ -117,10 +113,9 @@ class MakeBusinessPage extends StatelessWidget {
                       controller: fullNameController,
                       labelText: 'Full name',
                     ),
-
                     SizedBox(height: h * 0.013),
                     TextFildWidget(
-                      controller: addressController,
+                      controller: phoneNumberController,
                       labelText: 'Adress',
                     ),
                     SizedBox(height: h * 0.013),
