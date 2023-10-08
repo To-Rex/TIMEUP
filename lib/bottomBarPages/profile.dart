@@ -8,6 +8,7 @@ import '../elements/btn_business.dart';
 import '../elements/btn_users.dart';
 import '../elements/txt_business.dart';
 import '../pages/login_page.dart';
+import '../pages/make_business.dart';
 import '../pages/user_bussines_edit.dart';
 import '../pages/user_edit.dart';
 import '../res/getController.dart';
@@ -163,7 +164,9 @@ class ProfilePage extends StatelessWidget {
                             getController.meUsers.value.res?.business == null
                                 ? EditButton(
                                     text: 'Make business profile',
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      getController.entersUser.value = 2;
+                                    },
                                   )
                                 : SizedBox(
                                     width: w * 0.9,
@@ -228,10 +231,14 @@ class ProfilePage extends StatelessWidget {
                                 : BioBusiness(text: getController.meUsers.value.res?.business?.bio ?? '')),
                       ],
                     )
-                  : getController.entersUser.value == 1 &&
-                          getController.meUsers.value.res?.business == null
-                      ? EditUserPage()
-                      : EditBusinessUserPage(),
+                  : getController.entersUser.value == 1
+                      ? getController.meUsers.value.res?.business == null
+                          ? EditUserPage()
+                          : EditBusinessUserPage()
+                      : getController.entersUser.value == 2
+                          ? MakeBusinessPage()
+                          : const SizedBox(),
+
             ),
           )
         : const Center(
