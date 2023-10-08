@@ -106,7 +106,7 @@ class ProfilePage extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         Text(
-                                          '${getController.meUsers.value.res?.business?.workCategoryId}',
+                                          '${getController.meUsers.value.res?.business?.categoryName}',
                                           style: TextStyle(
                                             fontSize: w * 0.04,
                                             fontWeight: FontWeight.w400,

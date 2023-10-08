@@ -71,7 +71,8 @@ class MeRes {
 class Business {
   int? id;
   int? userId;
-  int? workCategoryId;
+  int? categoryId;
+  String? categoryName;
   String? officeAddress;
   String? officeName;
   int? experience;
@@ -81,7 +82,8 @@ class Business {
   Business(
       {this.id,
         this.userId,
-        this.workCategoryId,
+        this.categoryId,
+        this.categoryName,
         this.officeAddress,
         this.officeName,
         this.experience,
@@ -91,7 +93,8 @@ class Business {
   Business.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
-    workCategoryId = json['work_category_id'];
+    categoryId = json['category_id'];
+    categoryName = json['category_name'];
     officeAddress = json['office_address'];
     officeName = json['office_name'];
     experience = json['experience'];
@@ -103,7 +106,8 @@ class Business {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['user_id'] = userId;
-    data['work_category_id'] = workCategoryId;
+    data['category_id'] = categoryId;
+    data['category_name'] = categoryName;
     data['office_address'] = officeAddress;
     data['office_name'] = officeName;
     data['experience'] = experience;
@@ -112,3 +116,4 @@ class Business {
     return data;
   }
 }
+
