@@ -95,6 +95,57 @@ class MakeBusinessPage extends StatelessWidget {
             labelText: 'Adress',
           ),
           SizedBox(height: h * 0.015),
+          //dropdown menu for region
+          Container(
+            width: w * 0.9,
+            height: h * 0.07,
+            padding: EdgeInsets.only( right: w * 0.02),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.grey[200],
+            ),
+            child: Obx(
+              () => DropdownButtonHideUnderline(
+                child: DropdownButton(
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                  iconSize: w * 0.06,
+                  value: getController.getRegion.value.res![getController.regionIndex.value],
+                  hint: Padding(
+                    padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
+                    child: Text(
+                      'Region',
+                      style: TextStyle(
+                        fontSize: w * 0.04,
+                      ),
+                    ),
+                  ),
+                  items: getController.getRegion.value.res!
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
+                            child: Text(
+                              e,
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    int index = getController.getRegion.value.res!
+                        .indexWhere((element) => element == value);
+                    getController.changeRegionIndex(index);
+                  },
+                ),
+              ),
+            ),
+          ),
+
+          SizedBox(height: h * 0.015),
 
           //dropdown menu for category
           Container(

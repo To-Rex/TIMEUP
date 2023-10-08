@@ -21,6 +21,7 @@ class GetController extends GetxController {
   var subCategory = GetCategory().obs;
   var subCategoryIndex = 0.obs;
   var getRegion = GetRegion().obs;
+  var regionIndex = 0.obs;
 
   void changeCategoryID(int newCategoryID) {
     categoryIndex.value = newCategoryID;
@@ -88,6 +89,10 @@ class GetController extends GetxController {
 
   void clearRegion() {
     getRegion.value = GetRegion();
+  }
+
+  void changeRegionIndex(int newRegionIndex) {
+    regionIndex.value = newRegionIndex;
   }
 
 }
