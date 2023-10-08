@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:time_up/models/last_send_sms.dart';
 import 'package:time_up/models/register_model.dart';
 import '../models/category.dart';
+import '../models/get_region.dart';
 import '../models/verify_sms.dart';
 import '../models/me_user.dart';
 
@@ -20,6 +21,7 @@ class ApiController extends GetxController {
   var editMeUrl = 'user/edit-me';
   var categoryUrl = 'category/get';
   var subCategoryUrl = 'category/get?parent_id=';
+  var regionUrl = 'region/get';
 
   Future<String> sendSms(String phoneNumber) async {
     var response = await http.post(
@@ -176,8 +178,8 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<GetCategory> getSubCategory(id) async {
-    var response = await http.get(Uri.parse(url + subCategoryUrl+id));
+  Future<GetCategory> getSubCategory(int id) async {
+    var response = await http.get(Uri.parse(url + subCategoryUrl+id.toString()));
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return GetCategory.fromJson(jsonDecode(response.body));
@@ -186,4 +188,13 @@ class ApiController extends GetxController {
     }
   }
 
+  Future<GetRegion> getRegion() async {
+    var response = await http.get(Uri.parse(url + regionUrl));
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return GetRegion.fromJson(jsonDecode(response.body));
+    } else {
+      return GetRegion(res: [], status: false);
+    }
+  }
 }

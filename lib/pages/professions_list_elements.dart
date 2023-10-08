@@ -22,7 +22,7 @@ class ProfessionsListElements extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    ApiController().getSubCategory(index.toString()).then((value) => _getController.changeSubCategory(value));
+    ApiController().getSubCategory(index!.toInt()).then((value) => _getController.changeSubCategory(value));
     return Column(
       children: [
         SizedBox(
