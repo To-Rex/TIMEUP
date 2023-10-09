@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:time_up/elements/functions.dart';
 import '../api/api_controller.dart';
 import '../elements/btn_users.dart';
 import '../elements/text_filds.dart';
@@ -417,6 +418,8 @@ class MakeBusinessPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
                       child: TextFildWidget(
+                        //keyboardType: number keyboard not ',' and '.'
+                        keyboardType: TextInputType.number,
                         controller: experienceController,
                         labelText: '__',
                       ),
@@ -445,38 +448,60 @@ class MakeBusinessPage extends StatelessWidget {
               ? EditButton(
                   text: 'Save',
                   onPressed: () {
-                    if (nikNameController.text.isNotEmpty) {
+                    if (nikNameController.text.isEmpty) {
                       getController.changeFullName(nikNameController.text);
+                      Toast.showToast(context, 'Nikname is empty', Colors.red, Colors.white,);
+                      return;
                     }
-                    if (nameInstitutionController.text.isNotEmpty) {
+                    if (nameInstitutionController.text.isEmpty) {
                       getController.changeFullName(fullNameController.text);
+                      Toast.showToast(context, 'Name of the institution is empty', Colors.red, Colors.white,);
+                      return;
                     }
-                    if (phoneNumberController.text.isNotEmpty) {
+                    if (phoneNumberController.text.isEmpty) {
                       getController.changeFullName(phoneNumberController.text);
+                      Toast.showToast(context, 'Phone number is empty', Colors.red, Colors.white,);
+                      return;
                     }
-                    if (experienceController.text.isNotEmpty) {
-                      getController.changeFullName(experienceController.text);
-                    }
-                    if (getController.subCategory.value.res != null) {
+                    if (getController.subCategory.value.res == null) {
                       getController.changeFullName(getController.subCategory.value.res![getController.subCategoryIndex.value].name!);
+                      Toast.showToast(context, 'Subcategory is empty', Colors.red, Colors.white,);
+                      return;
                     }
-                    if (getController.getRegion.value.res != null) {
+                    if (getController.getRegion.value.res == null) {
                       getController.changeFullName(getController.getRegion.value.res![getController.regionIndex.value]);
+                      Toast.showToast(context, 'Region is empty', Colors.red, Colors.white,);
+                      return;
                     }
-
+                    if (experienceController.text.isEmpty) {
+                      Toast.showToast(context, 'Experience is empty', Colors.red, Colors.white,);
+                      return;
+                    }
+                    experienceController.text = experienceController.text.replaceAll(',', '.');
+                    //if experienceController . 2 ta bolsa
+                    if (experienceController.text.split('.').length > 2) {
+                      Toast.showToast(context, 'Please enter a valid number', Colors.red, Colors.white,);
+                      return;
+                    }
+                    var experience;
+                    //if experienceController.text in . bolsa
+                    if (experienceController.text.contains('.')) {
+                      experience = double.parse(experienceController.text);
+                    } else {
+                      experience = int.parse(experienceController.text);
+                    }
                     ApiController().createBusiness(
                         GetStorage().read('token'),
                         getController.subCategory.value.res![getController.subCategoryIndex.value].id!,
                         getController.getRegion.value.res![getController.regionIndex.value],
                         nameInstitutionController.text,
-                        int.parse(experienceController.text),
+                        experience,
                         bioController.text,
-                        dayOffController.text
-                        ).then((value) {
+                        dayOffController.text).then((value) {
                           if(value){
                             finish();
                           }else{
-                            Get.snackbar('Error', 'Error');
+                            Toast.showToast(context, 'Error', Colors.red, Colors.white,);
                           }
                         });
                   },

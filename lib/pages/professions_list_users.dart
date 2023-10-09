@@ -5,12 +5,10 @@ import 'package:time_up/pages/professions_list_details.dart';
 import '../res/getController.dart';
 
 class ProfessionsListUsers extends StatelessWidget {
-  final List<String> professions;
   final Function(String) onTap;
 
   ProfessionsListUsers({
     Key? key,
-    required this.professions,
     required this.onTap,
   }) : super(key: key);
 
@@ -65,7 +63,7 @@ class ProfessionsListUsers extends StatelessWidget {
                             SizedBox(
                               width: w * 0.2,
                               height: w * 0.2,
-                              child: CircleAvatar(
+                              child: const CircleAvatar(
                                 backgroundImage: AssetImage('assets/images/doctor.png'),
                               ),
                             ),

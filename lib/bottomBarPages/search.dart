@@ -12,25 +12,6 @@ class SearchPage extends StatelessWidget {
 
   var profession = [
     'Stomatolog',
-    'Kardiolog',
-    'Terapevt',
-    'Nevrolog',
-    'Oftalmolog',
-    'Dermatolog',
-    'Ginekolog',
-    'Urolog',
-    'Endokrinolog',
-    'Nevrohirurg',
-    'Psixolog',
-    'Psixiater',
-    'Onkolog',
-    'Radiolog',
-    'Rentgenolog',
-    'Mikrobiolog',
-    'Parazitolog',
-    'Immunolog',
-    'Epidemiolog',
-    'Patolog',
     'Anesteziolog',
     'Reanimatolog',
     'Feldsher'
@@ -56,7 +37,6 @@ class SearchPage extends StatelessWidget {
                       _getController.enters.value = 2;
                     })
                 : ProfessionsListUsers(
-                    professions: profession,
                     onTap: (profession) {
                       _getController.enters.value = 0;
                     },

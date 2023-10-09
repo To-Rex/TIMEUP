@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 class TextFildWidget extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
+  //keyboard type
+  final TextInputType? keyboardType;
 
   const TextFildWidget({super.key,
     required this.controller,
     required this.labelText,
+    this.keyboardType
   });
 
   @override
@@ -22,7 +25,7 @@ class TextFildWidget extends StatelessWidget {
       ),
       child: TextField(
         controller: controller,
-        keyboardType: TextInputType.name,
+        keyboardType: keyboardType,
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           hintText: labelText,
