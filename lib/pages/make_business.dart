@@ -13,6 +13,8 @@ class MakeBusinessPage extends StatelessWidget {
   final GetController getController = Get.put(GetController());
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController nikNameController = TextEditingController();
+  //tajriba
+  final TextEditingController experienceController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController nameInstitutionController = TextEditingController();
 
@@ -409,7 +411,7 @@ class MakeBusinessPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
                       child: TextFildWidget(
-                        controller: nikNameController,
+                        controller: experienceController,
                         labelText: '__',
                       ),
                     ),
@@ -437,8 +439,15 @@ class MakeBusinessPage extends StatelessWidget {
               ? EditButton(
                   text: 'Save',
                   onPressed: () {
-                    getController.entersUser.value = 0;
-                    getController.nextPages.value = 0;
+                    ApiController().createBusiness(
+                        GetStorage().read('token'),
+                        getController.categoryIndex.value,
+                        nameInstitutionController.text,
+                        nameInstitutionController.text,
+                        experienceController.text,
+                        nameInstitutionController.text,
+                        nameInstitutionController.text
+                       );
                   },
                 )
               : EditButton(
@@ -455,5 +464,9 @@ class MakeBusinessPage extends StatelessWidget {
         SizedBox(height: h * 0.05),
       ],
     );
+  }
+  finish() {
+    getController.entersUser.value = 0;
+    getController.nextPages.value = 0;
   }
 }

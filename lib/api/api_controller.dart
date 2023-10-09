@@ -208,5 +208,27 @@ class ApiController extends GetxController {
 //     "bio": "bio...",
 //     "day_offs": " Shanba, Yakshanba"
 // } Post
+  Future<bool> createBusiness(token, categoryId, officeAddress, officeName,
+      experience, bio, dayOffs) async {
+    var response = await http.post(Uri.parse(url + businessCreateUrl),
+        body: jsonEncode({
+          "category_id": categoryId,
+          "office_address": officeAddress,
+          "office_name": officeName,
+          "experience": experience,
+          "bio": bio,
+          "day_offs": dayOffs
+        }),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json'
+        });
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 }
