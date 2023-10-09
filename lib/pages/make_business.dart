@@ -37,11 +37,9 @@ class MakeBusinessPage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
 
-    fullNameController.text =
-        '${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res!.lastName}';
+    fullNameController.text = '${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res!.lastName}';
     nikNameController.text = getController.meUsers.value.res?.userName ?? '';
-    phoneNumberController.text =
-        getController.meUsers.value.res?.phoneNumber ?? '';
+    phoneNumberController.text = getController.meUsers.value.res?.phoneNumber ?? '';
 
     ApiController().getRegion().then((value) {
       getController.changeRegion(value);
@@ -447,16 +445,40 @@ class MakeBusinessPage extends StatelessWidget {
               ? EditButton(
                   text: 'Save',
                   onPressed: () {
+                    if (nikNameController.text.isNotEmpty) {
+                      getController.changeFullName(nikNameController.text);
+                    }
+                    if (nameInstitutionController.text.isNotEmpty) {
+                      getController.changeFullName(fullNameController.text);
+                    }
+                    if (phoneNumberController.text.isNotEmpty) {
+                      getController.changeFullName(phoneNumberController.text);
+                    }
+                    if (experienceController.text.isNotEmpty) {
+                      getController.changeFullName(experienceController.text);
+                    }
+                    if (getController.subCategory.value.res != null) {
+                      getController.changeFullName(getController.subCategory.value.res![getController.subCategoryIndex.value].name!);
+                    }
+                    if (getController.getRegion.value.res != null) {
+                      getController.changeFullName(getController.getRegion.value.res![getController.regionIndex.value]);
+                    }
+
                     ApiController().createBusiness(
                         GetStorage().read('token'),
-                        getController.subCategory.value
-                            .res![getController.subCategoryIndex.value].id!,
-                        getController.getRegion.value
-                            .res![getController.regionIndex.value],
+                        getController.subCategory.value.res![getController.subCategoryIndex.value].id!,
+                        getController.getRegion.value.res![getController.regionIndex.value],
                         nameInstitutionController.text,
                         int.parse(experienceController.text),
                         bioController.text,
-                        dayOffController.text);
+                        dayOffController.text
+                        ).then((value) {
+                          if(value){
+                            finish();
+                          }else{
+                            Get.snackbar('Error', 'Error');
+                          }
+                        });
                   },
                 )
               : EditButton(
