@@ -208,8 +208,8 @@ class ApiController extends GetxController {
 //     "bio": "bio...",
 //     "day_offs": " Shanba, Yakshanba"
 // } Post
-  Future<bool> createBusiness(token, categoryId, officeAddress, officeName,
-      experience, bio, dayOffs) async {
+  Future<bool> createBusiness(token, int categoryId, officeAddress, officeName,
+      int experience, bio, dayOffs) async {
     var response = await http.post(Uri.parse(url + businessCreateUrl),
         body: jsonEncode({
           "category_id": categoryId,

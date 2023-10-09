@@ -13,10 +13,14 @@ class MakeBusinessPage extends StatelessWidget {
   final GetController getController = Get.put(GetController());
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController nikNameController = TextEditingController();
-  //tajriba
   final TextEditingController experienceController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController nameInstitutionController = TextEditingController();
+  final TextEditingController nameInstitutionController =
+      TextEditingController();
+  //bio
+  final TextEditingController bioController = TextEditingController();
+  //day off
+  final TextEditingController dayOffController = TextEditingController();
 
   //page controller
   final PageController pageController = PageController();
@@ -31,9 +35,11 @@ class MakeBusinessPage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
 
-    fullNameController.text = '${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res!.lastName}';
+    fullNameController.text =
+        '${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res!.lastName}';
     nikNameController.text = getController.meUsers.value.res?.userName ?? '';
-    phoneNumberController.text = getController.meUsers.value.res?.phoneNumber ?? '';
+    phoneNumberController.text =
+        getController.meUsers.value.res?.phoneNumber ?? '';
 
     ApiController().getRegion().then((value) {
       getController.changeRegion(value);
@@ -197,59 +203,63 @@ class MakeBusinessPage extends StatelessWidget {
                       ),
                       child: Obx(
                         () => getController.category.value.res != null
-                            ?DropdownButtonHideUnderline(
-                          child: DropdownButton(
-                            icon: const Icon(Icons.arrow_drop_down,
-                                color: Colors.black),
-                            iconSize: w * 0.06,
-                            value: getController.categoryIndex.value,
-                            hint: Padding(
-                              padding: EdgeInsets.only(
-                                  left: w * 0.02, right: w * 0.02),
-                              child: Text(
-                                'Type of activity',
-                                style: TextStyle(
-                                  fontSize: w * 0.04,
-                                ),
-                              ),
-                            ),
-                            items: getController.category.value.res!
-                                .map(
-                                  (e) => DropdownMenuItem(
-                                    value: e.id,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          left: w * 0.02, right: w * 0.02),
-                                      child: Text(
-                                        e.name ?? '',
-                                        style: TextStyle(
-                                          fontSize: w * 0.04,
-                                        ),
+                            ? DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  icon: const Icon(Icons.arrow_drop_down,
+                                      color: Colors.black),
+                                  iconSize: w * 0.06,
+                                  value: getController.categoryIndex.value,
+                                  hint: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: w * 0.02, right: w * 0.02),
+                                    child: Text(
+                                      'Type of activity',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
                                       ),
                                     ),
                                   ),
-                                )
-                                .toList(),
-                            onChanged: (value) {
-                              getController.changeCategoryID(value as int);
-                              int index = getController.category.value.res!
-                                  .indexWhere((element) => element.id == value);
-                              ApiController()
-                                  .getSubCategory(getController
-                                      .category.value.res![index].id!)
-                                  .then((values) {
-                                getController.changeSubCategory(values);
-                              });
-                            },
-                          ),
-                        )
+                                  items: getController.category.value.res!
+                                      .map(
+                                        (e) => DropdownMenuItem(
+                                          value: e.id,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                left: w * 0.02,
+                                                right: w * 0.02),
+                                            child: Text(
+                                              e.name ?? '',
+                                              style: TextStyle(
+                                                fontSize: w * 0.04,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
+                                  onChanged: (value) {
+                                    getController
+                                        .changeCategoryID(value as int);
+                                    int index = getController
+                                        .category.value.res!
+                                        .indexWhere(
+                                            (element) => element.id == value);
+                                    ApiController()
+                                        .getSubCategory(getController
+                                            .category.value.res![index].id!)
+                                        .then((values) {
+                                      getController.changeSubCategory(values);
+                                    });
+                                  },
+                                ),
+                              )
                             : SizedBox(
-                          width: w * 0.1,
-                          height: h * 0.1,
-                          child: const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        ),
+                                width: w * 0.1,
+                                height: h * 0.1,
+                                child: const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
                       ),
                     ),
                     SizedBox(height: h * 0.013),
@@ -264,51 +274,53 @@ class MakeBusinessPage extends StatelessWidget {
                       ),
                       child: Obx(
                         () => getController.subCategory.value.res != null
-                            ?DropdownButtonHideUnderline(
-                          child: DropdownButton(
-                            icon: const Icon(Icons.arrow_drop_down,
-                                color: Colors.black),
-                            iconSize: w * 0.06,
-                            value: getController.subCategoryIndex.value,
-                            hint: Padding(
-                              padding: EdgeInsets.only(
-                                  left: w * 0.02, right: w * 0.02),
-                              child: Text(
-                                'Subcategory',
-                                style: TextStyle(
-                                  fontSize: w * 0.04,
-                                ),
-                              ),
-                            ),
-                            items: getController.subCategory.value.res!
-                                .map(
-                                  (e) => DropdownMenuItem(
-                                    value: e.id,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          left: w * 0.02, right: w * 0.02),
-                                      child: Text(
-                                        e.name ?? '',
-                                        style: TextStyle(
-                                          fontSize: w * 0.04,
-                                        ),
+                            ? DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  icon: const Icon(Icons.arrow_drop_down,
+                                      color: Colors.black),
+                                  iconSize: w * 0.06,
+                                  value: getController.subCategoryIndex.value,
+                                  hint: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: w * 0.02, right: w * 0.02),
+                                    child: Text(
+                                      'Subcategory',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
                                       ),
                                     ),
                                   ),
-                                )
-                                .toList(),
-                            onChanged: (value) {
-                              getController.changeSubCategoryID(value as int);
-                            },
-                          ),
-                        )
+                                  items: getController.subCategory.value.res!
+                                      .map(
+                                        (e) => DropdownMenuItem(
+                                          value: e.id,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                left: w * 0.02,
+                                                right: w * 0.02),
+                                            child: Text(
+                                              e.name ?? '',
+                                              style: TextStyle(
+                                                fontSize: w * 0.04,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
+                                  onChanged: (value) {
+                                    getController
+                                        .changeSubCategoryID(value as int);
+                                  },
+                                ),
+                              )
                             : SizedBox(
-                          width: w * 0.1,
-                          height: h * 0.1,
-                          child: const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        ),
+                                width: w * 0.1,
+                                height: h * 0.1,
+                                child: const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
                       ),
                     ),
                     SizedBox(height: h * 0.013),
@@ -332,6 +344,7 @@ class MakeBusinessPage extends StatelessWidget {
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.ease,
                             );
+                            getController.nextPages.value = 0;
                           },
                           icon: const Icon(Icons.arrow_back_ios),
                         ),
@@ -359,6 +372,7 @@ class MakeBusinessPage extends StatelessWidget {
                       child: TextField(
                         maxLines: 10,
                         maxLength: 300,
+                        controller: bioController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'About yourself',
@@ -390,6 +404,7 @@ class MakeBusinessPage extends StatelessWidget {
                       ),
                       child: TextField(
                         maxLines: 10,
+                        controller: dayOffController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Write down your days off',
@@ -441,13 +456,12 @@ class MakeBusinessPage extends StatelessWidget {
                   onPressed: () {
                     ApiController().createBusiness(
                         GetStorage().read('token'),
-                        getController.categoryIndex.value,
+                        getController.subCategory.value.res![getController.subCategoryIndex.value].id!,
+                        getController.getRegion.value.res![getController.regionIndex.value],
                         nameInstitutionController.text,
-                        nameInstitutionController.text,
-                        experienceController.text,
-                        nameInstitutionController.text,
-                        nameInstitutionController.text
-                       );
+                        int.parse(experienceController.text),
+                        bioController.text,
+                        dayOffController.text);
                   },
                 )
               : EditButton(
@@ -465,6 +479,7 @@ class MakeBusinessPage extends StatelessWidget {
       ],
     );
   }
+
   finish() {
     getController.entersUser.value = 0;
     getController.nextPages.value = 0;
