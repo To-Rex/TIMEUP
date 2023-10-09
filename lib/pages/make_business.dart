@@ -17,8 +17,10 @@ class MakeBusinessPage extends StatelessWidget {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController nameInstitutionController =
       TextEditingController();
+
   //bio
   final TextEditingController bioController = TextEditingController();
+
   //day off
   final TextEditingController dayOffController = TextEditingController();
 
@@ -88,7 +90,7 @@ class MakeBusinessPage extends StatelessWidget {
                           ),
                           const Spacer(),
                           CircleAvatar(
-                            radius: w * 0.11,
+                            radius: w * 0.14,
                             foregroundColor: Colors.blue,
                             backgroundImage: NetworkImage(
                                 'http://${getController.meUsers.value.res?.photoUrl}'),
@@ -98,6 +100,7 @@ class MakeBusinessPage extends StatelessWidget {
                         ],
                       ),
                     ),
+                    SizedBox(height: h * 0.01),
                     SizedBox(
                       height: h * 0.05,
                       child: TextButton(
@@ -111,22 +114,12 @@ class MakeBusinessPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: h * 0.01),
+                    SizedBox(height: h * 0.05),
                     TextFildWidget(
                       controller: nikNameController,
                       labelText: 'Nikname',
                     ),
-                    SizedBox(height: h * 0.013),
-                    TextFildWidget(
-                      controller: fullNameController,
-                      labelText: 'Full name',
-                    ),
-                    SizedBox(height: h * 0.013),
-                    TextFildWidget(
-                      controller: phoneNumberController,
-                      labelText: 'Adress',
-                    ),
-                    SizedBox(height: h * 0.013),
+                    SizedBox(height: h * 0.02),
                     //dropdown menu for region
                     Container(
                       width: w * 0.9,
@@ -191,7 +184,7 @@ class MakeBusinessPage extends StatelessWidget {
                               ),
                       ),
                     ),
-                    SizedBox(height: h * 0.013),
+                    SizedBox(height: h * 0.02),
                     //dropdown menu for category
                     Container(
                       width: w * 0.9,
@@ -262,7 +255,7 @@ class MakeBusinessPage extends StatelessWidget {
                               ),
                       ),
                     ),
-                    SizedBox(height: h * 0.013),
+                    SizedBox(height: h * 0.02),
                     //dropdown menu for subcategory
                     Container(
                       width: w * 0.9,
@@ -323,7 +316,7 @@ class MakeBusinessPage extends StatelessWidget {
                               ),
                       ),
                     ),
-                    SizedBox(height: h * 0.013),
+                    SizedBox(height: h * 0.02),
                     TextFildWidget(
                       controller: nameInstitutionController,
                       labelText: 'Name of the institution',
@@ -456,8 +449,10 @@ class MakeBusinessPage extends StatelessWidget {
                   onPressed: () {
                     ApiController().createBusiness(
                         GetStorage().read('token'),
-                        getController.subCategory.value.res![getController.subCategoryIndex.value].id!,
-                        getController.getRegion.value.res![getController.regionIndex.value],
+                        getController.subCategory.value
+                            .res![getController.subCategoryIndex.value].id!,
+                        getController.getRegion.value
+                            .res![getController.regionIndex.value],
                         nameInstitutionController.text,
                         int.parse(experienceController.text),
                         bioController.text,
