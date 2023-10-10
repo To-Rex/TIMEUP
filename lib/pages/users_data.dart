@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:time_up/api/api_controller.dart';
@@ -128,7 +129,7 @@ class LoginUserData extends StatelessWidget {
                     ).then((value) {
                       if(value.status == true){
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()));
-                        Toast.showToast(context, '${value.res?.token}', Colors.green, Colors.white);
+                        GetStorage().write('token', value.res?.token);
                       }else{
                         Toast.showToast(context, 'Exx Nimadur xato ketdi', Colors.red, Colors.white);
                       }
