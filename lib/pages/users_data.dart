@@ -19,9 +19,6 @@ class LoginUserData extends StatelessWidget {
   final TextEditingController nikNameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
 
-  var countries = ['Uzbekistan', 'Russia', 'USA', 'China', 'Korea'];
-  var dropdownValue = 'Uzbekistan';
-
   final ImagePicker _picker = ImagePicker();
   var croppedImage;
 
@@ -43,6 +40,9 @@ class LoginUserData extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
+    ApiController().getRegion().then((value) {
+      getController.changeRegion(value);
+    });
     return Scaffold(
       //resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -98,13 +98,15 @@ class LoginUserData extends StatelessWidget {
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: DropdownButtonHideUnderline(
+                  child: Obx(() => DropdownButtonHideUnderline(
                     child: DropdownButton(
-                      value: dropdownValue,
+                      value: getController.getRegion.value
+                          .res![getController.regionIndex.value],
                       onChanged: (String? newValue) {
-                        dropdownValue = newValue!;
+                        getController.changeRegionIndex(
+                            getController.getRegion.value.res!.indexOf(newValue!));
                       },
-                      items: countries.map<DropdownMenuItem<String>>(
+                      items: getController.getRegion.value.res!.map<DropdownMenuItem<String>>(
                         (String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -113,17 +115,39 @@ class LoginUserData extends StatelessWidget {
                         },
                       ).toList(),
                     ),
-                  ),
+                  ),),
                 ),
                 SizedBox(height: h * 0.02),
                 ElevatedButton(
                   onPressed: () {
+
+                    if (getController.image.value == '') {
+                      Toast.showToast(context, 'Iltimos Rasm tanlang!', Colors.red, Colors.white);
+                      return;
+                    }
+                    if (nameController.text.isEmpty) {
+                      Toast.showToast(context, 'Ismingizni kiriting!', Colors.red, Colors.white);
+                      return;
+                    }
+                    if (surnameController.text.isEmpty) {
+                      Toast.showToast(context, 'Familiyaningizni kiriting!', Colors.red, Colors.white);
+                      return;
+                    }
+                    if (nikNameController.text.isEmpty) {
+                      Toast.showToast(context, 'Nikname ni toldiring', Colors.red, Colors.white);
+                      return;
+                    }
+                    if (phoneNumberController.text.isEmpty) {
+                      Toast.showToast(context, 'Telefon raqamingizni kiriting!', Colors.red, Colors.white);
+                      return;
+                    }
+
                     ApiController().registerUser(
                       nameController.text.toString(),
                       surnameController.text.toString(),
                       nikNameController.text.toString(),
                       phoneNumberController.text.toString(),
-                      dropdownValue.toString(),
+                      getController.getRegion.value.res![getController.regionIndex.value],
                       getController.image.value,
                     ).then((value) {
                       if(value.status == true){
