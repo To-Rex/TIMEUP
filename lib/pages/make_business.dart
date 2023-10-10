@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:time_up/elements/functions.dart';
 import '../api/api_controller.dart';
@@ -33,14 +35,46 @@ class MakeBusinessPage extends StatelessWidget {
         await ApiController().getUserData(GetStorage().read('token')));
   }
 
+  final ImagePicker _picker = ImagePicker();
+  var croppedImage;
+
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedFile = await _picker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      _cropImage(pickedFile.path);
+    }
+  }
+
+  Future<void> _cropImage(String imagePath) async {
+    croppedImage = await ImageCropper.platform.cropImage(
+      sourcePath: imagePath,
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+      compressQuality: 100,
+      compressFormat: ImageCompressFormat.jpg,
+    );
+    if (croppedImage != null) {
+      getController.changeImage(croppedImage.path);
+    }else{
+      print('null$croppedImage');
+      return;
+    }
+    ApiController().editUserPhoto(
+        GetStorage().read('token'), croppedImage.path).then((value) =>
+        print(value)
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
 
-    fullNameController.text = '${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res!.lastName}';
+    fullNameController.text =
+        '${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res!.lastName}';
     nikNameController.text = getController.meUsers.value.res?.userName ?? '';
-    phoneNumberController.text = getController.meUsers.value.res?.phoneNumber ?? '';
+    phoneNumberController.text =
+        getController.meUsers.value.res?.phoneNumber ?? '';
 
     ApiController().getRegion().then((value) {
       getController.changeRegion(value);
@@ -103,7 +137,9 @@ class MakeBusinessPage extends StatelessWidget {
                     SizedBox(
                       height: h * 0.05,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _pickImage(ImageSource.gallery);
+                        },
                         child: Text(
                           'Edit profile photo',
                           style: TextStyle(
@@ -132,9 +168,11 @@ class MakeBusinessPage extends StatelessWidget {
                         () => getController.getRegion.value.res != null
                             ? DropdownButtonHideUnderline(
                                 child: DropdownButton(
-                                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                                  icon: const Icon(Icons.arrow_drop_down,
+                                      color: Colors.black),
                                   iconSize: w * 0.06,
-                                  value: getController.getRegion.value.res![getController.regionIndex.value],
+                                  value: getController.getRegion.value
+                                      .res![getController.regionIndex.value],
                                   hint: Padding(
                                     padding: EdgeInsets.only(
                                         left: w * 0.02, right: w * 0.02),
@@ -448,37 +486,78 @@ class MakeBusinessPage extends StatelessWidget {
                   onPressed: () {
                     if (nikNameController.text.isEmpty) {
                       getController.changeFullName(nikNameController.text);
-                      Toast.showToast(context, 'Nikname is empty', Colors.red, Colors.white,);
+                      Toast.showToast(
+                        context,
+                        'Nikname is empty',
+                        Colors.red,
+                        Colors.white,
+                      );
                       return;
                     }
                     if (nameInstitutionController.text.isEmpty) {
                       getController.changeFullName(fullNameController.text);
-                      Toast.showToast(context, 'Name of the institution is empty', Colors.red, Colors.white,);
+                      Toast.showToast(
+                        context,
+                        'Name of the institution is empty',
+                        Colors.red,
+                        Colors.white,
+                      );
                       return;
                     }
                     if (phoneNumberController.text.isEmpty) {
                       getController.changeFullName(phoneNumberController.text);
-                      Toast.showToast(context, 'Phone number is empty', Colors.red, Colors.white,);
+                      Toast.showToast(
+                        context,
+                        'Phone number is empty',
+                        Colors.red,
+                        Colors.white,
+                      );
                       return;
                     }
                     if (getController.subCategory.value.res == null) {
-                      getController.changeFullName(getController.subCategory.value.res![getController.subCategoryIndex.value].name!);
-                      Toast.showToast(context, 'Subcategory is empty', Colors.red, Colors.white,);
+                      getController.changeFullName(getController
+                          .subCategory
+                          .value
+                          .res![getController.subCategoryIndex.value]
+                          .name!);
+                      Toast.showToast(
+                        context,
+                        'Subcategory is empty',
+                        Colors.red,
+                        Colors.white,
+                      );
                       return;
                     }
                     if (getController.getRegion.value.res == null) {
-                      getController.changeFullName(getController.getRegion.value.res![getController.regionIndex.value]);
-                      Toast.showToast(context, 'Region is empty', Colors.red, Colors.white,);
+                      getController.changeFullName(getController.getRegion.value
+                          .res![getController.regionIndex.value]);
+                      Toast.showToast(
+                        context,
+                        'Region is empty',
+                        Colors.red,
+                        Colors.white,
+                      );
                       return;
                     }
                     if (experienceController.text.isEmpty) {
-                      Toast.showToast(context, 'Experience is empty', Colors.red, Colors.white,);
+                      Toast.showToast(
+                        context,
+                        'Experience is empty',
+                        Colors.red,
+                        Colors.white,
+                      );
                       return;
                     }
-                    experienceController.text = experienceController.text.replaceAll(',', '.');
+                    experienceController.text =
+                        experienceController.text.replaceAll(',', '.');
                     //if experienceController . 2 ta bolsa
                     if (experienceController.text.split('.').length > 2) {
-                      Toast.showToast(context, 'Please enter a valid number', Colors.red, Colors.white,);
+                      Toast.showToast(
+                        context,
+                        'Please enter a valid number',
+                        Colors.red,
+                        Colors.white,
+                      );
                       return;
                     }
                     var experience;
@@ -488,36 +567,61 @@ class MakeBusinessPage extends StatelessWidget {
                     } else {
                       experience = int.parse(experienceController.text);
                     }
-                    ApiController().editUser(
-                        GetStorage().read('token'),
-                        getController.meUsers.value.res?.fistName ?? '',
-                        getController.meUsers.value.res?.lastName ?? '',
-                        getController.getRegion.value.res![getController.regionIndex.value],
-                        nikNameController.text).then((value) {
-                          if(value.status!){
-                            ApiController().getUserData(GetStorage().read('token')).then((value) {
-                              ApiController().createBusiness(
+                    ApiController()
+                        .editUser(
+                            GetStorage().read('token'),
+                            getController.meUsers.value.res?.fistName ?? '',
+                            getController.meUsers.value.res?.lastName ?? '',
+                            getController.getRegion.value
+                                .res![getController.regionIndex.value],
+                            nikNameController.text)
+                        .then((value) {
+                      if (value.status!) {
+                        ApiController()
+                            .getUserData(GetStorage().read('token'))
+                            .then((value) {
+                          ApiController()
+                              .createBusiness(
                                   GetStorage().read('token'),
-                                  getController.subCategory.value.res![getController.subCategoryIndex.value].id!,
-                                  getController.getRegion.value.res![getController.regionIndex.value],
+                                  getController
+                                      .subCategory
+                                      .value
+                                      .res![
+                                          getController.subCategoryIndex.value]
+                                      .id!,
+                                  getController.getRegion.value
+                                      .res![getController.regionIndex.value],
                                   nameInstitutionController.text,
                                   experience,
                                   bioController.text,
-                                  dayOffController.text).then((value) {
-                                if(value){
-                                  ApiController().getUserData(GetStorage().read('token')).then((value) {
-                                    getController.changeMeUser(value);
-                                  });
-                                  finish();
-                                }else{
-                                  Toast.showToast(context, 'Error', Colors.red, Colors.white,);
-                                }
+                                  dayOffController.text)
+                              .then((value) {
+                            if (value) {
+                              ApiController()
+                                  .getUserData(GetStorage().read('token'))
+                                  .then((value) {
+                                getController.changeMeUser(value);
                               });
-                              getController.changeMeUser(value);
-                            });
-                          }else{
-                            Toast.showToast(context, 'Error', Colors.red, Colors.white,);
-                          }
+                              finish();
+                            } else {
+                              Toast.showToast(
+                                context,
+                                'Error',
+                                Colors.red,
+                                Colors.white,
+                              );
+                            }
+                          });
+                          getController.changeMeUser(value);
+                        });
+                      } else {
+                        Toast.showToast(
+                          context,
+                          'Error',
+                          Colors.red,
+                          Colors.white,
+                        );
+                      }
                     });
                   },
                 )

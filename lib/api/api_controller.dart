@@ -25,6 +25,7 @@ class ApiController extends GetxController {
   var regionUrl = 'region/get';
   var businessCreateUrl = 'business/create';
   var businessUpdateMeUrl = 'business/update-me';
+  var editPhotoUrl = 'user/edit-photo';
 
   Future<String> sendSms(String phoneNumber) async {
     var response = await http.post(
@@ -66,14 +67,12 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<Register> registerUser(
-    String fistName,
-    String lastName,
-    userName,
-    phoneNumber,
-    address,
-    profilePhoto,
-  ) async {
+  Future<Register> registerUser(String fistName,
+      String lastName,
+      userName,
+      phoneNumber,
+      address,
+      profilePhoto,) async {
     var request = http.MultipartRequest('POST', Uri.parse(url + registerUrl));
     request.fields.addAll({
       'fist_name': fistName,
@@ -82,8 +81,7 @@ class ApiController extends GetxController {
       'phone_number': phoneNumber,
       'address': address
     });
-    request.files
-        .add(await http.MultipartFile.fromPath('profile_photo', profilePhoto));
+    request.files.add(await http.MultipartFile.fromPath('profile_photo', profilePhoto));
     try {
       http.StreamedResponse response = await request.send();
       if (response.statusCode == 200) {
@@ -123,7 +121,7 @@ class ApiController extends GetxController {
     var response = await http.get(Uri.parse(url + meUrl),
         headers: {
           'Authorization':
-              'Bearer $token',
+          'Bearer $token',
         });
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -141,8 +139,9 @@ class ApiController extends GetxController {
           status: false);
     }
   }
-  Future<MeUser> editUser(token,name,surName,address,nikName) async{
-    var response = await http.put(Uri.parse(url+editMeUrl),
+
+  Future<MeUser> editUser(token, name, surName, address, nikName) async {
+    var response = await http.put(Uri.parse(url + editMeUrl),
       body: jsonEncode({
         "fist_name": name,
         "last_name": surName,
@@ -182,7 +181,8 @@ class ApiController extends GetxController {
   }
 
   Future<GetSubCategory> getSubCategory(int id) async {
-    var response = await http.get(Uri.parse(url + subCategoryUrl+id.toString()));
+    var response = await http.get(
+        Uri.parse(url + subCategoryUrl + id.toString()));
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return GetSubCategory.fromJson(jsonDecode(response.body));
@@ -200,6 +200,7 @@ class ApiController extends GetxController {
       return GetRegion(res: [], status: false);
     }
   }
+
   Future<bool> createBusiness(token, int categoryId, officeAddress, officeName,
       experience, bio, dayOffs) async {
     var response = await http.post(Uri.parse(url + businessCreateUrl),
@@ -246,4 +247,19 @@ class ApiController extends GetxController {
     }
   }
 
+  Future<bool> editUserPhoto(token, photo) async {
+    var headers = {
+      'Authorization': 'Bearer $token'
+    };
+    var request = http.MultipartRequest('PUT', Uri.parse(url + editPhotoUrl));
+    request.files.add(await http.MultipartFile.fromPath('profile_photo', photo));
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 }
