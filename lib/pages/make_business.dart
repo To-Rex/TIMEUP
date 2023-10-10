@@ -132,11 +132,9 @@ class MakeBusinessPage extends StatelessWidget {
                         () => getController.getRegion.value.res != null
                             ? DropdownButtonHideUnderline(
                                 child: DropdownButton(
-                                  icon: const Icon(Icons.arrow_drop_down,
-                                      color: Colors.black),
+                                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                                   iconSize: w * 0.06,
-                                  value: getController.getRegion.value
-                                      .res![getController.regionIndex.value],
+                                  value: getController.getRegion.value.res![getController.regionIndex.value],
                                   hint: Padding(
                                     padding: EdgeInsets.only(
                                         left: w * 0.02, right: w * 0.02),
@@ -490,23 +488,37 @@ class MakeBusinessPage extends StatelessWidget {
                     } else {
                       experience = int.parse(experienceController.text);
                     }
-                    ApiController().createBusiness(
+                    ApiController().editUser(
                         GetStorage().read('token'),
-                        getController.subCategory.value.res![getController.subCategoryIndex.value].id!,
+                        getController.meUsers.value.res?.fistName ?? '',
+                        getController.meUsers.value.res?.lastName ?? '',
                         getController.getRegion.value.res![getController.regionIndex.value],
-                        nameInstitutionController.text,
-                        experience,
-                        bioController.text,
-                        dayOffController.text).then((value) {
-                          if(value){
+                        nikNameController.text).then((value) {
+                          if(value.status!){
                             ApiController().getUserData(GetStorage().read('token')).then((value) {
+                              ApiController().createBusiness(
+                                  GetStorage().read('token'),
+                                  getController.subCategory.value.res![getController.subCategoryIndex.value].id!,
+                                  getController.getRegion.value.res![getController.regionIndex.value],
+                                  nameInstitutionController.text,
+                                  experience,
+                                  bioController.text,
+                                  dayOffController.text).then((value) {
+                                if(value){
+                                  ApiController().getUserData(GetStorage().read('token')).then((value) {
+                                    getController.changeMeUser(value);
+                                  });
+                                  finish();
+                                }else{
+                                  Toast.showToast(context, 'Error', Colors.red, Colors.white,);
+                                }
+                              });
                               getController.changeMeUser(value);
                             });
-                            finish();
                           }else{
                             Toast.showToast(context, 'Error', Colors.red, Colors.white,);
                           }
-                        });
+                    });
                   },
                 )
               : EditButton(
