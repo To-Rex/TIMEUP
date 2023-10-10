@@ -14,7 +14,6 @@ class LoginUserData extends StatelessWidget {
   LoginUserData({super.key});
 
   final GetController getController = Get.put(GetController());
-
   final TextEditingController nameController = TextEditingController();
   final TextEditingController surnameController = TextEditingController();
   final TextEditingController nikNameController = TextEditingController();
