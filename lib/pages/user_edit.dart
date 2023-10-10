@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:time_up/elements/functions.dart';
 
 import '../api/api_controller.dart';
@@ -17,10 +21,28 @@ class EditUserPage extends StatelessWidget {
   final TextEditingController nikNameController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
 
+  final ImagePicker _picker = ImagePicker();
+  var croppedImage;
+
   getUsers() async {
     getController.changeMeUser(
         await ApiController().getUserData(GetStorage().read('token')));
   }
+
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedFile = await _picker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      _cropImage(pickedFile.path);
+    }
+  }
+
+  Future<void> _cropImage(String imagePath) async {
+    croppedImage = await ImageCropper.platform
+        .cropImage(sourcePath: imagePath, aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),compressQuality: 100,compressFormat: ImageCompressFormat.jpg,);
+    getController.changeImage(croppedImage.path);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,16 +62,29 @@ class EditUserPage extends StatelessWidget {
             height: h * 0.05,
           ),
           Center(
-            child: CircleAvatar(
+            /*child: CircleAvatar(
               radius: w * 0.12,
               foregroundColor: Colors.blue,
               backgroundImage: NetworkImage(
                 //'${ApiController().url}${getController.meUsers.value.res?.photoUrl?.substring(24, getController.meUsers.value.res?.photoUrl?.length)}'),
                   'http://${getController.meUsers.value.res?.photoUrl}'),
-            ),
+            ),*/
+            child: Obx (() => getController.image.value == '' ? CircleAvatar(
+              radius: w * 0.12,
+              foregroundColor: Colors.blue,
+              backgroundImage: NetworkImage(
+                //'${ApiController().url}${getController.meUsers.value.res?.photoUrl?.substring(24, getController.meUsers.value.res?.photoUrl?.length)}'),
+                  'http://${getController.meUsers.value.res?.photoUrl}'),
+            ) : CircleAvatar(
+              radius: w * 0.12,
+              foregroundColor: Colors.blue,
+              backgroundImage: FileImage(File(getController.image.value)),
+            ),),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              _pickImage(ImageSource.gallery);
+            },
             child: Text(
               'Edit profile photo',
               style: TextStyle(
@@ -82,22 +117,53 @@ class EditUserPage extends StatelessWidget {
           EditButton(
             text: 'Save data',
             onPressed: () {
-              ApiController()
-                  .editUser(
-                GetStorage().read('token'),
-                nameController.text,
-                surnameController.text,
-                nikNameController.text,
-                addressController.text,
-              )
-                  .then((value) {
-                if (value.status == true) {
-                  getController.entersUser.value = 0;
-                  getUsers();
-                } else {
-                  print('error');
-                }
-              });
+              if (nameController.text == '' ||
+                  surnameController.text == '' ||
+                  nikNameController.text == '' ||
+                  addressController.text == '') {
+                //Toast.showToast(context, message, color, white)
+                Toast.showToast(context, 'Please fill in all the fields', Colors.red, Colors.white);
+                return;
+              }
+              if (getController.image.value == '') {
+                ApiController().editUser(
+                  GetStorage().read('token'),
+                  nameController.text,
+                  surnameController.text,
+                  nikNameController.text,
+                  addressController.text,
+                ).then((value) {
+                  if (value.status == true) {
+                    getController.entersUser.value = 0;
+                    getUsers();
+                  } else {
+                    Toast.showToast(context, 'Error', Colors.red, Colors.white );
+                  }
+                });
+              }else{
+                ApiController().editUserPhoto(GetStorage().read('token'), getController.image.value).then((value) {
+                  if (value == true) {
+                    ApiController().editUser(
+                      GetStorage().read('token'),
+                      nameController.text,
+                      surnameController.text,
+                      nikNameController.text,
+                      addressController.text,
+                    ).then((value) {
+                      if (value.status == true) {
+                        getController.entersUser.value = 0;
+                        getUsers();
+                      } else {
+                        Toast.showToast(context, 'Error', Colors.red, Colors.white );
+                      }
+                    });
+                  } else {
+                    Toast.showToast(context, 'Error', Colors.red, Colors.white );
+                  }
+                });
+              }
+
+
             },
           ),
           SizedBox(height: h * 0.05),
