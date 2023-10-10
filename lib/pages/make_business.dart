@@ -499,6 +499,9 @@ class MakeBusinessPage extends StatelessWidget {
                         bioController.text,
                         dayOffController.text).then((value) {
                           if(value){
+                            ApiController().getUserData(GetStorage().read('token')).then((value) {
+                              getController.changeMeUser(value);
+                            });
                             finish();
                           }else{
                             Toast.showToast(context, 'Error', Colors.red, Colors.white,);
