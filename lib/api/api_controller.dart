@@ -24,6 +24,7 @@ class ApiController extends GetxController {
   var subCategoryUrl = 'category/get?parent_id=';
   var regionUrl = 'region/get';
   var businessCreateUrl = 'business/create';
+  var businessUpdateMeUrl = 'business/update-me';
 
   Future<String> sendSms(String phoneNumber) async {
     var response = await http.post(
@@ -199,18 +200,32 @@ class ApiController extends GetxController {
       return GetRegion(res: [], status: false);
     }
   }
-
-  //Bearer token and body {
-//     "category_id": 3,
-//     "office_address": "office_address...",
-//     "office_name": "office_name..",
-//     "experience": 3,
-//     "bio": "bio...",
-//     "day_offs": " Shanba, Yakshanba"
-// } Post
   Future<bool> createBusiness(token, int categoryId, officeAddress, officeName,
       experience, bio, dayOffs) async {
     var response = await http.post(Uri.parse(url + businessCreateUrl),
+        body: jsonEncode({
+          "category_id": categoryId,
+          "office_address": officeAddress,
+          "office_name": officeName,
+          "experience": experience,
+          "bio": bio,
+          "day_offs": dayOffs
+        }),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json'
+        });
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> updateBusiness(token, int categoryId, officeAddress, officeName,
+      experience, bio, dayOffs) async {
+    var response = await http.put(Uri.parse(url + businessUpdateMeUrl),
         body: jsonEncode({
           "category_id": categoryId,
           "office_address": officeAddress,
