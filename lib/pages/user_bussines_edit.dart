@@ -43,8 +43,7 @@ class EditBusinessUserPage extends StatelessWidget {
             child: CircleAvatar(
               radius: w * 0.12,
               foregroundColor: Colors.blue,
-              backgroundImage: NetworkImage(
-                  '${ApiController().url}${getController.meUsers.value.res?.photoUrl}'),
+              backgroundImage: NetworkImage('http://${getController.meUsers.value.res?.photoUrl}'),
             ),
           ),
           TextButton(
