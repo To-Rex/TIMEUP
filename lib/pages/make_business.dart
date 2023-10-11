@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -40,7 +42,6 @@ class MakeBusinessPage extends StatelessWidget {
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
-
     if (pickedFile != null) {
       _cropImage(pickedFile.path);
     }
@@ -59,10 +60,7 @@ class MakeBusinessPage extends StatelessWidget {
       print('null$croppedImage');
       return;
     }
-    ApiController().editUserPhoto(
-        GetStorage().read('token'), croppedImage.path).then((value) =>
-        print(value)
-    );
+
   }
 
   @override
@@ -122,12 +120,19 @@ class MakeBusinessPage extends StatelessWidget {
                             ),
                           ),
                           const Spacer(),
-                          CircleAvatar(
-                            radius: w * 0.14,
-                            foregroundColor: Colors.blue,
-                            backgroundImage: NetworkImage(
-                                'http://${getController.meUsers.value.res?.photoUrl}'),
-                          ),
+                          if (getController.image.value == '')
+                            CircleAvatar(
+                              radius: w * 0.12,
+                              foregroundColor: Colors.blue,
+                              backgroundImage: NetworkImage(
+                                  'http://${getController.meUsers.value.res?.photoUrl}'),
+                            )
+                          else
+                            CircleAvatar(
+                              radius: w * 0.12,
+                              foregroundColor: Colors.blue,
+                              backgroundImage: FileImage(File(getController.image.value)),
+                            ),
                           const Spacer(),
                           SizedBox(width: w * 0.1)
                         ],
@@ -529,80 +534,55 @@ class MakeBusinessPage extends StatelessWidget {
                       return;
                     }
                     if (getController.getRegion.value.res == null) {
-                      getController.changeFullName(getController.getRegion.value
-                          .res![getController.regionIndex.value]);
-                      Toast.showToast(
-                        context,
-                        'Region is empty',
-                        Colors.red,
-                        Colors.white,
-                      );
+                      getController.changeFullName(getController.getRegion.value.res![getController.regionIndex.value]);
+                      Toast.showToast(context, 'Region is empty', Colors.red, Colors.white,);
                       return;
                     }
                     if (experienceController.text.isEmpty) {
-                      Toast.showToast(
-                        context,
-                        'Experience is empty',
-                        Colors.red,
-                        Colors.white,
-                      );
+                      Toast.showToast(context, 'Experience is empty', Colors.red, Colors.white,);
                       return;
                     }
-                    experienceController.text =
-                        experienceController.text.replaceAll(',', '.');
-                    //if experienceController . 2 ta bolsa
+                    experienceController.text = experienceController.text.replaceAll(',', '.');
+
                     if (experienceController.text.split('.').length > 2) {
-                      Toast.showToast(
-                        context,
-                        'Please enter a valid number',
-                        Colors.red,
-                        Colors.white,
-                      );
+                      Toast.showToast(context, 'Please enter a valid number', Colors.red, Colors.white,);
                       return;
                     }
                     var experience;
-                    //if experienceController.text in . bolsa
                     if (experienceController.text.contains('.')) {
                       experience = double.parse(experienceController.text);
                     } else {
                       experience = int.parse(experienceController.text);
                     }
-                    ApiController()
-                        .editUser(
-                            GetStorage().read('token'),
-                            getController.meUsers.value.res?.fistName ?? '',
-                            getController.meUsers.value.res?.lastName ?? '',
-                            getController.getRegion.value
-                                .res![getController.regionIndex.value],
-                            nikNameController.text)
-                        .then((value) {
-                      if (value.status!) {
-                        ApiController()
-                            .getUserData(GetStorage().read('token'))
-                            .then((value) {
-                          ApiController()
-                              .createBusiness(
-                                  GetStorage().read('token'),
-                                  getController
-                                      .subCategory
-                                      .value
-                                      .res![
-                                          getController.subCategoryIndex.value]
-                                      .id!,
-                                  getController.getRegion.value
-                                      .res![getController.regionIndex.value],
-                                  nameInstitutionController.text,
-                                  experience,
-                                  bioController.text,
-                                  dayOffController.text)
-                              .then((value) {
-                            if (value) {
-                              ApiController()
-                                  .getUserData(GetStorage().read('token'))
-                                  .then((value) {
+                    if (getController.image.value != '') {
+                      ApiController().editUserPhoto(
+                          GetStorage().read('token'), croppedImage.path).then((value) =>
+                          ApiController().editUser(
+                              GetStorage().read('token'),
+                              getController.meUsers.value.res?.fistName ?? '',
+                              getController.meUsers.value.res?.lastName ?? '',
+                              getController.getRegion.value
+                                  .res![getController.regionIndex.value],
+                              nikNameController.text).then((value) {
+                            if (value.status!) {
+                              ApiController().getUserData(GetStorage().read('token')).then((value) {
+                                ApiController().createBusiness(
+                                    GetStorage().read('token'),
+                                    getController.subCategory.value.res![getController.subCategoryIndex.value].id!,
+                                    getController.getRegion.value.res![getController.regionIndex.value],
+                                    nameInstitutionController.text,
+                                    experience,
+                                    bioController.text,
+                                    dayOffController.text).then((value) {
+                                  if (value) {
+                                    ApiController().getUserData(GetStorage().read('token')).then((value) {getController.changeMeUser(value);});
+                                    finish();
+                                  } else {
+                                    Toast.showToast(context, 'Error', Colors.red, Colors.white,);
+                                  }
+                                });
                                 getController.changeMeUser(value);
                               });
-                              finish();
                             } else {
                               Toast.showToast(
                                 context,
@@ -611,18 +591,46 @@ class MakeBusinessPage extends StatelessWidget {
                                 Colors.white,
                               );
                             }
+                          })
+                      );
+                    } else {
+                      ApiController().editUser(
+                          GetStorage().read('token'),
+                          getController.meUsers.value.res?.fistName ?? '',
+                          getController.meUsers.value.res?.lastName ?? '',
+                          getController.getRegion.value
+                              .res![getController.regionIndex.value],
+                          nikNameController.text).then((value) {
+                        if (value.status!) {
+                          ApiController().getUserData(GetStorage().read('token')).then((value) {
+                            ApiController().createBusiness(
+                                GetStorage().read('token'),
+                                getController.subCategory.value.res![getController.subCategoryIndex.value].id!,
+                                getController.getRegion.value.res![getController.regionIndex.value],
+                                nameInstitutionController.text,
+                                experience,
+                                bioController.text,
+                                dayOffController.text).then((value) {
+                              if (value) {
+                                ApiController().getUserData(GetStorage().read('token')).then((value) {getController.changeMeUser(value);});
+                                finish();
+                              } else {
+                                Toast.showToast(context, 'Error', Colors.red, Colors.white,);
+                              }
+                            });
+                            getController.changeMeUser(value);
                           });
-                          getController.changeMeUser(value);
-                        });
-                      } else {
-                        Toast.showToast(
-                          context,
-                          'Error',
-                          Colors.red,
-                          Colors.white,
-                        );
-                      }
-                    });
+                        } else {
+                          Toast.showToast(
+                            context,
+                            'Error',
+                            Colors.red,
+                            Colors.white,
+                          );
+                        }
+                      });
+                    }
+
                   },
                 )
               : EditButton(

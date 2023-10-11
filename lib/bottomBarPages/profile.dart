@@ -40,12 +40,62 @@ class ProfilePage extends StatelessWidget {
                         SizedBox(
                           height: h * 0.01,
                         ),
-                        Text(
-                          getController.meUsers.value.res?.userName ?? '',
-                          style: TextStyle(
-                            fontSize: w * 0.04,
-                            color: Colors.black,
+                        AppBar(
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          //center horizantal username text
+                          centerTitle: true,
+                          title: Text(
+                            getController.meUsers.value.res?.userName ?? '',
+                            style: TextStyle(
+                              fontSize: w * 0.04,
+                              color: Colors.black,
+                            ),
                           ),
+                          actions: [
+                            PopupMenuButton(
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                  child: TextButton(
+                                    onPressed: () {
+                                      GetStorage().remove('token');
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => LoginPage(),
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      'Log out',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.redAccent,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  child: TextButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      'Delete accaunt',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.redAccent,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                              icon: const Icon(
+                                Icons.menu,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: h * 0.01,
@@ -60,32 +110,9 @@ class ProfilePage extends StatelessWidget {
                               radius: w * 0.12,
                               foregroundColor: Colors.blue,
                               backgroundImage: NetworkImage(
-                                  //'${ApiController().url}${getController.meUsers.value.res?.photoUrl?.substring(24, getController.meUsers.value.res?.photoUrl?.length)}'),
                                   'http://${getController.meUsers.value.res?.photoUrl}'),
                             ),
                             const Expanded(child: SizedBox()),
-                            Container(
-                              margin: const EdgeInsets.only(right: 10),
-                              child: TextButton(
-                                onPressed: () {
-                                  GetStorage().remove('token');
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => LoginPage(),
-                                    ),
-                                  );
-                                },
-                                child: Text(
-                                  'Log out',
-                                  style: TextStyle(
-                                    fontSize: w * 0.04,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.redAccent,
-                                  ),
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                         Container(
@@ -131,14 +158,16 @@ class ProfilePage extends StatelessWidget {
                         TextEditButton(
                           text:
                               '${getController.meUsers.value.res?.phoneNumber}',
-                          color: Colors.blue, icon: Icons.phone,
+                          color: Colors.blue,
+                          icon: Icons.phone,
                         ),
                         Obx(() =>
                             getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
                                     text:
                                         '${getController.meUsers.value.res?.business?.officeAddress}',
-                                    color: Colors.blue, icon: Icons.location_on,
+                                    color: Colors.blue,
+                                    icon: Icons.location_on,
                                   )
                                 : const SizedBox()),
                         Obx(() =>
@@ -146,7 +175,8 @@ class ProfilePage extends StatelessWidget {
                                 ? TextEditButton(
                                     text:
                                         '${getController.meUsers.value.res?.business?.officeName}',
-                                    color: Colors.blue, icon: Icons.home,
+                                    color: Colors.blue,
+                                    icon: Icons.home,
                                   )
                                 : const SizedBox()),
                         Obx(() =>
@@ -154,7 +184,8 @@ class ProfilePage extends StatelessWidget {
                                 ? TextEditButton(
                                     text:
                                         '${getController.meUsers.value.res?.business?.dayOffs}',
-                                    color: Colors.blue, icon: Icons.access_time_outlined,
+                                    color: Colors.blue,
+                                    icon: Icons.access_time_outlined,
                                   )
                                 : const SizedBox()),
                         SizedBox(
@@ -228,7 +259,10 @@ class ProfilePage extends StatelessWidget {
                         Obx(() =>
                             getController.meUsers.value.res?.business == null
                                 ? const SizedBox()
-                                : BioBusiness(text: getController.meUsers.value.res?.business?.bio ?? '')),
+                                : BioBusiness(
+                                    text: getController
+                                            .meUsers.value.res?.business?.bio ??
+                                        '')),
                       ],
                     )
                   : getController.entersUser.value == 1
@@ -238,7 +272,6 @@ class ProfilePage extends StatelessWidget {
                       : getController.entersUser.value == 2
                           ? MakeBusinessPage()
                           : const SizedBox(),
-
             ),
           )
         : const Center(
