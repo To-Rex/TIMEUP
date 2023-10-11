@@ -570,41 +570,26 @@ class EditBusinessUserPage extends StatelessWidget {
               } else {
                 experience = int.parse(experienceController.text);
               }
-              ApiController()
-                  .editUser(
+              ApiController().editUser(
                   GetStorage().read('token'),
-                  getController.meUsers.value.res?.fistName ?? '',
-                  getController.meUsers.value.res?.lastName ?? '',
-                  getController.getRegion.value
-                      .res![getController.regionIndex.value],
-                  nikNameController.text)
-                  .then((value) {
+                  //getController.meUsers.value.res?.fistName ?? '',
+                  //getController.meUsers.value.res?.lastName ?? '',
+                  nameController.text,
+                  surnameController.text,
+                  getController.getRegion.value.res![getController.regionIndex.value],
+                  nikNameController.text).then((value) {
                 if (value.status!) {
-                  ApiController()
-                      .getUserData(GetStorage().read('token'))
-                      .then((value) {
-                    ApiController()
-                        .createBusiness(
+                  ApiController().getUserData(GetStorage().read('token')).then((value) {
+                    ApiController().updateBusiness(
                         GetStorage().read('token'),
-                        getController
-                            .subCategory
-                            .value
-                            .res![
-                        getController.subCategoryIndex.value]
-                            .id!,
-                        getController.getRegion.value
-                            .res![getController.regionIndex.value],
+                        value.res?.business?.id ?? 0,
+                        getController.subCategoryIndex.value,
+                        nameInstitutionController.text,
                         nameInstitutionController.text,
                         experience,
                         bioController.text,
-                        dayOffController.text)
-                        .then((value) {
+                        dayOffController.text).then((value) {
                       if (value) {
-                        ApiController()
-                            .getUserData(GetStorage().read('token'))
-                            .then((value) {
-                          getController.changeMeUser(value);
-                        });
                         finish();
                       } else {
                         Toast.showToast(
@@ -627,8 +612,7 @@ class EditBusinessUserPage extends StatelessWidget {
                 }
               });
             },
-          )
-              : EditButton(
+          ) : EditButton(
             text: 'Next',
             onPressed: () {
               pageController.nextPage(
