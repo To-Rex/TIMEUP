@@ -121,7 +121,6 @@ class EditUserPage extends StatelessWidget {
                   surnameController.text == '' ||
                   nikNameController.text == '' ||
                   addressController.text == '') {
-                //Toast.showToast(context, message, color, white)
                 Toast.showToast(context, 'Please fill in all the fields', Colors.red, Colors.white);
                 return;
               }

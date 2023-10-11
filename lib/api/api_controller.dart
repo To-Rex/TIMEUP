@@ -27,6 +27,7 @@ class ApiController extends GetxController {
   var businessUpdateMeUrl = 'business/update-me';
   var editPhotoUrl = 'user/edit-photo';
 
+
   Future<String> sendSms(String phoneNumber) async {
     var response = await http.post(
       Uri.parse(url + smsUrl),
@@ -224,10 +225,11 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> updateBusiness(token, int categoryId, officeAddress, officeName,
+  Future<bool> updateBusiness(token,int id, int categoryId, officeAddress, officeName,
       experience, bio, dayOffs) async {
     var response = await http.put(Uri.parse(url + businessUpdateMeUrl),
         body: jsonEncode({
+          "id": id,
           "category_id": categoryId,
           "office_address": officeAddress,
           "office_name": officeName,
@@ -262,4 +264,6 @@ class ApiController extends GetxController {
       return false;
     }
   }
+
+
 }
