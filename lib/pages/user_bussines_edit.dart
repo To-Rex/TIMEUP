@@ -59,10 +59,7 @@ class EditBusinessUserPage extends StatelessWidget {
       print('null$croppedImage');
       return;
     }
-    ApiController().editUserPhoto(
-        GetStorage().read('token'), croppedImage.path).then((value) =>
-        print(value)
-    );
+
   }
 
 
@@ -75,8 +72,7 @@ class EditBusinessUserPage extends StatelessWidget {
     nikNameController.text = getController.meUsers.value.res?.userName ?? '';
     nameController.text = getController.meUsers.value.res?.fistName ?? '';
     surnameController.text = getController.meUsers.value.res?.lastName ?? '';
-    //phoneNumberController.text = getController.meUsers.value.res?.phoneNumber ?? '';
-    nameInstitutionController.text = getController.meUsers.value.res?.address ?? '';
+    nameInstitutionController.text = getController.meUsers.value.res?.business?.officeName ?? '';
     bioController.text = getController.meUsers.value.res?.business?.bio ?? '';
     dayOffController.text = getController.meUsers.value.res?.business?.dayOffs ?? '';
     experienceController.text = getController.meUsers.value.res?.business?.experience.toString() ?? '';
@@ -88,9 +84,7 @@ class EditBusinessUserPage extends StatelessWidget {
     ApiController().getCategory().then((value) {
       getController.changeCategory(value);
       getController.categoryIndex.value = value.res![0].id!;
-      ApiController()
-          .getSubCategory(getController.categoryIndex.value)
-          .then((value) {
+      ApiController().getSubCategory(getController.categoryIndex.value).then((value) {
         getController.changeSubCategory(value);
         getController.subCategoryIndex.value = value.res![0].id!;
       });
@@ -570,27 +564,49 @@ class EditBusinessUserPage extends StatelessWidget {
               } else {
                 experience = int.parse(experienceController.text);
               }
-              ApiController().editUser(
-                  GetStorage().read('token'),
-                  //getController.meUsers.value.res?.fistName ?? '',
-                  //getController.meUsers.value.res?.lastName ?? '',
-                  nameController.text,
-                  surnameController.text,
-                  getController.getRegion.value.res![getController.regionIndex.value],
-                  nikNameController.text).then((value) {
-                if (value.status!) {
-                  ApiController().getUserData(GetStorage().read('token')).then((value) {
-                    ApiController().updateBusiness(
+              /*ApiController().editUserPhoto(
+                  GetStorage().read('token'), croppedImage.path).then((value) =>
+                  print(value)
+              );*/
+              if (getController.image.value != '') {
+                ApiController().editUserPhoto(
+                    GetStorage().read('token'), croppedImage.path).then((value) =>
+                    ApiController().editUser(
                         GetStorage().read('token'),
-                        value.res?.business?.id ?? 0,
-                        getController.subCategoryIndex.value,
-                        nameInstitutionController.text,
-                        nameInstitutionController.text,
-                        experience,
-                        bioController.text,
-                        dayOffController.text).then((value) {
-                      if (value) {
-                        finish();
+                        nameController.text,
+                        surnameController.text,
+                        getController.getRegion.value.res![getController.regionIndex.value],
+                        nikNameController.text).then((value) {
+                      if (value.status!) {
+                        ApiController().getUserData(GetStorage().read('token')).then((value) {
+                          ApiController().updateBusiness(
+                              GetStorage().read('token'),
+                              value.res?.business?.id ?? 0,
+                              getController.subCategoryIndex.value,
+                              //adress
+                              getController.getRegion.value.res![getController.regionIndex.value],
+                              nameInstitutionController.text,
+                              experience,
+                              bioController.text,
+                              dayOffController.text).then((value) {
+                            if (value) {
+                              ApiController()
+                                  .getUserData(GetStorage().read('token'))
+                                  .then((value) {
+                                getController.changeMeUser(value);
+                              });
+                              finish();
+                            } else {
+                              Toast.showToast(
+                                context,
+                                'Error',
+                                Colors.red,
+                                Colors.white,
+                              );
+                            }
+                          });
+                          getController.changeMeUser(value);
+                        });
                       } else {
                         Toast.showToast(
                           context,
@@ -599,18 +615,55 @@ class EditBusinessUserPage extends StatelessWidget {
                           Colors.white,
                         );
                       }
+                    })
+                );
+              }else {
+                ApiController().editUser(
+                    GetStorage().read('token'),
+                    nameController.text,
+                    surnameController.text,
+                    getController.getRegion.value.res![getController.regionIndex.value],
+                    nikNameController.text).then((value) {
+                  if (value.status!) {
+                    ApiController().getUserData(GetStorage().read('token')).then((value) {
+                      ApiController().updateBusiness(
+                          GetStorage().read('token'),
+                          value.res?.business?.id ?? 0,
+                          getController.subCategoryIndex.value,
+                          //adress
+                          getController.getRegion.value.res![getController.regionIndex.value],
+                          nameInstitutionController.text,
+                          experience,
+                          bioController.text,
+                          dayOffController.text).then((value) {
+                        if (value) {
+                          ApiController()
+                              .getUserData(GetStorage().read('token'))
+                              .then((value) {
+                            getController.changeMeUser(value);
+                          });
+                          finish();
+                        } else {
+                          Toast.showToast(
+                            context,
+                            'Error',
+                            Colors.red,
+                            Colors.white,
+                          );
+                        }
+                      });
+                      getController.changeMeUser(value);
                     });
-                    getController.changeMeUser(value);
-                  });
-                } else {
-                  Toast.showToast(
-                    context,
-                    'Error',
-                    Colors.red,
-                    Colors.white,
-                  );
-                }
-              });
+                  } else {
+                    Toast.showToast(
+                      context,
+                      'Error',
+                      Colors.red,
+                      Colors.white,
+                    );
+                  }
+                });
+              }
             },
           ) : EditButton(
             text: 'Next',
