@@ -162,8 +162,6 @@ class EditUserPage extends StatelessWidget {
                   }
                 });
               }
-
-
             },
           ),
           SizedBox(height: h * 0.05),
