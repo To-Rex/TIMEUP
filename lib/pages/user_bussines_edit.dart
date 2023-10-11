@@ -124,19 +124,19 @@ class EditBusinessUserPage extends StatelessWidget {
                             ),
                           ),
                           const Spacer(),
-                          if (getController.image.value == '')
-                            CircleAvatar(
-                              radius: w * 0.12,
-                              foregroundColor: Colors.blue,
-                              backgroundImage: NetworkImage(
-                                  'http://${getController.meUsers.value.res?.photoUrl}'),
-                            )
-                          else
-                            CircleAvatar(
-                              radius: w * 0.12,
-                              foregroundColor: Colors.blue,
-                              backgroundImage: FileImage(File(getController.image.value)),
-                            ),
+                          Obx(() => getController.image.value == ''
+                              ? CircleAvatar(
+                            radius: w * 0.12,
+                            foregroundColor: Colors.blue,
+                            backgroundImage: NetworkImage(
+                                'http://${getController.meUsers.value.res?.photoUrl}'),
+                          )
+                              : CircleAvatar(
+                            radius: w * 0.12,
+                            foregroundColor: Colors.blue,
+                            backgroundImage: FileImage(File(getController.image.value)),
+                          )),
+
                           const Spacer(),
                           SizedBox(width: w * 0.1)
                         ],

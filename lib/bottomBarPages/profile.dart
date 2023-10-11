@@ -42,7 +42,7 @@ class ProfilePage extends StatelessWidget {
                         AppBar(
                           backgroundColor: Colors.transparent,
                           elevation: 0,
-                          //center horizantal username text
+                          surfaceTintColor: Colors.transparent,
                           centerTitle: true,
                           title: Text(
                             getController.meUsers.value.res?.userName ?? '',
