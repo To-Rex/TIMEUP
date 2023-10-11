@@ -17,8 +17,9 @@ class EditBusinessUserPage extends StatelessWidget {
   final GetController getController = Get.put(GetController());
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController nikNameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController surnameController = TextEditingController();
   final TextEditingController experienceController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController nameInstitutionController =
   TextEditingController();
 
@@ -32,8 +33,7 @@ class EditBusinessUserPage extends StatelessWidget {
   final PageController pageController = PageController();
 
   getUsers() async {
-    getController.changeMeUser(
-        await ApiController().getUserData(GetStorage().read('token')));
+    getController.changeMeUser(await ApiController().getUserData(GetStorage().read('token')));
   }
 
   final ImagePicker _picker = ImagePicker();
@@ -41,7 +41,6 @@ class EditBusinessUserPage extends StatelessWidget {
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
-
     if (pickedFile != null) {
       _cropImage(pickedFile.path);
     }
@@ -72,11 +71,16 @@ class EditBusinessUserPage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
 
-    fullNameController.text =
-    '${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res!.lastName}';
+    fullNameController.text = '${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res!.lastName}';
     nikNameController.text = getController.meUsers.value.res?.userName ?? '';
-    phoneNumberController.text =
-        getController.meUsers.value.res?.phoneNumber ?? '';
+    nameController.text = getController.meUsers.value.res?.fistName ?? '';
+    surnameController.text = getController.meUsers.value.res?.lastName ?? '';
+    //phoneNumberController.text = getController.meUsers.value.res?.phoneNumber ?? '';
+    nameInstitutionController.text = getController.meUsers.value.res?.address ?? '';
+    bioController.text = getController.meUsers.value.res?.business?.bio ?? '';
+    dayOffController.text = getController.meUsers.value.res?.business?.dayOffs ?? '';
+    experienceController.text = getController.meUsers.value.res?.business?.experience.toString() ?? '';
+
 
     ApiController().getRegion().then((value) {
       getController.changeRegion(value);
@@ -125,7 +129,7 @@ class EditBusinessUserPage extends StatelessWidget {
                           ),
                           const Spacer(),
                           CircleAvatar(
-                            radius: w * 0.14,
+                            radius: w * 0.12,
                             foregroundColor: Colors.blue,
                             backgroundImage: NetworkImage(
                                 'http://${getController.meUsers.value.res?.photoUrl}'),
@@ -135,7 +139,6 @@ class EditBusinessUserPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: h * 0.01),
                     SizedBox(
                       height: h * 0.05,
                       child: TextButton(
@@ -151,17 +154,27 @@ class EditBusinessUserPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: h * 0.05),
+                    SizedBox(height: h * 0.015),
                     TextFildWidget(
                       controller: nikNameController,
                       labelText: 'Nikname',
                     ),
-                    SizedBox(height: h * 0.02),
+                    SizedBox(height: h * 0.015),
+                    TextFildWidget(
+                      controller: nameController,
+                      labelText: 'Name',
+                    ),
+                    SizedBox(height: h * 0.015),
+                    TextFildWidget(
+                      controller: surnameController,
+                      labelText: 'Surname',
+                    ),
+                    SizedBox(height: h * 0.015),
                     //dropdown menu for region
                     Container(
                       width: w * 0.9,
                       height: h * 0.07,
-                      padding: EdgeInsets.only(right: w * 0.02),
+                      padding: EdgeInsets.only(right: w * 0.015),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.grey[200],
@@ -177,7 +190,7 @@ class EditBusinessUserPage extends StatelessWidget {
                                 .res![getController.regionIndex.value],
                             hint: Padding(
                               padding: EdgeInsets.only(
-                                  left: w * 0.02, right: w * 0.02),
+                                  left: w * 0.02, right: w * 0.015),
                               child: Text(
                                 'Region',
                                 style: TextStyle(
@@ -190,9 +203,7 @@ class EditBusinessUserPage extends StatelessWidget {
                                   (e) => DropdownMenuItem(
                                 value: e,
                                 child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: w * 0.02,
-                                      right: w * 0.02),
+                                  padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
                                   child: Text(
                                     e,
                                     style: TextStyle(
@@ -221,7 +232,7 @@ class EditBusinessUserPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: h * 0.02),
+                    SizedBox(height: h * 0.015),
                     //dropdown menu for category
                     Container(
                       width: w * 0.9,
@@ -292,12 +303,12 @@ class EditBusinessUserPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: h * 0.02),
+                    SizedBox(height: h * 0.015),
                     //dropdown menu for subcategory
                     Container(
                       width: w * 0.9,
                       height: h * 0.07,
-                      padding: EdgeInsets.only(right: w * 0.02),
+                      padding: EdgeInsets.only(right: w * 0.015),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.grey[200],
@@ -501,16 +512,6 @@ class EditBusinessUserPage extends StatelessWidget {
                 Toast.showToast(
                   context,
                   'Name of the institution is empty',
-                  Colors.red,
-                  Colors.white,
-                );
-                return;
-              }
-              if (phoneNumberController.text.isEmpty) {
-                getController.changeFullName(phoneNumberController.text);
-                Toast.showToast(
-                  context,
-                  'Phone number is empty',
                   Colors.red,
                   Colors.white,
                 );
