@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -122,12 +124,19 @@ class EditBusinessUserPage extends StatelessWidget {
                             ),
                           ),
                           const Spacer(),
-                          CircleAvatar(
-                            radius: w * 0.12,
-                            foregroundColor: Colors.blue,
-                            backgroundImage: NetworkImage(
-                                'http://${getController.meUsers.value.res?.photoUrl}'),
-                          ),
+                          if (getController.image.value == '')
+                            CircleAvatar(
+                              radius: w * 0.12,
+                              foregroundColor: Colors.blue,
+                              backgroundImage: NetworkImage(
+                                  'http://${getController.meUsers.value.res?.photoUrl}'),
+                            )
+                          else
+                            CircleAvatar(
+                              radius: w * 0.12,
+                              foregroundColor: Colors.blue,
+                              backgroundImage: FileImage(File(getController.image.value)),
+                            ),
                           const Spacer(),
                           SizedBox(width: w * 0.1)
                         ],
@@ -564,10 +573,15 @@ class EditBusinessUserPage extends StatelessWidget {
               } else {
                 experience = int.parse(experienceController.text);
               }
-              /*ApiController().editUserPhoto(
-                  GetStorage().read('token'), croppedImage.path).then((value) =>
-                  print(value)
-              );*/
+              if (experience < 0) {
+                Toast.showToast(
+                  context,
+                  'Please enter a valid number',
+                  Colors.red,
+                  Colors.white,
+                );
+                return;
+              }
               if (getController.image.value != '') {
                 ApiController().editUserPhoto(
                     GetStorage().read('token'), croppedImage.path).then((value) =>
