@@ -130,7 +130,6 @@ class LoginPage extends StatelessWidget {
                                 {
                                   Toast.showToast(context, '${value.res?.token}', Colors.green, Colors.white),
                                   GetStorage().write('token', value.res?.token),
-                                  //clear verificated code
                                   nameController.code.value = '',
                                   _codeController.clear(),
                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),),
@@ -269,14 +268,11 @@ class LoginPage extends StatelessWidget {
                       startCountdown();
                     });
                   }
-                  ApiController()
-                      .sendSms(code + _controller.text)
-                      .then((value) => nameController.changeCode(value));
+                  ApiController().sendSms(code + _controller.text).then((value) => nameController.changeCode(value));
                 } else {
                   if (_codeController.text == nameController.code.value) {
                     var phone = code + _controller.text;
-                    var codes = _codeController.text;
-                    ApiController().verifySms(phone, codes).then((value) => {
+                    ApiController().verifySms(phone, _codeController.text).then((value) => {
                           if (value.status == true)
                             {
                               _codeController.clear(),

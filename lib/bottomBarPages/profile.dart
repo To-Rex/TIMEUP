@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:time_up/api/api_controller.dart';
+import 'package:time_up/elements/functions.dart';
 
 import '../elements/bio_business.dart';
 import '../elements/btn_business.dart';
@@ -77,7 +78,23 @@ class ProfilePage extends StatelessWidget {
                                 ),
                                 PopupMenuItem(
                                   child: TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      ApiController().deleteMe(
+                                          GetStorage().read('token')).then((value) => {
+                                            if(value == true){
+                                              GetStorage().remove('token'),
+                                              Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => LoginPage(),
+                                                ),
+                                              )
+                                            }else{
+                                              Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.white)
+                                            }
+                                      }
+                                      );
+                                    },
                                     child: Text(
                                       'Delete accaunt',
                                       style: TextStyle(

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:time_up/models/last_send_sms.dart';
@@ -11,6 +12,7 @@ import '../models/me_user.dart';
 
 class ApiController extends GetxController {
   var url = 'http://16.16.182.36:443/api/v1/';
+  //var url = 'https://timeup.jprq.site/api/v1/';
 
   //var url = 'http://timeup.jprq.live:80/api/v1/';
   //var url = 'https://timeup-production.up.railway.app/api/v1/';
@@ -26,14 +28,16 @@ class ApiController extends GetxController {
   var businessCreateUrl = 'business/create';
   var businessUpdateMeUrl = 'business/update-me';
   var editPhotoUrl = 'user/edit-photo';
+  var deleteMeUrl = 'user/delete-me';
 
 
   Future<String> sendSms(String phoneNumber) async {
     var response = await http.post(
       Uri.parse(url + smsUrl),
-      body: {
-        "phone_number": phoneNumber,
-      },
+      body: jsonEncode({
+        "phone_number": phoneNumber.toString(),
+      }),
+      headers: {"Content-Type": "application/json"},
     );
     if (response.statusCode == 200) {
       return getLastSms(phoneNumber).then((value) => value.res?.code ?? '');
@@ -45,18 +49,22 @@ class ApiController extends GetxController {
   Future<LastSendSms> getLastSms(String phoneNumber) async {
     var response = await http.post(
       Uri.parse(url + lastSmsUrl),
-      body: {
-        "phone_number": phoneNumber,
-      },
+      body: jsonEncode({
+        "phone_number": phoneNumber.toString(),
+      }),
+      headers: {"Content-Type": "application/json"},
     );
+    print(response.body);
     return LastSendSms.fromJson(jsonDecode(response.body));
   }
 
   Future<VerifySms> verifySms(phoneNumber, code) async {
     var response = await http.post(
       Uri.parse(url + verifyUrl),
-      body: jsonEncode(
-          {"phone_number": phoneNumber.toString(), "code": code.toString()}),
+      body: jsonEncode({
+        "phone_number": phoneNumber.toString(),
+        "code": code.toString(),
+      }),
       headers: {"Content-Type": "application/json"},
     );
     print(response.body);
@@ -265,5 +273,18 @@ class ApiController extends GetxController {
     }
   }
 
+  Future<bool> deleteMe(token) async {
+    var response = await http.delete(Uri.parse(url+deleteMeUrl),
+        headers: {
+          'Authorization':
+          'Bearer $token',
+        });
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 }
