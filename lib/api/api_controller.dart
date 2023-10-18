@@ -29,6 +29,8 @@ class ApiController extends GetxController {
   var businessUpdateMeUrl = 'business/update-me';
   var editPhotoUrl = 'user/edit-photo';
   var deleteMeUrl = 'user/delete-me';
+  //{{host}}/api/v1/business/get-by-category/11
+  var getByCategoryUrl = 'business/get-by-category/';
 
 
   Future<String> sendSms(String phoneNumber) async {
@@ -286,5 +288,7 @@ class ApiController extends GetxController {
       return false;
     }
   }
+
+
 
 }
