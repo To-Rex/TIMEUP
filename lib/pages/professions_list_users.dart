@@ -110,26 +110,14 @@ class ProfessionsListUsers extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ProfessionsListDetails()));
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
                               },
                               child: Column(
                                 children: [
                                   Row(
                                     children: [
-                                      /*SizedBox(
-                                        width: w * 0.2,
-                                        height: w * 0.2,
-                                        child: const CircleAvatar(
-                                          backgroundImage: AssetImage('assets/images/doctor.png'),
-                                        ),
-                                      ),*/
-                                      if (_getController.getByCategory.value
-                                              .res?[index].photoUrl ==
-                                          null)
+                                      if (_getController.getByCategory.value.res?[index].photoUrl == null)
                                         SizedBox(
                                           width: w * 0.2,
                                           height: w * 0.2,
@@ -150,22 +138,17 @@ class ProfessionsListUsers extends StatelessWidget {
                                       SizedBox(width: w * 0.05),
                                       //name and profession
                                       Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            _getController.getByCategory.value
-                                                    .res?[index].lastName ??
-                                                '',
+                                            _getController.getByCategory.value.res?[index].lastName ?? '',
                                             style: TextStyle(
                                               fontSize: w * 0.04,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
                                           Text(
-                                            _getController.getByCategory.value
-                                                    .res?[index].fistName ??
-                                                '',
+                                            _getController.getByCategory.value.res?[index].fistName ?? '',
                                             style: TextStyle(
                                               fontSize: w * 0.04,
                                               fontWeight: FontWeight.w400,
@@ -181,9 +164,7 @@ class ProfessionsListUsers extends StatelessWidget {
                               ),
                             );
                           },
-                          itemCount:
-                              _getController.getByCategory.value.res?.length ??
-                                  0,
+                          itemCount: _getController.getByCategory.value.res?.length ?? 0,
                         ),
                       )),
               ],
