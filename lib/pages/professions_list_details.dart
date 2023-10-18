@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:time_up/api/api_controller.dart';
+import '../res/getController.dart';
 
 class ProfessionsListDetails extends StatelessWidget {
-  const ProfessionsListDetails({Key? key}) : super(key: key);
+  ProfessionsListDetails({super.key});
+
+  final GetController _getController = Get.put(GetController());
 
   @override
   Widget build(BuildContext context) {
@@ -40,18 +45,20 @@ class ProfessionsListDetails extends StatelessWidget {
                 onTap: () {
                   Navigator.pop(context);
                 },
-                child: Icon(Icons.arrow_back_ios),
+                child: const Icon(Icons.arrow_back_ios),
               ),
               const Expanded(
                 child: SizedBox(),
               ),
-              Text(
-                'Sobit_Doctor',
-                style: TextStyle(
-                  fontSize: w * 0.05,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+              Obx(() => _getController.getProfileById.value.res == null
+                  ? const Center(child: Text('No data'))
+                  : Text(
+                      _getController.getProfileById.value.res!.userName ?? '',
+                      style: TextStyle(
+                        fontSize: w * 0.05,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )),
               const Expanded(
                 child: SizedBox(),
               ),
@@ -65,10 +72,13 @@ class ProfessionsListDetails extends StatelessWidget {
           ),
           SizedBox(
             width: w,
-            child: const Image(
-              image: AssetImage('assets/images/doctor.png'),
-              fit: BoxFit.fitWidth,
-            ),
+            height: h * 0.3,
+            child: Obx(() => _getController.getProfileById.value.res == null
+                ? const Center(child: Text('No data'))
+                : Image.network(
+                    "http://${_getController.getProfileById.value.res!.photoUrl}",
+                    fit: BoxFit.fitWidth,
+                  )),
           ),
           SizedBox(
             height: h * 0.02,
@@ -78,39 +88,45 @@ class ProfessionsListDetails extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Boymirzayev Sobit',
-                    style: TextStyle(
-                      fontSize: w * 0.05,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                  Obx(() => _getController.getProfileById.value.res == null
+                      ? const SizedBox()
+                      : Text(
+                          "${_getController.getProfileById.value.res!.fistName} ${_getController.getProfileById.value.res!.lastName}",
+                          style: TextStyle(
+                            fontSize: w * 0.05,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        )),
                   SizedBox(
                     height: h * 0.01,
                   ),
                   Row(
                     children: [
-                      Text(
-                        'Urolog',
-                        //text style bold
-                        style: TextStyle(
-                          fontSize: w * 0.04,
-                          fontWeight: FontWeight.w500,
-                          //bold
-                          color: Colors.grey[500],
-                        ),
-                      ),
+                      Obx(() => _getController.getProfileById.value.res == null
+                          ? const SizedBox()
+                          : Text(
+                              _getController
+                                      .getProfileById.value.res!.categoryName ??
+                                  '',
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                                //bold
+                                color: Colors.grey[500],
+                              ),
+                            )),
                       SizedBox(
                         width: w * 0.02,
                       ),
-                      //8 yillik ish tajribasi
-                      Text(
-                        '8 yillik ish tajribasi',
-                        style: TextStyle(
-                          fontSize: w * 0.04,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      Obx(() => _getController.getProfileById.value.res == null
+                          ? const SizedBox()
+                          : Text(
+                              "${_getController.getProfileById.value.res!.experience} yillik ish tajribasi",
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            )),
                     ],
                   ),
                   SizedBox(
@@ -125,13 +141,17 @@ class ProfessionsListDetails extends StatelessWidget {
                       SizedBox(
                         width: w * 0.02,
                       ),
-                      Text(
-                        '+998 99 999 99 99',
-                        style: TextStyle(
-                          fontSize: w * 0.04,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      Obx(() => _getController.getProfileById.value.res == null
+                          ? const SizedBox()
+                          : Text(
+                              _getController
+                                      .getProfileById.value.res!.phoneNumber ??
+                                  '',
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            )),
                     ],
                   ),
                   SizedBox(
@@ -146,13 +166,17 @@ class ProfessionsListDetails extends StatelessWidget {
                       SizedBox(
                         width: w * 0.02,
                       ),
-                      Text(
-                        'Кибрайский район Qibray tumaniУзбекистан',
-                        style: TextStyle(
-                          fontSize: w * 0.035,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      Obx(() => _getController.getProfileById.value.res == null
+                          ? const SizedBox()
+                          : Text(
+                              _getController
+                                      .getProfileById.value.res!.address ??
+                                  '',
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            )),
                     ],
                   ),
                   SizedBox(
@@ -167,13 +191,17 @@ class ProfessionsListDetails extends StatelessWidget {
                       SizedBox(
                         width: w * 0.02,
                       ),
-                      Text(
-                        'Toshkent shahar 5 bolalar shifoxonasi',
-                        style: TextStyle(
-                          fontSize: w * 0.04,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      Obx(() => _getController.getProfileById.value.res == null
+                          ? const SizedBox()
+                          : Text(
+                              _getController
+                                      .getProfileById.value.res!.officeName ??
+                                  '',
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            )),
                     ],
                   ),
                   SizedBox(
@@ -201,7 +229,8 @@ class ProfessionsListDetails extends StatelessWidget {
                       const Expanded(child: SizedBox()),
                       Container(
                           height: h * 0.05,
-                          padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
+                          padding:
+                              EdgeInsets.only(left: w * 0.02, right: w * 0.02),
                           decoration: BoxDecoration(
                             color: Colors.grey,
                             borderRadius: BorderRadius.circular(3),
@@ -257,7 +286,7 @@ class ProfessionsListDetails extends StatelessWidget {
                   SizedBox(
                     height: h * 0.02,
                   ),
-                  Container(
+                  /*Container(
                     padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02,bottom: h * 0.01),
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
@@ -284,7 +313,27 @@ class ProfessionsListDetails extends StatelessWidget {
                         contentPadding: EdgeInsets.only(left: w * 0.02),
                       ),
                     ),
-                  )
+                  )*/
+                  Container(
+                    padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02, bottom: h * 0.01),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(3),
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    child: Obx(
+                      () => _getController.getProfileById.value.res == null
+                          ? const SizedBox()
+                          : Text(
+                              _getController.getProfileById.value.res!.bio ?? '',
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                              ),),
+                    ),
+                  ),
                 ],
               )),
         ],

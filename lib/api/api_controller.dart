@@ -7,6 +7,7 @@ import 'package:time_up/models/register_model.dart';
 import '../models/category.dart';
 import '../models/get_by_category.dart';
 import '../models/get_region.dart';
+import '../models/profile_by_id.dart';
 import '../models/sub_category.dart';
 import '../models/verify_sms.dart';
 import '../models/me_user.dart';
@@ -32,6 +33,8 @@ class ApiController extends GetxController {
   var deleteMeUrl = 'user/delete-me';
   //{{host}}/api/v1/business/get-by-category/11
   var getByCategoryUrl = 'business/get-by-category/';
+  //{{host}}/api/v1/business/profile/26
+  var profileByIdUrl = 'business/profile/';
 
 
   Future<String> sendSms(String phoneNumber) async {
@@ -297,6 +300,16 @@ class ApiController extends GetxController {
       return GetByCategory.fromJson(jsonDecode(response.body));
     } else {
       return GetByCategory(res: [], status: false);
+    }
+  }
+
+  Future<ProfileById> profileById(int id) async {
+    var response = await http.get(Uri.parse(url + profileByIdUrl + id.toString()));
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return ProfileById.fromJson(jsonDecode(response.body));
+    } else {
+      return ProfileById(res: ProfileByIdRes(), status: false);
     }
   }
 }

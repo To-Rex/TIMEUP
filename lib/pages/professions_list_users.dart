@@ -16,8 +16,14 @@ class ProfessionsListUsers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
-    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery
+        .of(context)
+        .size
+        .height;
+    var w = MediaQuery
+        .of(context)
+        .size
+        .width;
     _getController.clearByCategory();
     ApiController()
         .getByCategory(_getController.categoryByID.value)
@@ -100,72 +106,88 @@ class ProfessionsListUsers extends StatelessWidget {
                     ),
                   ),*/
                 //getcontroller by category res length
-                Obx(() => _getController.getByCategory.value.res == null || _getController.getByCategory.value.res!.isEmpty
+                Obx(() =>
+                _getController.getByCategory.value.res == null ||
+                    _getController.getByCategory.value.res!.isEmpty
                     ? const Center(child: Text('No data'))
                     : SizedBox(
-                        height: h * 0.74,
-                        width: w * 0.9,
-                        child: ListView.builder(
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
-                              },
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      if (_getController.getByCategory.value.res?[index].photoUrl == null)
-                                        SizedBox(
-                                          width: w * 0.2,
-                                          height: w * 0.2,
-                                          child: const CircleAvatar(
-                                            backgroundImage: AssetImage(
-                                                'assets/images/doctor.png'),
-                                          ),
-                                        )
-                                      else
-                                        SizedBox(
-                                          width: w * 0.2,
-                                          height: w * 0.2,
-                                          child: CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                                ApiController().url.substring(0, ApiController().url.length - 1) + _getController.getByCategory.value.res![index].photoUrl.toString()),
-                                          ),
-                                        ),
-                                      SizedBox(width: w * 0.05),
-                                      //name and profession
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            _getController.getByCategory.value.res?[index].lastName ?? '',
-                                            style: TextStyle(
-                                              fontSize: w * 0.04,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          Text(
-                                            _getController.getByCategory.value.res?[index].fistName ?? '',
-                                            style: TextStyle(
-                                              fontSize: w * 0.04,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                  height: h * 0.74,
+                  width: w * 0.9,
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          _getController.profileByID.value =
+                          _getController.getByCategory.value.res![index]
+                              .businessId!;
+                          _getController.clearProfileById();
+                          ApiController().profileById(
+                              _getController.profileByID.value).then((value) => {_getController.changeProfileById(value),
+                          });
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
+                        },
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                if (_getController.getByCategory.value
+                                    .res?[index].photoUrl == null)
+                                  SizedBox(
+                                    width: w * 0.2,
+                                    height: w * 0.2,
+                                    child: const CircleAvatar(
+                                      backgroundImage: AssetImage(
+                                          'assets/images/doctor.png'),
+                                    ),
+                                  )
+                                else
+                                  SizedBox(
+                                    width: w * 0.2,
+                                    height: w * 0.2,
+                                    child: CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                          ApiController().url.substring(0,
+                                              ApiController().url.length - 1) +
+                                              _getController.getByCategory.value
+                                                  .res![index].photoUrl
+                                                  .toString()),
+                                    ),
                                   ),
-                                  SizedBox(height: h * 0.02),
-                                ],
-                              ),
-                            );
-                          },
-                          itemCount: _getController.getByCategory.value.res?.length ?? 0,
+                                SizedBox(width: w * 0.05),
+                                //name and profession
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      _getController.getByCategory.value
+                                          .res?[index].lastName ?? '',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    Text(
+                                      _getController.getByCategory.value
+                                          .res?[index].fistName ?? '',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: h * 0.02),
+                          ],
                         ),
-                      )),
+                      );
+                    },
+                    itemCount: _getController.getByCategory.value.res?.length ??
+                        0,
+                  ),
+                )),
               ],
             )),
       ],

@@ -3,6 +3,7 @@ import 'package:time_up/models/category.dart';
 import 'package:time_up/models/me_user.dart';
 import '../models/get_by_category.dart';
 import '../models/get_region.dart';
+import '../models/profile_by_id.dart';
 import '../models/sub_category.dart';
 
 class GetController extends GetxController {
@@ -23,10 +24,13 @@ class GetController extends GetxController {
   var subCategory = GetSubCategory().obs;
   var getRegion = GetRegion().obs;
   var getByCategory = GetByCategory().obs;
+  //ProfileById
+  var getProfileById = ProfileById().obs;
   var categoryIndex = 0.obs;
   var subCategoryIndex = 0.obs;
   var regionIndex = 0.obs;
   var categoryByID = 0.obs;
+  var profileByID = 0.obs;
 
   void changeCategoryID(int newCategoryID) {
     categoryIndex.value = newCategoryID;
@@ -87,6 +91,14 @@ class GetController extends GetxController {
 
   void clearMeUser() {
     meUsers.value = MeUser();
+  }
+
+  void changeProfileById(ProfileById newProfileById) {
+    getProfileById.value = newProfileById;
+  }
+
+  void clearProfileById() {
+    getProfileById.value = ProfileById();
   }
 
   void clearCategory() {
