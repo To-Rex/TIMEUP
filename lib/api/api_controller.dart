@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:time_up/models/last_send_sms.dart';
 import 'package:time_up/models/register_model.dart';
 import '../models/category.dart';
+import '../models/get_by_category.dart';
 import '../models/get_region.dart';
 import '../models/sub_category.dart';
 import '../models/verify_sms.dart';
@@ -289,6 +290,12 @@ class ApiController extends GetxController {
     }
   }
 
-
-
+  Future<GetByCategory> getByCategory(int id) async {
+    var response = await http.get(Uri.parse(url + getByCategoryUrl + id.toString()));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return GetByCategory.fromJson(jsonDecode(response.body));
+    } else {
+      return GetByCategory(res: [], status: false);
+    }
+  }
 }

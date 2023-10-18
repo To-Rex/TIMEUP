@@ -1,14 +1,14 @@
-class GetByCategoryUrl {
-  List<ResGetByCategoryUrl>? res;
+class GetByCategory {
+  List<ResGetByCategory>? res;
   bool? status;
 
-  GetByCategoryUrl({this.res, this.status});
+  GetByCategory({this.res, this.status});
 
-  GetByCategoryUrl.fromJson(Map<String, dynamic> json) {
+  GetByCategory.fromJson(Map<String, dynamic> json) {
     if (json['res'] != null) {
-      res = <ResGetByCategoryUrl>[];
+      res = <ResGetByCategory>[];
       json['res'].forEach((v) {
-        res!.add(ResGetByCategoryUrl.fromJson(v));
+        res!.add(ResGetByCategory.fromJson(v));
       });
     }
     status = json['status'];
@@ -24,7 +24,7 @@ class GetByCategoryUrl {
   }
 }
 
-class ResGetByCategoryUrl {
+class ResGetByCategory {
   int? businessId;
   int? userId;
   int? experience;
@@ -32,7 +32,7 @@ class ResGetByCategoryUrl {
   String? lastName;
   String? photoUrl;
 
-  ResGetByCategoryUrl(
+  ResGetByCategory(
       {this.businessId,
         this.userId,
         this.experience,
@@ -40,7 +40,7 @@ class ResGetByCategoryUrl {
         this.lastName,
         this.photoUrl});
 
-  ResGetByCategoryUrl.fromJson(Map<String, dynamic> json) {
+  ResGetByCategory.fromJson(Map<String, dynamic> json) {
     businessId = json['business_id'];
     userId = json['user_id'];
     experience = json['experience'];
