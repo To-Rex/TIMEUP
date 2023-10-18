@@ -61,6 +61,7 @@ class ProfessionsListElements extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                     onTap: () {
+                      _getController.categoryByID.value = _getController.subCategory.value.res![index].id!;
                       _getController.enters.value = 2;
                     },
                     child: Column(
@@ -78,7 +79,7 @@ class ProfessionsListElements extends StatelessWidget {
                             Icon(Icons.arrow_forward_ios, size: w * 0.04),
                           ],
                         ),
-                        const Divider(),
+                        const Expanded(child: SizedBox()),
                       ],
                     ));
               },

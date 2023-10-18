@@ -292,6 +292,7 @@ class ApiController extends GetxController {
 
   Future<GetByCategory> getByCategory(int id) async {
     var response = await http.get(Uri.parse(url + getByCategoryUrl + id.toString()));
+    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return GetByCategory.fromJson(jsonDecode(response.body));
     } else {
