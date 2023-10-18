@@ -100,8 +100,7 @@ class ProfessionsListUsers extends StatelessWidget {
                     ),
                   ),*/
                 //getcontroller by category res length
-                Obx(() => _getController.getByCategory.value.res == null ||
-                        _getController.getByCategory.value.res!.isEmpty
+                Obx(() => _getController.getByCategory.value.res == null || _getController.getByCategory.value.res!.isEmpty
                     ? const Center(child: Text('No data'))
                     : SizedBox(
                         height: h * 0.74,
