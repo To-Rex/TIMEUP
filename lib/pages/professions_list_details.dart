@@ -74,20 +74,13 @@ class ProfessionsListDetails extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios,size: w * 0.05),
+              child: Icon(Icons.arrow_back_ios, size: w * 0.05),
             ),
             title: Obx(() => _getController.getProfileById.value.res == null
-                ? const Center(child: Text('No data'))
-                : Text(
-              _getController.getProfileById.value.res!.userName ?? '',
-              style: TextStyle(
-                fontSize: w * 0.05,
-                fontWeight: FontWeight.w500,
-              ),
-            )),
+                ? Text('No data', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500,),)
+                : Text(_getController.getProfileById.value.res!.userName ?? '', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500,),)),
             centerTitle: true,
           ),
-
           SizedBox(
             width: w,
             height: h * 0.3,
@@ -307,7 +300,8 @@ class ProfessionsListDetails extends StatelessWidget {
                   Container(
                     width: w,
                     height: h * 0.22,
-                    padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02, bottom: h * 0.01),
+                    padding: EdgeInsets.only(
+                        left: w * 0.02, right: w * 0.02, bottom: h * 0.01),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(3),
@@ -319,11 +313,13 @@ class ProfessionsListDetails extends StatelessWidget {
                       () => _getController.getProfileById.value.res == null
                           ? const SizedBox()
                           : Text(
-                              _getController.getProfileById.value.res!.bio ?? '',
+                              _getController.getProfileById.value.res!.bio ??
+                                  '',
                               style: TextStyle(
                                 fontSize: w * 0.04,
                                 fontWeight: FontWeight.w500,
-                              ),),
+                              ),
+                            ),
                     ),
                   ),
                 ],
