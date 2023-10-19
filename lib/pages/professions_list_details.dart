@@ -35,7 +35,7 @@ class ProfessionsListDetails extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          /*Row(
             children: [
               //back button
               SizedBox(
@@ -66,10 +66,28 @@ class ProfessionsListDetails extends StatelessWidget {
                 width: w * 0.04,
               ),
             ],
+          ),*/
+          AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(Icons.arrow_back_ios,size: w * 0.05),
+            ),
+            title: Obx(() => _getController.getProfileById.value.res == null
+                ? const Center(child: Text('No data'))
+                : Text(
+              _getController.getProfileById.value.res!.userName ?? '',
+              style: TextStyle(
+                fontSize: w * 0.05,
+                fontWeight: FontWeight.w500,
+              ),
+            )),
+            centerTitle: true,
           ),
-          SizedBox(
-            height: h * 0.02,
-          ),
+
           SizedBox(
             width: w,
             height: h * 0.3,
@@ -286,35 +304,9 @@ class ProfessionsListDetails extends StatelessWidget {
                   SizedBox(
                     height: h * 0.02,
                   ),
-                  /*Container(
-                    padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02,bottom: h * 0.01),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(3),
-                      border: Border.all(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    child: TextFormField(
-                      style: TextStyle(
-                        fontSize: w * 0.04,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textInputAction: TextInputAction.newline,
-                      keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(
-                        hintText: 'Izoh qoldirish',
-                        hintStyle: TextStyle(
-                          fontSize: w * 0.04,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        counterText: '0/100',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.only(left: w * 0.02),
-                      ),
-                    ),
-                  )*/
                   Container(
+                    width: w,
+                    height: h * 0.22,
                     padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02, bottom: h * 0.01),
                     decoration: BoxDecoration(
                       color: Colors.white,
