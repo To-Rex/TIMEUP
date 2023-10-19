@@ -4,9 +4,10 @@ import 'package:time_up/api/api_controller.dart';
 import '../res/getController.dart';
 
 class ProfessionsListDetails extends StatelessWidget {
-  ProfessionsListDetails({super.key});
+  ProfessionsListDetails({Key? key}) : super(key: key);
 
   final GetController _getController = Get.put(GetController());
+  final PageController pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,38 +36,6 @@ class ProfessionsListDetails extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /*Row(
-            children: [
-              //back button
-              SizedBox(
-                width: w * 0.04,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: const Icon(Icons.arrow_back_ios),
-              ),
-              const Expanded(
-                child: SizedBox(),
-              ),
-              Obx(() => _getController.getProfileById.value.res == null
-                  ? const Center(child: Text('No data'))
-                  : Text(
-                      _getController.getProfileById.value.res!.userName ?? '',
-                      style: TextStyle(
-                        fontSize: w * 0.05,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    )),
-              const Expanded(
-                child: SizedBox(),
-              ),
-              SizedBox(
-                width: w * 0.04,
-              ),
-            ],
-          ),*/
           AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -77,8 +46,20 @@ class ProfessionsListDetails extends StatelessWidget {
               child: Icon(Icons.arrow_back_ios, size: w * 0.05),
             ),
             title: Obx(() => _getController.getProfileById.value.res == null
-                ? Text('No data', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500,),)
-                : Text(_getController.getProfileById.value.res!.userName ?? '', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500,),)),
+                ? Text(
+                    'No data',
+                    style: TextStyle(
+                      fontSize: w * 0.04,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                : Text(
+                    _getController.getProfileById.value.res!.userName ?? '',
+                    style: TextStyle(
+                      fontSize: w * 0.05,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )),
             centerTitle: true,
           ),
           SizedBox(
@@ -297,22 +278,28 @@ class ProfessionsListDetails extends StatelessWidget {
                   SizedBox(
                     height: h * 0.02,
                   ),
-                  Container(
+                  SizedBox(
                     width: w,
                     height: h * 0.22,
-                    padding: EdgeInsets.only(
-                        left: w * 0.02, right: w * 0.02, bottom: h * 0.01),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(3),
-                      border: Border.all(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    child: Obx(
-                      () => _getController.getProfileById.value.res == null
-                          ? const SizedBox()
-                          : Text(
+                    child: PageView(
+                      //physics: const NeverScrollableScrollPhysics(),
+                      controller: pageController,
+                      children: [
+                        Container(
+                          width: w,
+                          padding: EdgeInsets.only(
+                              left: w * 0.02, right: w * 0.02, bottom: h * 0.01),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(3),
+                            border: Border.all(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          child: Obx(
+                                () => _getController.getProfileById.value.res == null
+                                ? const SizedBox()
+                                : Text(
                               _getController.getProfileById.value.res!.bio ??
                                   '',
                               style: TextStyle(
@@ -320,6 +307,27 @@ class ProfessionsListDetails extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: w,
+                          height: h * 0.22,
+                          child: Obx(
+                            () => _getController.getProfileById.value.res ==
+                                    null
+                                ? const SizedBox()
+                                : Text(
+                                    _getController.getProfileById.value.res!.bio ??
+                                        '',
+                                    style: TextStyle(
+                                      fontSize: w * 0.04,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                          ),
+                        ),
+
+                      ],
                     ),
                   ),
                 ],
