@@ -7,6 +7,7 @@ import 'package:time_up/models/last_send_sms.dart';
 import 'package:time_up/models/register_model.dart';
 import '../models/booking_business_get.dart';
 import '../models/category.dart';
+import '../models/follov_model.dart';
 import '../models/get_by_category.dart';
 import '../models/get_region.dart';
 import '../models/profile_by_id.dart';
@@ -341,6 +342,20 @@ class ApiController extends GetxController {
       return BookingBusinessGetList.fromJson(jsonDecode(response.body));
     } else {
       return BookingBusinessGetList(res: [], status: false);
+    }
+  }
+
+  Future<FollowModel> follow(id) async{
+    var response = await http.post(Uri.parse('$url$businessFollowUrl$id/follow'),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return FollowModel.fromJson(jsonDecode(response.body));
+    } else {
+      return FollowModel(res: FollowModelRes(), status: false);
     }
   }
 }

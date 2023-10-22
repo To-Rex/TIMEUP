@@ -1,11 +1,11 @@
 class FollowModel {
-  Res? res;
+  FollowModelRes? res;
   bool? status;
 
   FollowModel({this.res, this.status});
 
   FollowModel.fromJson(Map<String, dynamic> json) {
-    res = json['res'] != null ? Res.fromJson(json['res']) : null;
+    res = json['res'] != null ? FollowModelRes.fromJson(json['res']) : null;
     status = json['status'];
   }
 
@@ -19,15 +19,15 @@ class FollowModel {
   }
 }
 
-class Res {
+class FollowModelRes {
   int? id;
   int? businessId;
   int? followerId;
   String? createdAt;
 
-  Res({this.id, this.businessId, this.followerId, this.createdAt});
+  FollowModelRes({this.id, this.businessId, this.followerId, this.createdAt});
 
-  Res.fromJson(Map<String, dynamic> json) {
+  FollowModelRes.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     businessId = json['business_id'];
     followerId = json['follower_id'];
