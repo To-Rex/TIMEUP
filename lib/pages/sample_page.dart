@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:time_up/bottomBarPages/home.dart';
+import '../api/api_controller.dart';
 import '../bottomBarPages/history.dart';
 import '../bottomBarPages/profile.dart';
 import '../bottomBarPages/search.dart';
@@ -26,26 +28,43 @@ class SamplePage extends StatelessWidget {
     _getController.changeIndex(index);
   }
 
+  getUsers() async {
+    _getController.changeMeUser(
+        await ApiController().getUserData(GetStorage().read('token')));
+  }
+
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
+    getUsers();
+
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(h * 0.06),
-        child: Container(
-          margin: EdgeInsets.only(top: h * 0.045, bottom: h * 0.01),
-          child: Row(
-            children: [
-              SizedBox(width: w * 0.04,),
-              Image(image: const AssetImage('assets/images/text.png'), width: w * 0.2, height: h * 0.05,),
-            ],
-          ),
+        //preferredSize: Size.fromHeight(h * 0.06),
+        preferredSize: _getController.index.value != 3 ? Size.fromHeight(h * 0.06) : Size.fromHeight(h * 0),
+        child: Obx(() => _getController.index.value != 2
+              ? Container(
+                  height: h * 0.06,
+                  margin: EdgeInsets.only(top: h * 0.045, bottom: h * 0.01),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: w * 0.04,
+                      ),
+                      Image(
+                        image: const AssetImage('assets/images/text.png'),
+                        width: w * 0.2,
+                        height: h * 0.05,
+                      ),
+                    ],
+                  ),
+                )
+              : Container(height: h * 0.03)
         )
       ),
       body: SingleChildScrollView(
-        child:
-          Obx(() => _widgetOptions.elementAt(_getController.index.value)),
+        child: Obx(() => _widgetOptions.elementAt(_getController.index.value)),
       ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
@@ -56,28 +75,60 @@ class SamplePage extends StatelessWidget {
           type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Image(image: AssetImage('assets/images/home_icon.png'), width: 25, height: 25,),
+              icon: Image(
+                image: AssetImage('assets/images/home_icon.png'),
+                width: 25,
+                height: 25,
+              ),
               label: 'Home',
-              activeIcon: Image(image: AssetImage('assets/images/home_icon.png'), width: 25, height: 25,
-                color: Colors.blue,),
+              activeIcon: Image(
+                image: AssetImage('assets/images/home_icon.png'),
+                width: 25,
+                height: 25,
+                color: Colors.blue,
+              ),
             ),
             BottomNavigationBarItem(
-              icon: Image(image: AssetImage('assets/images/search_icon.png'), width: 25, height: 25,),
+              icon: Image(
+                image: AssetImage('assets/images/search_icon.png'),
+                width: 25,
+                height: 25,
+              ),
               label: 'Search',
-              activeIcon: Image(image: AssetImage('assets/images/search_icon.png'), width: 25, height: 25,
-                color: Colors.blue,),
+              activeIcon: Image(
+                image: AssetImage('assets/images/search_icon.png'),
+                width: 25,
+                height: 25,
+                color: Colors.blue,
+              ),
             ),
             BottomNavigationBarItem(
-              icon: Image(image: AssetImage('assets/images/histoy_icon.png'), width: 25, height: 25,),
+              icon: Image(
+                image: AssetImage('assets/images/histoy_icon.png'),
+                width: 25,
+                height: 25,
+              ),
               label: 'History',
-              activeIcon: Image(image: AssetImage('assets/images/histoy_icon.png'), width: 25, height: 25,
-                color: Colors.blue,),
+              activeIcon: Image(
+                image: AssetImage('assets/images/histoy_icon.png'),
+                width: 25,
+                height: 25,
+                color: Colors.blue,
+              ),
             ),
             BottomNavigationBarItem(
-              icon: Image(image: AssetImage('assets/images/user_icon.png'), width: 25, height: 25,),
+              icon: Image(
+                image: AssetImage('assets/images/user_icon.png'),
+                width: 25,
+                height: 25,
+              ),
               label: 'Profile',
-              activeIcon: Image(image: AssetImage('assets/images/user_icon.png'), width: 25, height: 25,
-                color: Colors.blue,),
+              activeIcon: Image(
+                image: AssetImage('assets/images/user_icon.png'),
+                width: 25,
+                height: 25,
+                color: Colors.blue,
+              ),
             ),
           ],
           currentIndex: _getController.index.value,

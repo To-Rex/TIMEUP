@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:time_up/models/category.dart';
 import 'package:time_up/models/me_user.dart';
+import '../models/booking_business_get.dart';
 import '../models/get_by_category.dart';
 import '../models/get_region.dart';
 import '../models/profile_by_id.dart';
@@ -26,11 +27,14 @@ class GetController extends GetxController {
   var getByCategory = GetByCategory().obs;
   //ProfileById
   var getProfileById = ProfileById().obs;
+  //BookingBusinessGetList
+  var bookingBusinessGetList = BookingBusinessGetList().obs;
   var categoryIndex = 0.obs;
   var subCategoryIndex = 0.obs;
   var regionIndex = 0.obs;
   var categoryByID = 0.obs;
   var profileByID = 0.obs;
+  var bookingBusinessGetListByID = 0.obs;
 
   void changeCategoryID(int newCategoryID) {
     categoryIndex.value = newCategoryID;
@@ -84,9 +88,17 @@ class GetController extends GetxController {
     getByCategory.value = newGetByCategory;
   }
 
+  void changeBookingBusinessGetList(BookingBusinessGetList newBookingBusinessGetList) {
+    bookingBusinessGetList.value = newBookingBusinessGetList;
+  }
+
   //clear data GetByCategory
   void clearByCategory() {
     getByCategory.value = GetByCategory();
+  }
+
+  void clearBookingBusinessGetList() {
+    bookingBusinessGetList.value = BookingBusinessGetList();
   }
 
   void clearMeUser() {
