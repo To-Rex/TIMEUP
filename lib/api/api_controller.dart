@@ -35,6 +35,9 @@ class ApiController extends GetxController {
   var getByCategoryUrl = 'business/get-by-category/';
   //{{host}}/api/v1/business/profile/26
   var profileByIdUrl = 'business/profile/';
+  //{{host}}/api/v1/booking/business/get-list/{{business_id}}
+  var bookingBusinessGetListUrl = 'booking/business/get-list/';
+
 
 
   Future<String> sendSms(String phoneNumber) async {
@@ -312,4 +315,6 @@ class ApiController extends GetxController {
       return ProfileById(res: ProfileByIdRes(), status: false);
     }
   }
+
+
 }
