@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:time_up/api/api_controller.dart';
 import '../res/getController.dart';
 
 class ProfessionsListDetails extends StatelessWidget {
