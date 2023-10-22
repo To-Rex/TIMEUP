@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:time_up/models/last_send_sms.dart';
 import 'package:time_up/models/register_model.dart';
+import '../models/booking_business_get.dart';
 import '../models/category.dart';
 import '../models/get_by_category.dart';
 import '../models/get_region.dart';
@@ -316,5 +317,13 @@ class ApiController extends GetxController {
     }
   }
 
-
+  Future<BookingBusinessGetList> bookingBusinessGetList(int id) async {
+    var response = await http.get(Uri.parse(url + bookingBusinessGetListUrl + id.toString()));
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return BookingBusinessGetList.fromJson(jsonDecode(response.body));
+    } else {
+      return BookingBusinessGetList(res: [], status: false);
+    }
+  }
 }
