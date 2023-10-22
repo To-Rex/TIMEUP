@@ -16,18 +16,10 @@ class ProfessionsListUsers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery
-        .of(context)
-        .size
-        .height;
-    var w = MediaQuery
-        .of(context)
-        .size
-        .width;
+    var h = MediaQuery.of(context).size.height;
+    var w = MediaQuery.of(context).size.width;
     _getController.clearByCategory();
-    ApiController()
-        .getByCategory(_getController.categoryByID.value)
-        .then((value) => _getController.changeByCategory(value));
+    ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value));
     return Column(
       children: [
         SizedBox(
@@ -40,8 +32,7 @@ class ProfessionsListUsers extends StatelessWidget {
                 SizedBox(width: w * 0.04),
                 const Icon(Icons.arrow_back_ios),
                 const Expanded(child: SizedBox()),
-                Text(
-                  'Urolog',
+                Text('Urolog',
                   style: TextStyle(
                     fontSize: w * 0.05,
                     fontWeight: FontWeight.w500,
@@ -60,8 +51,7 @@ class ProfessionsListUsers extends StatelessWidget {
             child: ListView(
               children: [
                 Obx(() =>
-                _getController.getByCategory.value.res == null ||
-                    _getController.getByCategory.value.res!.isEmpty
+                _getController.getByCategory.value.res == null || _getController.getByCategory.value.res!.isEmpty
                     ? const Center(child: Text('No data'))
                     : SizedBox(
                   height: h * 0.74,
@@ -71,20 +61,16 @@ class ProfessionsListUsers extends StatelessWidget {
                       return GestureDetector(
                         onTap: () {
                           _getController.profileByID.value =
-                          _getController.getByCategory.value.res![index]
-                              .businessId!;
+                          _getController.getByCategory.value.res![index].businessId!;
                           _getController.clearProfileById();
-                          ApiController().profileById(
-                              _getController.profileByID.value).then((value) => {_getController.changeProfileById(value),
-                          });
+                          ApiController().profileById(_getController.profileByID.value).then((value) => {_getController.changeProfileById(value),});
                           Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
                         },
                         child: Column(
                           children: [
                             Row(
                               children: [
-                                if (_getController.getByCategory.value
-                                    .res?[index].photoUrl == null)
+                                if (_getController.getByCategory.value.res?[index].photoUrl == null)
                                   SizedBox(
                                     width: w * 0.2,
                                     height: w * 0.2,
@@ -106,17 +92,13 @@ class ProfessionsListUsers extends StatelessWidget {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      _getController.getByCategory.value
-                                          .res?[index].lastName ?? '',
+                                    Text(_getController.getByCategory.value.res?[index].lastName ?? '',
                                       style: TextStyle(
                                         fontSize: w * 0.04,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                    Text(
-                                      _getController.getByCategory.value
-                                          .res?[index].fistName ?? '',
+                                    Text(_getController.getByCategory.value.res?[index].fistName ?? '',
                                       style: TextStyle(
                                         fontSize: w * 0.04,
                                         fontWeight: FontWeight.w400,
@@ -125,6 +107,30 @@ class ProfessionsListUsers extends StatelessWidget {
                                     ),
                                   ],
                                 ),
+                                //follow button
+                                const Expanded(child: SizedBox()),
+                                SizedBox(
+                                  height: h * 0.045,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      backgroundColor: Colors.blue,
+                                    ),
+                                    child: Text('Follow',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: w * 0.05),
                               ],
                             ),
                             SizedBox(height: h * 0.02),
