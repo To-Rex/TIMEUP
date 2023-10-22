@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:time_up/api/api_controller.dart';
+import 'package:time_up/elements/functions.dart';
 import 'package:time_up/pages/professions_list_details.dart';
 import '../res/getController.dart';
 
@@ -107,13 +108,18 @@ class ProfessionsListUsers extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                //follow button
                                 const Expanded(child: SizedBox()),
                                 SizedBox(
                                   height: h * 0.045,
                                   child: ElevatedButton(
                                     onPressed: () {
-
+                                      ApiController().follow(_getController.getByCategory.value.res?[index].businessId ?? 0).then((value) =>{
+                                        if(value.status == true) {
+                                          Toast.showToast(context, 'Followed', Colors.green, Colors.white),
+                                        }else{
+                                          Toast.showToast(context, 'Error', Colors.red, Colors.white),
+                                        }
+                                      });
                                     },
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
