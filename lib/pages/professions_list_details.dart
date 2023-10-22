@@ -62,16 +62,20 @@ class ProfessionsListDetails extends StatelessWidget {
                   )),
             centerTitle: true,
           ),
-          SizedBox(
-            width: w,
-            height: h * 0.3,
-            child: Obx(() => _getController.getProfileById.value.res == null
-                ? const Center(child: Text('No data'))
-                : Image.network(
-                    "http://${_getController.getProfileById.value.res!.photoUrl}",
-                    fit: BoxFit.fitWidth,
-                  )),
-          ),
+          Obx(() => _getController.getProfileById.value.res == null
+              ? const Center(child: Text('No data'))
+              : SizedBox(
+              child: _getController.getProfileById.value.res!.photoUrl == null
+                  ? const CircleAvatar(backgroundImage: AssetImage('assets/images/doctor.png'),)
+                  : Row(
+                children: [
+                  SizedBox(width: w * 0.04),
+                  CircleAvatar(
+                    radius: w * 0.18,
+                    backgroundImage: NetworkImage("http://${_getController.getProfileById.value.res!.photoUrl}",),),
+                ],
+              )
+          )),
           SizedBox(
             height: h * 0.02,
           ),
@@ -280,7 +284,7 @@ class ProfessionsListDetails extends StatelessWidget {
                   ),
                   SizedBox(
                     width: w,
-                    height: h * 0.22,
+                    height: h * 0.3,
                     child: PageView(
                       //physics: const NeverScrollableScrollPhysics(),
                       controller: pageController,
@@ -288,7 +292,9 @@ class ProfessionsListDetails extends StatelessWidget {
                         Container(
                           width: w,
                           padding: EdgeInsets.only(
-                              left: w * 0.02, right: w * 0.02, bottom: h * 0.01),
+                              left: w * 0.02,
+                              right: w * 0.02,
+                              bottom: h * 0.01),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(3),
@@ -297,36 +303,34 @@ class ProfessionsListDetails extends StatelessWidget {
                             ),
                           ),
                           child: Obx(
-                                () => _getController.getProfileById.value.res == null
-                                ? const SizedBox()
-                                : Text(
-                              _getController.getProfileById.value.res!.bio ??
-                                  '',
-                              style: TextStyle(
-                                fontSize: w * 0.04,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
+                            () => _getController.getProfileById.value.res == null
+                                    ? const SizedBox()
+                                    : Text(
+                                        _getController.getProfileById.value.res!.bio ?? '',
+                                        style: TextStyle(
+                                          fontSize: w * 0.04,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
                           ),
                         ),
                         SizedBox(
                           width: w,
                           height: h * 0.22,
                           child: Obx(
-                            () => _getController.getProfileById.value.res ==
-                                    null
-                                ? const SizedBox()
-                                : Text(
-                                    _getController.getProfileById.value.res!.bio ??
-                                        '',
-                                    style: TextStyle(
-                                      fontSize: w * 0.04,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
+                            () =>
+                                _getController.getProfileById.value.res == null
+                                    ? const SizedBox()
+                                    : Text(
+                                        _getController.getProfileById.value.res!
+                                                .bio ?? '',
+                                        style: TextStyle(
+                                          fontSize: w * 0.04,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
