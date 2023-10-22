@@ -335,12 +335,10 @@ class ApiController extends GetxController {
         'Authorization': 'Bearer $token',
       },
     );
-    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return BookingBusinessGetList.fromJson(jsonDecode(response.body));
     } else {
       return BookingBusinessGetList(res: [], status: false);
     }
   }
-
 }

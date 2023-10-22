@@ -30,7 +30,7 @@ class HistoryPage extends StatelessWidget {
             AppBar(
               backgroundColor: Colors.white,
               elevation: 0,
-              title: Obx(() => _getController.meUsers.value.res == null
+              title: Obx(() => _getController.meUsers.value.res?.business == null
                   ? SizedBox(
                 height: h * 0.045,
                 child: TextButton(

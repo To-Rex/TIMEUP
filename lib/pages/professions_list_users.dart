@@ -54,58 +54,11 @@ class ProfessionsListUsers extends StatelessWidget {
           ),
         ),
         SizedBox(height: h * 0.02),
-        // List of professions taking up the remaining space
         SizedBox(
             height: h * 0.74,
             width: w * 0.9,
             child: ListView(
               children: [
-                /*for (int i = 0; i < 15; i++)
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
-                    },
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            //circle avatar
-                            SizedBox(
-                              width: w * 0.2,
-                              height: w * 0.2,
-                              child: const CircleAvatar(
-                                backgroundImage: AssetImage('assets/images/doctor.png'),
-                              ),
-                            ),
-                            SizedBox(width: w * 0.05),
-                            //name and profession
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Dr. John Doe',
-                                  style: TextStyle(
-                                    fontSize: w * 0.04,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Text(
-                                  'Urolog',
-                                  style: TextStyle(
-                                    fontSize: w * 0.04,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: h * 0.02),
-                      ],
-                    ),
-                  ),*/
-                //getcontroller by category res length
                 Obx(() =>
                 _getController.getByCategory.value.res == null ||
                     _getController.getByCategory.value.res!.isEmpty
@@ -145,12 +98,7 @@ class ProfessionsListUsers extends StatelessWidget {
                                     width: w * 0.2,
                                     height: w * 0.2,
                                     child: CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                          ApiController().url.substring(0,
-                                              ApiController().url.length - 1) +
-                                              _getController.getByCategory.value
-                                                  .res![index].photoUrl
-                                                  .toString()),
+                                      backgroundImage: NetworkImage("http://${_getController.getByCategory.value.res![index].photoUrl}"),
                                     ),
                                   ),
                                 SizedBox(width: w * 0.05),
@@ -184,8 +132,7 @@ class ProfessionsListUsers extends StatelessWidget {
                         ),
                       );
                     },
-                    itemCount: _getController.getByCategory.value.res?.length ??
-                        0,
+                    itemCount: _getController.getByCategory.value.res?.length ?? 0,
                   ),
                 )),
               ],
