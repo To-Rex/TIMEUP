@@ -268,13 +268,9 @@ class ProfilePage extends StatelessWidget {
                                   ),
                                 ],
                               ))),
-                        Obx(() =>
-                            getController.meUsers.value.res?.business == null
+                        Obx(() => getController.meUsers.value.res?.business == null
                                 ? const SizedBox()
-                                : BioBusiness(
-                                    text: getController
-                                            .meUsers.value.res?.business?.bio ??
-                                        '')),
+                                : BioBusiness(text: getController.meUsers.value.res?.business?.bio ?? '')),
                       ],
                     )
                   : getController.entersUser.value == 1

@@ -58,17 +58,28 @@ class EditUserPage extends StatelessWidget {
       width: w,
       child: Column(
         children: [
-          SizedBox(
-            height: h * 0.05,
+          SizedBox(height: h * 0.01),
+          AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              onPressed: () {
+                getController.entersUser.value = 0;
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+              ),
+            ),
+            title: Text('Edit profile',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: w * 0.05,
+              ),
+            ),
+            centerTitle: true,
           ),
           Center(
-            /*child: CircleAvatar(
-              radius: w * 0.12,
-              foregroundColor: Colors.blue,
-              backgroundImage: NetworkImage(
-                //'${ApiController().url}${getController.meUsers.value.res?.photoUrl?.substring(24, getController.meUsers.value.res?.photoUrl?.length)}'),
-                  'http://${getController.meUsers.value.res?.photoUrl}'),
-            ),*/
             child: Obx (() => getController.image.value == '' ? CircleAvatar(
               radius: w * 0.12,
               foregroundColor: Colors.blue,
