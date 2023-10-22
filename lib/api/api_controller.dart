@@ -41,6 +41,8 @@ class ApiController extends GetxController {
   var bookingBusinessGetListUrl = 'booking/business/get-list/';
   //{{host}}/api/v1/booking/client/get-list
   var bookingClientGetListUrl = 'booking/client/get-list';
+  //{{host}}/api/v1/business/1/follow
+  var businessFollowUrl = 'business/';
 
 
   Future<String> sendSms(String phoneNumber) async {
