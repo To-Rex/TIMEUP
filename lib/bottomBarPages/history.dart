@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:time_up/api/api_controller.dart';
 import '../res/getController.dart';
 
@@ -12,127 +15,22 @@ class HistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
-    ApiController()
-        .bookingBusinessGetList(_getController.bookingBusinessGetListByID.value)
-        .then((value) => _getController.changeBookingBusinessGetList(value));
+    if (_getController.meUsers.value.res?.business == null) {
+      ApiController().bookingClientGetList('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEwMzM2MDY2MTEyLCJpYXQiOjE2OTYwNjYxMTIsInN1YiI6IjMifQ.ueJ0RCf8pLq_5yUcuon7MDjP8a56IIaZw4maWPp-ZKA').then((value) => _getController.changeBookingBusinessGetList(value));
+      //ApiController().bookingClientGetList(GetStorage().read('token')).then((value) => _getController.changeBookingBusinessGetList(value));
+    } else {
+      ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value).then((value) => _getController.changeBookingBusinessGetList(value));
+    }
+
     return SizedBox(
       width: w,
       child: SingleChildScrollView(
         child: Column(
           children: [
-            /*Obx(() => _getController.meUsers.value.res != null
-                ? Center(
-                    child: SizedBox(
-                      height: h * 0.045,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          'Eslatma',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ),
-                    ))
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SizedBox(
-                        width: w * 0.45,
-                        child: const Text(
-                          textAlign: TextAlign.center,
-                          'Eslatma',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: w * 0.005,
-                        height: h * 0.03,
-                        color: Colors.grey,
-                      ),
-                      SizedBox(
-                        width: w * 0.45,
-                        child: const Text(
-                          textAlign: TextAlign.center,
-                          'Sizning Mijozlaringiz',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),*/
-            /*AppBar(
-              backgroundColor: Colors.white,
-              elevation: 0,
-              title: Obx(() => _getController.meUsers.value.res != null
-                  ? SizedBox(
-                      height: h * 0.045,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Eslatma',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ),
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        SizedBox(
-                          width: w * 0.45,
-                          child: TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Eslatma',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.blue,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: w * 0.005,
-                          height: h * 0.03,
-                          color: Colors.grey,
-                        ),
-                        SizedBox(
-                          width: w * 0.45,
-                          child: TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Sizning Mijozlaringiz',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )),
-              centerTitle: true,
-            ),*/
             AppBar(
               backgroundColor: Colors.white,
               elevation: 0,
-              title: Obx(() => _getController.meUsers.value.res != null
+              title: Obx(() => _getController.meUsers.value.res == null
                   ? SizedBox(
                 height: h * 0.045,
                 child: TextButton(
@@ -187,7 +85,6 @@ class HistoryPage extends StatelessWidget {
               )),
               centerTitle: true,
             ),
-
             SizedBox(
               width: w * 0.9,
               height: h * 0.07,
@@ -201,7 +98,7 @@ class HistoryPage extends StatelessWidget {
                         initialDate: DateTime.now(),
                         firstDate: DateTime(2000),
                         lastDate: DateTime(2025),
-                      );
+                      ).then((value) => _dateController.text = '${value!.day}/${value.month}/${value.year}');
                     },
                     child: const Icon(
                       Icons.calendar_today,
@@ -238,98 +135,17 @@ class HistoryPage extends StatelessWidget {
             SizedBox(
               height: h * 0.02,
             ),
-            //List 10 User icon and text
-            /*SizedBox(
-                height: h * 0.68,
-                child: ListView(
-                  children: [
-                    for (var i = 0; i < 10; i++)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          //CircleAvatar User icon Image.asset('assets/images/doctor.png'),
-                          const CircleAvatar(
-                            radius: 30,
-                            backgroundImage: AssetImage(
-                              'assets/images/doctor.png',
-                            ),
-                          ),
-                          //User name and profession
-                          SizedBox(
-                            width: w * 0.6,
-                            child: const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                //User name
-                                Text(
-                                  'Doctor_sobit',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                //User profession
-                                Text(
-                                  'Sobit Boymirzayev',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.phone,
-                                      size: 15,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      '+998 99 999 99 99',
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Text(
-                                  'Sizning navbatingiz: 11/02/2023 15 : 00',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                Divider(
-                                  color: Colors.grey,
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                  ],
-                )),*/
-            //_getController.bookingBusinessGetList.value.res == null
             Obx(() => _getController.bookingBusinessGetList.value.res == null
                 ? const SizedBox()
                 : SizedBox(
                     height: h * 0.68,
                     child: ListView.builder(
-                      itemCount: _getController
-                          .bookingBusinessGetList.value.res!.length,
+                      itemCount: _getController.bookingBusinessGetList.value.res!.length,
                       itemBuilder: (context, index) {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            _getController.bookingBusinessGetList.value
-                                        .res![index].photoUrl ==
-                                    null
+                            _getController.bookingBusinessGetList.value.res![index].photoUrl == null
                                 ? const CircleAvatar(
                                     radius: 30,
                                     backgroundImage: AssetImage(
@@ -342,17 +158,13 @@ class HistoryPage extends StatelessWidget {
                                       "http://${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",
                                     ),
                                   ),
-
-                            //User name and profession
                             SizedBox(
                               width: w * 0.6,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  //User name
                                   Text(
-                                    _getController.bookingBusinessGetList.value
-                                        .res![index].userName!,
+                                    _getController.bookingBusinessGetList.value.res![index].userName!,
                                     style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500,
@@ -361,11 +173,7 @@ class HistoryPage extends StatelessWidget {
                                   ),
                                   //User profession
                                   Text(
-                                    _getController.bookingBusinessGetList.value
-                                            .res![index].fistName! +
-                                        ' ' +
-                                        _getController.bookingBusinessGetList
-                                            .value.res![index].lastName!,
+                                    '${_getController.bookingBusinessGetList.value.res![index].fistName!} ${_getController.bookingBusinessGetList.value.res![index].lastName!}',
                                     style: const TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.w400,
@@ -373,38 +181,25 @@ class HistoryPage extends StatelessWidget {
                                   ),
                                   Row(
                                     children: [
-                                      const Icon(
-                                        Icons.phone,
-                                        size: 15,
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
+                                      const Icon(Icons.phone, size: 15,),
+                                      const SizedBox(width: 5,),
                                       Text(
-                                        _getController.bookingBusinessGetList
-                                            .value.res![index].phoneNumber!,
-                                        style: const TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w400,
-                                        ),
+                                        _getController.bookingBusinessGetList.value.res![index].phoneNumber!,
+                                        style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400,),
                                       ),
                                     ],
                                   ),
+                                  //if _getController.meUsers.value.res?.business != null Mijozingiz navbati: else Sizning navbatingiz:
                                   Text(
-                                    'Sizning navbatingiz: ' +
-                                        _getController.bookingBusinessGetList
-                                            .value.res![index].date! +
-                                        ' ' +
-                                        _getController.bookingBusinessGetList
-                                            .value.res![index].time!,
+                                    _getController.meUsers.value.res?.business != null
+                                        ? 'Mijozingiz navbati: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}'
+                                        : 'Sizning navbatingiz: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}',
                                     style: const TextStyle(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
-                                  const Divider(
-                                    color: Colors.grey,
-                                  ),
+                                  const Divider(color: Colors.grey,),
                                   const SizedBox(
                                     height: 5,
                                   )

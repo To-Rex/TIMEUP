@@ -180,26 +180,21 @@ class ProfilePage extends StatelessWidget {
                         Obx(() =>
                             getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
-                                    text:
-                                        '${getController.meUsers.value.res?.business?.officeAddress}',
+                                    text: '${getController.meUsers.value.res?.business?.officeAddress}',
                                     color: Colors.blue,
                                     icon: Icons.location_on,
                                   )
                                 : const SizedBox()),
-                        Obx(() =>
-                            getController.meUsers.value.res?.business != null
+                        Obx(() => getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
-                                    text:
-                                        '${getController.meUsers.value.res?.business?.officeName}',
+                                    text: '${getController.meUsers.value.res?.business?.officeName}',
                                     color: Colors.blue,
                                     icon: Icons.home,
                                   )
                                 : const SizedBox()),
-                        Obx(() =>
-                            getController.meUsers.value.res?.business != null
+                        Obx(() => getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
-                                    text:
-                                        '${getController.meUsers.value.res?.business?.dayOffs}',
+                                    text: '${getController.meUsers.value.res?.business?.dayOffs}',
                                     color: Colors.blue,
                                     icon: Icons.access_time_outlined,
                                   )
@@ -212,6 +207,7 @@ class ProfilePage extends StatelessWidget {
                                 ? EditButton(
                                     text: 'Make business profile',
                                     onPressed: () {
+                                      getController.nextPages.value = 0;
                                       getController.entersUser.value = 2;
                                     },
                                   )

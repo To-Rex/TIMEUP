@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:time_up/models/last_send_sms.dart';
@@ -38,7 +39,8 @@ class ApiController extends GetxController {
   var profileByIdUrl = 'business/profile/';
   //{{host}}/api/v1/booking/business/get-list/{{business_id}}
   var bookingBusinessGetListUrl = 'booking/business/get-list/';
-
+  //{{host}}/api/v1/booking/client/get-list
+  var bookingClientGetListUrl = 'booking/client/get-list';
 
 
   Future<String> sendSms(String phoneNumber) async {
@@ -317,7 +319,7 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<BookingBusinessGetList> bookingBusinessGetList(int id) async {
+  Future<BookingBusinessGetList> bookingBusinessGetList(id) async {
     var response = await http.get(Uri.parse(url + bookingBusinessGetListUrl + id.toString()));
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -326,4 +328,19 @@ class ApiController extends GetxController {
       return BookingBusinessGetList(res: [], status: false);
     }
   }
+
+  Future<BookingBusinessGetList> bookingClientGetList(token) async {
+    var response = await http.get(Uri.parse(url + bookingClientGetListUrl),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return BookingBusinessGetList.fromJson(jsonDecode(response.body));
+    } else {
+      return BookingBusinessGetList(res: [], status: false);
+    }
+  }
+
 }
