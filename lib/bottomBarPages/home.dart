@@ -87,7 +87,6 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-
                       SizedBox(
                         width: w * 0.9,
                         child: Text(
