@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:time_up/models/category.dart';
+import 'package:time_up/models/get_follow_model.dart';
 import 'package:time_up/models/me_user.dart';
 import '../models/booking_business_get.dart';
 import '../models/get_by_category.dart';
@@ -27,6 +28,7 @@ class GetController extends GetxController {
   var getByCategory = GetByCategory().obs;
   var getProfileById = ProfileById().obs;
   var bookingBusinessGetList = BookingBusinessGetList().obs;
+  var followList = GetFollowModel().obs;
   var categoryIndex = 0.obs;
   var subCategoryIndex = 0.obs;
   var regionIndex = 0.obs;
@@ -88,6 +90,14 @@ class GetController extends GetxController {
 
   void changeBookingBusinessGetList(BookingBusinessGetList newBookingBusinessGetList) {
     bookingBusinessGetList.value = newBookingBusinessGetList;
+  }
+
+  void changeFollowList(GetFollowModel newFollowList) {
+    followList.value = newFollowList;
+  }
+
+  void clearFollowList() {
+    followList.value = GetFollowModel();
   }
 
   //clear data GetByCategory

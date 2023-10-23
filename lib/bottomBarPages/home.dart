@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
+import 'package:time_up/api/api_controller.dart';
 import '../res/getController.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,92 +11,97 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    return SizedBox(
-      width: w,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: h * 0.02,
-          ),
-          Image(
-            image: const AssetImage('assets/images/home.png'),
-            //height: h * 0.2,
-            fit: BoxFit.contain,
+    ApiController()
+        .getFollowList()
+        .then((value) => _getController.changeFollowList(value));
+    return Obx(() => _getController.followList.value.res == null
+        ? SizedBox()
+        : SizedBox(
             width: w,
-          ),
-          SizedBox(
-            height: h * 0.02,
-          ),
-          Row(
-            children: [
-              SizedBox(
-                width: w * 0.05,
-              ),
-              const Icon(
-                //phone
-                Icons.phone,
-                color: Colors.blue,
-              ),
-              SizedBox(
-                width: w * 0.02,
-              ),
-              const Icon(
-                Icons.location_on,
-                color: Colors.blue,
-              ),
-              SizedBox(
-                width: w * 0.02,
-              ),
-              const Icon(
-                Icons.work,
-                color: Colors.blue,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: h * 0.02,
-          ),
-          //Doctor_sobit
-          Container(
-            margin: EdgeInsets.only(left: w * 0.05),
-            child: const Text(
-              'Doctor_Sobit',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          //Urolog
-          Container(
-            margin: EdgeInsets.only(left: w * 0.05),
-            child: const Text(
-              'Urolog',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-              ),
-            ),
-          ),
-          //САЛОМ МЕН ДОКТОР ИСЧАНОВ НОДИРБЕК ИСЧАНOВИЧ,\n
-          // МИЛЛАТИМ ЎЗБЕК...More
-          SizedBox(
-            height: h * 0.02,
-          ),
-          Container(
-            margin: EdgeInsets.only(left: w * 0.05),
-            child: Text(
-              'САЛОМ МЕН ДОКТОР ИСЧАНОВ НОДИРБЕК ИСЧАНOВИЧ,\nМИЛЛАТИМ ЎЗБЕК... More',
-              style: TextStyle(
-                fontSize: w * 0.03 > 15 ? 15 : w * 0.03,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+            height: h * 0.9,
+            child: ListView.builder(
+                itemCount: _getController.followList.value.res?.length ?? 0,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      //image
+                      SizedBox(
+                        height: h * 0.02,
+                      ),
+                      if (_getController.followList.value.res?[index].photoUrl != null)
+                        SizedBox(
+                          height: h * 0.3,
+                          child: Image.network(
+                            'http://${_getController.followList.value.res?[index].photoUrl}',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      SizedBox(
+                        height: h * 0.02,
+                      ),
+                      SizedBox(
+                        width: w * 0.95,
+                        child:Row(
+                          children: [
+                            IconButton(
+                                onPressed: (){},
+                                icon: Icon(Icons.phone, color: Colors.blue, size: w * 0.08,)
+                            ),
+                            IconButton(
+                                onPressed: (){},
+                                icon: Icon(Icons.location_on, color: Colors.blue, size: w * 0.08,)
+                            ),
+                            IconButton(
+                                onPressed: (){},
+                                //job
+                                icon: Icon(Icons.work, color: Colors.blue, size: w * 0.08,)
+                            ),
+                          ],
+                        ),
+                      ),
+                      //name
+                      SizedBox(
+                        width: w * 0.9,
+                        child: Text(
+                          '${_getController.followList.value.res?[index].userName}',
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        width: w * 0.9,
+                        child: Text(
+                          '${_getController.followList.value.res?[index].categoryName}',
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        width: w * 0.9,
+                        child: Text(
+                          '${_getController.followList.value.res?[index].bio}',
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * 0.02,
+                      ),
+                      const Divider(
+                        color: Colors.grey,
+                      ),
+                    ],
+                  );
+                }),
+          ));
   }
 }
