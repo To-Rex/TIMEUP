@@ -11,7 +11,8 @@ import '../elements/text_filds.dart';
 import '../res/getController.dart';
 
 class LoginUserData extends StatelessWidget {
-  LoginUserData({super.key});
+  String? phoneNumber;
+  LoginUserData({Key? key, required this.phoneNumber}) : super(key: key);
 
   final GetController getController = Get.put(GetController());
   final TextEditingController nameController = TextEditingController();
@@ -86,43 +87,6 @@ class LoginUserData extends StatelessWidget {
                   labelText: 'Nikname',
                 ),
                 SizedBox(height: h * 0.02),
-                /*SizedBox(
-                  width: w * 0.9,
-                  height: h * 0.07,
-                  child: TextField(
-                    cursorColor: Colors.grey,
-                    controller: _dateController,
-                    decoration: InputDecoration(
-                      suffixIcon: InkWell(
-                        onTap: () {
-                          showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2025),
-                          ).then((value) => _dateController.text = '${value!.day}/${value.month}/${value.year}');
-                        },
-                        child: const Icon(
-                          Icons.calendar_today,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      hintText: 'MM / DD / YYYY',
-                      hintStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey,
-                      ),
-
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                ),*/
                 Container(
                   height: h * 0.06,
                   width: w * 0.9,
@@ -165,10 +129,6 @@ class LoginUserData extends StatelessWidget {
                     ),
                   ),
                 ),
-                /*TextFildWidget(
-                  controller: phoneNumberController,
-                  labelText: 'Telefon raqam',
-                ),*/
                 SizedBox(height: h * 0.02),
                 Container(
                   height: h * 0.06,
@@ -178,7 +138,8 @@ class LoginUserData extends StatelessWidget {
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Obx(() => DropdownButtonHideUnderline(
+                  child: Obx(() => getController.getRegion.value.res == null ? const Center(child: CircularProgressIndicator(),) :
+                      DropdownButtonHideUnderline(
                     child: DropdownButton(
                       value: getController.getRegion.value
                           .res![getController.regionIndex.value],
