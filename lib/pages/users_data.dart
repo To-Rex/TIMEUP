@@ -18,6 +18,7 @@ class LoginUserData extends StatelessWidget {
   final TextEditingController surnameController = TextEditingController();
   final TextEditingController nikNameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
 
   final ImagePicker _picker = ImagePicker();
   var croppedImage;
@@ -85,10 +86,89 @@ class LoginUserData extends StatelessWidget {
                   labelText: 'Nikname',
                 ),
                 SizedBox(height: h * 0.02),
-                TextFildWidget(
+                /*SizedBox(
+                  width: w * 0.9,
+                  height: h * 0.07,
+                  child: TextField(
+                    cursorColor: Colors.grey,
+                    controller: _dateController,
+                    decoration: InputDecoration(
+                      suffixIcon: InkWell(
+                        onTap: () {
+                          showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2025),
+                          ).then((value) => _dateController.text = '${value!.day}/${value.month}/${value.year}');
+                        },
+                        child: const Icon(
+                          Icons.calendar_today,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      hintText: 'MM / DD / YYYY',
+                      hintStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey,
+                      ),
+
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),*/
+                Container(
+                  height: h * 0.06,
+                  width: w * 0.9,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(7),
+                    color: Colors.grey[200],
+                  ),
+                  child: TextField(
+                    controller: _dateController,
+                    decoration: InputDecoration(
+                      suffixIcon: InkWell(
+                        onTap: () {
+                          showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2025),
+                          ).then((value) => _dateController.text = '${value!.day}/${value.month}/${value.year}');
+                        },
+                        child: Icon(
+                          Icons.calendar_today,
+                          color: Colors.blue,
+                          size: w * 0.05 > 20 ? 20 : w * 0.05,
+                        ),
+                      ),
+                      hintText: 'Birth date',
+                      hintStyle: TextStyle(
+                        fontSize: w * 0.04 > 20 ? 20 : w * 0.04,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black54,
+                      ),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(7)),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: w * 0.04 > 20 ? 20 : w * 0.04,
+                    ),
+                  ),
+                ),
+                /*TextFildWidget(
                   controller: phoneNumberController,
                   labelText: 'Telefon raqam',
-                ),
+                ),*/
                 SizedBox(height: h * 0.02),
                 Container(
                   height: h * 0.06,
@@ -117,7 +197,7 @@ class LoginUserData extends StatelessWidget {
                     ),
                   ),),
                 ),
-                SizedBox(height: h * 0.02),
+                SizedBox(height: h * 0.05),
                 ElevatedButton(
                   onPressed: () {
 

@@ -83,9 +83,7 @@ class EditUserPage extends StatelessWidget {
             child: Obx (() => getController.image.value == '' ? CircleAvatar(
               radius: w * 0.12,
               foregroundColor: Colors.blue,
-              backgroundImage: NetworkImage(
-                //'${ApiController().url}${getController.meUsers.value.res?.photoUrl?.substring(24, getController.meUsers.value.res?.photoUrl?.length)}'),
-                  'http://${getController.meUsers.value.res?.photoUrl}'),
+              backgroundImage: NetworkImage('http://${getController.meUsers.value.res?.photoUrl}'),
             ) : CircleAvatar(
               radius: w * 0.12,
               foregroundColor: Colors.blue,
