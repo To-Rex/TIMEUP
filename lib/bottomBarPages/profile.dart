@@ -24,6 +24,172 @@ class ProfilePage extends StatelessWidget {
         await ApiController().getUserData(GetStorage().read('token')));
   }
 
+  showDialogs(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text(''),
+        content: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.05,
+          child: const Center(
+            child: Text('Do you want delete you accaount ? '),
+          ),
+        ),
+        actions: [
+          Center(
+            child: Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.32,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 1,
+                        backgroundColor: Colors.grey[300],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Cancel',
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.035,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ))),
+                ),
+                const Expanded(child: SizedBox()),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.32,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      onPressed: () {
+                        ApiController()
+                            .deleteMe(GetStorage().read('token'))
+                            .then((value) => {
+                                  if (value == true){
+                                      GetStorage().remove('token'),
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => LoginPage(),
+                                        ),
+                                      )
+                                    }
+                                  else {
+                                      Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.white)
+                                    }
+                                });
+                      },
+                      child: Row(
+                        children: [
+                          const Expanded(child: SizedBox()),
+                          Text('Delete',
+                              style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.035,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              )),
+                          //okey icon
+                          const Icon(Icons.check, color: Colors.white),
+                        ],
+                      )),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  showClosDialogs(BuildContext context){
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text(''),
+        content: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.05,
+          child: const Center(
+            child: Text('Do you want log out ? '),
+          ),
+        ),
+        actions: [
+          Center(
+            child: Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.32,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 1,
+                        backgroundColor: Colors.grey[300],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Cancel',
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.035,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ))),
+                ),
+                const Expanded(child: SizedBox()),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.32,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      onPressed: () {
+                        //closs all pages and go to login page
+                        GetStorage().remove('token');
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginPage(),
+                          ),
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          const Expanded(child: SizedBox()),
+                          Text('Log out',
+                              style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.035,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              )),
+                          //okey icon
+                          const Icon(Icons.check, color: Colors.white),
+                        ],
+                      )),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
@@ -58,13 +224,7 @@ class ProfilePage extends StatelessWidget {
                                 PopupMenuItem(
                                   child: TextButton(
                                     onPressed: () {
-                                      GetStorage().remove('token');
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => LoginPage(),
-                                        ),
-                                      );
+                                      showClosDialogs(context);
                                     },
                                     child: Text(
                                       'Log out',
@@ -79,21 +239,7 @@ class ProfilePage extends StatelessWidget {
                                 PopupMenuItem(
                                   child: TextButton(
                                     onPressed: () {
-                                      ApiController().deleteMe(
-                                          GetStorage().read('token')).then((value) => {
-                                            if(value == true){
-                                              GetStorage().remove('token'),
-                                              Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => LoginPage(),
-                                                ),
-                                              )
-                                            }else{
-                                              Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.white)
-                                            }
-                                      }
-                                      );
+                                      showDialogs(context);
                                     },
                                     child: Text(
                                       'Delete accaunt',
@@ -180,21 +326,26 @@ class ProfilePage extends StatelessWidget {
                         Obx(() =>
                             getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
-                                    text: '${getController.meUsers.value.res?.business?.officeAddress}',
+                                    text:
+                                        '${getController.meUsers.value.res?.business?.officeAddress}',
                                     color: Colors.blue,
                                     icon: Icons.location_on,
                                   )
                                 : const SizedBox()),
-                        Obx(() => getController.meUsers.value.res?.business != null
+                        Obx(() =>
+                            getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
-                                    text: '${getController.meUsers.value.res?.business?.officeName}',
+                                    text:
+                                        '${getController.meUsers.value.res?.business?.officeName}',
                                     color: Colors.blue,
                                     icon: Icons.home,
                                   )
                                 : const SizedBox()),
-                        Obx(() => getController.meUsers.value.res?.business != null
+                        Obx(() =>
+                            getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
-                                    text: '${getController.meUsers.value.res?.business?.dayOffs}',
+                                    text:
+                                        '${getController.meUsers.value.res?.business?.dayOffs}',
                                     color: Colors.blue,
                                     icon: Icons.access_time_outlined,
                                   )
@@ -268,9 +419,13 @@ class ProfilePage extends StatelessWidget {
                                   ),
                                 ],
                               ))),
-                        Obx(() => getController.meUsers.value.res?.business == null
+                        Obx(() =>
+                            getController.meUsers.value.res?.business == null
                                 ? const SizedBox()
-                                : BioBusiness(text: getController.meUsers.value.res?.business?.bio ?? '')),
+                                : BioBusiness(
+                                    text: getController
+                                            .meUsers.value.res?.business?.bio ??
+                                        '')),
                       ],
                     )
                   : getController.entersUser.value == 1

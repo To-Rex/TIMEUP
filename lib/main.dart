@@ -37,34 +37,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  //get token from storage
-  final box = GetStorage();
-  String? token = '';
-
-  //function for get token
-  getToken() async {
-    token = box.read('token');
-    print(token);
-  }
-
-  @override
-  void initState() {
-    getToken();
-    Timer(const Duration(seconds: 3), () {
-      if (token != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => SamplePage()),
-        );
-      } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
-        );
-      }
-    });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
