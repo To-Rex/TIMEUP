@@ -15,7 +15,11 @@ class HomePage extends StatelessWidget {
         .getFollowList()
         .then((value) => _getController.changeFollowList(value));
     return Obx(() => _getController.followList.value.res == null
-        ? SizedBox()
+        ? SizedBox(
+            width: w,
+            height: h * 0.9,
+            child: const Center(child: CircularProgressIndicator()),
+    )
         : SizedBox(
             width: w,
             height: h * 0.9,
