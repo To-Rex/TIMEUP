@@ -147,7 +147,6 @@ class ProfessionsListDetails extends StatelessWidget {
                 ),
               ),
               SizedBox(height: h * 0.05),
-              //Jonatish
               SizedBox(
                 width: w * 0.9,
                 height: h * 0.07,
@@ -157,9 +156,16 @@ class ProfessionsListDetails extends StatelessWidget {
                       _getController.getProfileById.value.res!.id ?? 0,
                       _dateController.text,
                       _timeController.text,
-                    );
-                    ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value).then((value) => _getController.changeBookingBusinessGetList(value));
-                    Navigator.pop(context);
+                    ).then((value) => {
+                      if(value == true){
+                        ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value).then((value) => _getController.changeBookingBusinessGetList(value)),
+                        Navigator.pop(context),
+                        Toast.showToast(context, 'Booking yaratildi', Colors.green, Colors.white),
+                      }else{
+                        Toast.showToast(context, 'Error', Colors.red, Colors.white),
+                      }
+                    });
+
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
