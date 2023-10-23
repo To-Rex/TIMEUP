@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../api/api_controller.dart';
+import '../elements/functions.dart';
 import '../res/getController.dart';
 
 class ProfessionsListDetails extends StatelessWidget {
@@ -399,7 +400,13 @@ class ProfessionsListDetails extends StatelessWidget {
                             child: IconButton(
                               color: Colors.white,
                               onPressed: () {
-
+                                ApiController().follow(_getController.getProfileById.value.res!.id ?? 0).then((value) =>{
+                                  if(value.status == true) {
+                                    Toast.showToast(context, 'Followed', Colors.green, Colors.white),
+                                  }else{
+                                    Toast.showToast(context, 'Error', Colors.red, Colors.white),
+                                  }
+                                });
                               },
                               icon: Icon(
                                 size: w * 0.1,
@@ -491,7 +498,9 @@ class ProfessionsListDetails extends StatelessWidget {
                                                   SizedBox(
                                                     width: w * 0.7,
                                                     child: Text(
-                                                      'Ushbu mijoz ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                                      'Ushbu mijoz'
+                                                          ' ${_getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
+                                                          '${_getController.bookingBusinessGetList.value.res![index].time!} keladi',
                                                       style: TextStyle(
                                                         fontSize: w * 0.04,
                                                         fontWeight: FontWeight.w500,
@@ -507,7 +516,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                   ),
                                   Row(
                                     children: [
-                                      Expanded(child: SizedBox()),
+                                      const Expanded(child: SizedBox()),
                                       SizedBox(
                                         height: h * 0.045,
                                         child: TextButton(onPressed: (){},

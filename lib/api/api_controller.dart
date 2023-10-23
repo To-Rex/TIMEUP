@@ -11,6 +11,7 @@ import '../models/booking_business_get.dart';
 import '../models/category.dart';
 import '../models/follov_model.dart';
 import '../models/get_by_category.dart';
+import '../models/get_follow_model.dart';
 import '../models/get_region.dart';
 import '../models/profile_by_id.dart';
 import '../models/sub_category.dart';
@@ -46,6 +47,8 @@ class ApiController extends GetxController {
   var bookingClientGetListUrl = 'booking/client/get-list';
   //{{host}}/api/v1/business/1/follow
   var businessFollowUrl = 'business/';
+  //{{host}}/api/v1/business/followed/list?limit=300&offset=0
+  var businessFollowedListUrl = 'business/followed/list?limit=300&offset=0';
 
 
   Future<String> sendSms(String phoneNumber) async {
@@ -358,6 +361,20 @@ class ApiController extends GetxController {
       return FollowModel.fromJson(jsonDecode(response.body));
     } else {
       return FollowModel(res: FollowModelRes(), status: false);
+    }
+  }
+
+  Future<GetFollowModel> getFollowList() async{
+    var response = await http.get(Uri.parse('$url$businessFollowedListUrl'),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return GetFollowModel.fromJson(jsonDecode(response.body));
+    } else {
+      return GetFollowModel(res: [], status: false);
     }
   }
 }
