@@ -37,6 +37,7 @@ class SearchPage extends StatelessWidget {
                       _getController.enters.value = 2;
                     })
                 : ProfessionsListUsers(
+                    title: _getController.subCategory.value.res?[index!].name,
                     onTap: (profession) {
                       _getController.enters.value = 0;
                     },
