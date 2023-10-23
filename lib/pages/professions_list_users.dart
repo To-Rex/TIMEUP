@@ -65,6 +65,7 @@ class ProfessionsListUsers extends StatelessWidget {
                           _getController.clearProfileById();
                           ApiController().profileById(_getController.profileByID.value).then((value) => {_getController.changeProfileById(value),});
                           _getController.bookingBusinessGetListByID.value = _getController.getByCategory.value.res![index].businessId!;
+                          _getController.nextPagesUserDetails.value = 0;
                           Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
                         },
                         child: Column(

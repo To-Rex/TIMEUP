@@ -49,7 +49,8 @@ class ApiController extends GetxController {
   var businessFollowUrl = 'business/';
   //{{host}}/api/v1/business/followed/list?limit=300&offset=0
   var businessFollowedListUrl = 'business/followed/list?limit=300&offset=0';
-
+  //{{host}}/api/v1/booking/client/create
+  var bookingClientCreateUrl = 'booking/client/create';
 
   Future<String> sendSms(String phoneNumber) async {
     var response = await http.post(
@@ -108,12 +109,15 @@ class ApiController extends GetxController {
       'last_name': lastName,
       'user_name': userName,
       'phone_number': phoneNumber,
-      'address': address
+      'address': address,
+      'birth_date': '23/10/2003'
     });
     request.files.add(await http.MultipartFile.fromPath('profile_photo', profilePhoto));
     try {
       http.StreamedResponse response = await request.send();
-      if (response.statusCode == 200) {
+      print(response.statusCode);
+      print(response.reasonPhrase);
+      if (response.statusCode == 200|| response.statusCode == 201) {
         final responseBody = await response.stream.bytesToString();
         return Register.fromJson(jsonDecode(responseBody));
       } else {
@@ -375,6 +379,25 @@ class ApiController extends GetxController {
       return GetFollowModel.fromJson(jsonDecode(response.body));
     } else {
       return GetFollowModel(res: [], status: false);
+    }
+  }
+
+  Future<bool> createBookingClientCreate(businessId, date, time) async {
+    var response = await http.post(Uri.parse(url + bookingClientCreateUrl),
+        body: jsonEncode({
+          "business_id": businessId,
+          "date": date,
+          "time": time,
+        }),
+        headers: {
+          'Authorization': 'Bearer ${GetStorage().read('token')}',
+          'Content-Type': 'application/json'
+        });
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
