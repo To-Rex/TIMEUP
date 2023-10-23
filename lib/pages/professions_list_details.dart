@@ -158,7 +158,9 @@ class ProfessionsListDetails extends StatelessWidget {
                       _dateController.text,
                       _timeController.text,
                     );
-                    ApiController().bookingBusinessGetList(26).then((value) => _getController.changeBookingBusinessGetList(value));
+                    ApiController().bookingBusinessGetList(
+                        _getController.bookingBusinessGetListByID.value
+                    ).then((value) => _getController.changeBookingBusinessGetList(value));
                     //close bottom sheet
                     Navigator.pop(context);
                   },
@@ -320,8 +322,8 @@ class ProfessionsListDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    //ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value).then((value) => _getController.changeBookingBusinessGetList(value));
-    ApiController().bookingBusinessGetList(26).then((value) => _getController.changeBookingBusinessGetList(value));
+    ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value).then((value) => _getController.changeBookingBusinessGetList(value));
+    //ApiController().bookingBusinessGetList(26).then((value) => _getController.changeBookingBusinessGetList(value));
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(h * 0.1),
@@ -686,9 +688,7 @@ class ProfessionsListDetails extends StatelessWidget {
                           color: Colors.white,
                           onPressed: () {
                             ApiController()
-                                .follow(_getController
-                                        .getProfileById.value.res!.id ??
-                                    0)
+                                .follow(_getController.getProfileById.value.res!.id ?? 0)
                                 .then((value) => {
                                       if (value.status == true)
                                         {

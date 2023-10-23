@@ -11,9 +11,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    ApiController()
-        .getFollowList()
-        .then((value) => _getController.changeFollowList(value));
+    ApiController().getFollowList().then((value) => _getController.changeFollowList(value));
     return Obx(() => _getController.followList.value.res == null
         ? SizedBox(
             width: w,
