@@ -139,7 +139,7 @@ class LoginPage extends StatelessWidget {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => LoginUserData(phoneNumber: _controller.text,)),
+                                        builder: (context) => LoginUserData(phoneNumber: code + _controller.text)),
                                   ),
                                 }
                             }
@@ -288,7 +288,7 @@ class LoginPage extends StatelessWidget {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => LoginUserData(phoneNumber: _controller.text,)),
+                                        builder: (context) => LoginUserData(phoneNumber: code + _controller.text,)),
                                   ),
                                 }
                             }

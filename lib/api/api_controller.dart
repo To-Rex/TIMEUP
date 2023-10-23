@@ -102,7 +102,16 @@ class ApiController extends GetxController {
       userName,
       phoneNumber,
       address,
-      profilePhoto,) async {
+      profilePhoto,
+      birthDate
+      ) async {
+    print(lastName);
+    print(userName);
+    print(phoneNumber);
+    print(address);
+    print(profilePhoto);
+    print(birthDate);
+
     var request = http.MultipartRequest('POST', Uri.parse(url + registerUrl));
     request.fields.addAll({
       'fist_name': fistName,
@@ -110,7 +119,7 @@ class ApiController extends GetxController {
       'user_name': userName,
       'phone_number': phoneNumber,
       'address': address,
-      'birth_date': '23/10/2003'
+      'birth_date': birthDate,
     });
     request.files.add(await http.MultipartFile.fromPath('profile_photo', profilePhoto));
     try {

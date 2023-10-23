@@ -45,6 +45,7 @@ class LoginUserData extends StatelessWidget {
     ApiController().getRegion().then((value) {
       getController.changeRegion(value);
     });
+    phoneNumberController.text = phoneNumber ?? '';
     return Scaffold(
       //resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -182,7 +183,17 @@ class LoginUserData extends StatelessWidget {
                       Toast.showToast(context, 'Telefon raqamingizni kiriting!', Colors.red, Colors.white);
                       return;
                     }
-
+                    if (_dateController.text.isEmpty) {
+                      Toast.showToast(context, 'Tugilgan kuningizni kiriting!', Colors.red, Colors.white);
+                      return;
+                    }
+                    //_dateController if exampel 12/2/2021 to 12/02/2021
+                    if (_dateController.text.split('/')[0].length == 1) {
+                      _dateController.text = '0${_dateController.text}';
+                    }
+                    if (_dateController.text.split('/')[1].length == 1) {
+                      _dateController.text = '${_dateController.text.split('/')[0]}/0${_dateController.text.split('/')[1]}/${_dateController.text.split('/')[2]}';
+                    }
                     ApiController().registerUser(
                       nameController.text.toString(),
                       surnameController.text.toString(),
@@ -190,6 +201,7 @@ class LoginUserData extends StatelessWidget {
                       phoneNumberController.text.toString(),
                       getController.getRegion.value.res![getController.regionIndex.value],
                       getController.image.value,
+                      _dateController.text.toString(),
                     ).then((value) {
                       if(value.status == true){
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()));
