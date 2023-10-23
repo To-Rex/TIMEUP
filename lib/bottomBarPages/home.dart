@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
     )
         : SizedBox(
             width: w,
-            height: h * 0.9,
+            height: h * 0.85,
             child: ListView.builder(
                 itemCount: _getController.followList.value.res?.length ?? 0,
                 itemBuilder: (context, index) {
@@ -34,7 +34,8 @@ class HomePage extends StatelessWidget {
                       ),
                       if (_getController.followList.value.res?[index].photoUrl != null)
                         SizedBox(
-                          height: h * 0.3,
+                          width: w ,
+                          height: h * 0.33,
                           child: Image.network(
                             'http://${_getController.followList.value.res?[index].photoUrl}',
                             fit: BoxFit.cover,
@@ -99,9 +100,6 @@ class HomePage extends StatelessWidget {
                       ),
                       SizedBox(
                         height: h * 0.02,
-                      ),
-                      const Divider(
-                        color: Colors.grey,
                       ),
                     ],
                   );

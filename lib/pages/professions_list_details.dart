@@ -184,6 +184,138 @@ class ProfessionsListDetails extends StatelessWidget {
     );
   }
 
+  showBottomSheetList(context){
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.9,
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10)
+              )
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: h * 0.1),
+              Row(
+                children: [
+                  SizedBox(width: w * 0.05),
+                  const Text('kunni tanlang'),
+                ],
+              ),
+              SizedBox(
+                width: w * 0.9,
+                height: h * 0.07,
+                child: TextField(
+                  controller: _dateController,
+                  decoration: InputDecoration(
+                    suffixIcon: InkWell(
+                      onTap: () {
+                        showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2025),
+                        ).then((value) => _dateController.text = '${value!.day}/${value.month}/${value.year}');
+                      },
+                      child: const Icon(
+                        Icons.calendar_today,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    hintText: 'MM / DD / YYYY',
+                    hintStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: h * 0.02),
+              //list bookingBusinessGetList
+              Expanded(child: Padding(
+                padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: _getController
+                        .bookingBusinessGetList
+                        .value
+                        .res!
+                        .length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: w * 0.08,
+                                child: Text(
+                                  '${index + 1}',
+                                  style: TextStyle(
+                                    fontSize:
+                                    w * 0.04,
+                                    fontWeight:
+                                    FontWeight
+                                        .w500,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: w * 0.7,
+                                child: Text(
+                                  'Ushbu mijoz'
+                                      ' ${_getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
+                                      '${_getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                  style: TextStyle(
+                                    fontSize:
+                                    w * 0.04,
+                                    fontWeight:
+                                    FontWeight
+                                        .w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Divider(),
+                        ],
+                      );
+                    }),
+              ))
+
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
@@ -397,9 +529,7 @@ class ProfessionsListDetails extends StatelessWidget {
                               ? ElevatedButton(
                                   onPressed: () {
                                     _getController.nextPagesUserDetails.value = 0;
-                                    pageController.animateToPage(0, duration:
-                                            const Duration(milliseconds: 500),
-                                        curve: Curves.ease);
+                                    pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                   },
                                   style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
@@ -701,7 +831,9 @@ class ProfessionsListDetails extends StatelessWidget {
                                             SizedBox(
                                               height: h * 0.045,
                                               child: TextButton(
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  showBottomSheetList(context);
+                                                },
                                                 child: Text(
                                                   'Barchasini ko\'rish',
                                                   style: TextStyle(
