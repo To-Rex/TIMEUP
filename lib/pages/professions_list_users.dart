@@ -61,10 +61,10 @@ class ProfessionsListUsers extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          _getController.profileByID.value =
-                          _getController.getByCategory.value.res![index].businessId!;
+                          _getController.profileByID.value = _getController.getByCategory.value.res![index].businessId!;
                           _getController.clearProfileById();
                           ApiController().profileById(_getController.profileByID.value).then((value) => {_getController.changeProfileById(value),});
+                          _getController.bookingBusinessGetListByID.value = _getController.getByCategory.value.res![index].businessId!;
                           Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
                         },
                         child: Column(
