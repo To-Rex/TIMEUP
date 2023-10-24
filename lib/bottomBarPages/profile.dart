@@ -18,10 +18,11 @@ class ProfilePage extends StatelessWidget {
   ProfilePage({Key? key}) : super(key: key);
 
   final GetController getController = Get.put(GetController());
+  final PageController pageController = PageController();
+  final TextEditingController _dateController = TextEditingController();
 
   getUsers() async {
-    getController.changeMeUser(
-        await ApiController().getUserData());
+    getController.changeMeUser(await ApiController().getUserData());
   }
 
   showDialogs(BuildContext context) {
@@ -71,19 +72,11 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        ApiController()
-                            .deleteMe()
-                            .then((value) => {
+                        ApiController().deleteMe().then((value) => {
                                   if (value == true){
                                       GetStorage().remove('token'),
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => LoginPage(),
-                                        ),
-                                      )
-                                    }
-                                  else {
+                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(),),)
+                                  } else {
                                       Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.white)
                                     }
                                 });
@@ -187,6 +180,138 @@ class ProfilePage extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  showBottomSheetList(context){
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.9,
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10)
+              )
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: h * 0.1),
+              Row(
+                children: [
+                  SizedBox(width: w * 0.05),
+                  const Text('kunni tanlang'),
+                ],
+              ),
+              SizedBox(
+                width: w * 0.9,
+                height: h * 0.07,
+                child: TextField(
+                  controller: _dateController,
+                  decoration: InputDecoration(
+                    suffixIcon: InkWell(
+                      onTap: () {
+                        showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2025),
+                        ).then((value) => _dateController.text = '${value!.day}/${value.month}/${value.year}');
+                      },
+                      child: const Icon(
+                        Icons.calendar_today,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    hintText: 'MM / DD / YYYY',
+                    hintStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: h * 0.02),
+              //list bookingBusinessGetList
+              Expanded(child: Padding(
+                padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: getController
+                        .bookingBusinessGetList
+                        .value
+                        .res!
+                        .length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: w * 0.08,
+                                child: Text(
+                                  '${index + 1}',
+                                  style: TextStyle(
+                                    fontSize:
+                                    w * 0.04,
+                                    fontWeight:
+                                    FontWeight
+                                        .w500,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: w * 0.7,
+                                child: Text(
+                                  'Ushbu mijoz'
+                                      ' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
+                                      '${getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                  style: TextStyle(
+                                    fontSize:
+                                    w * 0.04,
+                                    fontWeight:
+                                    FontWeight
+                                        .w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Divider(),
+                        ],
+                      );
+                    }),
+              ))
+
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -396,36 +521,177 @@ class ProfilePage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  //Biografiya and Ish Jadvali
-                                  SizedBox(
-                                    width: w * 0.5,
-                                    height: h * 0.062,
-                                    child: BusinessEditButton(
-                                      text: 'Biografiya',
-                                      onPressed: () {},
-                                      color: Colors.blue,
-                                      radius: 0,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: w * 0.5,
-                                    height: h * 0.062,
-                                    child: BusinessEditButton(
-                                      text: 'Ish jadvali',
-                                      onPressed: () {},
-                                      color: Colors.grey,
-                                      radius: 0,
-                                    ),
-                                  ),
+                                  Obx(() => getController.nextPagesUserDetails.value == 0
+                                      ? SizedBox(
+                                          width: w * 0.5,
+                                          height: h * 0.062,
+                                          child: BusinessEditButton(
+                                            text: 'Biografiya',
+                                            onPressed: () {
+                                              pageController.animateToPage(0,
+                                                  duration: const Duration(
+                                                      milliseconds: 500),
+                                                  curve: Curves.ease);
+                                            },
+                                            color: Colors.blue,
+                                            radius: 0,
+                                          ),
+                                        )
+                                      : SizedBox(
+                                          width: w * 0.5,
+                                          height: h * 0.062,
+                                          child: BusinessEditButton(
+                                            text: 'Biografiya',
+                                            onPressed: () {
+                                              pageController.animateToPage(0,
+                                                  duration: const Duration(
+                                                      milliseconds: 500),
+                                                  curve: Curves.ease);
+                                            },
+                                            color: Colors.grey,
+                                            radius: 0,
+                                          ),
+                                        )),
+                                  Obx(() => getController.nextPagesUserDetails
+                                              .value ==
+                                          1
+                                      ? SizedBox(
+                                          width: w * 0.5,
+                                          height: h * 0.062,
+                                          child: BusinessEditButton(
+                                            text: 'Ish jadvali',
+                                            onPressed: () {
+                                              pageController.animateToPage(1,
+                                                  duration: const Duration(
+                                                      milliseconds: 500),
+                                                  curve: Curves.ease);
+                                            },
+                                            color: Colors.blue,
+                                            radius: 0,
+                                          ),
+                                        )
+                                      : SizedBox(
+                                          width: w * 0.5,
+                                          height: h * 0.062,
+                                          child: BusinessEditButton(
+                                            text: 'Ish jadvali',
+                                            onPressed: () {
+                                              pageController.animateToPage(1,
+                                                  duration: const Duration(
+                                                      milliseconds: 500),
+                                                  curve: Curves.ease);
+                                            },
+                                            color: Colors.grey,
+                                            radius: 0,
+                                          ),
+                                        )),
                                 ],
                               ))),
                         Obx(() =>
                             getController.meUsers.value.res?.business == null
                                 ? const SizedBox()
-                                : BioBusiness(
-                                    text: getController
-                                            .meUsers.value.res?.business?.bio ??
-                                        '')),
+                                : //BioBusiness(text: getController.meUsers.value.res?.business?.bio ?? '')
+                            SizedBox(
+                              width: w,
+                              height: h * 0.3,
+                              child: PageView(
+                                //physics: const NeverScrollableScrollPhysics(),
+                                onPageChanged: (index) {
+                                  getController.nextPagesUserDetails.value = index;
+                                },
+                                controller: pageController,
+                                children: [
+                                  BioBusiness(
+                                    text: getController.meUsers.value.res?.business?.bio ?? '',
+                                  ),
+                                  SizedBox(
+                                    width: w,
+                                    height: h * 0.22,
+                                    child: Obx(() => getController.bookingBusinessGetList.value.res == null
+                                          ? const Center(child: Text('Ma\'lumotlar topilmadi'))
+                                          : Container(
+                                          width: w,
+                                          padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02, top: h * 0.01),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(3),
+                                            border: Border.all(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              SizedBox(
+                                                height: h * 0.24,
+                                                child: ListView.builder(
+                                                    shrinkWrap: true,
+                                                    itemCount: getController.bookingBusinessGetList.value.res!.length,
+                                                    itemBuilder: (context, index) {
+                                                      return Column(
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              SizedBox(
+                                                                width: w * 0.08,
+                                                                child: Text(
+                                                                  '${index + 1}',
+                                                                  style: TextStyle(
+                                                                    fontSize:
+                                                                    w * 0.04,
+                                                                    fontWeight:
+                                                                    FontWeight.w500,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: w * 0.7,
+                                                                child: Text(
+                                                                  'Ushbu mijoz'' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} ''${getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                                                  style: TextStyle(
+                                                                    fontSize:
+                                                                    w * 0.04,
+                                                                    fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          const Divider(),
+                                                        ],
+                                                      );
+                                                    }),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  const Expanded(child: SizedBox()),
+                                                  SizedBox(
+                                                    height: h * 0.045,
+                                                    child: TextButton(
+                                                      onPressed: () {
+                                                        showBottomSheetList(context);
+                                                      },
+                                                      child: Text(
+                                                        'Barchasini ko\'rish',
+                                                        style: TextStyle(
+                                                          fontSize: w * 0.04,
+                                                          fontWeight: FontWeight.w500,
+                                                          color: Colors.blue,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              )
+                                            ],
+                                          )),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ),
                       ],
                     )
                   : getController.entersUser.value == 1
