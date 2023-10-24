@@ -16,8 +16,8 @@ class HistoryPage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     if (_getController.meUsers.value.res?.business == null) {
-      ApiController().bookingClientGetList('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEwMzM2MDY2MTEyLCJpYXQiOjE2OTYwNjYxMTIsInN1YiI6IjMifQ.ueJ0RCf8pLq_5yUcuon7MDjP8a56IIaZw4maWPp-ZKA').then((value) => _getController.changeBookingBusinessGetList(value));
-      //ApiController().bookingClientGetList(GetStorage().read('token')).then((value) => _getController.changeBookingBusinessGetList(value));
+      //ApiController().bookingClientGetList('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEwMzM2MDY2MTEyLCJpYXQiOjE2OTYwNjYxMTIsInN1YiI6IjMifQ.ueJ0RCf8pLq_5yUcuon7MDjP8a56IIaZw4maWPp-ZKA').then((value) => _getController.changeBookingBusinessGetList(value));
+      ApiController().bookingClientGetList().then((value) => _getController.changeBookingBusinessGetList(value));
     } else {
       ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value).then((value) => _getController.changeBookingBusinessGetList(value));
     }

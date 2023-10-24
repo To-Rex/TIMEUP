@@ -26,7 +26,6 @@ class LoginUserData extends StatelessWidget {
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
-
     if (pickedFile != null) {
       _cropImage(pickedFile.path);
     }
@@ -162,7 +161,6 @@ class LoginUserData extends StatelessWidget {
                 SizedBox(height: h * 0.05),
                 ElevatedButton(
                   onPressed: () {
-
                     if (getController.image.value == '') {
                       Toast.showToast(context, 'Iltimos Rasm tanlang!', Colors.red, Colors.white);
                       return;

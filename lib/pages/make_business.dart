@@ -34,7 +34,7 @@ class MakeBusinessPage extends StatelessWidget {
 
   getUsers() async {
     getController.changeMeUser(
-        await ApiController().getUserData(GetStorage().read('token')));
+        await ApiController().getUserData());
   }
 
   final ImagePicker _picker = ImagePicker();
@@ -509,7 +509,7 @@ class MakeBusinessPage extends StatelessWidget {
                       );
                       return;
                     }
-                    if (phoneNumberController.text.isEmpty) {
+                    /*if (phoneNumberController.text.isEmpty) {
                       getController.changeFullName(phoneNumberController.text);
                       Toast.showToast(
                         context,
@@ -518,7 +518,7 @@ class MakeBusinessPage extends StatelessWidget {
                         Colors.white,
                       );
                       return;
-                    }
+                    }*/
                     if (getController.subCategory.value.res == null) {
                       getController.changeFullName(getController
                           .subCategory
@@ -556,18 +556,16 @@ class MakeBusinessPage extends StatelessWidget {
                     }
                     if (getController.image.value != '') {
                       ApiController().editUserPhoto(
-                          GetStorage().read('token'), croppedImage.path).then((value) =>
+                          croppedImage.path).then((value) =>
                           ApiController().editUser(
-                              GetStorage().read('token'),
                               getController.meUsers.value.res?.fistName ?? '',
                               getController.meUsers.value.res?.lastName ?? '',
                               getController.getRegion.value
                                   .res![getController.regionIndex.value],
                               nikNameController.text).then((value) {
                             if (value.status!) {
-                              ApiController().getUserData(GetStorage().read('token')).then((value) {
+                              ApiController().getUserData().then((value) {
                                 ApiController().createBusiness(
-                                    GetStorage().read('token'),
                                     getController.subCategory.value.res![getController.subCategoryIndex.value].id!,
                                     getController.getRegion.value.res![getController.regionIndex.value],
                                     nameInstitutionController.text,
@@ -575,7 +573,7 @@ class MakeBusinessPage extends StatelessWidget {
                                     bioController.text,
                                     dayOffController.text).then((value) {
                                   if (value) {
-                                    ApiController().getUserData(GetStorage().read('token')).then((value) {getController.changeMeUser(value);});
+                                    ApiController().getUserData().then((value) {getController.changeMeUser(value);});
                                     finish();
                                   } else {
                                     Toast.showToast(context, 'Error', Colors.red, Colors.white,);
@@ -595,16 +593,14 @@ class MakeBusinessPage extends StatelessWidget {
                       );
                     } else {
                       ApiController().editUser(
-                          GetStorage().read('token'),
                           getController.meUsers.value.res?.fistName ?? '',
                           getController.meUsers.value.res?.lastName ?? '',
                           getController.getRegion.value
                               .res![getController.regionIndex.value],
                           nikNameController.text).then((value) {
                         if (value.status!) {
-                          ApiController().getUserData(GetStorage().read('token')).then((value) {
+                          ApiController().getUserData().then((value) {
                             ApiController().createBusiness(
-                                GetStorage().read('token'),
                                 getController.subCategory.value.res![getController.subCategoryIndex.value].id!,
                                 getController.getRegion.value.res![getController.regionIndex.value],
                                 nameInstitutionController.text,
@@ -612,7 +608,7 @@ class MakeBusinessPage extends StatelessWidget {
                                 bioController.text,
                                 dayOffController.text).then((value) {
                               if (value) {
-                                ApiController().getUserData(GetStorage().read('token')).then((value) {getController.changeMeUser(value);});
+                                ApiController().getUserData().then((value) {getController.changeMeUser(value);});
                                 finish();
                               } else {
                                 Toast.showToast(context, 'Error', Colors.red, Colors.white,);

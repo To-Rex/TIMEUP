@@ -35,7 +35,7 @@ class EditBusinessUserPage extends StatelessWidget {
   final PageController pageController = PageController();
 
   getUsers() async {
-    getController.changeMeUser(await ApiController().getUserData(GetStorage().read('token')));
+    getController.changeMeUser(await ApiController().getUserData());
   }
 
   final ImagePicker _picker = ImagePicker();
@@ -584,17 +584,15 @@ class EditBusinessUserPage extends StatelessWidget {
               }
               if (getController.image.value != '') {
                 ApiController().editUserPhoto(
-                    GetStorage().read('token'), croppedImage.path).then((value) =>
+                    croppedImage.path).then((value) =>
                     ApiController().editUser(
-                        GetStorage().read('token'),
                         nameController.text,
                         surnameController.text,
                         getController.getRegion.value.res![getController.regionIndex.value],
                         nikNameController.text).then((value) {
                       if (value.status!) {
-                        ApiController().getUserData(GetStorage().read('token')).then((value) {
+                        ApiController().getUserData().then((value) {
                           ApiController().updateBusiness(
-                              GetStorage().read('token'),
                               value.res?.business?.id ?? 0,
                               getController.subCategoryIndex.value,
                               //adress
@@ -605,7 +603,7 @@ class EditBusinessUserPage extends StatelessWidget {
                               dayOffController.text).then((value) {
                             if (value) {
                               ApiController()
-                                  .getUserData(GetStorage().read('token'))
+                                  .getUserData()
                                   .then((value) {
                                 getController.changeMeUser(value);
                               });
@@ -633,18 +631,15 @@ class EditBusinessUserPage extends StatelessWidget {
                 );
               }else {
                 ApiController().editUser(
-                    GetStorage().read('token'),
                     nameController.text,
                     surnameController.text,
                     getController.getRegion.value.res![getController.regionIndex.value],
                     nikNameController.text).then((value) {
                   if (value.status!) {
-                    ApiController().getUserData(GetStorage().read('token')).then((value) {
+                    ApiController().getUserData().then((value) {
                       ApiController().updateBusiness(
-                          GetStorage().read('token'),
                           value.res?.business?.id ?? 0,
                           getController.subCategoryIndex.value,
-                          //adress
                           getController.getRegion.value.res![getController.regionIndex.value],
                           nameInstitutionController.text,
                           experience,
@@ -652,7 +647,7 @@ class EditBusinessUserPage extends StatelessWidget {
                           dayOffController.text).then((value) {
                         if (value) {
                           ApiController()
-                              .getUserData(GetStorage().read('token'))
+                              .getUserData()
                               .then((value) {
                             getController.changeMeUser(value);
                           });

@@ -26,7 +26,7 @@ class EditUserPage extends StatelessWidget {
 
   getUsers() async {
     getController.changeMeUser(
-        await ApiController().getUserData(GetStorage().read('token')));
+        await ApiController().getUserData());
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -135,7 +135,6 @@ class EditUserPage extends StatelessWidget {
               }
               if (getController.image.value == '') {
                 ApiController().editUser(
-                  GetStorage().read('token'),
                   nameController.text,
                   surnameController.text,
                   nikNameController.text,
@@ -149,10 +148,10 @@ class EditUserPage extends StatelessWidget {
                   }
                 });
               }else{
-                ApiController().editUserPhoto(GetStorage().read('token'), getController.image.value).then((value) {
+                ApiController().editUserPhoto(
+                    getController.image.value).then((value) {
                   if (value == true) {
                     ApiController().editUser(
-                      GetStorage().read('token'),
                       nameController.text,
                       surnameController.text,
                       nikNameController.text,

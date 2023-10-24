@@ -30,7 +30,7 @@ class SamplePage extends StatelessWidget {
 
   getUsers() async {
     _getController.changeMeUser(
-        await ApiController().getUserData(GetStorage().read('token')));
+        await ApiController().getUserData());
   }
 
   @override

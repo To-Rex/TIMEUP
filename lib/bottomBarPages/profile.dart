@@ -21,7 +21,7 @@ class ProfilePage extends StatelessWidget {
 
   getUsers() async {
     getController.changeMeUser(
-        await ApiController().getUserData(GetStorage().read('token')));
+        await ApiController().getUserData());
   }
 
   showDialogs(BuildContext context) {
@@ -72,7 +72,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                       onPressed: () {
                         ApiController()
-                            .deleteMe(GetStorage().read('token'))
+                            .deleteMe()
                             .then((value) => {
                                   if (value == true){
                                       GetStorage().remove('token'),

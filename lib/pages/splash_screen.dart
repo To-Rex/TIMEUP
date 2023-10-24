@@ -13,7 +13,7 @@ class SplashScreen extends StatelessWidget {
   SplashScreen({super.key});
 
   final GetController _getController = Get.put(GetController());
-  getUsers() async {if (GetStorage().read('token') != null) {_getController.changeMeUser(await ApiController().getUserData(GetStorage().read('token')));}}
+  getUsers() async {if (GetStorage().read('token') != null) {_getController.changeMeUser(await ApiController().getUserData());}}
 
   @override
   Widget build(BuildContext context) {

@@ -159,13 +159,15 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<MeUser> getUserData(token) async {
+  Future<MeUser> getUserData() async {
+    print(GetStorage().read('token'));
     var response = await http.get(Uri.parse(url + meUrl),
         headers: {
           'Authorization':
-          'Bearer $token',
+          'Bearer ${GetStorage().read('token')}',
         });
     print(response.body);
+    print(response.statusCode);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return MeUser.fromJson(jsonDecode(response.body));
     } else {
@@ -182,7 +184,7 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<MeUser> editUser(token, name, surName, address, nikName) async {
+  Future<MeUser> editUser(name, surName, address, nikName) async {
     var response = await http.put(Uri.parse(url + editMeUrl),
       body: jsonEncode({
         "fist_name": name,
@@ -191,7 +193,7 @@ class ApiController extends GetxController {
         "user_name": nikName,
       }),
       headers: {
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
         'Content-Type': 'application/json'
       },
     );
@@ -243,7 +245,7 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> createBusiness(token, int categoryId, officeAddress, officeName,
+  Future<bool> createBusiness(int categoryId, officeAddress, officeName,
       experience, bio, dayOffs) async {
     var response = await http.post(Uri.parse(url + businessCreateUrl),
         body: jsonEncode({
@@ -255,7 +257,7 @@ class ApiController extends GetxController {
           "day_offs": dayOffs
         }),
         headers: {
-          'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer ${GetStorage().read('token')}',
           'Content-Type': 'application/json'
         });
     print(response.body);
@@ -266,7 +268,7 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> updateBusiness(token,int id, int categoryId, officeAddress, officeName,
+  Future<bool> updateBusiness(int id, int categoryId, officeAddress, officeName,
       experience, bio, dayOffs) async {
     var response = await http.put(Uri.parse(url + businessUpdateMeUrl),
         body: jsonEncode({
@@ -279,7 +281,7 @@ class ApiController extends GetxController {
           "day_offs": dayOffs
         }),
         headers: {
-          'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer ${GetStorage().read('token')}',
           'Content-Type': 'application/json'
         });
     print(response.body);
@@ -290,9 +292,9 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> editUserPhoto(token, photo) async {
+  Future<bool> editUserPhoto(photo) async {
     var headers = {
-      'Authorization': 'Bearer $token'
+      'Authorization': 'Bearer ${GetStorage().read('token')}',
     };
     var request = http.MultipartRequest('PUT', Uri.parse(url + editPhotoUrl));
     request.files.add(await http.MultipartFile.fromPath('profile_photo', photo));
@@ -306,11 +308,11 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> deleteMe(token) async {
+  Future<bool> deleteMe() async {
     var response = await http.delete(Uri.parse(url+deleteMeUrl),
         headers: {
           'Authorization':
-          'Bearer $token',
+          'Bearer ${GetStorage().read('token')}',
         });
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -350,10 +352,10 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<BookingBusinessGetList> bookingClientGetList(token) async {
+  Future<BookingBusinessGetList> bookingClientGetList() async {
     var response = await http.get(Uri.parse(url + bookingClientGetListUrl),
       headers: {
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
       },
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
