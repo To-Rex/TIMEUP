@@ -28,6 +28,7 @@ class GetController extends GetxController {
   var getByCategory = GetByCategory().obs;
   var getProfileById = ProfileById().obs;
   var bookingBusinessGetList = BookingBusinessGetList().obs;
+  var bookingBusinessGetList1 = BookingBusinessGetList().obs;
   var followList = GetFollowModel().obs;
   var categoryIndex = 0.obs;
   var subCategoryIndex = 0.obs;
@@ -96,6 +97,9 @@ class GetController extends GetxController {
   void changeBookingBusinessGetList(BookingBusinessGetList newBookingBusinessGetList) {
     bookingBusinessGetList.value = newBookingBusinessGetList;
   }
+  void changeBookingBusinessGetList1(BookingBusinessGetList newBookingBusinessGetList) {
+    bookingBusinessGetList1.value = newBookingBusinessGetList;
+  }
 
   void changeFollowList(GetFollowModel newFollowList) {
     followList.value = newFollowList;
@@ -112,6 +116,9 @@ class GetController extends GetxController {
 
   void clearBookingBusinessGetList() {
     bookingBusinessGetList.value = BookingBusinessGetList();
+  }
+  void clearBookingBusinessGetList1() {
+    bookingBusinessGetList1.value = BookingBusinessGetList();
   }
 
   void clearMeUser() {
