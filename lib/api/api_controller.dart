@@ -224,7 +224,7 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<GetSubCategory> getSubCategory(int id) async {
+  Future<GetSubCategory> getSubCategory(id) async {
     var response = await http.get(
         Uri.parse(url + subCategoryUrl + id.toString()));
     print(response.body);

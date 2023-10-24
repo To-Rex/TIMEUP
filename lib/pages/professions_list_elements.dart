@@ -1,9 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:time_up/models/sub_category.dart';
 import '../api/api_controller.dart';
 import '../res/getController.dart';
 
@@ -23,7 +20,9 @@ class ProfessionsListElements extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    ApiController().getSubCategory(index!.toInt()).then((value) => _getController.changeSubCategory(value));
+    ApiController().getSubCategory(index!.toInt()).then((value) =>
+    {_getController.changeSubCategory(value),
+      _getController.changeTitleListElements(_getController.category.value.res![index!].name!)});
     return Column(
       children: [
         SizedBox(
@@ -37,13 +36,7 @@ class ProfessionsListElements extends StatelessWidget {
                 SizedBox(width: w * 0.04),
                 const Icon(Icons.arrow_back_ios),
                 const Expanded(child: SizedBox()),
-                Text(
-                  'Tibbiyot Kasblar royhati',
-                  style: TextStyle(
-                    fontSize: w * 0.05,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                Text('Tibbiyot Kasblar royhati', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500,),),
                 const Expanded(child: SizedBox()),
                 SizedBox(width: w * 0.04),
               ],
@@ -52,7 +45,7 @@ class ProfessionsListElements extends StatelessWidget {
         ),
         SizedBox(height: h * 0.02),
         // List of professions taking up the remaining space
-        Obx(() => _getController.subCategory.value.res == null || _getController.subCategory.value.res!.isEmpty
+        Obx(() => _getController.subCategory.value.res == null
             ? const Center(child: Text('No data'))
             : SizedBox(
             height: h * 0.74,
@@ -83,7 +76,7 @@ class ProfessionsListElements extends StatelessWidget {
                       ],
                     ));
               },
-              itemCount: _getController.subCategory.value.res?.length ?? 0,
+              itemCount: _getController.subCategory.value.res?.length,
               cacheExtent: w * 0.1,
               dragStartBehavior: DragStartBehavior.down,
               prototypeItem: Container(

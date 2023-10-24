@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../api/api_controller.dart';
 import '../elements/professions_list.dart';
 import '../pages/professions_list_elements.dart';
 import '../pages/professions_list_users.dart';
@@ -37,7 +38,6 @@ class SearchPage extends StatelessWidget {
                       _getController.enters.value = 2;
                     })
                 : ProfessionsListUsers(
-                    title: _getController.subCategory.value.res?[index!].name,
                     onTap: (profession) {
                       _getController.enters.value = 0;
                     },

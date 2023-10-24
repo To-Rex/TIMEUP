@@ -35,6 +35,11 @@ class GetController extends GetxController {
   var categoryByID = 0.obs;
   var profileByID = 0.obs;
   var bookingBusinessGetListByID = 0.obs;
+  var titleListElements = ''.obs;
+
+  void changeTitleListElements(String newTitleListElements) {
+    titleListElements.value = newTitleListElements;
+  }
 
   void changeCategoryID(int newCategoryID) {
     categoryIndex.value = newCategoryID;

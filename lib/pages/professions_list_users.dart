@@ -7,12 +7,10 @@ import '../res/getController.dart';
 
 class ProfessionsListUsers extends StatelessWidget {
   final Function(String) onTap;
-  String? title;
 
   ProfessionsListUsers({
     Key? key,
     required this.onTap,
-    required this.title,
   }) : super(key: key);
 
   final GetController _getController = Get.put(GetController());
@@ -35,13 +33,15 @@ class ProfessionsListUsers extends StatelessWidget {
                 SizedBox(width: w * 0.04),
                 const Icon(Icons.arrow_back_ios),
                 const Expanded(child: SizedBox()),
-                Text(
-                  title ?? '',
+                Obx(() => _getController.titleListElements.value == ''
+                    ? const Center(child: Text('No data'))
+                    : Text(
+                  _getController.titleListElements.value,
                   style: TextStyle(
                     fontSize: w * 0.05,
                     fontWeight: FontWeight.w500,
                   ),
-                ),
+                )),
                 const Expanded(child: SizedBox()),
                 SizedBox(width: w * 0.04),
               ],
