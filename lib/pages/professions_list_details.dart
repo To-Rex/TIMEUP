@@ -158,14 +158,13 @@ class ProfessionsListDetails extends StatelessWidget {
                       _timeController.text,
                     ).then((value) => {
                       if(value == true){
-                        ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value).then((value) => _getController.changeBookingBusinessGetList(value)),
+                        ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value,'').then((value) => _getController.changeBookingBusinessGetList(value)),
                         Navigator.pop(context),
                         Toast.showToast(context, 'Booking yaratildi', Colors.green, Colors.white),
                       }else{
                         Toast.showToast(context, 'Error', Colors.red, Colors.white),
                       }
                     });
-
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -325,7 +324,7 @@ class ProfessionsListDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value).then((value) => _getController.changeBookingBusinessGetList(value));
+    ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value,'').then((value) => _getController.changeBookingBusinessGetList(value));
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(h * 0.1),

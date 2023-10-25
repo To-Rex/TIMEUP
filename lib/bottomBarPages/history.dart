@@ -25,7 +25,7 @@ class HistoryPage extends StatelessWidget {
       //ApiController().bookingClientGetList('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEwMzM2MDY2MTEyLCJpYXQiOjE2OTYwNjYxMTIsInN1YiI6IjMifQ.ueJ0RCf8pLq_5yUcuon7MDjP8a56IIaZw4maWPp-ZKA').then((value) => _getController.changeBookingBusinessGetList(value));
       ApiController().bookingClientGetList(currentDate).then((value) => _getController.changeBookingBusinessGetList(value));
     } else {
-      ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value).then((value) => _getController.changeBookingBusinessGetList(value));
+      ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value,'').then((value) => _getController.changeBookingBusinessGetList(value));
       //ApiController().bookingClientGetList('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEwMzM2MDY2MTEyLCJpYXQiOjE2OTYwNjYxMTIsInN1YiI6IjMifQ.ueJ0RCf8pLq_5yUcuon7MDjP8a56IIaZw4maWPp-ZKA').then((value) => _getController.changeBookingBusinessGetList1(value));
       ApiController().bookingClientGetList(currentDate).then((value) => _getController.changeBookingBusinessGetList1(value));
     }
@@ -172,13 +172,11 @@ class HistoryPage extends StatelessWidget {
                         _getController.clearBookingBusinessGetList(),
                         _getController.clearBookingBusinessGetList1(),
                         _dateController.text = '${value!.day}/${value.month}/${value.year}',
-                        //ApiController().bookingClientGetList('${value.day}/${value.month}/${value.year}').then((value) => _getController.changeBookingBusinessGetList(value)),
-                        //ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value).then((value) => _getController.changeBookingBusinessGetList1(value)),
                         if (_getController.meUsers.value.res?.business == null) {
                           ApiController().bookingClientGetList('${value.day}/${value.month}/${value.year}').then((value) => _getController.changeBookingBusinessGetList(value)),
                         }else{
                           ApiController().bookingClientGetList('${value.day}/${value.month}/${value.year}').then((value) => _getController.changeBookingBusinessGetList(value)),
-                          ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value).then((value) => _getController.changeBookingBusinessGetList1(value)),
+                          ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '${value.day}/${value.month}/${value.year}').then((value) => _getController.changeBookingBusinessGetList1(value)),
                         }
                       });
                     },
@@ -311,13 +309,8 @@ class HistoryPage extends StatelessWidget {
                                                   ),
                                                 ],
                                               ),
-                                              //if _getController.meUsers.value.res?.business != null Mijozingiz navbati: else Sizning navbatingiz:
                                               Text(
-                                                _getController.meUsers.value.res
-                                                            ?.business !=
-                                                        null
-                                                    ? 'Mijozingiz navbati: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}'
-                                                    : 'Sizning navbatingiz: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}',
+                                                'Sizning navbatingiz: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}',
                                                 style: const TextStyle(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.w400,

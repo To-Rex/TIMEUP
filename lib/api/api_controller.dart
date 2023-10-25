@@ -345,8 +345,12 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<BookingBusinessGetList> bookingBusinessGetList(id) async {
-    var response = await http.get(Uri.parse(url + bookingBusinessGetListUrl + id.toString()));
+  Future<BookingBusinessGetList> bookingBusinessGetList(id,date) async {
+    var response = await http.get(Uri.parse('$url$bookingBusinessGetListUrl$id?date=$date'),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },
+    );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return BookingBusinessGetList.fromJson(jsonDecode(response.body));
