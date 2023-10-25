@@ -75,7 +75,14 @@ class ProfilePage extends StatelessWidget {
                         ApiController().deleteMe().then((value) => {
                                   if (value == true){
                                       GetStorage().remove('token'),
-                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(),),)
+                                    getController.clearMeUser(),
+                                    getController.clearCategory(),
+                                    Navigator.pop(context),
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginPage()),
+                                    ),
                                   } else {
                                       Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.white)
                                     }
@@ -153,11 +160,13 @@ class ProfilePage extends StatelessWidget {
                       onPressed: () {
                         //closs all pages and go to login page
                         GetStorage().remove('token');
+                        getController.clearMeUser();
+                        getController.clearCategory();
+                        Navigator.pop(context);
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LoginPage(),
-                          ),
+                              builder: (context) => LoginPage()),
                         );
                       },
                       child: Row(
@@ -317,10 +326,15 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if( GetStorage().read('token') == null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    }
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     getUsers();
-
     return Obx(() => getController.meUsers.value.res != null
         ? SizedBox(
             width: w,

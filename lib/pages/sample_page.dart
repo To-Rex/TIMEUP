@@ -7,6 +7,7 @@ import '../bottomBarPages/history.dart';
 import '../bottomBarPages/profile.dart';
 import '../bottomBarPages/search.dart';
 import '../res/getController.dart';
+import 'login_page.dart';
 
 class SamplePage extends StatelessWidget {
   SamplePage({Key? key}) : super(key: key);
@@ -37,6 +38,12 @@ class SamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
+    if( GetStorage().read('token') == null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    }
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: _getController.index.value != 3 ? Size.fromHeight(h * 0.06) : Size.fromHeight(h * 0),
