@@ -16,13 +16,18 @@ class HistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
+    _getController.nextPagesUserDetails.value = 0;
+    //26/11/2023
+    var currentDate = '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
+    print(currentDate);
+    currentDate = '';
     if (_getController.meUsers.value.res?.business == null) {
       //ApiController().bookingClientGetList('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEwMzM2MDY2MTEyLCJpYXQiOjE2OTYwNjYxMTIsInN1YiI6IjMifQ.ueJ0RCf8pLq_5yUcuon7MDjP8a56IIaZw4maWPp-ZKA').then((value) => _getController.changeBookingBusinessGetList(value));
-      ApiController().bookingClientGetList().then((value) => _getController.changeBookingBusinessGetList(value));
+      ApiController().bookingClientGetList(currentDate).then((value) => _getController.changeBookingBusinessGetList(value));
     } else {
       ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value).then((value) => _getController.changeBookingBusinessGetList(value));
       //ApiController().bookingClientGetList('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEwMzM2MDY2MTEyLCJpYXQiOjE2OTYwNjYxMTIsInN1YiI6IjMifQ.ueJ0RCf8pLq_5yUcuon7MDjP8a56IIaZw4maWPp-ZKA').then((value) => _getController.changeBookingBusinessGetList1(value));
-      ApiController().bookingClientGetList().then((value) => _getController.changeBookingBusinessGetList1(value));
+      ApiController().bookingClientGetList(currentDate).then((value) => _getController.changeBookingBusinessGetList1(value));
     }
 
     return SizedBox(
@@ -160,10 +165,22 @@ class HistoryPage extends StatelessWidget {
                       showDatePicker(
                         context: context,
                         initialDate: DateTime.now(),
-                        firstDate: DateTime(2000),
+                        firstDate: DateTime(1900),
                         lastDate: DateTime(2025),
-                      ).then((value) => _dateController.text =
-                          '${value!.day}/${value.month}/${value.year}');
+                      ).then((value) => {
+                        //cler bookingClientGetList
+                        _getController.clearBookingBusinessGetList(),
+                        _getController.clearBookingBusinessGetList1(),
+                        _dateController.text = '${value!.day}/${value.month}/${value.year}',
+                        //ApiController().bookingClientGetList('${value.day}/${value.month}/${value.year}').then((value) => _getController.changeBookingBusinessGetList(value)),
+                        //ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value).then((value) => _getController.changeBookingBusinessGetList1(value)),
+                        if (_getController.meUsers.value.res?.business == null) {
+                          ApiController().bookingClientGetList('${value.day}/${value.month}/${value.year}').then((value) => _getController.changeBookingBusinessGetList(value)),
+                        }else{
+                          ApiController().bookingClientGetList('${value.day}/${value.month}/${value.year}').then((value) => _getController.changeBookingBusinessGetList(value)),
+                          ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value).then((value) => _getController.changeBookingBusinessGetList1(value)),
+                        }
+                      });
                     },
                     child: const Icon(
                       Icons.calendar_today,
@@ -241,7 +258,8 @@ class HistoryPage extends StatelessWidget {
                                             : CircleAvatar(
                                                 radius: 30,
                                                 backgroundImage: NetworkImage(
-                                                  "${ApiController().url.substring(0, ApiController().url.length - 1)}${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",
+                                                  //"${ApiController().url.substring(0, ApiController().url.length - 1)}${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",
+                                                  "http://${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",
                                                 ),
                                               ),
                                         SizedBox(
@@ -353,7 +371,8 @@ class HistoryPage extends StatelessWidget {
                                             : CircleAvatar(
                                                 radius: 30,
                                                 backgroundImage: NetworkImage(
-                                                  "${ApiController().url.substring(0, ApiController().url.length - 1)}${_getController.bookingBusinessGetList1.value.res![index].photoUrl!}",
+                                                  //"${ApiController().url.substring(0, ApiController().url.length - 1)}${_getController.bookingBusinessGetList1.value.res![index].photoUrl!}",
+                                                  "http://${_getController.bookingBusinessGetList1.value.res![index].photoUrl!}",
                                                 ),
                                               ),
                                         SizedBox(
@@ -470,7 +489,8 @@ class HistoryPage extends StatelessWidget {
                               : CircleAvatar(
                             radius: 30,
                             backgroundImage: NetworkImage(
-                              "${ApiController().url.substring(0, ApiController().url.length - 1)}${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",
+                              //"${ApiController().url.substring(0, ApiController().url.length - 1)}${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",
+                              "http://${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",
                             ),
                           ),
                           SizedBox(
@@ -524,8 +544,7 @@ class HistoryPage extends StatelessWidget {
                                 ),
                                 //if _getController.meUsers.value.res?.business != null Mijozingiz navbati: else Sizning navbatingiz:
                                 Text(
-                                  _getController.meUsers.value.res
-                                      ?.business !=
+                                  _getController.meUsers.value.res?.business !=
                                       null
                                       ? 'Mijozingiz navbati: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}'
                                       : 'Sizning navbatingiz: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}',

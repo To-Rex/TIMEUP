@@ -44,7 +44,7 @@ class ApiController extends GetxController {
   //{{host}}/api/v1/booking/business/get-list/{{business_id}}
   var bookingBusinessGetListUrl = 'booking/business/get-list/';
   //{{host}}/api/v1/booking/client/get-list
-  var bookingClientGetListUrl = 'booking/client/get-list';
+  var bookingClientGetListUrl = 'booking/client/get-list?date=';
   //{{host}}/api/v1/business/1/follow
   var businessFollowUrl = 'business/';
   //{{host}}/api/v1/business/followed/list?limit=300&offset=0
@@ -355,8 +355,8 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<BookingBusinessGetList> bookingClientGetList() async {
-    var response = await http.get(Uri.parse(url + bookingClientGetListUrl),
+  Future<BookingBusinessGetList> bookingClientGetList(date) async {
+    var response = await http.get(Uri.parse(url + bookingClientGetListUrl + date),
       headers: {
         'Authorization': 'Bearer ${GetStorage().read('token')}',
       },
