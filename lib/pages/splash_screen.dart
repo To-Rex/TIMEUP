@@ -20,11 +20,11 @@ class SplashScreen extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
     Timer(const Duration(seconds: 3), () {
       if (GetStorage().read('token') != null) {
-        getUsers();
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => SamplePage()),
         );
+        getUsers();
       } else {
         Navigator.pushReplacement(
           context,

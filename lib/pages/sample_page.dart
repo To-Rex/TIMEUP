@@ -10,7 +10,8 @@ import '../res/getController.dart';
 import 'login_page.dart';
 
 class SamplePage extends StatelessWidget {
-  SamplePage({Key? key}) : super(key: key);
+  SamplePage({super.key});
+
   final GetController _getController = Get.put(GetController());
 
   static final List<Widget> _widgetOptions = <Widget>[
@@ -25,13 +26,8 @@ class SamplePage extends StatelessWidget {
     _getController.entersUser.value = 0;
     _getController.clearCategory();
     _getController.clearSubCategory();
-    //_getController.clearMeUser();
     _getController.changeIndex(index);
-  }
-
-  getUsers() async {
-    _getController.changeMeUser(
-        await ApiController().getUserData());
+    //_getController.clearMeUser();
   }
 
   @override

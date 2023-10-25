@@ -158,16 +158,14 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        //closs all pages and go to login page
-                        GetStorage().remove('token');
-                        getController.clearMeUser();
-                        getController.clearCategory();
-                        Navigator.pop(context);
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => LoginPage()),
                         );
+                        GetStorage().remove('token');
+                        getController.clearMeUser();
+                        getController.clearCategory();
                       },
                       child: Row(
                         children: [
