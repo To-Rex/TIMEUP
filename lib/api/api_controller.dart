@@ -260,7 +260,7 @@ class ApiController extends GetxController {
           'Authorization': 'Bearer ${GetStorage().read('token')}',
           'Content-Type': 'application/json'
         });
-    print(response.body);
+    print("business ========= ${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {
@@ -323,7 +323,10 @@ class ApiController extends GetxController {
   }
 
   Future<GetByCategory> getByCategory(int id) async {
-    var response = await http.get(Uri.parse(url + getByCategoryUrl + id.toString()));
+    var response = await http.get(
+        Uri.parse(url + getByCategoryUrl + id.toString()),
+        headers: {'Authorization': 'Bearer ${GetStorage().read('token')}'}
+    );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return GetByCategory.fromJson(jsonDecode(response.body));
@@ -411,4 +414,6 @@ class ApiController extends GetxController {
       return false;
     }
   }
+
+
 }
