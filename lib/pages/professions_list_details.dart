@@ -60,7 +60,13 @@ class ProfessionsListDetails extends StatelessWidget {
                           initialDate: DateTime.now(),
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2025),
-                        ).then((value) => _dateController.text = '${value!.day}/${value.month}/${value.year}');
+                        ).then((value) =>
+                        {
+                          //clear list
+                          //_getController.bookingBusinessGetList.value.res!.clear(),
+                          _dateController.text = '${value!.day}}/${value.month}/${value.year}',
+                          //ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value,'${value.day}/${value.month}/${value.year}').then((value) => _getController.changeBookingBusinessGetList(value)),
+                        });
                       },
                       child: const Icon(
                         Icons.calendar_today,
@@ -227,7 +233,12 @@ class ProfessionsListDetails extends StatelessWidget {
                           initialDate: DateTime.now(),
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2025),
-                        ).then((value) => _dateController.text = '${value!.day}/${value.month}/${value.year}');
+                        ).then((value) => {
+                          //clear list
+                          _getController.bookingBusinessGetList.value.res!.clear(),
+                          _dateController.text = '${value!.day}}/${value.month}/${value.year}',
+                          ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value,'${value.day}/${value.month}/${value.year}').then((value) => _getController.changeBookingBusinessGetList(value)),
+                        });
                       },
                       child: const Icon(
                         Icons.calendar_today,
@@ -265,7 +276,9 @@ class ProfessionsListDetails extends StatelessWidget {
               //list bookingBusinessGetList
               Expanded(child: Padding(
                 padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
-                child: ListView.builder(
+                child: Obx(() => _getController.bookingBusinessGetList.value.res == null
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView.builder(
                     shrinkWrap: true,
                     itemCount: _getController
                         .bookingBusinessGetList
@@ -310,7 +323,7 @@ class ProfessionsListDetails extends StatelessWidget {
                           const Divider(),
                         ],
                       );
-                    }),
+                    })),
               ))
 
             ],
