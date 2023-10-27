@@ -62,10 +62,7 @@ class ProfessionsListDetails extends StatelessWidget {
                           lastDate: DateTime(2025),
                         ).then((value) =>
                         {
-                          //clear list
-                          //_getController.bookingBusinessGetList.value.res!.clear(),
-                          _dateController.text = '${value!.day}}/${value.month}/${value.year}',
-                          //ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value,'${value.day}/${value.month}/${value.year}').then((value) => _getController.changeBookingBusinessGetList(value)),
+                          _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
                         });
                       },
                       child: const Icon(
@@ -118,7 +115,8 @@ class ProfessionsListDetails extends StatelessWidget {
                         showTimePicker(
                           context: context,
                           initialTime: TimeOfDay.now(),
-                        ).then((value) => _timeController.text = '${value!.hour}:${value.minute}');
+                        ).then((value) =>
+                            _timeController.text = '${value!.hour < 10 ? '0${value.hour}' : value.hour}:${value.minute < 10 ? '0${value.minute}' : value.minute}');
                       },
                       child: const Icon(
                         Icons.access_time,
@@ -236,7 +234,7 @@ class ProfessionsListDetails extends StatelessWidget {
                         ).then((value) => {
                           //clear list
                           _getController.bookingBusinessGetList.value.res!.clear(),
-                          _dateController.text = '${value!.day}}/${value.month}/${value.year}',
+                          _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
                           ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value,'${value.day}/${value.month}/${value.year}').then((value) => _getController.changeBookingBusinessGetList(value)),
                         });
                       },
@@ -791,7 +789,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         SizedBox(
-                                          height: h * 0.24,
+                                          height: h * 0.23,
                                           child: ListView.builder(
                                               shrinkWrap: true,
                                               itemCount: _getController
@@ -843,7 +841,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                           children: [
                                             const Expanded(child: SizedBox()),
                                             SizedBox(
-                                              height: h * 0.045,
+                                              height: h * 0.05,
                                               child: TextButton(
                                                 onPressed: () {
                                                   showBottomSheetList(context);
