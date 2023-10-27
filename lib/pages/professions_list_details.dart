@@ -278,11 +278,7 @@ class ProfessionsListDetails extends StatelessWidget {
                     ? const Center(child: CircularProgressIndicator())
                     : ListView.builder(
                     shrinkWrap: true,
-                    itemCount: _getController
-                        .bookingBusinessGetList
-                        .value
-                        .res!
-                        .length,
+                    itemCount: _getController.bookingBusinessGetList.value.res!.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
@@ -293,20 +289,14 @@ class ProfessionsListDetails extends StatelessWidget {
                                 child: Text(
                                   '${index + 1}',
                                   style: TextStyle(
-                                    fontSize:
-                                    w * 0.04,
-                                    fontWeight:
-                                    FontWeight
-                                        .w500,
+                                    fontSize: w * 0.04, fontWeight: FontWeight.w500,
                                   ),
                                 ),
                               ),
                               SizedBox(
                                 width: w * 0.7,
                                 child: Text(
-                                  'Ushbu mijoz'
-                                      ' ${_getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
-                                      '${_getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                  'Ushbu mijoz'' ${_getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} ''${_getController.bookingBusinessGetList.value.res![index].time!} keladi',
                                   style: TextStyle(
                                     fontSize:
                                     w * 0.04,
@@ -322,8 +312,7 @@ class ProfessionsListDetails extends StatelessWidget {
                         ],
                       );
                     })),
-              ))
-
+              )),
             ],
           ),
         );
