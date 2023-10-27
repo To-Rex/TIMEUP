@@ -229,7 +229,9 @@ class ProfilePage extends StatelessWidget {
                           initialDate: DateTime.now(),
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2025),
-                        ).then((value) => _dateController.text = '${value!.day}/${value.month}/${value.year}');
+                        ).then((value) =>
+                        //_dateController.text = '${value!.day}/${value.month}/${value.year}');
+                        _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}');
                       },
                       child: const Icon(
                         Icons.calendar_today,
