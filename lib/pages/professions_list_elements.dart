@@ -13,7 +13,6 @@ class ProfessionsListElements extends StatelessWidget {
     required this.index,
     required this.onTap,
   }) : super(key: key);
-
   final GetController _getController = Get.put(GetController());
 
   @override
