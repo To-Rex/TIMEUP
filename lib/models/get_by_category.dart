@@ -31,6 +31,7 @@ class ResGetByCategory {
   String? fistName;
   String? lastName;
   String? photoUrl;
+  bool? followed;
 
   ResGetByCategory(
       {this.businessId,
@@ -38,7 +39,9 @@ class ResGetByCategory {
         this.experience,
         this.fistName,
         this.lastName,
-        this.photoUrl});
+        this.photoUrl,
+        this.followed
+      });
 
   ResGetByCategory.fromJson(Map<String, dynamic> json) {
     businessId = json['business_id'];
@@ -47,6 +50,7 @@ class ResGetByCategory {
     fistName = json['fist_name'];
     lastName = json['last_name'];
     photoUrl = json['photo_url'];
+    followed = json['followed'];
   }
 
   Map<String, dynamic> toJson() {
@@ -57,6 +61,7 @@ class ResGetByCategory {
     data['fist_name'] = fistName;
     data['last_name'] = lastName;
     data['photo_url'] = photoUrl;
+    data['followed'] = followed;
     return data;
   }
 }
