@@ -119,7 +119,7 @@ class ProfessionsListUsers extends StatelessWidget {
                                     onPressed: () {
                                       ApiController().unFollow(_getController.getByCategory.value.res?[index].businessId ?? 0).then((value) =>{
                                         if(value == true) {
-                                          Toast.showToast(context, 'UnFollowed', Colors.green, Colors.white),
+                                          Toast.showToast(context, 'UnFollow', Colors.green, Colors.white),
                                         }else{
                                           Toast.showToast(context, 'Error', Colors.red, Colors.white),
                                         }
@@ -129,9 +129,9 @@ class ProfessionsListUsers extends StatelessWidget {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      backgroundColor: Colors.red,
+                                      backgroundColor: Colors.grey,
                                     ),
-                                    child: Text('UnFollow',
+                                    child: Text('Following',
                                       style: TextStyle(
                                         fontSize: w * 0.04,
                                         fontWeight: FontWeight.w400,
