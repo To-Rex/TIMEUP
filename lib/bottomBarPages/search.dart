@@ -13,9 +13,36 @@ class SearchPage extends StatelessWidget {
   final GetController _getController = Get.put(GetController());
   int? index;
 
+  showDialogs(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Вы действительно хотите выйти?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Нет'),
+          ),
+          TextButton(
+            onPressed: () {
+              GetStorage().remove('token');
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
+            child: Text('Да'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    if(GetStorage().read('token') == null) {
+    if (GetStorage().read('token') == null) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LoginPage()),
@@ -23,27 +50,40 @@ class SearchPage extends StatelessWidget {
     }
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    return Column(
-      children: [
-        SizedBox(height: h * 0.02),
-        Obx(() => _getController.enters.value == 0
-            ? ProfessionsList(
-                onTap: (profession) {
-                  _getController.enters.value = 1;
-                  index = profession;
-                })
-            : _getController.enters.value == 1
-                ? ProfessionsListElements(
-                    index: index,
-                    onTap: (profession) {
-                      _getController.enters.value = 2;
-                    })
-                : ProfessionsListUsers(
-                    onTap: (profession) {
-                      _getController.enters.value = 0;
-                    },
-                  )),
-      ],
-    );
+    return WillPopScope(
+        onWillPop: () async {
+          if (_getController.enters.value == 0) {
+            return true;
+          } else if (_getController.enters.value == 1) {
+            _getController.enters.value = 0;
+            return false;
+          } else if (_getController.enters.value == 2) {
+            _getController.enters.value = 1;
+            return false;
+          } else {
+            return false;
+          }
+        },
+        child: Column(
+          children: [
+            SizedBox(height: h * 0.02),
+            Obx(() => _getController.enters.value == 0
+                ? ProfessionsList(onTap: (profession) {
+                    _getController.enters.value = 1;
+                    index = profession;
+                  })
+                : _getController.enters.value == 1
+                    ? ProfessionsListElements(
+                        index: index,
+                        onTap: (profession) {
+                          _getController.enters.value = 2;
+                        })
+                    : ProfessionsListUsers(
+                        onTap: (profession) {
+                          _getController.enters.value = 0;
+                        },
+                      )),
+          ],
+        ));
   }
 }
