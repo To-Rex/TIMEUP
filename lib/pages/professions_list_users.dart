@@ -61,7 +61,7 @@ class ProfessionsListUsers extends StatelessWidget {
                   width: w * 0.9,
                   child: ListView.builder(
                     itemBuilder: (context, index) {
-                      return GestureDetector(
+                      /*return GestureDetector(
                         onTap: () {
                           _getController.profileByID.value = _getController.getByCategory.value.res![index].businessId!;
                           _getController.clearProfileById();
@@ -173,6 +173,120 @@ class ProfessionsListUsers extends StatelessWidget {
                             ),
                             SizedBox(height: h * 0.02),
                           ],
+                        ),
+                      );*/
+                      return InkWell(
+                        onTap: () {
+                          _getController.profileByID.value = _getController.getByCategory.value.res![index].businessId!;
+                          _getController.clearProfileById();
+                          ApiController().profileById(_getController.profileByID.value).then((value) => {_getController.changeProfileById(value),});
+                          _getController.bookingBusinessGetListByID.value = _getController.getByCategory.value.res![index].businessId!;
+                          _getController.nextPagesUserDetails.value = 0;
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
+                        },
+                        child: Container(
+                          height: h * 0.1,
+                          width: w * 0.9,
+                          margin: EdgeInsets.only(bottom: h * 0.02),
+                          child: Row(
+                            children: [
+                              if (_getController.getByCategory.value.res?[index].photoUrl == null)
+                                SizedBox(
+                                  width: w * 0.15,
+                                  height: w * 0.15,
+                                  child: const CircleAvatar(
+                                    backgroundImage: AssetImage(
+                                        'assets/images/doctor.png'),
+                                  ),
+                                )
+                              else
+                                SizedBox(
+                                  width: w * 0.15,
+                                  height: w * 0.15,
+                                  child: CircleAvatar(
+                                    backgroundImage: NetworkImage("http://${_getController.getByCategory.value.res![index].photoUrl}"),
+                                  ),
+                                ),
+                              SizedBox(width: w * 0.05),
+                              //name and profession
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(_getController.getByCategory.value.res?[index].lastName ?? '',
+                                    style: TextStyle(
+                                      fontSize: w * 0.04,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(_getController.getByCategory.value.res?[index].fistName ?? '',
+                                    style: TextStyle(
+                                      fontSize: w * 0.04,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Expanded(child: SizedBox()),
+                              Obx(() => _getController.getByCategory.value.res?[index].followed == true
+                                  ? SizedBox(
+                                height: h * 0.045,
+                                child: ElevatedButton(
+                                  onPressed: ()
+                                  {
+                                    ApiController().unFollow(_getController.getByCategory.value.res?[index].businessId ?? 0).then((value) =>{
+                                      if(value == true) {
+                                        ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value))
+                                      }else{
+                                        Toast.showToast(context, 'Error', Colors.red, Colors.white),
+                                      }
+                                    });
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    backgroundColor: Colors.grey,
+                                  ),
+                                  child: Text('Following',
+                                    style: TextStyle(
+                                      fontSize: w * 0.04,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              )
+                                  : SizedBox(
+                                height: h * 0.045,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    ApiController().follow(_getController.getByCategory.value.res?[index].businessId ?? 0).then((value) =>{
+                                      if(value.status == true) {
+                                        ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value))
+                                      }else{
+                                        Toast.showToast(context, 'Error', Colors.red, Colors.white),
+                                      }
+                                    });
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    backgroundColor: Colors.blue,
+                                  ),
+                                  child: Text('Follow',
+                                    style: TextStyle(
+                                      fontSize: w * 0.04,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              )),
+                            ],
+                          ),
                         ),
                       );
                     },
