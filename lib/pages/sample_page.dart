@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:time_up/bottomBarPages/home.dart';
-import '../api/api_controller.dart';
 import '../bottomBarPages/history.dart';
 import '../bottomBarPages/profile.dart';
 import '../bottomBarPages/search.dart';
