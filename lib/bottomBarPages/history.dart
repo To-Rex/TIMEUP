@@ -29,11 +29,9 @@ class HistoryPage extends StatelessWidget {
     print(currentDate);
     currentDate = '';
     if (_getController.meUsers.value.res?.business == null) {
-      //ApiController().bookingClientGetList('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEwMzM2MDY2MTEyLCJpYXQiOjE2OTYwNjYxMTIsInN1YiI6IjMifQ.ueJ0RCf8pLq_5yUcuon7MDjP8a56IIaZw4maWPp-ZKA').then((value) => _getController.changeBookingBusinessGetList(value));
       ApiController().bookingClientGetList(currentDate).then((value) => _getController.changeBookingBusinessGetList(value));
     } else {
       ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value,'').then((value) => _getController.changeBookingBusinessGetList(value));
-      //ApiController().bookingClientGetList('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEwMzM2MDY2MTEyLCJpYXQiOjE2OTYwNjYxMTIsInN1YiI6IjMifQ.ueJ0RCf8pLq_5yUcuon7MDjP8a56IIaZw4maWPp-ZKA').then((value) => _getController.changeBookingBusinessGetList1(value));
       ApiController().bookingClientGetList(currentDate).then((value) => _getController.changeBookingBusinessGetList1(value));
     }
 
@@ -166,6 +164,16 @@ class HistoryPage extends StatelessWidget {
               height: h * 0.07,
               child: TextField(
                 controller: _dateController,
+                onChanged: (value) {
+                  if (value == '') {
+                    if (_getController.meUsers.value.res?.business == null) {
+                      ApiController().bookingClientGetList('').then((value) => _getController.changeBookingBusinessGetList(value));
+                    }else{
+                      ApiController().bookingClientGetList('').then((value) => _getController.changeBookingBusinessGetList(value));
+                      ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, currentDate).then((value) => _getController.changeBookingBusinessGetList1(value));
+                    }
+                  }
+                },
                 decoration: InputDecoration(
                   suffixIcon: InkWell(
                     onTap: () {
@@ -175,15 +183,14 @@ class HistoryPage extends StatelessWidget {
                         firstDate: DateTime(1900),
                         lastDate: DateTime(2025),
                       ).then((value) => {
-                        //cler bookingClientGetList
                         _getController.clearBookingBusinessGetList(),
                         _getController.clearBookingBusinessGetList1(),
-                        _dateController.text = '${value!.day}/${value.month}/${value.year}',
+                        _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
                         if (_getController.meUsers.value.res?.business == null) {
-                          ApiController().bookingClientGetList('${value.day}/${value.month}/${value.year}').then((value) => _getController.changeBookingBusinessGetList(value)),
+                          ApiController().bookingClientGetList(_dateController.text).then((value) => _getController.changeBookingBusinessGetList(value)),
                         }else{
-                          ApiController().bookingClientGetList('${value.day}/${value.month}/${value.year}').then((value) => _getController.changeBookingBusinessGetList(value)),
-                          ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '${value.day}/${value.month}/${value.year}').then((value) => _getController.changeBookingBusinessGetList1(value)),
+                          ApiController().bookingClientGetList(_dateController.text).then((value) => _getController.changeBookingBusinessGetList(value)),
+                          ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, _dateController.text).then((value) => _getController.changeBookingBusinessGetList1(value)),
                         }
                       });
                     },
@@ -219,11 +226,12 @@ class HistoryPage extends StatelessWidget {
                 ),
               ),
             ),
+
             SizedBox(
               height: h * 0.02,
             ),
             if (_getController.meUsers.value.res?.business != null)
-              Obx(() => _getController.bookingBusinessGetList.value.res != null
+              /*Obx(() => _getController.bookingBusinessGetList.value.res != null
                   ? SizedBox(
                   height: h * 0.75,
                   child: PageView(
@@ -248,12 +256,7 @@ class HistoryPage extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
                                       children: [
-                                        _getController
-                                                    .bookingBusinessGetList
-                                                    .value
-                                                    .res![index]
-                                                    .photoUrl ==
-                                                null
+                                        _getController.bookingBusinessGetList.value.res![index].photoUrl == null
                                             ? const CircleAvatar(
                                                 radius: 30,
                                                 backgroundImage: AssetImage(
@@ -287,7 +290,8 @@ class HistoryPage extends StatelessWidget {
                                               ),
                                               //User profession
                                               Text(
-                                                '${_getController.bookingBusinessGetList.value.res![index].fistName!} ${_getController.bookingBusinessGetList.value.res![index].lastName!}',
+                                                '${_getController.bookingBusinessGetList.value.res![index].fistName!} '
+                                                    '${_getController.bookingBusinessGetList.value.res![index].lastName!}',
                                                 style: const TextStyle(
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.w400,
@@ -339,7 +343,7 @@ class HistoryPage extends StatelessWidget {
                               )),
                       ),
                       SizedBox(
-                        child: Obx(() => _getController.bookingBusinessGetList1.value.res!.isEmpty||_getController.bookingBusinessGetList1.value.res == null
+                        child: Obx(() => _getController.bookingBusinessGetList1.value.res!.isEmpty
                             ? const Center(
                                 child: Text('Ma`lumot mavjud emas'),
                               )
@@ -455,7 +459,233 @@ class HistoryPage extends StatelessWidget {
                   ))
                   : const Center(
                       child: CircularProgressIndicator(),
-                    )),
+                    )),*/
+              SizedBox(
+                  height: h * 0.75,
+                  child: PageView(
+                    //physics: const NeverScrollableScrollPhysics(),
+                    onPageChanged: (index) {
+                      _getController.nextPagesUserDetails.value = index;
+                    },
+                    controller: pageController,
+                    children: [
+                      SizedBox(
+                        child: Obx(() => _getController.bookingBusinessGetList1.value.res!.isEmpty
+                            ? const Center(
+                          child: Text('Ma`lumot mavjud emas'),
+                        )
+                            : SizedBox(
+                          height: h * 0.68,
+                          child: ListView.builder(
+                            itemCount: _getController
+                                .bookingBusinessGetList1
+                                .value
+                                .res!
+                                .length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceAround,
+                                children: [
+                                  _getController
+                                      .bookingBusinessGetList1
+                                      .value
+                                      .res![index]
+                                      .photoUrl ==
+                                      null
+                                      ? const CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: AssetImage(
+                                      'assets/images/doctor.png',
+                                    ),
+                                  )
+                                      : CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: NetworkImage(
+                                      //"${ApiController().url.substring(0, ApiController().url.length - 1)}${_getController.bookingBusinessGetList1.value.res![index].photoUrl!}",
+                                      "http://${_getController.bookingBusinessGetList1.value.res![index].photoUrl!}",
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: w * 0.6,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          _getController
+                                              .bookingBusinessGetList1
+                                              .value
+                                              .res![index]
+                                              .userName!,
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        //User profession
+                                        Text(
+                                          '${_getController.bookingBusinessGetList1.value.res![index].fistName!} ${_getController.bookingBusinessGetList1.value.res![index].lastName!}',
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.phone,
+                                              size: 15,
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              _getController
+                                                  .bookingBusinessGetList1
+                                                  .value
+                                                  .res![index]
+                                                  .phoneNumber!,
+                                              style: const TextStyle(
+                                                fontSize: 13,
+                                                fontWeight:
+                                                FontWeight.w400,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        //if _getController.meUsers.value.res?.business != null Mijozingiz navbati: else Sizning navbatingiz:
+                                        Text(
+                                          _getController.meUsers.value.res
+                                              ?.business !=
+                                              null
+                                              ? 'Mijozingiz navbati: ${_getController.bookingBusinessGetList1.value.res![index].date!} ${_getController.bookingBusinessGetList1.value.res![index].time!}'
+                                              : 'Sizning navbatingiz: ${_getController.bookingBusinessGetList1.value.res![index].date!} ${_getController.bookingBusinessGetList1.value.res![index].time!}',
+                                          style: const TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                        const Divider(
+                                          color: Colors.grey,
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        )),
+                      ),
+                      SizedBox(
+                        child: Obx(() => _getController.bookingBusinessGetList.value.res!.isEmpty
+                            ? const Center(
+                          child: Text('Ma`lumot mavjud emas'),
+                        )
+                            : SizedBox(
+                          height: h * 0.68,
+                          child: ListView.builder(
+                            itemCount: _getController
+                                .bookingBusinessGetList.value.res!.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceAround,
+                                children: [
+                                  _getController.bookingBusinessGetList.value.res![index].photoUrl == null
+                                      ? const CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: AssetImage(
+                                      'assets/images/doctor.png',
+                                    ),
+                                  )
+                                      : CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: NetworkImage(
+                                      //"${ApiController().url.substring(0, ApiController().url.length - 1)}${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",
+                                      "http://${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: w * 0.6,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          _getController
+                                              .bookingBusinessGetList
+                                              .value
+                                              .res![index]
+                                              .userName!,
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        //User profession
+                                        Text(
+                                          '${_getController.bookingBusinessGetList.value.res![index].fistName!} '
+                                              '${_getController.bookingBusinessGetList.value.res![index].lastName!}',
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.phone,
+                                              size: 15,
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              _getController
+                                                  .bookingBusinessGetList
+                                                  .value
+                                                  .res![index]
+                                                  .phoneNumber!,
+                                              style: const TextStyle(
+                                                fontSize: 13,
+                                                fontWeight:
+                                                FontWeight.w400,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Text(
+                                          'Sizning navbatingiz: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}',
+                                          style: const TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                        const Divider(
+                                          color: Colors.grey,
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        )),
+                      ),
+                    ],
+                  )),
+
             if (_getController.meUsers.value.res?.business == null)
               Obx(() => _getController.bookingBusinessGetList.value.res != null
                   ? SizedBox(
