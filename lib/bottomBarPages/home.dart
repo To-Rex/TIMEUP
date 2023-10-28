@@ -100,6 +100,43 @@ class HomePage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
+                      if (_getController.followList.value.res?[index].photoUrl != null)
+                        Row(
+                          children: [
+                            //circle avatar and name
+                            SizedBox(
+                              width: w * 0.9,
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: w * 0.02,
+                                  ),
+                                  SizedBox(
+                                    width: w * 0.11,
+                                    height: w * 0.11,
+                                    child: CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                          'http://${_getController.followList.value.res?[index].photoUrl}'),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: w * 0.02,
+                                  ),
+                                  SizedBox(
+                                    width: w * 0.6,
+                                    child: Text(
+                                      '${_getController.followList.value.res?[index].lastName} ${_getController.followList.value.res?[index].fistName}',
+                                      style: TextStyle(
+                                        fontSize: w * 0.05,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       SizedBox(height: h * 0.02,),
                       if (_getController.followList.value.res?[index].photoUrl != null)
                         SizedBox(width: w , height: h * 0.33, child: Image.network('http://${_getController.followList.value.res?[index].photoUrl}', fit: BoxFit.cover,),),
