@@ -23,7 +23,6 @@ class HistoryPage extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
     _getController.nextPagesUserDetails.value = 0;
     var currentDate = '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
-    print(currentDate);
     currentDate = '';
     if (_getController.meUsers.value.res?.business == null) {
       ApiController()
@@ -284,8 +283,7 @@ class HistoryPage extends StatelessWidget {
                         controller: pageController,
                         children: [
                           SizedBox(
-                            child: Obx(() => _getController
-                                    .bookingBusinessGetList1.value.res!.isEmpty
+                            child: Obx(() => _getController.bookingBusinessGetList1.value.res!.isEmpty
                                 ? const Center(
                                     child: Text('Ma`lumot mavjud emas'),
                                   )
@@ -373,16 +371,7 @@ class HistoryPage extends StatelessWidget {
                                                       ),
                                                     ],
                                                   ),
-                                                  //if _getController.meUsers.value.res?.business != null Mijozingiz navbati: else Sizning navbatingiz:
-                                                  Text(
-                                                    _getController
-                                                                .meUsers
-                                                                .value
-                                                                .res
-                                                                ?.business !=
-                                                            null
-                                                        ? 'Mijozingiz navbati: ${_getController.bookingBusinessGetList1.value.res![index].date!} ${_getController.bookingBusinessGetList1.value.res![index].time!}'
-                                                        : 'Sizning navbatingiz: ${_getController.bookingBusinessGetList1.value.res![index].date!} ${_getController.bookingBusinessGetList1.value.res![index].time!}',
+                                                  Text('Sizning navbatingiz: ${_getController.bookingBusinessGetList1.value.res![index].date!} ${_getController.bookingBusinessGetList1.value.res![index].time!}',
                                                     style: const TextStyle(
                                                       fontSize: 11,
                                                       fontWeight:
@@ -405,8 +394,7 @@ class HistoryPage extends StatelessWidget {
                                   )),
                           ),
                           SizedBox(
-                            child: Obx(() => _getController
-                                    .bookingBusinessGetList.value.res!.isEmpty
+                            child: Obx(() => _getController.bookingBusinessGetList.value.res!.isEmpty
                                 ? const Center(
                                     child: Text('Ma`lumot mavjud emas'),
                                   )
@@ -496,7 +484,7 @@ class HistoryPage extends StatelessWidget {
                                                     ],
                                                   ),
                                                   Text(
-                                                    'Sizning navbatingiz: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}',
+                                                    'Mijozingiz navbati: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}',
                                                     style: const TextStyle(
                                                       fontSize: 11,
                                                       fontWeight:
@@ -605,13 +593,7 @@ class HistoryPage extends StatelessWidget {
                                                 ),
                                               ],
                                             ),
-                                            //if _getController.meUsers.value.res?.business != null Mijozingiz navbati: else Sizning navbatingiz:
-                                            Text(
-                                              _getController.meUsers.value.res
-                                                          ?.business !=
-                                                      null
-                                                  ? 'Mijozingiz navbati: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}'
-                                                  : 'Sizning navbatingiz: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}',
+                                            Text('Sizning navbatingiz: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}',
                                               style: const TextStyle(
                                                 fontSize: 11,
                                                 fontWeight: FontWeight.w400,
