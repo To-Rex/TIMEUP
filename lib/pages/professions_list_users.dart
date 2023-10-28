@@ -54,8 +54,7 @@ class ProfessionsListUsers extends StatelessWidget {
             width: w * 0.9,
             child: ListView(
               children: [
-                Obx(() =>
-                _getController.getByCategory.value.res == null || _getController.getByCategory.value.res!.isEmpty
+                Obx(() => _getController.getByCategory.value.res == null || _getController.getByCategory.value.res!.isEmpty
                     ? const Center(child: Text('No data'))
                     : SizedBox(
                   height: h * 0.74,
@@ -113,7 +112,29 @@ class ProfessionsListUsers extends StatelessWidget {
                                   ],
                                 ),
                                 const Expanded(child: SizedBox()),
-                                SizedBox(
+                                Obx(() => _getController.getByCategory.value.res?[index].followed == true
+                                    ? SizedBox(
+                                  height: h * 0.045,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                    child: Text('UnFollow',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                    : SizedBox(
                                   height: h * 0.045,
                                   child: ElevatedButton(
                                     onPressed: () {
@@ -139,7 +160,34 @@ class ProfessionsListUsers extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                ),
+                                )),
+                                /*SizedBox(
+                                  height: h * 0.045,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      ApiController().follow(_getController.getByCategory.value.res?[index].businessId ?? 0).then((value) =>{
+                                        if(value.status == true) {
+                                          Toast.showToast(context, 'Followed', Colors.green, Colors.white),
+                                        }else{
+                                          Toast.showToast(context, 'Error', Colors.red, Colors.white),
+                                        }
+                                      });
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      backgroundColor: Colors.blue,
+                                    ),
+                                    child: Text('Follow',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),*/
                                 SizedBox(width: w * 0.05),
                               ],
                             ),
