@@ -74,14 +74,12 @@ class ProfilePage extends StatelessWidget {
                       onPressed: () {
                         ApiController().deleteMe().then((value) => {
                                   if (value == true){
-                                      GetStorage().remove('token'),
+                                    GetStorage().remove('token'),
                                     getController.clearMeUser(),
                                     getController.clearCategory(),
                                     Navigator.pop(context),
                                     Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => LoginPage()),
+                                      context, MaterialPageRoute(builder: (context) => LoginPage()),
                                     ),
                                   } else {
                                       Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.white)
@@ -98,7 +96,6 @@ class ProfilePage extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
                               )),
-                          //okey icon
                           const Icon(Icons.check, color: Colors.white),
                         ],
                       )),
@@ -159,9 +156,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                       onPressed: () {
                         Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginPage()),
+                          context, MaterialPageRoute(builder: (context) => LoginPage()),
                         );
                         GetStorage().remove('token');
                         getController.clearMeUser();
@@ -172,12 +167,10 @@ class ProfilePage extends StatelessWidget {
                           const Expanded(child: SizedBox()),
                           Text('Log out',
                               style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.035,
+                                fontSize: MediaQuery.of(context).size.width * 0.035,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
                               )),
-                          //okey icon
                           const Icon(Icons.check, color: Colors.white),
                         ],
                       )),
@@ -230,7 +223,6 @@ class ProfilePage extends StatelessWidget {
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2025),
                         ).then((value) =>
-                        //_dateController.text = '${value!.day}/${value.month}/${value.year}');
                         _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}');
                       },
                       child: const Icon(
@@ -266,16 +258,11 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: h * 0.02),
-              //list bookingBusinessGetList
               Expanded(child: Padding(
                 padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
                 child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: getController
-                        .bookingBusinessGetList
-                        .value
-                        .res!
-                        .length,
+                    itemCount: getController.bookingBusinessGetList.value.res!.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
@@ -283,29 +270,19 @@ class ProfilePage extends StatelessWidget {
                             children: [
                               SizedBox(
                                 width: w * 0.08,
-                                child: Text(
-                                  '${index + 1}',
+                                child: Text('${index + 1}',
                                   style: TextStyle(
-                                    fontSize:
-                                    w * 0.04,
-                                    fontWeight:
-                                    FontWeight
-                                        .w500,
+                                    fontSize: w * 0.04,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
                               ),
                               SizedBox(
                                 width: w * 0.7,
-                                child: Text(
-                                  'Ushbu mijoz'
-                                      ' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
-                                      '${getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                child: Text('Ushbu mijoz'' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} ''${getController.bookingBusinessGetList.value.res![index].time!} keladi',
                                   style: TextStyle(
-                                    fontSize:
-                                    w * 0.04,
-                                    fontWeight:
-                                    FontWeight
-                                        .w500,
+                                    fontSize: w * 0.04,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
                               ),
@@ -327,10 +304,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if( GetStorage().read('token') == null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-      );
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()),);
     }
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
@@ -342,9 +316,7 @@ class ProfilePage extends StatelessWidget {
               () => getController.entersUser.value == 0
                   ? Column(
                       children: [
-                        SizedBox(
-                          height: h * 0.01,
-                        ),
+                        SizedBox(height: h * 0.01),
                         AppBar(
                           backgroundColor: Colors.transparent,
                           elevation: 0,
@@ -398,20 +370,16 @@ class ProfilePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: h * 0.01,
-                        ),
+                        SizedBox(height: h * 0.01),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(width: w * 0.05),
-                            //network image
                             CircleAvatar(
                               radius: w * 0.12,
                               foregroundColor: Colors.blue,
-                              backgroundImage: NetworkImage(
-                                  'http://${getController.meUsers.value.res?.photoUrl}'),
+                              backgroundImage: NetworkImage('http://${getController.meUsers.value.res?.photoUrl}'),
                             ),
                             const Expanded(child: SizedBox()),
                           ],
@@ -419,8 +387,7 @@ class ProfilePage extends StatelessWidget {
                         Container(
                           width: w * 0.9,
                           margin: const EdgeInsets.only(top: 15),
-                          child: Text(
-                              '${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res?.lastName}',
+                          child: Text('${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res?.lastName}',
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -434,19 +401,15 @@ class ProfilePage extends StatelessWidget {
                                     margin: const EdgeInsets.only(top: 5),
                                     child: Row(
                                       children: [
-                                        Text(
-                                          '${getController.meUsers.value.res?.business?.categoryName}',
+                                        Text('${getController.meUsers.value.res?.business?.categoryName}',
                                           style: TextStyle(
                                             fontSize: w * 0.04,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                           ),
                                         ),
-                                        SizedBox(
-                                          width: w * 0.01,
-                                        ),
-                                        Text(
-                                          '${getController.meUsers.value.res?.business?.experience} years of experience',
+                                        SizedBox(width: w * 0.01,),
+                                        Text('${getController.meUsers.value.res?.business?.experience} years of experience',
                                           style: TextStyle(
                                             fontSize: w * 0.04,
                                             fontWeight: FontWeight.w400,
@@ -457,45 +420,34 @@ class ProfilePage extends StatelessWidget {
                                     ))
                                 : const SizedBox()),
                         TextEditButton(
-                          text:
-                              '${getController.meUsers.value.res?.phoneNumber}',
+                          text: '${getController.meUsers.value.res?.phoneNumber}',
                           color: Colors.blue,
                           icon: Icons.phone,
                         ),
-                        Obx(() =>
-                            getController.meUsers.value.res?.business != null
+                        Obx(() => getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
-                                    text:
-                                        '${getController.meUsers.value.res?.business?.officeAddress}',
+                                    text: '${getController.meUsers.value.res?.business?.officeAddress}',
                                     color: Colors.blue,
                                     icon: Icons.location_on,
                                   )
                                 : const SizedBox()),
-                        Obx(() =>
-                            getController.meUsers.value.res?.business != null
+                        Obx(() => getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
-                                    text:
-                                        '${getController.meUsers.value.res?.business?.officeName}',
+                                    text: '${getController.meUsers.value.res?.business?.officeName}',
                                     color: Colors.blue,
                                     icon: Icons.home,
                                   )
                                 : const SizedBox()),
-                        Obx(() =>
-                            getController.meUsers.value.res?.business != null
+                        Obx(() => getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
-                                    text:
-                                        '${getController.meUsers.value.res?.business?.dayOffs}',
+                                    text: '${getController.meUsers.value.res?.business?.dayOffs}',
                                     color: Colors.blue,
                                     icon: Icons.access_time_outlined,
                                   )
                                 : const SizedBox()),
-                        SizedBox(
-                          height: h * 0.02,
-                        ),
-                        Obx(() =>
-                            getController.meUsers.value.res?.business == null
-                                ? EditButton(
-                                    text: 'Make business profile',
+                        SizedBox(height: h * 0.02,),
+                        Obx(() => getController.meUsers.value.res?.business == null
+                                ? EditButton(text: 'Make business profile',
                                     onPressed: () {
                                       getController.nextPages.value = 0;
                                       getController.entersUser.value = 2;
@@ -512,8 +464,7 @@ class ProfilePage extends StatelessWidget {
                                           child: BusinessEditButton(
                                             text: 'Edit profile',
                                             onPressed: () {
-                                              getController.entersUser.value =
-                                                  1;
+                                              getController.entersUser.value = 1;
                                             },
                                             color: Colors.blue,
                                             radius: 3,
@@ -522,8 +473,7 @@ class ProfilePage extends StatelessWidget {
                                       ],
                                     ),
                                   )),
-                        Obx(() => getController.meUsers.value.res?.business ==
-                                null
+                        Obx(() => getController.meUsers.value.res?.business == null
                             ? EditButton(
                                 text: 'Edit profile',
                                 onPressed: () {
@@ -542,10 +492,7 @@ class ProfilePage extends StatelessWidget {
                                           child: BusinessEditButton(
                                             text: 'Biografiya',
                                             onPressed: () {
-                                              pageController.animateToPage(0,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
+                                              pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             color: Colors.blue,
                                             radius: 0,
@@ -557,28 +504,20 @@ class ProfilePage extends StatelessWidget {
                                           child: BusinessEditButton(
                                             text: 'Biografiya',
                                             onPressed: () {
-                                              pageController.animateToPage(0,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
+                                              pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             color: Colors.grey,
                                             radius: 0,
                                           ),
                                         )),
-                                  Obx(() => getController.nextPagesUserDetails
-                                              .value ==
-                                          1
+                                  Obx(() => getController.nextPagesUserDetails.value == 1
                                       ? SizedBox(
                                           width: w * 0.5,
                                           height: h * 0.062,
                                           child: BusinessEditButton(
                                             text: 'Ish jadvali',
                                             onPressed: () {
-                                              pageController.animateToPage(1,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
+                                              pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             color: Colors.blue,
                                             radius: 0,
@@ -590,10 +529,7 @@ class ProfilePage extends StatelessWidget {
                                           child: BusinessEditButton(
                                             text: 'Ish jadvali',
                                             onPressed: () {
-                                              pageController.animateToPage(1,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
+                                              pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             color: Colors.grey,
                                             radius: 0,
@@ -602,12 +538,8 @@ class ProfilePage extends StatelessWidget {
                                 ],
                               ))),
                         Obx(() =>
-                            getController.meUsers.value.res?.business == null
-                                ? const SizedBox()
-                                : //BioBusiness(text: getController.meUsers.value.res?.business?.bio ?? '')
-                            SizedBox(
-                              width: w,
-                              height: h * 0.3,
+                            getController.meUsers.value.res?.business == null ? const SizedBox()
+                                : SizedBox(width: w, height: h * 0.3,
                               child: PageView(
                                 //physics: const NeverScrollableScrollPhysics(),
                                 onPageChanged: (index) {
