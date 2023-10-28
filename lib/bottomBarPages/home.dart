@@ -21,37 +21,18 @@ class HomePage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     ApiController().getFollowList().then((value) => _getController.changeFollowList(value));
     return Obx(() => _getController.followList.value.res == null
-        ? SizedBox(
-            width: w,
-            height: h * 0.9,
-            child: const Center(child: CircularProgressIndicator()),
-    )
-        : SizedBox(
-            width: w,
-            height: h * 0.85,
+        ? SizedBox(width: w, height: h * 0.9, child: const Center(child: CircularProgressIndicator()),)
+        : SizedBox(width: w, height: h * 0.85,
             child: ListView.builder(
                 itemCount: _getController.followList.value.res?.length ?? 0,
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
-                      //image
-                      SizedBox(
-                        height: h * 0.02,
-                      ),
+                      SizedBox(height: h * 0.02,),
                       if (_getController.followList.value.res?[index].photoUrl != null)
-                        SizedBox(
-                          width: w ,
-                          height: h * 0.33,
-                          child: Image.network(
-                            'http://${_getController.followList.value.res?[index].photoUrl}',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      SizedBox(
-                        height: h * 0.02,
-                      ),
-                      SizedBox(
-                        width: w * 0.95,
+                        SizedBox(width: w , height: h * 0.33, child: Image.network('http://${_getController.followList.value.res?[index].photoUrl}', fit: BoxFit.cover,),),
+                      SizedBox(height: h * 0.02,),
+                      SizedBox(width: w * 0.95,
                         child:Row(
                           children: [
                             IconButton(
