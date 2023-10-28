@@ -198,40 +198,14 @@ class HistoryPage extends StatelessWidget {
                         firstDate: DateTime(1900),
                         lastDate: DateTime(2025),
                       ).then((value) => {
-                            _dateController.text =
-                                '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
-                            if (_getController.meUsers.value.res?.business ==
-                                null)
-                              {
-                                ApiController()
-                                    .bookingClientGetList(_dateController.text)
-                                    .then((value) => _getController
-                                        .changeBookingBusinessGetList(value))
-                              }
-                            else
-                              {
-                                if (_getController.nextPagesUserDetails.value ==
-                                    1)
-                                  {
-                                    ApiController()
-                                        .bookingBusinessGetList(
-                                            _getController
-                                                .bookingBusinessGetListByID
-                                                .value,
-                                            _dateController.text)
-                                        .then((value) => _getController
-                                            .changeBookingBusinessGetList(
-                                                value)),
-                                  }
-                                else
-                                  {
-                                    ApiController()
-                                        .bookingClientGetList(
-                                            _dateController.text)
-                                        .then((value) => _getController
-                                            .changeBookingBusinessGetList1(
-                                                value))
-                                  }
+                            _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
+                            if (_getController.meUsers.value.res?.business == null){
+                                ApiController().bookingClientGetList(_dateController.text).then((value) => _getController.changeBookingBusinessGetList(value))
+                              } else {
+                                if (_getController.nextPagesUserDetails.value == 1){
+                                    ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, _dateController.text).then((value) => _getController.changeBookingBusinessGetList(value)),}
+                                else {
+                                  ApiController().bookingClientGetList(_dateController.text).then((value) => _getController.changeBookingBusinessGetList1(value))}
                               }
                           });
                     },
@@ -275,9 +249,9 @@ class HistoryPage extends StatelessWidget {
                   ? SizedBox(
                       height: h * 0.75,
                       child: PageView(
-                        //physics: const NeverScrollableScrollPhysics(),
                         onPageChanged: (index) {
                           _getController.nextPagesUserDetails.value = index;
+                          _dateController.text = '';
                         },
                         controller: pageController,
                         children: [
