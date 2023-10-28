@@ -218,6 +218,11 @@ class ProfilePage extends StatelessWidget {
                 height: h * 0.07,
                 child: TextField(
                   controller: _dateController,
+                  onChanged: (value) {
+                    if (value != '') {
+                      ApiController().bookingBusinessGetList(getController.meUsers.value.res!.business!.id!, '').then((value) => getController.changeBookingBusinessGetList(value));
+                    }
+                  },
                   decoration: InputDecoration(
                     suffixIcon: InkWell(
                       onTap: () {
