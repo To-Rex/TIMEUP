@@ -55,7 +55,6 @@ class ProfessionsListElements extends StatelessWidget {
           title:  const Text('Tibbiyot Kasblar royhati', style: TextStyle(color: Colors.black),),
           centerTitle: true,
         ),
-        // List of professions taking up the remaining space
         Obx(() => _getController.subCategory.value.res == null
             ? const Center(child: Text('No data'))
             : SizedBox(
