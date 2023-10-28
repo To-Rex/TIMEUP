@@ -539,7 +539,7 @@ class ProfilePage extends StatelessWidget {
                               ))),
                         Obx(() =>
                             getController.meUsers.value.res?.business == null ? const SizedBox()
-                                : SizedBox(width: w, height: h * 0.3,
+                                : SizedBox(width:  w * 0.95, height: h * 0.3,
                               child: PageView(
                                 //physics: const NeverScrollableScrollPhysics(),
                                 onPageChanged: (index) {
@@ -551,24 +551,23 @@ class ProfilePage extends StatelessWidget {
                                     text: getController.meUsers.value.res?.business?.bio ?? '',
                                   ),
                                   SizedBox(
-                                    width: w,
+                                    width: w * 0.9,
                                     height: h * 0.22,
                                     child: Obx(() => getController.bookingBusinessGetList.value.res == null
                                           ? const Center(child: Text('Ma\'lumotlar topilmadi'))
-                                          : Container(
-                                          width: w,
-                                          padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02, top: h * 0.01),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(3),
-                                            border: Border.all(
-                                              color: Colors.grey,
-                                            ),
+                                          : Container(height: h * 0.22,
+                                        margin: EdgeInsets.only(top: h * 0.02),
+                                        padding: EdgeInsets.all(w * 0.02),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.grey,
                                           ),
+                                          borderRadius: BorderRadius.circular(3),
+                                        ),
                                           child: Column(
                                             children: [
                                               SizedBox(
-                                                height: h * 0.24,
+                                                height: h * 0.205,
                                                 child: ListView.builder(
                                                     shrinkWrap: true,
                                                     itemCount: getController.bookingBusinessGetList.value.res!.length,
@@ -613,7 +612,7 @@ class ProfilePage extends StatelessWidget {
                                                 children: [
                                                   const Expanded(child: SizedBox()),
                                                   SizedBox(
-                                                    height: h * 0.045,
+                                                    height: h * 0.05,
                                                     child: TextButton(
                                                       onPressed: () {
                                                         showBottomSheetList(context);
