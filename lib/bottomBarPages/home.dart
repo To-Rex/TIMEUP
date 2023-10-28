@@ -9,6 +9,78 @@ class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
   final GetController _getController = Get.put(GetController());
 
+  showDialogs(BuildContext context,text,disc) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Center(
+          child: Text(text, style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04),),
+        ),
+        content: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.05,
+          child: Center(
+            child: Text(disc, style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04),),
+          ),
+        ),
+        actions: [
+          Center(
+            child: Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.32,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 1,
+                        backgroundColor: Colors.grey[300],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Cancel',
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.035,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ))),
+                ),
+                const Expanded(child: SizedBox()),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.32,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      onPressed: () {
+                      },
+                      child: Row(
+                        children: [
+                          const Expanded(child: SizedBox()),
+                          Text('Call',
+                              style: TextStyle(
+                                fontSize:
+                                MediaQuery.of(context).size.width * 0.035,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              )),
+                          const Icon(Icons.check, color: Colors.white),
+                        ],
+                      )),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if( GetStorage().read('token') == null) {
@@ -36,15 +108,21 @@ class HomePage extends StatelessWidget {
                         child:Row(
                           children: [
                             IconButton(
-                                onPressed: (){},
+                                onPressed: (){
+                                  showDialogs(context, _getController.followList.value.res?[index].phoneNumber ?? '','You will be charged for this call');
+                                },
                                 icon: Icon(Icons.phone, color: Colors.blue, size: w * 0.08,)
                             ),
                             IconButton(
-                                onPressed: (){},
+                                onPressed: (){
+                                  showDialogs(context, 'Manzil',_getController.followList.value.res?[index].officeAddress ?? '');
+                                },
                                 icon: Icon(Icons.location_on, color: Colors.blue, size: w * 0.08,)
                             ),
                             IconButton(
-                                onPressed: (){},
+                                onPressed: (){
+                                  showDialogs(context,_getController.followList.value.res?[index].categoryName ?? '',_getController.followList.value.res?[index].bio ?? '');
+                                },
                                 //job
                                 icon: Icon(Icons.work, color: Colors.blue, size: w * 0.08,)
                             ),
