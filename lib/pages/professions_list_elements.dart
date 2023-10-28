@@ -24,24 +24,6 @@ class ProfessionsListElements extends StatelessWidget {
       _getController.changeTitleListElements(_getController.category.value.res![index!].name!)});
     return Column(
       children: [
-        /*SizedBox(
-          child: GestureDetector(
-            onTap: () {
-              _getController.clearSubCategory();
-              _getController.enters.value = 0;
-            },
-            child: Row(
-              children: [
-                SizedBox(width: w * 0.04),
-                const Icon(Icons.arrow_back_ios),
-                const Expanded(child: SizedBox()),
-                Text('Tibbiyot Kasblar royhati', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500,),),
-                const Expanded(child: SizedBox()),
-                SizedBox(width: w * 0.04),
-              ],
-            ),
-          ),
-        ),*/
         AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -59,33 +41,36 @@ class ProfessionsListElements extends StatelessWidget {
             ? const Center(child: Text('No data'))
             : SizedBox(
             height: h * 0.74,
-            width: w * 0.9,
+            width: w * 0.95,
             child: ListView.builder(
               itemBuilder: (context, index) {
-                return GestureDetector(
-                    onTap: () {
-                      _getController.categoryByID.value = _getController.subCategory.value.res![index].id!;
-                      _getController.enters.value = 2;
-                      _getController.changeTitleListElements(_getController.subCategory.value.res![index].name!);
-                    },
-                    child: Column(
+                return InkWell(
+                  onTap: () {
+                    _getController.categoryByID.value = _getController.subCategory.value.res![index].id!;
+                    _getController.enters.value = 2;
+                    _getController.changeTitleListElements(_getController.subCategory.value.res![index].name!);
+                  },
+                  child: Container(
+                    height: h * 0.04,
+                    width: w * 0.98,
+                    margin: EdgeInsets.only(bottom: h * 0.02),
+                    child: Row(
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                              _getController.subCategory.value.res?[index].name ?? '',
-                              style: TextStyle(
-                                fontSize: w * 0.04,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            const Expanded(child: SizedBox()),
-                            Icon(Icons.arrow_forward_ios, size: w * 0.04),
-                          ],
+                        SizedBox(width: w * 0.02),
+                        Text(
+                          _getController.subCategory.value.res?[index].name ?? '',
+                          style: TextStyle(
+                            fontSize: w * 0.04,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                         const Expanded(child: SizedBox()),
+                        Icon(Icons.arrow_forward_ios, size: w * 0.04),
+                        SizedBox(width: w * 0.02),
                       ],
-                    ));
+                    ),
+                  ),
+                );
               },
               itemCount: _getController.subCategory.value.res?.length,
               cacheExtent: w * 0.1,
