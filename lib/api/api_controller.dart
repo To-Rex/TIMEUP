@@ -51,6 +51,9 @@ class ApiController extends GetxController {
   var businessFollowedListUrl = 'business/followed/list?limit=300&offset=0';
   //{{host}}/api/v1/booking/client/create
   var bookingClientCreateUrl = 'booking/client/create';
+  //{{host}}/api/v1/business/{{business_id}}/unfollow
+  var businessUnFollowUrl = 'business/';
+  var businessUnFollowUrl2 = '/unfollow';
 
   Future<String> sendSms(String phoneNumber) async {
     var response = await http.post(
@@ -411,6 +414,20 @@ class ApiController extends GetxController {
           'Authorization': 'Bearer ${GetStorage().read('token')}',
           'Content-Type': 'application/json'
         });
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> unFollow(id) async{
+    var response = await http.post(Uri.parse('$url$businessFollowUrl$id$businessUnFollowUrl2'),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },
+    );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
