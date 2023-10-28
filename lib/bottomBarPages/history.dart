@@ -581,11 +581,7 @@ class HistoryPage extends StatelessWidget {
                                                   width: 5,
                                                 ),
                                                 Text(
-                                                  _getController
-                                                      .bookingBusinessGetList
-                                                      .value
-                                                      .res![index]
-                                                      .phoneNumber!,
+                                                  _getController.bookingBusinessGetList.value.res![index].phoneNumber!,
                                                   style: const TextStyle(
                                                     fontSize: 13,
                                                     fontWeight: FontWeight.w400,
