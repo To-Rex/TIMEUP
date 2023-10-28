@@ -167,34 +167,6 @@ class ProfessionsListUsers extends StatelessWidget {
                                     ),
                                   ),
                                 )),
-                                /*SizedBox(
-                                  height: h * 0.045,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      ApiController().follow(_getController.getByCategory.value.res?[index].businessId ?? 0).then((value) =>{
-                                        if(value.status == true) {
-                                          Toast.showToast(context, 'Followed', Colors.green, Colors.white),
-                                        }else{
-                                          Toast.showToast(context, 'Error', Colors.red, Colors.white),
-                                        }
-                                      });
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      backgroundColor: Colors.blue,
-                                    ),
-                                    child: Text('Follow',
-                                      style: TextStyle(
-                                        fontSize: w * 0.04,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),*/
-                                SizedBox(width: w * 0.05),
                               ],
                             ),
                             SizedBox(height: h * 0.02),
