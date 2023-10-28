@@ -202,8 +202,7 @@ class ProfilePage extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.9,
           decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -271,7 +270,9 @@ class ProfilePage extends StatelessWidget {
               SizedBox(height: h * 0.02),
               Expanded(child: Padding(
                 padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
-                child: ListView.builder(
+                child: Obx(() => getController.bookingBusinessGetList.value.res == null
+                    ? const Center(child: Text('Ma\'lumotlar topilmadi'))
+                    : ListView.builder(
                     shrinkWrap: true,
                     itemCount: getController.bookingBusinessGetList.value.res!.length,
                     itemBuilder: (context, index) {
@@ -293,8 +294,8 @@ class ProfilePage extends StatelessWidget {
                                 width: w * 0.7,
                                 child: Text(
                                   'Ushbu mijoz'
-                                  ' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
-                                  '${getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                      ' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
+                                      '${getController.bookingBusinessGetList.value.res![index].time!} keladi',
                                   style: TextStyle(
                                     fontSize: w * 0.04,
                                     fontWeight: FontWeight.w500,
@@ -306,8 +307,8 @@ class ProfilePage extends StatelessWidget {
                           const Divider(),
                         ],
                       );
-                    }),
-              ))
+                    }),),
+              )),
             ],
           ),
         );
