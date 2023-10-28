@@ -25,17 +25,10 @@ class HistoryPage extends StatelessWidget {
     var currentDate = '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
     currentDate = '';
     if (_getController.meUsers.value.res?.business == null) {
-      ApiController()
-          .bookingClientGetList(currentDate)
-          .then((value) => _getController.changeBookingBusinessGetList(value));
+      ApiController().bookingClientGetList(currentDate).then((value) => _getController.changeBookingBusinessGetList(value));
     } else {
-      ApiController()
-          .bookingBusinessGetList(
-              _getController.bookingBusinessGetListByID.value, '')
-          .then((value) => _getController.changeBookingBusinessGetList(value));
-      ApiController()
-          .bookingClientGetList(currentDate)
-          .then((value) => _getController.changeBookingBusinessGetList1(value));
+      ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value));
+      ApiController().bookingClientGetList(currentDate).then((value) => _getController.changeBookingBusinessGetList1(value));
     }
 
     return SizedBox(
@@ -190,8 +183,7 @@ class HistoryPage extends StatelessWidget {
                         firstDate: DateTime(1900),
                         lastDate: DateTime(2025),
                       ).then((value) => {
-                            _dateController.text =
-                                '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
+                            _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
                             if (_getController.meUsers.value.res?.business ==
                                 null)
                               {

@@ -73,18 +73,24 @@ class ProfilePage extends StatelessWidget {
                       ),
                       onPressed: () {
                         ApiController().deleteMe().then((value) => {
-                                  if (value == true){
-                                    GetStorage().remove('token'),
-                                    getController.clearMeUser(),
-                                    getController.clearCategory(),
-                                    Navigator.pop(context),
-                                    Navigator.pushReplacement(
-                                      context, MaterialPageRoute(builder: (context) => LoginPage()),
-                                    ),
-                                  } else {
-                                      Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.white)
-                                    }
-                                });
+                              if (value == true)
+                                {
+                                  GetStorage().remove('token'),
+                                  getController.clearMeUser(),
+                                  getController.clearCategory(),
+                                  Navigator.pop(context),
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginPage()),
+                                  ),
+                                }
+                              else
+                                {
+                                  Toast.showToast(context, 'Xatolik yuz berdi',
+                                      Colors.red, Colors.white)
+                                }
+                            });
                       },
                       child: Row(
                         children: [
@@ -108,7 +114,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  showClosDialogs(BuildContext context){
+  showClosDialogs(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -156,7 +162,8 @@ class ProfilePage extends StatelessWidget {
                       ),
                       onPressed: () {
                         Navigator.pushReplacement(
-                          context, MaterialPageRoute(builder: (context) => LoginPage()),
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
                         );
                         GetStorage().remove('token');
                         getController.clearMeUser();
@@ -167,7 +174,8 @@ class ProfilePage extends StatelessWidget {
                           const Expanded(child: SizedBox()),
                           Text('Log out',
                               style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.width * 0.035,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.035,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
                               )),
@@ -183,7 +191,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  showBottomSheetList(context){
+  showBottomSheetList(context) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     showModalBottomSheet(
@@ -195,10 +203,7 @@ class ProfilePage extends StatelessWidget {
           decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10)
-              )
-          ),
+                  topLeft: Radius.circular(10), topRight: Radius.circular(10))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -219,11 +224,17 @@ class ProfilePage extends StatelessWidget {
                       onTap: () {
                         showDatePicker(
                           context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2000),
+                          initialDate: _dateController.text == '' ? DateTime.now() : DateTime.parse('${_dateController.text.substring(6, 10)}-${_dateController.text.substring(3, 5)}-${_dateController.text.substring(0, 2)}'),
+                          firstDate: DateTime(1900),
                           lastDate: DateTime(2025),
-                        ).then((value) =>
-                        _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}');
+                        ).then((value) => {
+                              if (value != null){
+                                _dateController.text = '${value.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
+                                ApiController().bookingBusinessGetList(getController.meUsers.value.res!.business!.id!, _dateController.text).then((value) => getController.changeBookingBusinessGetList(value))
+                              }else{
+                                _dateController.text = ''
+                              }
+                        });
                       },
                       child: const Icon(
                         Icons.calendar_today,
@@ -270,7 +281,8 @@ class ProfilePage extends StatelessWidget {
                             children: [
                               SizedBox(
                                 width: w * 0.08,
-                                child: Text('${index + 1}',
+                                child: Text(
+                                  '${index + 1}',
                                   style: TextStyle(
                                     fontSize: w * 0.04,
                                     fontWeight: FontWeight.w500,
@@ -279,7 +291,10 @@ class ProfilePage extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: w * 0.7,
-                                child: Text('Ushbu mijoz'' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} ''${getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                child: Text(
+                                  'Ushbu mijoz'
+                                  ' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
+                                  '${getController.bookingBusinessGetList.value.res![index].time!} keladi',
                                   style: TextStyle(
                                     fontSize: w * 0.04,
                                     fontWeight: FontWeight.w500,
@@ -293,7 +308,6 @@ class ProfilePage extends StatelessWidget {
                       );
                     }),
               ))
-
             ],
           ),
         );
@@ -303,8 +317,11 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if( GetStorage().read('token') == null) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()),);
+    if (GetStorage().read('token') == null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
     }
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
@@ -379,7 +396,8 @@ class ProfilePage extends StatelessWidget {
                             CircleAvatar(
                               radius: w * 0.12,
                               foregroundColor: Colors.blue,
-                              backgroundImage: NetworkImage('http://${getController.meUsers.value.res?.photoUrl}'),
+                              backgroundImage: NetworkImage(
+                                  'http://${getController.meUsers.value.res?.photoUrl}'),
                             ),
                             const Expanded(child: SizedBox()),
                           ],
@@ -387,7 +405,8 @@ class ProfilePage extends StatelessWidget {
                         Container(
                           width: w * 0.9,
                           margin: const EdgeInsets.only(top: 15),
-                          child: Text('${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res?.lastName}',
+                          child: Text(
+                              '${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res?.lastName}',
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -401,15 +420,19 @@ class ProfilePage extends StatelessWidget {
                                     margin: const EdgeInsets.only(top: 5),
                                     child: Row(
                                       children: [
-                                        Text('${getController.meUsers.value.res?.business?.categoryName}',
+                                        Text(
+                                          '${getController.meUsers.value.res?.business?.categoryName}',
                                           style: TextStyle(
                                             fontSize: w * 0.04,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                           ),
                                         ),
-                                        SizedBox(width: w * 0.01,),
-                                        Text('${getController.meUsers.value.res?.business?.experience} years of experience',
+                                        SizedBox(
+                                          width: w * 0.01,
+                                        ),
+                                        Text(
+                                          '${getController.meUsers.value.res?.business?.experience} years of experience',
                                           style: TextStyle(
                                             fontSize: w * 0.04,
                                             fontWeight: FontWeight.w400,
@@ -420,34 +443,45 @@ class ProfilePage extends StatelessWidget {
                                     ))
                                 : const SizedBox()),
                         TextEditButton(
-                          text: '${getController.meUsers.value.res?.phoneNumber}',
+                          text:
+                              '${getController.meUsers.value.res?.phoneNumber}',
                           color: Colors.blue,
                           icon: Icons.phone,
                         ),
-                        Obx(() => getController.meUsers.value.res?.business != null
+                        Obx(() =>
+                            getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
-                                    text: '${getController.meUsers.value.res?.business?.officeAddress}',
+                                    text:
+                                        '${getController.meUsers.value.res?.business?.officeAddress}',
                                     color: Colors.blue,
                                     icon: Icons.location_on,
                                   )
                                 : const SizedBox()),
-                        Obx(() => getController.meUsers.value.res?.business != null
+                        Obx(() =>
+                            getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
-                                    text: '${getController.meUsers.value.res?.business?.officeName}',
+                                    text:
+                                        '${getController.meUsers.value.res?.business?.officeName}',
                                     color: Colors.blue,
                                     icon: Icons.home,
                                   )
                                 : const SizedBox()),
-                        Obx(() => getController.meUsers.value.res?.business != null
+                        Obx(() =>
+                            getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
-                                    text: '${getController.meUsers.value.res?.business?.dayOffs}',
+                                    text:
+                                        '${getController.meUsers.value.res?.business?.dayOffs}',
                                     color: Colors.blue,
                                     icon: Icons.access_time_outlined,
                                   )
                                 : const SizedBox()),
-                        SizedBox(height: h * 0.02,),
-                        Obx(() => getController.meUsers.value.res?.business == null
-                                ? EditButton(text: 'Make business profile',
+                        SizedBox(
+                          height: h * 0.02,
+                        ),
+                        Obx(() =>
+                            getController.meUsers.value.res?.business == null
+                                ? EditButton(
+                                    text: 'Make business profile',
                                     onPressed: () {
                                       getController.nextPages.value = 0;
                                       getController.entersUser.value = 2;
@@ -464,7 +498,8 @@ class ProfilePage extends StatelessWidget {
                                           child: BusinessEditButton(
                                             text: 'Edit profile',
                                             onPressed: () {
-                                              getController.entersUser.value = 1;
+                                              getController.entersUser.value =
+                                                  1;
                                             },
                                             color: Colors.blue,
                                             radius: 3,
@@ -473,7 +508,8 @@ class ProfilePage extends StatelessWidget {
                                       ],
                                     ),
                                   )),
-                        Obx(() => getController.meUsers.value.res?.business == null
+                        Obx(() => getController.meUsers.value.res?.business ==
+                                null
                             ? EditButton(
                                 text: 'Edit profile',
                                 onPressed: () {
@@ -485,14 +521,19 @@ class ProfilePage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Obx(() => getController.nextPagesUserDetails.value == 0
+                                  Obx(() => getController
+                                              .nextPagesUserDetails.value ==
+                                          0
                                       ? SizedBox(
                                           width: w * 0.5,
                                           height: h * 0.062,
                                           child: BusinessEditButton(
                                             text: 'Biografiya',
                                             onPressed: () {
-                                              pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                                              pageController.animateToPage(0,
+                                                  duration: const Duration(
+                                                      milliseconds: 500),
+                                                  curve: Curves.ease);
                                             },
                                             color: Colors.blue,
                                             radius: 0,
@@ -504,20 +545,28 @@ class ProfilePage extends StatelessWidget {
                                           child: BusinessEditButton(
                                             text: 'Biografiya',
                                             onPressed: () {
-                                              pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                                              pageController.animateToPage(0,
+                                                  duration: const Duration(
+                                                      milliseconds: 500),
+                                                  curve: Curves.ease);
                                             },
                                             color: Colors.grey,
                                             radius: 0,
                                           ),
                                         )),
-                                  Obx(() => getController.nextPagesUserDetails.value == 1
+                                  Obx(() => getController
+                                              .nextPagesUserDetails.value ==
+                                          1
                                       ? SizedBox(
                                           width: w * 0.5,
                                           height: h * 0.062,
                                           child: BusinessEditButton(
                                             text: 'Ish jadvali',
                                             onPressed: () {
-                                              pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                                              pageController.animateToPage(1,
+                                                  duration: const Duration(
+                                                      milliseconds: 500),
+                                                  curve: Curves.ease);
                                             },
                                             color: Colors.blue,
                                             radius: 0,
@@ -529,7 +578,10 @@ class ProfilePage extends StatelessWidget {
                                           child: BusinessEditButton(
                                             text: 'Ish jadvali',
                                             onPressed: () {
-                                              pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                                              pageController.animateToPage(1,
+                                                  duration: const Duration(
+                                                      milliseconds: 500),
+                                                  curve: Curves.ease);
                                             },
                                             color: Colors.grey,
                                             radius: 0,
@@ -537,105 +589,138 @@ class ProfilePage extends StatelessWidget {
                                         )),
                                 ],
                               ))),
-                        Obx(() =>
-                            getController.meUsers.value.res?.business == null ? const SizedBox()
-                                : SizedBox(width:  w * 0.95, height: h * 0.3,
-                              child: PageView(
-                                //physics: const NeverScrollableScrollPhysics(),
-                                onPageChanged: (index) {
-                                  getController.nextPagesUserDetails.value = index;
-                                },
-                                controller: pageController,
-                                children: [
-                                  BioBusiness(
-                                    text: getController.meUsers.value.res?.business?.bio ?? '',
-                                  ),
-                                  SizedBox(
-                                    width: w * 0.9,
-                                    height: h * 0.22,
-                                    child: Obx(() => getController.bookingBusinessGetList.value.res == null
-                                          ? const Center(child: Text('Ma\'lumotlar topilmadi'))
-                                          : Container(height: h * 0.22,
-                                        margin: EdgeInsets.only(top: h * 0.02),
-                                        padding: EdgeInsets.all(w * 0.02),
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Colors.grey,
+                        Obx(
+                          () =>
+                              getController.meUsers.value.res?.business == null
+                                  ? const SizedBox()
+                                  : SizedBox(
+                                      width: w * 0.95,
+                                      height: h * 0.3,
+                                      child: PageView(
+                                        //physics: const NeverScrollableScrollPhysics(),
+                                        onPageChanged: (index) {
+                                          getController.nextPagesUserDetails
+                                              .value = index;
+                                        },
+                                        controller: pageController,
+                                        children: [
+                                          BioBusiness(
+                                            text: getController.meUsers.value
+                                                    .res?.business?.bio ??
+                                                '',
                                           ),
-                                          borderRadius: BorderRadius.circular(3),
-                                        ),
-                                          child: Column(
-                                            children: [
-                                              SizedBox(
-                                                height: h * 0.205,
-                                                child: ListView.builder(
-                                                    shrinkWrap: true,
-                                                    itemCount: getController.bookingBusinessGetList.value.res!.length,
-                                                    itemBuilder: (context, index) {
-                                                      return Column(
+                                          SizedBox(
+                                            width: w * 0.9,
+                                            height: h * 0.22,
+                                            child: Obx(
+                                              () => getController
+                                                          .bookingBusinessGetList
+                                                          .value
+                                                          .res ==
+                                                      null
+                                                  ? const Center(
+                                                      child: Text(
+                                                          'Ma\'lumotlar topilmadi'))
+                                                  : Container(
+                                                      height: h * 0.22,
+                                                      margin: EdgeInsets.only(
+                                                          top: h * 0.02),
+                                                      padding: EdgeInsets.all(
+                                                          w * 0.02),
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                          color: Colors.grey,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(3),
+                                                      ),
+                                                      child: Column(
                                                         children: [
+                                                          SizedBox(
+                                                            height: h * 0.205,
+                                                            child: ListView
+                                                                .builder(
+                                                                    shrinkWrap:
+                                                                        true,
+                                                                    itemCount: getController
+                                                                        .bookingBusinessGetList
+                                                                        .value
+                                                                        .res!
+                                                                        .length,
+                                                                    itemBuilder:
+                                                                        (context,
+                                                                            index) {
+                                                                      return Column(
+                                                                        children: [
+                                                                          Row(
+                                                                            children: [
+                                                                              SizedBox(
+                                                                                width: w * 0.08,
+                                                                                child: Text(
+                                                                                  '${index + 1}',
+                                                                                  style: TextStyle(
+                                                                                    fontSize: w * 0.04,
+                                                                                    fontWeight: FontWeight.w500,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              SizedBox(
+                                                                                width: w * 0.7,
+                                                                                child: Text(
+                                                                                  'Ushbu mijoz' ' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} ' '${getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                                                                  style: TextStyle(
+                                                                                    fontSize: w * 0.04,
+                                                                                    fontWeight: FontWeight.w500,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          const Divider(),
+                                                                        ],
+                                                                      );
+                                                                    }),
+                                                          ),
                                                           Row(
                                                             children: [
+                                                              const Expanded(
+                                                                  child:
+                                                                      SizedBox()),
                                                               SizedBox(
-                                                                width: w * 0.08,
-                                                                child: Text(
-                                                                  '${index + 1}',
-                                                                  style: TextStyle(
-                                                                    fontSize:
-                                                                    w * 0.04,
-                                                                    fontWeight:
-                                                                    FontWeight.w500,
+                                                                height:
+                                                                    h * 0.05,
+                                                                child:
+                                                                    TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    showBottomSheetList(
+                                                                        context);
+                                                                  },
+                                                                  child: Text(
+                                                                    'Barchasini ko\'rish',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          w * 0.04,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      color: Colors
+                                                                          .blue,
+                                                                    ),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                              SizedBox(
-                                                                width: w * 0.7,
-                                                                child: Text(
-                                                                  'Ushbu mijoz'' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} ''${getController.bookingBusinessGetList.value.res![index].time!} keladi',
-                                                                  style: TextStyle(
-                                                                    fontSize:
-                                                                    w * 0.04,
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                  ),
-                                                                ),
-                                                              ),
+                                                              )
                                                             ],
-                                                          ),
-                                                          const Divider(),
+                                                          )
                                                         ],
-                                                      );
-                                                    }),
-                                              ),
-                                              Row(
-                                                children: [
-                                                  const Expanded(child: SizedBox()),
-                                                  SizedBox(
-                                                    height: h * 0.05,
-                                                    child: TextButton(
-                                                      onPressed: () {
-                                                        showBottomSheetList(context);
-                                                      },
-                                                      child: Text(
-                                                        'Barchasini ko\'rish',
-                                                        style: TextStyle(
-                                                          fontSize: w * 0.04,
-                                                          fontWeight: FontWeight.w500,
-                                                          color: Colors.blue,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              )
-                                            ],
-                                          )),
+                                                      )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
                         ),
                       ],
                     )
