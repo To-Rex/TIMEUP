@@ -423,7 +423,7 @@ class ApiController extends GetxController {
   }
 
   Future<bool> unFollow(id) async{
-    var response = await http.post(Uri.parse('$url$businessFollowUrl$id$businessUnFollowUrl2'),
+    var response = await http.delete(Uri.parse('$url$businessFollowUrl$id$businessUnFollowUrl2'),
       headers: {
         'Authorization': 'Bearer ${GetStorage().read('token')}',
       },

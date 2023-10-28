@@ -117,7 +117,13 @@ class ProfessionsListUsers extends StatelessWidget {
                                   height: h * 0.045,
                                   child: ElevatedButton(
                                     onPressed: () {
-
+                                      ApiController().unFollow(_getController.getByCategory.value.res?[index].businessId ?? 0).then((value) =>{
+                                        if(value == true) {
+                                          Toast.showToast(context, 'UnFollowed', Colors.green, Colors.white),
+                                        }else{
+                                          Toast.showToast(context, 'Error', Colors.red, Colors.white),
+                                        }
+                                      });
                                     },
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
