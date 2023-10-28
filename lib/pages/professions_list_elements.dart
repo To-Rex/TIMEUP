@@ -24,7 +24,7 @@ class ProfessionsListElements extends StatelessWidget {
       _getController.changeTitleListElements(_getController.category.value.res![index!].name!)});
     return Column(
       children: [
-        SizedBox(
+        /*SizedBox(
           child: GestureDetector(
             onTap: () {
               _getController.clearSubCategory();
@@ -41,8 +41,20 @@ class ProfessionsListElements extends StatelessWidget {
               ],
             ),
           ),
+        ),*/
+        AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: GestureDetector(
+            onTap: () {
+              _getController.clearSubCategory();
+              _getController.enters.value = 0;
+            },
+            child: const Icon(Icons.arrow_back_ios, color: Colors.black),
+          ),
+          title:  const Text('Tibbiyot Kasblar royhati', style: TextStyle(color: Colors.black),),
+          centerTitle: true,
         ),
-        SizedBox(height: h * 0.02),
         // List of professions taking up the remaining space
         Obx(() => _getController.subCategory.value.res == null
             ? const Center(child: Text('No data'))
