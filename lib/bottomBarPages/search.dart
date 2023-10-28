@@ -13,13 +13,6 @@ class SearchPage extends StatelessWidget {
   final GetController _getController = Get.put(GetController());
   int? index;
 
-  var profession = [
-    'Stomatolog',
-    'Anesteziolog',
-    'Reanimatolog',
-    'Feldsher'
-  ];
-
   @override
   Widget build(BuildContext context) {
     if(GetStorage().read('token') == null) {

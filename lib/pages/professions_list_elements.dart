@@ -20,8 +20,8 @@ class ProfessionsListElements extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    ApiController().getSubCategory(index!.toInt()).then((value) =>
-    {_getController.changeSubCategory(value),
+    ApiController().getSubCategory(index!.toInt()).then((value) => {
+      _getController.changeSubCategory(value),
       _getController.changeTitleListElements(_getController.category.value.res![index!].name!)});
     return Column(
       children: [
@@ -56,6 +56,7 @@ class ProfessionsListElements extends StatelessWidget {
                     onTap: () {
                       _getController.categoryByID.value = _getController.subCategory.value.res![index].id!;
                       _getController.enters.value = 2;
+                      _getController.changeTitleListElements(_getController.subCategory.value.res![index].name!);
                     },
                     child: Column(
                       children: [
