@@ -38,6 +38,10 @@ class GetController extends GetxController {
   var bookingBusinessGetListByID = 0.obs;
   var titleListElements = ''.obs;
 
+  void follows(index) {
+    getByCategory.value.res?[index].followed == true ? getByCategory.value.res![index].followed = false : getByCategory.value.res![index].followed = true;
+  }
+
   void changeTitleListElements(String newTitleListElements) {
     titleListElements.value = newTitleListElements;
   }

@@ -120,6 +120,7 @@ class ProfessionsListUsers extends StatelessWidget {
                                       ApiController().unFollow(_getController.getByCategory.value.res?[index].businessId ?? 0).then((value) =>{
                                         if(value == true) {
                                           Toast.showToast(context, 'UnFollow', Colors.green, Colors.white),
+                                          ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value))
                                         }else{
                                           Toast.showToast(context, 'Error', Colors.red, Colors.white),
                                         }
@@ -147,6 +148,7 @@ class ProfessionsListUsers extends StatelessWidget {
                                       ApiController().follow(_getController.getByCategory.value.res?[index].businessId ?? 0).then((value) =>{
                                         if(value.status == true) {
                                           Toast.showToast(context, 'Followed', Colors.green, Colors.white),
+                                          ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value))
                                         }else{
                                           Toast.showToast(context, 'Error', Colors.red, Colors.white),
                                         }
