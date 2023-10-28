@@ -22,9 +22,7 @@ class HistoryPage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     _getController.nextPagesUserDetails.value = 0;
-    //26/11/2023
-    var currentDate =
-        '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
+    var currentDate = '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
     print(currentDate);
     currentDate = '';
     if (_getController.meUsers.value.res?.business == null) {
