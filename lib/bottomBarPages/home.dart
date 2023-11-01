@@ -6,12 +6,13 @@ import 'package:time_up/api/api_controller.dart';
 import '../pages/login_page.dart';
 import '../pages/professions_list_details.dart';
 import '../res/getController.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
   final GetController _getController = Get.put(GetController());
 
-  showDialogs(BuildContext context,text,disc) {
+  showDialogs(BuildContext context,text,disc,ok,int index) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -60,18 +61,30 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
+                        if(index == 1){
+                          FlutterPhoneDirectCaller.callNumber(text);
+                          Navigator.pop(context);
+                        }else if(index == 2){
+
+                          Navigator.pop(context);
+                        }else{
+                          Navigator.pop(context);
+                        }
                       },
                       child: Row(
                         children: [
                           const Expanded(child: SizedBox()),
-                          Text('Call',
+                          SizedBox(width: MediaQuery.of(context).size.width * 0.02,),
+                          Text(ok,
                               style: TextStyle(
                                 fontSize:
                                 MediaQuery.of(context).size.width * 0.035,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
                               )),
+                          SizedBox(width: MediaQuery.of(context).size.width * 0.02,),
                           const Icon(Icons.check, color: Colors.white),
+                          const Expanded(child: SizedBox()),
                         ],
                       )),
                 )
@@ -151,14 +164,13 @@ class HomePage extends StatelessWidget {
                                   iconSize: w * 0.07,
                                   padding: EdgeInsets.zero,
                                   onPressed: (){
-                                    showDialogs(context, _getController.followList.value.res?[index].phoneNumber ?? '','You will be charged for this call');
+                                    showDialogs(
+                                        context, _getController.followList.value.res?[index].phoneNumber ?? '','You will be charged for this call','Call',1);
                                   },
                                   icon: HeroIcon(HeroIcons.phone, color: Colors.blue, size: w * 0.07,)
                               ),
                             ),
-                            SizedBox(
-                              width: w * 0.01,
-                            ),
+                            SizedBox(width: w * 0.01,),
                             SizedBox(
                               height: w * 0.07,
                               width: w * 0.07,
@@ -166,15 +178,11 @@ class HomePage extends StatelessWidget {
                                   hoverColor: Colors.blue,
                                   iconSize: w * 0.07,
                                   padding: EdgeInsets.zero,
-                                  onPressed: (){
-                                    showDialogs(context, 'Manzil',_getController.followList.value.res?[index].officeAddress ?? '');
-                                  },
+                                  onPressed: (){showDialogs(context, 'Manzil',_getController.followList.value.res?[index].officeAddress ?? '','ok',2);},
                                   icon: HeroIcon(HeroIcons.mapPin, color: Colors.blue, size: w * 0.07,)
                               ),
                             ),
-                            SizedBox(
-                              width: w * 0.01,
-                            ),
+                            SizedBox(width: w * 0.01),
                             SizedBox(
                               height: w * 0.07,
                               width: w * 0.07,
@@ -182,22 +190,19 @@ class HomePage extends StatelessWidget {
                                   hoverColor: Colors.blue,
                                   iconSize: w * 0.07,
                                   padding: EdgeInsets.zero,
-                                  onPressed: (){
-                                    showDialogs(context,_getController.followList.value.res?[index].categoryName ?? '',_getController.followList.value.res?[index].bio ?? '');
-                                  },
+                                  onPressed: (){showDialogs(context,_getController.followList.value.res?[index].categoryName ?? '',_getController.followList.value.res?[index].bio ?? '','ok',3);},
                                   icon: HeroIcon(HeroIcons.briefcase, color: Colors.blue, size: w * 0.07,)
                               ),
                             ),
                           ],
                         ),
                       ),
-                      //name
+                      SizedBox(height: h * 0.01),
                       SizedBox(
                         width: w * 0.9,
-                        child: Text(
-                          '${_getController.followList.value.res?[index].userName}',
-                          style: const TextStyle(
-                            fontSize: 22,
+                        child: Text('${_getController.followList.value.res?[index].userName}',
+                          style: TextStyle(
+                            fontSize: w * 0.055,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
