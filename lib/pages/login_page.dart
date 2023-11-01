@@ -42,10 +42,14 @@ class LoginPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Image(image: AssetImage('assets/images/logo.png')),
+          //const Image(image: AssetImage('assets/images/logo.png')),
+          /*SizedBox(
+            height: h * 0.1,
+            child: const Image(image: AssetImage('assets/images/logoss.png')),
+          ),*/
+
           SizedBox(height: h * 0.01),
-          Image(
-              image: const AssetImage('assets/images/text.png'),
+          Image(image: const AssetImage('assets/images/text.png'),
               height: h * 0.05),
           SizedBox(height: h * 0.06),
           Container(
@@ -68,10 +72,7 @@ class LoginPage extends StatelessWidget {
               decoration: const InputDecoration(
                 hintText: 'Telefon raqam',
                 hintStyle: TextStyle(color: Colors.black54),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(7)),
-                  borderSide: BorderSide.none,
-                ),
+                border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(7)), borderSide: BorderSide.none,),
                 counterText: '',
                 counter: null,
                 semanticCounterText: null,
@@ -92,15 +93,11 @@ class LoginPage extends StatelessWidget {
               showCursor: false,
               showDropdownIcon: false,
               initialCountryCode: 'UZ',
-              onCountryChanged: (phone) {
-                code = phone.fullCountryCode;
-              },
+              onCountryChanged: (phone) {code = phone.fullCountryCode;},
             ),
           ),
           Obx(() => nameController.sendCode.value
-              ? SizedBox(
-                  height: h * 0.02,
-                )
+              ? SizedBox(height: h * 0.02,)
               : const SizedBox()),
           Obx(() => nameController.sendCode.value
               ? Container(
@@ -110,47 +107,28 @@ class LoginPage extends StatelessWidget {
                     color: Colors.grey[200],
                   ),
                   child: TextField(
-                    controller: nameController.code.value.isEmpty
-                        ? _codeController
-                        : _codeController
-                      ..text = nameController.code.value,
+                    controller: nameController.code.value.isEmpty ? _codeController : _codeController..text = nameController.code.value,
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.done,
                     onChanged: (value) {
                       if (value.length == 6) {
                         var phone = code + _controller.text;
                         var codes = _codeController.text;
-                        ApiController()
-                            .verifySms(phone, codes)
-                            .then((value) => {
-                          if (value.status == true)
-                            {
+                        ApiController().verifySms(phone, codes).then((value) => {
+                          if (value.status == true){
                               _codeController.clear(),
-                              if (value.res!.token != '')
-                                {
+                              if (value.res!.token != ''){
                                   Toast.showToast(context, '${value.res?.token}', Colors.green, Colors.white),
                                   GetStorage().write('token', value.res?.token),
                                   nameController.code.value = '',
                                   _codeController.clear(),
                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),),
+                                } else {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUserData(phoneNumber: code + _controller.text)),),
                                 }
-                              else
-                                {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginUserData(phoneNumber: code + _controller.text)),
-                                  ),
-                                }
-                            }
-                          else
-                            {
+                            } else {
                               _codeController.clear(),
-                              Toast.showToast(
-                                  context,
-                                  'Kodni noto`g`ri kiritdingiz',
-                                  Colors.red,
-                                  Colors.red),
+                              Toast.showToast(context, 'Kodni noto`g`ri kiritdingiz', Colors.red, Colors.red),
                             }
                         });
                       }
@@ -164,9 +142,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       counterText: '',
                       counter: null,
-                      //counter false
                       semanticCounterText: null,
-                      //counter false
                       errorStyle: TextStyle(
                         color: Colors.red,
                         fontSize: 12,
@@ -198,8 +174,7 @@ class LoginPage extends StatelessWidget {
                                 controller: _controllerTimer,
                                 seconds: _secondsRemaining,
                                 build: (_, double time) {
-                                  final formattedTime = formatDuration(
-                                      Duration(seconds: time.toInt()));
+                                  final formattedTime = formatDuration(Duration(seconds: time.toInt()));
                                   return Text(
                                     'Kodni qayta yuborish: $formattedTime',
                                     style: const TextStyle(fontSize: 16),
@@ -212,14 +187,9 @@ class LoginPage extends StatelessWidget {
                               )
                             : Row(
                                 children: [
-                                  const Text('Kodni qayta yuborish ',
-                                      style: TextStyle(fontSize: 16)),
+                                  const Text('Kodni qayta yuborish ', style: TextStyle(fontSize: 16)),
                                   TextButton(
-                                    style: TextButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(7),
-                                      ),
-                                    ),
+                                    style: TextButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7),),),
                                     onPressed: () {
                                       nameController.changeOnFinished();
                                       _codeController.clear();
@@ -249,14 +219,11 @@ class LoginPage extends StatelessWidget {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(7),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7),),
               ),
               onPressed: () {
                 if (_controller.text.isEmpty) {
-                  Toast.showToast(context, 'Telefon raqamni kiriting',
-                      Colors.red, Colors.red);
+                  Toast.showToast(context, 'Telefon raqamni kiriting', Colors.red, Colors.red);
                   return;
                 }
                 if (!nameController.onFinished.value) {
@@ -273,55 +240,38 @@ class LoginPage extends StatelessWidget {
                   if (_codeController.text == nameController.code.value) {
                     var phone = code + _controller.text;
                     ApiController().verifySms(phone, _codeController.text).then((value) => {
-                          if (value.status == true)
-                            {
+                          if (value.status == true){
                               _codeController.clear(),
-                              if (value.res!.token != '')
-                                {
+                              if (value.res!.token != ''){
                                   GetStorage().write('token', value.res?.token),
                                   nameController.code.value = '',
                                   _codeController.clear(),
                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),),
+                                } else {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUserData(phoneNumber: code + _controller.text,)),),
                                 }
-                              else
-                                {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginUserData(phoneNumber: code + _controller.text,)),
-                                  ),
-                                }
-                            }
-                          else
-                            {
+                            } else {
                               _codeController.clear(),
-                              Toast.showToast(
-                                  context,
-                                  'Kodni noto`g`ri kiritdingiz',
-                                  Colors.red,
-                                  Colors.red),
+                              Toast.showToast(context, 'Kodni noto`g`ri kiritdingiz', Colors.red, Colors.red),
                             }
                         });
                     return;
                   } else {
                     _codeController.clear();
-                    Toast.showToast(context, 'Kodni noto`g`ri kiritdingiz',
-                        Colors.red, Colors.red);
+                    Toast.showToast(context, 'Kodni noto`g`ri kiritdingiz', Colors.red, Colors.red);
                   }
                 }
               },
               child: Obx(
                 () => nameController.sendCode.value
-                    ? Text(
-                        'Tasdiqlash',
+                    ? Text('Tasdiqlash',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: w * 0.04 > 20 ? 20 : w * 0.04,
                           fontWeight: FontWeight.bold,
                         ),
                       )
-                    : Text(
-                        'Kodni yuborish',
+                    : Text('Kodni yuborish',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: w * 0.04 > 20 ? 20 : w * 0.04,
