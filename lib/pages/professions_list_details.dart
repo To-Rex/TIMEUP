@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:heroicons/heroicons.dart';
 import '../api/api_controller.dart';
 import '../elements/functions.dart';
 import '../res/getController.dart';
@@ -65,10 +66,11 @@ class ProfessionsListDetails extends StatelessWidget {
                           _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
                         });
                       },
-                      child: const Icon(
-                        Icons.calendar_today,
-                        color: Colors.grey,
-                      ),
+                      child: HeroIcon(
+                        HeroIcons.calendar,
+                        color: Colors.black,
+                        size: w * 0.06,
+                      )
                     ),
                     hintText: 'MM / DD / YYYY',
                     hintStyle: const TextStyle(
@@ -118,10 +120,11 @@ class ProfessionsListDetails extends StatelessWidget {
                         ).then((value) =>
                             _timeController.text = '${value!.hour < 10 ? '0${value.hour}' : value.hour}:${value.minute < 10 ? '0${value.minute}' : value.minute}');
                       },
-                      child: const Icon(
-                        Icons.access_time,
-                        color: Colors.grey,
-                      ),
+                      child: HeroIcon(
+                        HeroIcons.clock,
+                        color: Colors.black,
+                        size: w * 0.06,
+                      )
                     ),
                     hintText: 'HH : MM',
                     hintStyle: const TextStyle(
@@ -229,19 +232,23 @@ class ProfessionsListDetails extends StatelessWidget {
                         showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
-                          firstDate: DateTime(2000),
+                          firstDate: DateTime(1900),
                           lastDate: DateTime(2025),
                         ).then((value) => {
-                          //clear list
                           _getController.bookingBusinessGetList.value.res!.clear(),
                           _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
                           ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value,'${value.day}/${value.month}/${value.year}').then((value) => _getController.changeBookingBusinessGetList(value)),
                         });
                       },
-                      child: const Icon(
+                      /*child: const Icon(
                         Icons.calendar_today,
                         color: Colors.grey,
-                      ),
+                      ),*/
+                      child: HeroIcon(
+                        HeroIcons.calendar,
+                        color: Colors.black,
+                        size: w * 0.06,
+                      )
                     ),
                     hintText: 'MM / DD / YYYY',
                     hintStyle: const TextStyle(
@@ -379,11 +386,15 @@ class ProfessionsListDetails extends StatelessWidget {
               : SizedBox(
                   child:
                       _getController.getProfileById.value.res!.photoUrl == null
-                          ? const CircleAvatar(
+                        ? Row(
+                          children: [
+                             SizedBox(width: w * 0.04),
+                             const CircleAvatar(
                               backgroundImage:
-                                  AssetImage('assets/images/doctor.png'),
-                            )
-                          : Row(
+                               AssetImage('assets/images/doctor.png'),
+                            ),
+                          ],
+                         ) : Row(
                               children: [
                                 SizedBox(width: w * 0.04),
                                 CircleAvatar(
@@ -394,9 +405,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                 ),
                               ],
                             ))),
-          SizedBox(
-            height: h * 0.02,
-          ),
+          SizedBox(height: h * 0.02),
           Container(
               margin: EdgeInsets.only(left: w * 0.04, right: w * 0.04),
               child: Column(
@@ -404,38 +413,23 @@ class ProfessionsListDetails extends StatelessWidget {
                 children: [
                   Obx(() => _getController.getProfileById.value.res == null
                       ? const SizedBox()
-                      : Text(
-                          "${_getController.getProfileById.value.res!.fistName} ${_getController.getProfileById.value.res!.lastName}",
-                          style: TextStyle(
-                            fontSize: w * 0.05,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        )),
-                  SizedBox(
-                    height: h * 0.01,
-                  ),
+                      : Text("${_getController.getProfileById.value.res!.fistName} ${_getController.getProfileById.value.res!.lastName}", style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500,),)),
+                  SizedBox(height: h * 0.01,),
                   Row(
                     children: [
                       Obx(() => _getController.getProfileById.value.res == null
                           ? const SizedBox()
-                          : Text(
-                              _getController
-                                      .getProfileById.value.res!.categoryName ??
-                                  '',
+                          : Text(_getController.getProfileById.value.res!.categoryName ?? '',
                               style: TextStyle(
                                 fontSize: w * 0.04,
                                 fontWeight: FontWeight.w500,
-                                //bold
                                 color: Colors.grey[500],
                               ),
                             )),
-                      SizedBox(
-                        width: w * 0.02,
-                      ),
+                      SizedBox(width: w * 0.02),
                       Obx(() => _getController.getProfileById.value.res == null
                           ? const SizedBox()
-                          : Text(
-                              "${_getController.getProfileById.value.res!.experience} yillik ish tajribasi",
+                          : Text("${_getController.getProfileById.value.res!.experience} yillik ish tajribasi",
                               style: TextStyle(
                                 fontSize: w * 0.04,
                                 fontWeight: FontWeight.w500,
@@ -443,24 +437,17 @@ class ProfessionsListDetails extends StatelessWidget {
                             )),
                     ],
                   ),
-                  SizedBox(
-                    height: h * 0.01,
-                  ),
+                  SizedBox(height: h * 0.01,),
                   Row(
                     children: [
-                      const Icon(
-                        Icons.phone_android,
+                      HeroIcon(
+                        HeroIcons.phone,
                         color: Colors.blue,
-                      ),
-                      SizedBox(
-                        width: w * 0.02,
-                      ),
+                        size: w * 0.05,),
+                      SizedBox(width: w * 0.02,),
                       Obx(() => _getController.getProfileById.value.res == null
                           ? const SizedBox()
-                          : Text(
-                              _getController
-                                      .getProfileById.value.res!.phoneNumber ??
-                                  '',
+                          : Text(_getController.getProfileById.value.res!.phoneNumber ?? '',
                               style: TextStyle(
                                 fontSize: w * 0.04,
                                 fontWeight: FontWeight.w500,
@@ -468,24 +455,17 @@ class ProfessionsListDetails extends StatelessWidget {
                             )),
                     ],
                   ),
-                  SizedBox(
-                    height: h * 0.01,
-                  ),
+                  SizedBox(height: h * 0.01,),
                   Row(
                     children: [
-                      const Icon(
-                        Icons.location_on,
+                      HeroIcon(
+                        HeroIcons.mapPin,
                         color: Colors.blue,
-                      ),
-                      SizedBox(
-                        width: w * 0.02,
-                      ),
+                        size: w * 0.05,),
+                      SizedBox(width: w * 0.02,),
                       Obx(() => _getController.getProfileById.value.res == null
                           ? const SizedBox()
-                          : Text(
-                              _getController
-                                      .getProfileById.value.res!.address ??
-                                  '',
+                          : Text(_getController.getProfileById.value.res!.address ?? '',
                               style: TextStyle(
                                 fontSize: w * 0.04,
                                 fontWeight: FontWeight.w500,
@@ -493,15 +473,13 @@ class ProfessionsListDetails extends StatelessWidget {
                             )),
                     ],
                   ),
-                  SizedBox(
-                    height: h * 0.01,
-                  ),
+                  SizedBox(height: h * 0.01),
                   Row(
                     children: [
-                      const Icon(
-                        Icons.work,
+                      HeroIcon(
+                        HeroIcons.briefcase,
                         color: Colors.blue,
-                      ),
+                        size: w * 0.05,),
                       SizedBox(
                         width: w * 0.02,
                       ),
@@ -535,13 +513,10 @@ class ProfessionsListDetails extends StatelessWidget {
                                     pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(3),
-                                    ),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3),),
                                     backgroundColor: Colors.blue,
                                   ),
-                                  child: Text(
-                                    'Bio',
+                                  child: Text('Bio',
                                     style: TextStyle(
                                       fontSize: w * 0.04,
                                       fontWeight: FontWeight.w500,
@@ -551,21 +526,14 @@ class ProfessionsListDetails extends StatelessWidget {
                                 )
                               : ElevatedButton(
                                   onPressed: () {
-                                    _getController.nextPagesUserDetails.value =
-                                        0;
-                                    pageController.animateToPage(0,
-                                        duration:
-                                            const Duration(milliseconds: 500),
-                                        curve: Curves.ease);
+                                    _getController.nextPagesUserDetails.value = 0;
+                                    pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(3),
-                                    ),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3),),
                                     backgroundColor: Colors.grey,
                                   ),
-                                  child: Text(
-                                    'Bio',
+                                  child: Text('Bio',
                                     style: TextStyle(
                                       fontSize: w * 0.04,
                                       fontWeight: FontWeight.w500,
@@ -582,21 +550,14 @@ class ProfessionsListDetails extends StatelessWidget {
                             () => _getController.nextPagesUserDetails.value == 1
                                 ? ElevatedButton(
                                     onPressed: () {
-                                      _getController
-                                          .nextPagesUserDetails.value = 1;
-                                      pageController.animateToPage(1,
-                                          duration:
-                                              const Duration(milliseconds: 500),
-                                          curve: Curves.ease);
+                                      _getController.nextPagesUserDetails.value = 1;
+                                      pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(3),
-                                      ),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3),),
                                       backgroundColor: Colors.blue,
                                     ),
-                                    child: Text(
-                                      'Ish jadvali',
+                                    child: Text('Ish jadvali',
                                       style: TextStyle(
                                         fontSize: w * 0.04,
                                         fontWeight: FontWeight.w500,
@@ -606,21 +567,14 @@ class ProfessionsListDetails extends StatelessWidget {
                                   )
                                 : ElevatedButton(
                                     onPressed: () {
-                                      _getController
-                                          .nextPagesUserDetails.value = 1;
-                                      pageController.animateToPage(1,
-                                          duration:
-                                              const Duration(milliseconds: 500),
-                                          curve: Curves.ease);
+                                      _getController.nextPagesUserDetails.value = 1;
+                                      pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(3),
-                                      ),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3),),
                                       backgroundColor: Colors.grey,
                                     ),
-                                    child: Text(
-                                      'Ish jadvali',
+                                    child: Text('Ish jadvali',
                                       style: TextStyle(
                                         fontSize: w * 0.04,
                                         fontWeight: FontWeight.w500,
@@ -636,21 +590,14 @@ class ProfessionsListDetails extends StatelessWidget {
                               ? SizedBox(
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      _getController
-                                          .nextPagesUserDetails.value = 2;
-                                      pageController.animateToPage(2,
-                                          duration:
-                                              const Duration(milliseconds: 500),
-                                          curve: Curves.ease);
+                                      _getController.nextPagesUserDetails.value = 2;
+                                      pageController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(3),
-                                      ),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3),),
                                       backgroundColor: Colors.blue,
                                     ),
-                                    child: Text(
-                                      'Booking',
+                                    child: Text('Booking',
                                       style: TextStyle(
                                         fontSize: w * 0.04,
                                         fontWeight: FontWeight.w500,
@@ -666,13 +613,10 @@ class ProfessionsListDetails extends StatelessWidget {
                                       pageController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(3),
-                                      ),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3),),
                                       backgroundColor: Colors.grey,
                                     ),
-                                    child: Text(
-                                      'Booking',
+                                    child: Text('Booking',
                                       style: TextStyle(
                                         fontSize: w * 0.04,
                                         fontWeight: FontWeight.w500,
@@ -685,37 +629,33 @@ class ProfessionsListDetails extends StatelessWidget {
                       Container(
                         alignment: Alignment.center,
                         width: w * 0.1,
+                        height: h * 0.05,
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(3),
+                        ),
                         child: IconButton(
                           color: Colors.white,
                           onPressed: () {
-                            ApiController()
-                                .follow(_getController.getProfileById.value.res!.id ?? 0)
-                                .then((value) => {
-                                      if (value.status == true)
-                                        {
-                                          Toast.showToast(context, 'Followed',
-                                              Colors.green, Colors.white),
-                                        }
-                                      else
-                                        {
-                                          Toast.showToast(context, 'Error',
-                                              Colors.red, Colors.white),
+                            ApiController().follow(_getController.getProfileById.value.res!.id ?? 0).then((value) => {
+                                      if (value.status == true){
+                                          Toast.showToast(context, 'Followed', Colors.green, Colors.white),
+                                        } else {
+                                          Toast.showToast(context, 'Error', Colors.red, Colors.white),
                                         }
                                     });
                           },
-                          icon: Icon(
+                          icon: HeroIcon(
+                            HeroIcons.userPlus,
+                            color: Colors.white,
                             size: w * 0.1,
-                            Icons.add_circle,
-                            color: Colors.blue,
-                          ),
+                          )
                         ),
                       ),
                       const Expanded(child: SizedBox()),
                     ],
                   ),
-                  SizedBox(
-                    height: h * 0.02,
-                  ),
+                  SizedBox(height: h * 0.02,),
                   SizedBox(
                     width: w,
                     height: h * 0.3,
@@ -743,10 +683,7 @@ class ProfessionsListDetails extends StatelessWidget {
                             () =>
                                 _getController.getProfileById.value.res == null
                                     ? const SizedBox()
-                                    : Text(
-                                        _getController.getProfileById.value.res!
-                                                .bio ??
-                                            '',
+                                    : Text(_getController.getProfileById.value.res!.bio ?? '',
                                         style: TextStyle(
                                           fontSize: w * 0.04,
                                           fontWeight: FontWeight.w500,
@@ -758,9 +695,7 @@ class ProfessionsListDetails extends StatelessWidget {
                           width: w,
                           height: h * 0.22,
                           child: Obx(
-                            () => _getController
-                                        .bookingBusinessGetList.value.res ==
-                                    null
+                            () => _getController.bookingBusinessGetList.value.res == null
                                 ? const SizedBox()
                                 : Container(
                                     width: w,
@@ -771,9 +706,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(3),
-                                      border: Border.all(
-                                        color: Colors.grey,
-                                      ),
+                                      border: Border.all(color: Colors.grey,),
                                     ),
                                     child: Column(
                                       children: [
@@ -781,11 +714,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                           height: h * 0.23,
                                           child: ListView.builder(
                                               shrinkWrap: true,
-                                              itemCount: _getController
-                                                  .bookingBusinessGetList
-                                                  .value
-                                                  .res!
-                                                  .length,
+                                              itemCount: _getController.bookingBusinessGetList.value.res!.length,
                                               itemBuilder: (context, index) {
                                                 return Column(
                                                   children: [
@@ -793,14 +722,10 @@ class ProfessionsListDetails extends StatelessWidget {
                                                       children: [
                                                         SizedBox(
                                                           width: w * 0.08,
-                                                          child: Text(
-                                                            '${index + 1}',
+                                                          child: Text('${index + 1}',
                                                             style: TextStyle(
-                                                              fontSize:
-                                                                  w * 0.04,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
+                                                              fontSize: w * 0.04,
+                                                              fontWeight: FontWeight.w500,
                                                             ),
                                                           ),
                                                         ),
@@ -811,11 +736,8 @@ class ProfessionsListDetails extends StatelessWidget {
                                                             ' ${_getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
                                                             '${_getController.bookingBusinessGetList.value.res![index].time!} keladi',
                                                             style: TextStyle(
-                                                              fontSize:
-                                                                  w * 0.04,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
+                                                              fontSize: w * 0.04,
+                                                              fontWeight: FontWeight.w500,
                                                             ),
                                                           ),
                                                         ),
@@ -835,8 +757,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                                 onPressed: () {
                                                   showBottomSheetList(context);
                                                 },
-                                                child: Text(
-                                                  'Barchasini ko\'rish',
+                                                child: Text('Barchasini ko\'rish',
                                                   style: TextStyle(
                                                     fontSize: w * 0.04,
                                                     fontWeight: FontWeight.w500,
@@ -860,9 +781,7 @@ class ProfessionsListDetails extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(3),
-                              border: Border.all(
-                                color: Colors.grey,
-                              ),
+                              border: Border.all(color: Colors.grey),
                             ),
                             child: Center(
                               child: ElevatedButton(
@@ -870,13 +789,10 @@ class ProfessionsListDetails extends StatelessWidget {
                                   showBottomSheet(context);
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3),),
                                   backgroundColor: Colors.blue,
                                 ),
-                                child: Text(
-                                  'Vaqtni tanlang',
+                                child: Text('Vaqtni tanlang',
                                   style: TextStyle(
                                     fontSize: w * 0.04,
                                     fontWeight: FontWeight.w500,

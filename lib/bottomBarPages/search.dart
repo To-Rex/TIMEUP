@@ -23,7 +23,7 @@ class SearchPage extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text('Нет'),
+            child: Text('No'),
           ),
           TextButton(
             onPressed: () {
@@ -33,7 +33,7 @@ class SearchPage extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => LoginPage()),
               );
             },
-            child: Text('Да'),
+            child: Text('Yes'),
           ),
         ],
       ),
