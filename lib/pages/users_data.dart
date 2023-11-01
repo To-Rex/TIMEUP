@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:time_up/api/api_controller.dart';
@@ -64,8 +65,7 @@ class LoginUserData extends StatelessWidget {
                 },
                   icon: Obx(() => getController.image.value == '' ? Image.asset('assets/images/user.png') : CircleAvatar(backgroundImage: FileImage(File(getController.image.value)),radius: 50,),),
                 ),
-                Text(
-                  'Upload image',
+                Text('Upload image',
                   style: TextStyle(
                     fontSize: w * 0.05,
                     fontWeight: FontWeight.bold,
@@ -102,12 +102,12 @@ class LoginUserData extends StatelessWidget {
                           showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
-                            firstDate: DateTime(2000),
+                            firstDate: DateTime(1900),
                             lastDate: DateTime(2025),
                           ).then((value) => _dateController.text = '${value!.day}/${value.month}/${value.year}');
                         },
-                        child: Icon(
-                          Icons.calendar_today,
+                        child: HeroIcon(
+                          HeroIcons.calendar,
                           color: Colors.blue,
                           size: w * 0.05 > 20 ? 20 : w * 0.05,
                         ),
@@ -141,11 +141,9 @@ class LoginUserData extends StatelessWidget {
                   child: Obx(() => getController.getRegion.value.res == null ? const Center(child: CircularProgressIndicator(),) :
                       DropdownButtonHideUnderline(
                     child: DropdownButton(
-                      value: getController.getRegion.value
-                          .res![getController.regionIndex.value],
+                      value: getController.getRegion.value.res![getController.regionIndex.value],
                       onChanged: (String? newValue) {
-                        getController.changeRegionIndex(
-                            getController.getRegion.value.res!.indexOf(newValue!));
+                        getController.changeRegionIndex(getController.getRegion.value.res!.indexOf(newValue!));
                       },
                       items: getController.getRegion.value.res!.map<DropdownMenuItem<String>>(
                         (String value) {
