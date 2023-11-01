@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
 import '../pages/login_page.dart';
+import '../pages/professions_list_details.dart';
 import '../res/getController.dart';
 
 class HomePage extends StatelessWidget {
@@ -102,41 +103,38 @@ class HomePage extends StatelessWidget {
                   return Column(
                     children: [
                       if (_getController.followList.value.res?[index].photoUrl != null)
-                        Row(
-                          children: [
-                            //circle avatar and name
-                            SizedBox(
-                              width: w * 0.9,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: w * 0.02,
-                                  ),
-                                  SizedBox(
-                                    width: w * 0.11,
-                                    height: w * 0.11,
-                                    child: CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                          'http://${_getController.followList.value.res?[index].photoUrl}'),
+                        InkWell(
+                          onTap: (){
+                            ApiController().profileById(_getController.followList.value.res?[index].id ?? 0).then((value) => {_getController.changeProfileById(value),});
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: w * 0.9,
+                                child: Row(
+                                  children: [
+                                    SizedBox(width: w * 0.02,),
+                                    SizedBox(
+                                      width: w * 0.11,
+                                      height: w * 0.11,
+                                      child: CircleAvatar(backgroundImage: NetworkImage('http://${_getController.followList.value.res?[index].photoUrl}'),),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: w * 0.02,
-                                  ),
-                                  SizedBox(
-                                    width: w * 0.6,
-                                    child: Text(
-                                      '${_getController.followList.value.res?[index].lastName} ${_getController.followList.value.res?[index].fistName}',
-                                      style: TextStyle(
-                                        fontSize: w * 0.05,
-                                        fontWeight: FontWeight.w500,
+                                    SizedBox(width: w * 0.02,),
+                                    SizedBox(
+                                      width: w * 0.6,
+                                      child: Text('${_getController.followList.value.res?[index].lastName} ${_getController.followList.value.res?[index].fistName}',
+                                        style: TextStyle(
+                                          fontSize: w * 0.05,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       SizedBox(height: h * 0.02,),
                       if (_getController.followList.value.res?[index].photoUrl != null)
