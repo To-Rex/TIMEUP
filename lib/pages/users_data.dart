@@ -63,7 +63,8 @@ class LoginUserData extends StatelessWidget {
                 IconButton(onPressed: (){
                   _pickImage(ImageSource.gallery);
                 },
-                  icon: Obx(() => getController.image.value == '' ? Image.asset('assets/images/user.png') : CircleAvatar(backgroundImage: FileImage(File(getController.image.value)),radius: 50,),),
+                  icon: Obx(() => getController.image.value == '' ? HeroIcon(HeroIcons.userCircle,color: Colors.blue,size: w * 0.2 > 100 ? 100 : w * 0.2,) :
+                  CircleAvatar(backgroundImage: FileImage(File(getController.image.value)),radius: 50,),),
                 ),
                 Text('Upload image',
                   style: TextStyle(
