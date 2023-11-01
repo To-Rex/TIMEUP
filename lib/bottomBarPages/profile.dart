@@ -103,7 +103,7 @@ class ProfilePage extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
                               )),
-                          const Icon(Icons.check, color: Colors.white),
+                          const HeroIcon(HeroIcons.check, color: Colors.white)
                         ],
                       )),
                 )
@@ -180,7 +180,7 @@ class ProfilePage extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
                               )),
-                          const Icon(Icons.check, color: Colors.white),
+                          const HeroIcon(HeroIcons.check, color: Colors.white)
                         ],
                       )),
                 )
@@ -663,13 +663,8 @@ class ProfilePage extends StatelessWidget {
                                                             height: h * 0.205,
                                                             child: ListView
                                                                 .builder(
-                                                                    shrinkWrap:
-                                                                        true,
-                                                                    itemCount: getController
-                                                                        .bookingBusinessGetList
-                                                                        .value
-                                                                        .res!
-                                                                        .length,
+                                                                    shrinkWrap: true,
+                                                                    itemCount: getController.bookingBusinessGetList.value.res!.length,
                                                                     itemBuilder:
                                                                         (context,
                                                                             index) {
