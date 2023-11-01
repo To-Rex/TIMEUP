@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
 import '../pages/login_page.dart';
 import '../res/getController.dart';
@@ -132,12 +133,7 @@ class HistoryPage extends StatelessWidget {
                                 width: w * 0.45,
                                 child: TextButton(
                                   onPressed: () {
-                                    pageController.animateToPage(
-                                      1,
-                                      duration:
-                                          const Duration(milliseconds: 500),
-                                      curve: Curves.ease,
-                                    );
+                                    pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease,);
                                   },
                                   child: const Text(
                                     'Sizning Mijozlaringiz',
@@ -178,37 +174,13 @@ class HistoryPage extends StatelessWidget {
                         context: context,
                         initialDate: _dateController.text == ''
                             ? DateTime.now()
-                            : DateTime.parse(
-                                '${_dateController.text.substring(6, 10)}-${_dateController.text.substring(3, 5)}-${_dateController.text.substring(0, 2)}'),
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime(2025),
-                      ).then((value) => {
-                            _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
-                            if (_getController.meUsers.value.res?.business ==
-                                null)
-                              {
-                                ApiController()
-                                    .bookingClientGetList(_dateController.text)
-                                    .then((value) => _getController
-                                        .changeBookingBusinessGetList(value))
-                              }
-                            else
-                              {
-                                if (_getController.nextPagesUserDetails.value ==
-                                    1)
-                                  {
-                                    ApiController()
-                                        .bookingBusinessGetList(
-                                            _getController
-                                                .bookingBusinessGetListByID
-                                                .value,
-                                            _dateController.text)
-                                        .then((value) => _getController
-                                            .changeBookingBusinessGetList(
-                                                value)),
-                                  }
-                                else
-                                  {
+                            : DateTime.parse('${_dateController.text.substring(6, 10)}-${_dateController.text.substring(3, 5)}-${_dateController.text.substring(0, 2)}'), firstDate: DateTime(1900), lastDate: DateTime(2025),).then((value) => {_dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
+                            if (_getController.meUsers.value.res?.business == null){
+                                ApiController().bookingClientGetList(_dateController.text).then((value) => _getController.changeBookingBusinessGetList(value))
+                              } else {
+                                if (_getController.nextPagesUserDetails.value == 1){
+                                    ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, _dateController.text).then((value) => _getController.changeBookingBusinessGetList(value)),
+                                  } else {
                                     ApiController()
                                         .bookingClientGetList(
                                             _dateController.text)
@@ -219,9 +191,9 @@ class HistoryPage extends StatelessWidget {
                               }
                           });
                     },
-                    child: const Icon(
-                      Icons.calendar_today,
-                      color: Colors.grey,
+                    child: const HeroIcon(
+                      HeroIcons.calendar,
+                      color: Colors.black,
                     ),
                   ),
                   hintText: 'MM / DD / YYYY',
@@ -282,81 +254,51 @@ class HistoryPage extends StatelessWidget {
                                 : SizedBox(
                                     height: h * 0.68,
                                     child: ListView.builder(
-                                      itemCount: _getController
-                                          .bookingBusinessGetList1
-                                          .value
-                                          .res!
-                                          .length,
+                                      itemCount: _getController.bookingBusinessGetList1.value.res!.length,
                                       itemBuilder: (context, index) {
                                         return Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceAround,
                                           children: [
-                                            _getController
-                                                        .bookingBusinessGetList1
-                                                        .value
-                                                        .res![index]
-                                                        .photoUrl ==
-                                                    null
-                                                ? const CircleAvatar(
-                                                    radius: 30,
-                                                    backgroundImage: AssetImage(
+                                            _getController.bookingBusinessGetList1.value.res![index].photoUrl == null
+                                                ? CircleAvatar(
+                                                    radius: w * 0.08,
+                                                    backgroundImage: const AssetImage(
                                                       'assets/images/doctor.png',
                                                     ),
                                                   )
-                                                : CircleAvatar(
-                                                    radius: 30,
-                                                    backgroundImage:
-                                                        NetworkImage(
-                                                      //"${ApiController().url.substring(0, ApiController().url.length - 1)}${_getController.bookingBusinessGetList1.value.res![index].photoUrl!}",
-                                                      "http://${_getController.bookingBusinessGetList1.value.res![index].photoUrl!}",
-                                                    ),
-                                                  ),
+                                                : CircleAvatar(radius: w * 0.08, backgroundImage: NetworkImage("http://${_getController.bookingBusinessGetList1.value.res![index].photoUrl!}",),),
                                             SizedBox(
                                               width: w * 0.6,
                                               child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                    _getController
-                                                        .bookingBusinessGetList1
-                                                        .value
-                                                        .res![index]
-                                                        .userName!,
-                                                    style: const TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                                  Text(_getController.bookingBusinessGetList1.value.res![index].userName!,
+                                                    style: TextStyle(
+                                                      fontSize: w * 0.04,
+                                                      fontWeight: FontWeight.w500,
                                                       color: Colors.black,
                                                     ),
                                                   ),
                                                   //User profession
                                                   Text(
                                                     '${_getController.bookingBusinessGetList1.value.res![index].fistName!} ${_getController.bookingBusinessGetList1.value.res![index].lastName!}',
-                                                    style: const TextStyle(
-                                                      fontSize: 13,
-                                                      fontWeight:
-                                                          FontWeight.w400,
+                                                    style: TextStyle(
+                                                      fontSize: w * 0.04,
+                                                      fontWeight: FontWeight.w400,
                                                     ),
                                                   ),
                                                   Row(
                                                     children: [
-                                                      const Icon(
-                                                        Icons.phone,
-                                                        size: 15,
+                                                      HeroIcon(
+                                                        HeroIcons.phone,
+                                                        size: w * 0.04,
+                                                        color: Colors.blue,
                                                       ),
-                                                      const SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      Text(
-                                                        _getController
-                                                            .bookingBusinessGetList1
-                                                            .value
-                                                            .res![index]
-                                                            .phoneNumber!,
-                                                        style: const TextStyle(
-                                                          fontSize: 13,
+                                                      SizedBox(width: w * 0.01),
+                                                      Text(_getController.bookingBusinessGetList1.value.res![index].phoneNumber!,
+                                                        style: TextStyle(
+                                                          fontSize: w * 0.04,
                                                           fontWeight:
                                                               FontWeight.w400,
                                                         ),
@@ -364,8 +306,8 @@ class HistoryPage extends StatelessWidget {
                                                     ],
                                                   ),
                                                   Text('Sizning navbatingiz: ${_getController.bookingBusinessGetList1.value.res![index].date!} ${_getController.bookingBusinessGetList1.value.res![index].time!}',
-                                                    style: const TextStyle(
-                                                      fontSize: 11,
+                                                    style: TextStyle(
+                                                      fontSize: w * 0.03,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                     ),
@@ -393,30 +335,21 @@ class HistoryPage extends StatelessWidget {
                                 : SizedBox(
                                     height: h * 0.68,
                                     child: ListView.builder(
-                                      itemCount: _getController
-                                          .bookingBusinessGetList
-                                          .value
-                                          .res!
-                                          .length,
+                                      itemCount: _getController.bookingBusinessGetList.value.res!.length,
                                       itemBuilder: (context, index) {
                                         return Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceAround,
                                           children: [
-                                            _getController
-                                                        .bookingBusinessGetList
-                                                        .value
-                                                        .res![index]
-                                                        .photoUrl ==
-                                                    null
-                                                ? const CircleAvatar(
-                                                    radius: 30,
-                                                    backgroundImage: AssetImage(
+                                            _getController.bookingBusinessGetList.value.res![index].photoUrl == null
+                                                ? CircleAvatar(
+                                                    radius: w * 0.08,
+                                                    backgroundImage: const AssetImage(
                                                       'assets/images/doctor.png',
                                                     ),
                                                   )
                                                 : CircleAvatar(
-                                                    radius: 30,
+                                                    radius: w * 0.08,
                                                     backgroundImage:
                                                         NetworkImage(
                                                       //"${ApiController().url.substring(0, ApiController().url.length - 1)}${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",
@@ -429,14 +362,9 @@ class HistoryPage extends StatelessWidget {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                    _getController
-                                                        .bookingBusinessGetList
-                                                        .value
-                                                        .res![index]
-                                                        .userName!,
-                                                    style: const TextStyle(
-                                                      fontSize: 15,
+                                                  Text(_getController.bookingBusinessGetList.value.res![index].userName!,
+                                                    style: TextStyle(
+                                                      fontSize: w * 0.04,
                                                       fontWeight:
                                                           FontWeight.w500,
                                                       color: Colors.black,
@@ -446,29 +374,25 @@ class HistoryPage extends StatelessWidget {
                                                   Text(
                                                     '${_getController.bookingBusinessGetList.value.res![index].fistName!} '
                                                     '${_getController.bookingBusinessGetList.value.res![index].lastName!}',
-                                                    style: const TextStyle(
-                                                      fontSize: 13,
+                                                    style: TextStyle(
+                                                      fontSize: w * 0.04,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                     ),
                                                   ),
                                                   Row(
                                                     children: [
-                                                      const Icon(
-                                                        Icons.phone,
-                                                        size: 15,
+                                                      HeroIcon(
+                                                        HeroIcons.phone,
+                                                        size: w * 0.04,
+                                                        color: Colors.blue,
                                                       ),
-                                                      const SizedBox(
-                                                        width: 5,
+                                                      SizedBox(
+                                                        width: w * 0.01,
                                                       ),
-                                                      Text(
-                                                        _getController
-                                                            .bookingBusinessGetList
-                                                            .value
-                                                            .res![index]
-                                                            .phoneNumber!,
-                                                        style: const TextStyle(
-                                                          fontSize: 13,
+                                                      Text(_getController.bookingBusinessGetList.value.res![index].phoneNumber!,
+                                                        style: TextStyle(
+                                                          fontSize: w * 0.04,
                                                           fontWeight:
                                                               FontWeight.w400,
                                                         ),
@@ -477,8 +401,8 @@ class HistoryPage extends StatelessWidget {
                                                   ),
                                                   Text(
                                                     'Mijozingiz navbati: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}',
-                                                    style: const TextStyle(
-                                                      fontSize: 11,
+                                                    style: TextStyle(
+                                                      fontSize: w * 0.03,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                     ),
@@ -486,8 +410,8 @@ class HistoryPage extends StatelessWidget {
                                                   const Divider(
                                                     color: Colors.grey,
                                                   ),
-                                                  const SizedBox(
-                                                    height: 5,
+                                                  SizedBox(
+                                                    height: w * 0.01,
                                                   )
                                                 ],
                                               ),
@@ -521,77 +445,58 @@ class HistoryPage extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      _getController.bookingBusinessGetList
-                                                  .value.res![index].photoUrl ==
-                                              null
-                                          ? const CircleAvatar(
-                                              radius: 30,
-                                              backgroundImage: AssetImage(
-                                                'assets/images/doctor.png',
-                                              ),
-                                            )
-                                          : CircleAvatar(
-                                              radius: 30,
-                                              backgroundImage: NetworkImage(
-                                                //"${ApiController().url.substring(0, ApiController().url.length - 1)}${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",
-                                                "http://${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",
-                                              ),
-                                            ),
+                                      _getController.bookingBusinessGetList.value.res![index].photoUrl == null
+                                          ? CircleAvatar(radius: w * 0.08, backgroundImage: const AssetImage('assets/images/doctor.png',),)
+                                          : CircleAvatar(radius: w * 0.08, backgroundImage: NetworkImage("http://${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",),),
                                       SizedBox(
                                         width: w * 0.6,
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              _getController
-                                                  .bookingBusinessGetList
-                                                  .value
-                                                  .res![index]
-                                                  .userName!,
-                                              style: const TextStyle(
-                                                fontSize: 15,
+                                            Text(_getController.bookingBusinessGetList.value.res![index].userName!,
+                                              style: TextStyle(
+                                                fontSize: w * 0.04,
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.black,
                                               ),
                                             ),
-                                            //User profession
                                             Text(
                                               '${_getController.bookingBusinessGetList.value.res![index].fistName!} ${_getController.bookingBusinessGetList.value.res![index].lastName!}',
-                                              style: const TextStyle(
-                                                fontSize: 13,
+                                              style: TextStyle(
+                                                fontSize: w * 0.04,
                                                 fontWeight: FontWeight.w400,
                                               ),
                                             ),
                                             Row(
                                               children: [
-                                                const Icon(
-                                                  Icons.phone,
-                                                  size: 15,
+                                                HeroIcon(
+                                                  HeroIcons.phone,
+                                                  size: w * 0.04,
+                                                  color: Colors.blue,
                                                 ),
-                                                const SizedBox(
-                                                  width: 5,
+                                                SizedBox(
+                                                  width: w * 0.01,
                                                 ),
                                                 Text(
                                                   _getController.bookingBusinessGetList.value.res![index].phoneNumber!,
-                                                  style: const TextStyle(
-                                                    fontSize: 13,
+                                                  style: TextStyle(
+                                                    fontSize: w * 0.04,
                                                     fontWeight: FontWeight.w400,
                                                   ),
                                                 ),
                                               ],
                                             ),
                                             Text('Sizning navbatingiz: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}',
-                                              style: const TextStyle(
-                                                fontSize: 11,
+                                              style: TextStyle(
+                                                fontSize: w * 0.03,
                                                 fontWeight: FontWeight.w400,
                                               ),
                                             ),
                                             const Divider(
                                               color: Colors.grey,
                                             ),
-                                            const SizedBox(
-                                              height: 5,
+                                            SizedBox(
+                                              height: w * 0.01,
                                             )
                                           ],
                                         ),
