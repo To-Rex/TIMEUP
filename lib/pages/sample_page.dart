@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:time_up/bottomBarPages/home.dart';
 import '../bottomBarPages/history.dart';
 import '../bottomBarPages/profile.dart';
@@ -72,60 +73,53 @@ class SamplePage extends StatelessWidget {
           showSelectedLabels: false,
           selectedFontSize: 0,
           type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Image(
-                image: AssetImage('assets/images/home_icon.png'),
-                width: 25,
-                height: 25,
+              icon: HeroIcon(
+                HeroIcons.home,
+                size: w * 0.07,
               ),
               label: 'Home',
-              activeIcon: Image(
-                image: AssetImage('assets/images/home_icon.png'),
-                width: 25,
-                height: 25,
+
+              activeIcon: HeroIcon(
+                HeroIcons.home,
+                size: w * 0.07,
                 color: Colors.blue,
               ),
             ),
             BottomNavigationBarItem(
-              icon: Image(
-                image: AssetImage('assets/images/search_icon.png'),
-                width: 25,
-                height: 25,
+              icon: HeroIcon(
+                HeroIcons.magnifyingGlass,
+                size: w * 0.07,
               ),
               label: 'Search',
-              activeIcon: Image(
-                image: AssetImage('assets/images/search_icon.png'),
-                width: 25,
-                height: 25,
+              activeIcon: HeroIcon(
+                HeroIcons.magnifyingGlass,
+                size: w * 0.07,
                 color: Colors.blue,
               ),
             ),
             BottomNavigationBarItem(
-              icon: Image(
-                image: AssetImage('assets/images/histoy_icon.png'),
-                width: 25,
-                height: 25,
+              icon: HeroIcon(
+                HeroIcons.clock,
+                size: w * 0.07,
               ),
               label: 'History',
-              activeIcon: Image(
-                image: AssetImage('assets/images/histoy_icon.png'),
-                width: 25,
-                height: 25,
+              activeIcon: HeroIcon(
+                HeroIcons.clock,
+                size: w * 0.07,
                 color: Colors.blue,
               ),
             ),
             BottomNavigationBarItem(
-              icon: Image(
-                image: AssetImage('assets/images/user_icon.png'),
-                width: 25,
-                height: 25,
+              icon: HeroIcon(
+                HeroIcons.userCircle,
+                size: w * 0.07,
               ),
               label: 'Profile',
-              activeIcon: Image(
-                image: AssetImage('assets/images/user_icon.png'),
-                width: 25,
-                height: 25,
+              activeIcon: HeroIcon(
+                HeroIcons.userCircle,
+                size: w * 0.07,
                 color: Colors.blue,
               ),
             ),
