@@ -65,7 +65,6 @@ class HomePage extends StatelessWidget {
                           FlutterPhoneDirectCaller.callNumber(text);
                           Navigator.pop(context);
                         }else if(index == 2){
-
                           Navigator.pop(context);
                         }else{
                           Navigator.pop(context);
