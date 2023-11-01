@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TextEditButton extends StatelessWidget {
   String text;
   late Color color;
-  late IconData icon;
+  late String icon;
 
   TextEditButton({
     Key? key,
@@ -18,13 +18,18 @@ class TextEditButton extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
     return Container(
       width: w * 0.9,
+      height: h * 0.032,
       margin: const EdgeInsets.only(top: 5),
       child: Row(
         children: [
-          Icon(
-            icon,
-            color: color,
-            size: w * 0.05,
+          SizedBox(
+            width: w * 0.06,
+            child: Image(
+              image: AssetImage(icon),
+              width: w * 0.05,
+              height: h * 0.05,
+              fit: BoxFit.fitWidth,
+            ),
           ),
           SizedBox(
             width: w * 0.01,
