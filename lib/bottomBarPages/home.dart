@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
 import '../pages/login_page.dart';
 import '../res/getController.dart';
@@ -144,24 +145,50 @@ class HomePage extends StatelessWidget {
                       SizedBox(width: w * 0.95,
                         child:Row(
                           children: [
-                            IconButton(
-                                onPressed: (){
-                                  showDialogs(context, _getController.followList.value.res?[index].phoneNumber ?? '','You will be charged for this call');
-                                },
-                                icon: Icon(Icons.phone, color: Colors.blue, size: w * 0.08,)
+                            SizedBox(
+                              height: w * 0.07,
+                              width: w * 0.07,
+                              child: IconButton(
+                                  hoverColor: Colors.blue,
+                                  iconSize: w * 0.07,
+                                  padding: EdgeInsets.zero,
+                                  onPressed: (){
+                                    showDialogs(context, _getController.followList.value.res?[index].phoneNumber ?? '','You will be charged for this call');
+                                  },
+                                  icon: HeroIcon(HeroIcons.phone, color: Colors.blue, size: w * 0.07,)
+                              ),
                             ),
-                            IconButton(
-                                onPressed: (){
-                                  showDialogs(context, 'Manzil',_getController.followList.value.res?[index].officeAddress ?? '');
-                                },
-                                icon: Icon(Icons.location_on, color: Colors.blue, size: w * 0.08,)
+                            SizedBox(
+                              width: w * 0.01,
                             ),
-                            IconButton(
-                                onPressed: (){
-                                  showDialogs(context,_getController.followList.value.res?[index].categoryName ?? '',_getController.followList.value.res?[index].bio ?? '');
-                                },
-                                //job
-                                icon: Icon(Icons.work, color: Colors.blue, size: w * 0.08,)
+                            SizedBox(
+                              height: w * 0.07,
+                              width: w * 0.07,
+                              child: IconButton(
+                                  hoverColor: Colors.blue,
+                                  iconSize: w * 0.07,
+                                  padding: EdgeInsets.zero,
+                                  onPressed: (){
+                                    showDialogs(context, 'Manzil',_getController.followList.value.res?[index].officeAddress ?? '');
+                                  },
+                                  icon: HeroIcon(HeroIcons.mapPin, color: Colors.blue, size: w * 0.07,)
+                              ),
+                            ),
+                            SizedBox(
+                              width: w * 0.01,
+                            ),
+                            SizedBox(
+                              height: w * 0.07,
+                              width: w * 0.07,
+                              child: IconButton(
+                                  hoverColor: Colors.blue,
+                                  iconSize: w * 0.07,
+                                  padding: EdgeInsets.zero,
+                                  onPressed: (){
+                                    showDialogs(context,_getController.followList.value.res?[index].categoryName ?? '',_getController.followList.value.res?[index].bio ?? '');
+                                  },
+                                  icon: HeroIcon(HeroIcons.briefcase, color: Colors.blue, size: w * 0.07,)
+                              ),
                             ),
                           ],
                         ),
