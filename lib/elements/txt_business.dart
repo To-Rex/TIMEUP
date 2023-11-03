@@ -24,11 +24,12 @@ class TextEditButton extends StatelessWidget {
         children: [
           SizedBox(
             width: w * 0.06,
+            height: h * 0.05,
             child: Image(
               image: AssetImage(icon),
               width: w * 0.05,
               height: h * 0.05,
-              fit: BoxFit.fitWidth,
+              fit: BoxFit.fill,
             ),
           ),
           SizedBox(

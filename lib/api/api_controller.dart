@@ -19,11 +19,8 @@ import '../models/verify_sms.dart';
 import '../models/me_user.dart';
 
 class ApiController extends GetxController {
-  var url = 'http://16.16.182.36:443/api/v1/';
-  //var url = 'https://timeup.jprq.site/api/v1/';
-
-  //var url = 'http://timeup.jprq.live:80/api/v1/';
-  //var url = 'https://timeup-production.up.railway.app/api/v1/';
+  //var url = 'http://16.16.182.36:443/api/v1/';
+  var url = 'https://timeup.dizinfeksiya.uz/api/v1/';
   var smsUrl = 'sms/send';
   var lastSmsUrl = 'sms/last-sent-sms';
   var verifyUrl = 'sms/verify';

@@ -101,12 +101,13 @@ class SamplePage extends StatelessWidget {
             ),
             BottomNavigationBarItem(
               icon: HeroIcon(
-                HeroIcons.clock,
+                HeroIcons.bell,
                 size: w * 0.07,
               ),
               label: 'History',
+              //notification icon
               activeIcon: HeroIcon(
-                HeroIcons.clock,
+                HeroIcons.bell,
                 size: w * 0.07,
                 color: Colors.blue,
               ),

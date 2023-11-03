@@ -40,16 +40,15 @@ class HistoryPage extends StatelessWidget {
             AppBar(
               backgroundColor: Colors.white,
               elevation: 0,
-              title: Obx(() => _getController.meUsers.value.res?.business ==
-                      null
+              title: Obx(() => _getController.meUsers.value.res?.business == null
                   ? SizedBox(
-                      height: h * 0.045,
+                      height: h * 0.05,
                       child: TextButton(
                         onPressed: () {},
-                        child: const Text(
+                        child: Text(
                           'Eslatma',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: w * 0.04,
                             fontWeight: FontWeight.w500,
                             color: Colors.blue,
                           ),
@@ -64,17 +63,15 @@ class HistoryPage extends StatelessWidget {
                                 width: w * 0.45,
                                 child: TextButton(
                                   onPressed: () {
-                                    pageController.animateToPage(
-                                      0,
-                                      duration:
-                                          const Duration(milliseconds: 500),
+                                    pageController.animateToPage(0,
+                                      duration: const Duration(milliseconds: 500),
                                       curve: Curves.ease,
                                     );
                                   },
-                                  child: const Text(
+                                  child: Text(
                                     'Eslatma',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: w * 0.04,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.blue,
                                     ),
@@ -85,17 +82,16 @@ class HistoryPage extends StatelessWidget {
                                 width: w * 0.45,
                                 child: TextButton(
                                   onPressed: () {
-                                    pageController.animateToPage(
-                                      0,
+                                    pageController.animateToPage(0,
                                       duration:
                                           const Duration(milliseconds: 500),
                                       curve: Curves.ease,
                                     );
                                   },
-                                  child: const Text(
+                                  child: Text(
                                     'Eslatma',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: w * 0.04,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.black,
                                     ),
@@ -112,17 +108,12 @@ class HistoryPage extends StatelessWidget {
                                 width: w * 0.45,
                                 child: TextButton(
                                   onPressed: () {
-                                    pageController.animateToPage(
-                                      1,
-                                      duration:
-                                          const Duration(milliseconds: 500),
-                                      curve: Curves.ease,
-                                    );
+                                    pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease,);
                                   },
-                                  child: const Text(
+                                  child: Text(
                                     'Sizning Mijozlaringiz',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: w * 0.04,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.blue,
                                     ),
@@ -135,10 +126,10 @@ class HistoryPage extends StatelessWidget {
                                   onPressed: () {
                                     pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease,);
                                   },
-                                  child: const Text(
+                                  child: Text(
                                     'Sizning Mijozlaringiz',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: w * 0.04,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.black,
                                     ),
@@ -197,8 +188,8 @@ class HistoryPage extends StatelessWidget {
                     ),
                   ),
                   hintText: 'MM / DD / YYYY',
-                  hintStyle: const TextStyle(
-                    fontSize: 16,
+                  hintStyle: TextStyle(
+                    fontSize: w * 0.04,
                     fontWeight: FontWeight.w500,
                     color: Colors.grey,
                   ),

@@ -465,16 +465,14 @@ class ProfilePage extends StatelessWidget {
                                     ))
                                 : const SizedBox()),
                         TextEditButton(
-                          text:
-                              '${getController.meUsers.value.res?.phoneNumber}',
+                          text: '${getController.meUsers.value.res?.phoneNumber}',
                           color: Colors.blue,
                           icon: 'assets/images/user_call.png',
                         ),
                         Obx(() =>
                             getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
-                                    text:
-                                        '${getController.meUsers.value.res?.business?.officeAddress}',
+                                    text: '${getController.meUsers.value.res?.business?.officeAddress}',
                                     color: Colors.blue,
                                     icon: 'assets/images/user_location.png',
                                   )
