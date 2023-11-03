@@ -24,8 +24,7 @@ class ProfessionsList extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          'Kasblar royhati',
+        Text('Kasblar royhati',
           style: TextStyle(
             fontSize: w * 0.05,
             fontWeight: FontWeight.w500,
@@ -34,7 +33,8 @@ class ProfessionsList extends StatelessWidget {
         SizedBox(height: h * 0.02),
         Obx(() => _getController.category.value.res == null
             ? const Center(child: Text('No data'))
-            : SizedBox(
+            : Obx(() => _getController.category.value.res!.isNotEmpty
+            ?SizedBox(
           width: w,
           height: h * 0.74,
           child: ListView.builder(
@@ -66,7 +66,9 @@ class ProfessionsList extends StatelessWidget {
               );
             },
           ),
-        ),
+        )
+            : const Center(child: Text('No data'))
+        )
         ),
       ],
     );
