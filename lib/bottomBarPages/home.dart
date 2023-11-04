@@ -131,7 +131,7 @@ class HomePage extends StatelessWidget {
                               SizedBox(
                                 width: w * 0.11,
                                 height: w * 0.11,
-                                child: CircleAvatar(backgroundImage: NetworkImage('http://${_getController.followList.value.res?[index].photoUrl}'),),
+                                child: CircleAvatar(backgroundImage: NetworkImage('${_getController.followList.value.res?[index].photoUrl}'),),
                               ),
                               SizedBox(width: w * 0.02,),
                               SizedBox(
@@ -151,7 +151,7 @@ class HomePage extends StatelessWidget {
                   ),
                 SizedBox(height: h * 0.02,),
                 if (_getController.followList.value.res?[index].photoUrl != null)
-                  SizedBox(width: w , height: h * 0.33, child: Image.network('http://${_getController.followList.value.res?[index].photoUrl}', fit: BoxFit.cover,),),
+                  SizedBox(width: w , height: h * 0.33, child: Image.network('${_getController.followList.value.res?[index].photoUrl}', fit: BoxFit.cover,),),
                 SizedBox(height: h * 0.02,),
                 SizedBox(width: w * 0.95,
                   child:Row(

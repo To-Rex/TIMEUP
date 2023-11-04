@@ -204,7 +204,7 @@ class ProfessionsListUsers extends StatelessWidget {
                                   width: w * 0.15,
                                   height: w * 0.15,
                                   child: CircleAvatar(
-                                    backgroundImage: NetworkImage("http://${_getController.getByCategory.value.res![index].photoUrl}"),
+                                    backgroundImage: NetworkImage("${_getController.getByCategory.value.res![index].photoUrl}"),
                                   ),
                                 ),
                               SizedBox(width: w * 0.05),

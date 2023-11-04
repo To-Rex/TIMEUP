@@ -258,7 +258,7 @@ class HistoryPage extends StatelessWidget {
                                                       'assets/images/doctor.png',
                                                     ),
                                                   )
-                                                : CircleAvatar(radius: w * 0.08, backgroundImage: NetworkImage("http://${_getController.bookingBusinessGetList1.value.res![index].photoUrl!}",),),
+                                                : CircleAvatar(radius: w * 0.08, backgroundImage: NetworkImage("${_getController.bookingBusinessGetList1.value.res![index].photoUrl!}",),),
                                             SizedBox(
                                               width: w * 0.6,
                                               child: Column(
@@ -344,7 +344,7 @@ class HistoryPage extends StatelessWidget {
                                                     backgroundImage:
                                                         NetworkImage(
                                                       //"${ApiController().url.substring(0, ApiController().url.length - 1)}${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",
-                                                      "http://${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",
+                                                      "${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",
                                                     ),
                                                   ),
                                             SizedBox(
@@ -438,7 +438,7 @@ class HistoryPage extends StatelessWidget {
                                     children: [
                                       _getController.bookingBusinessGetList.value.res![index].photoUrl == null
                                           ? CircleAvatar(radius: w * 0.08, backgroundImage: const AssetImage('assets/images/doctor.png',),)
-                                          : CircleAvatar(radius: w * 0.08, backgroundImage: NetworkImage("http://${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",),),
+                                          : CircleAvatar(radius: w * 0.08, backgroundImage: NetworkImage("${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",),),
                                       SizedBox(
                                         width: w * 0.6,
                                         child: Column(

@@ -419,7 +419,7 @@ class ProfilePage extends StatelessWidget {
                               radius: w * 0.12,
                               foregroundColor: Colors.blue,
                               backgroundImage: NetworkImage(
-                                  'http://${getController.meUsers.value.res?.photoUrl}'),
+                                  '${getController.meUsers.value.res?.photoUrl}'),
                             ),
                             const Expanded(child: SizedBox()),
                           ],

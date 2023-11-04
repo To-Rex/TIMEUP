@@ -400,7 +400,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                 CircleAvatar(
                                   radius: w * 0.18,
                                   backgroundImage: NetworkImage(
-                                    "http://${_getController.getProfileById.value.res!.photoUrl}",
+                                    "${_getController.getProfileById.value.res!.photoUrl}",
                                   ),
                                 ),
                               ],

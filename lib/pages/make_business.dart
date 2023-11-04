@@ -125,7 +125,7 @@ class MakeBusinessPage extends StatelessWidget {
                                   radius: w * 0.12,
                                   foregroundColor: Colors.blue,
                                   backgroundImage: NetworkImage(
-                                      'http://${getController.meUsers.value.res?.photoUrl}'),
+                                      '${getController.meUsers.value.res?.photoUrl}'),
                                 )
                               : CircleAvatar(
                                   radius: w * 0.12,
