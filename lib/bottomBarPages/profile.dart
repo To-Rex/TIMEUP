@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/elements/functions.dart';
 import '../elements/bio_business.dart';
@@ -323,6 +325,29 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
+  final ImagePicker _picker = ImagePicker();
+  var croppedImage;
+
+  Future<void> _pickImage(ImageSource source,context) async {
+    final pickedFile = await _picker.pickImage(source: source);
+    if (pickedFile != null) {
+      _cropImage(pickedFile.path,context);
+    }
+  }
+
+  Future<void> _cropImage(String imagePath,context) async {
+    croppedImage = await ImageCropper.platform.cropImage(sourcePath: imagePath, aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),compressQuality: 100,compressFormat: ImageCompressFormat.jpg,);
+    getController.changeImage(croppedImage.path);
+    ApiController().editUserPhoto(croppedImage.path).then((value) => {
+          if (value == true){
+            getUsers(),
+            Toast.showToast(context, 'Rasm muvaffaqiyatli o\'zgartirildi', Colors.green, Colors.white)
+          } else {
+            Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.white)
+          }
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (GetStorage().read('token') == null) {
@@ -415,19 +440,42 @@ class ProfilePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(width: w * 0.05),
-                            InkWell(
-                              hoverColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => PhotoView(imageProvider: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),),),);
-                              },
-                              child: CircleAvatar(
-                                radius: w * 0.12,
-                                foregroundColor: Colors.blue,
-                                backgroundImage: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),
-                              ),
+                            Stack(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => PhotoView(imageProvider: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),),),);
+                                  },
+                                  child: CircleAvatar(
+                                    radius: w * 0.12,
+                                    foregroundColor: Colors.blue,
+                                    backgroundImage: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Container(
+                                    width: w * 0.08,
+                                    height: w * 0.08,
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: BorderRadius.circular(w * 0.04),
+                                    ),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        _pickImage(ImageSource.gallery,context);
+                                      },
+                                      icon: HeroIcon(
+                                        //camera icon
+                                        HeroIcons.camera,
+                                        color: Colors.white,
+                                        size: w * 0.05,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                             const Expanded(child: SizedBox()),
                           ],
@@ -526,8 +574,7 @@ class ProfilePage extends StatelessWidget {
                                           child: BusinessEditButton(
                                             text: 'Edit profile',
                                             onPressed: () {
-                                              getController.entersUser.value =
-                                                  1;
+                                              getController.entersUser.value = 1;
                                             },
                                             color: Colors.blue,
                                             radius: 3,
@@ -617,9 +664,7 @@ class ProfilePage extends StatelessWidget {
                                         )),
                                 ],
                               ))),
-                        Obx(
-                          () =>
-                              getController.meUsers.value.res?.business == null
+                        Obx(() => getController.meUsers.value.res?.business == null
                                   ? const SizedBox()
                                   : SizedBox(
                                       width: w * 0.95,
@@ -627,48 +672,30 @@ class ProfilePage extends StatelessWidget {
                                       child: PageView(
                                         //physics: const NeverScrollableScrollPhysics(),
                                         onPageChanged: (index) {
-                                          getController.nextPagesUserDetails
-                                              .value = index;
+                                          getController.nextPagesUserDetails.value = index;
                                         },
                                         controller: pageController,
                                         children: [
-                                          BioBusiness(
-                                            text: getController.meUsers.value
-                                                    .res?.business?.bio ??
-                                                '',
-                                          ),
+                                          BioBusiness(text: getController.meUsers.value.res?.business?.bio ?? '',),
                                           SizedBox(
                                             width: w * 0.9,
                                             height: h * 0.22,
                                             child: Obx(
-                                              () => getController
-                                                          .bookingBusinessGetList
-                                                          .value
-                                                          .res ==
-                                                      null
-                                                  ? const Center(
-                                                      child: Text(
-                                                          'Ma\'lumotlar topilmadi'))
+                                              () => getController.bookingBusinessGetList.value.res == null
+                                                  ? const Center(child: Text('Ma\'lumotlar topilmadi'))
                                                   : Container(
                                                       height: h * 0.22,
-                                                      margin: EdgeInsets.only(
-                                                          top: h * 0.02),
-                                                      padding: EdgeInsets.all(
-                                                          w * 0.02),
+                                                      margin: EdgeInsets.only(top: h * 0.02),
+                                                      padding: EdgeInsets.all(w * 0.02),
                                                       decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.grey,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(3),
+                                                        border: Border.all(color: Colors.grey,),
+                                                        borderRadius: BorderRadius.circular(3),
                                                       ),
                                                       child: Column(
                                                         children: [
                                                           SizedBox(
                                                             height: h * 0.205,
-                                                            child: ListView
-                                                                .builder(
+                                                            child: ListView.builder(
                                                                     shrinkWrap: true,
                                                                     itemCount: getController.bookingBusinessGetList.value.res!.length,
                                                                     itemBuilder:

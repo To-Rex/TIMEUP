@@ -293,17 +293,14 @@ class ApiController extends GetxController {
   }
 
   Future<bool> editUserPhoto(photo) async {
-    var headers = {
-      'Authorization': 'Bearer ${GetStorage().read('token')}',
-    };
+    var headers = {'Authorization': 'Bearer ${GetStorage().read('token')}',};
     var request = http.MultipartRequest('PUT', Uri.parse(url + editPhotoUrl));
     request.files.add(await http.MultipartFile.fromPath('profile_photo', photo));
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
@@ -311,8 +308,7 @@ class ApiController extends GetxController {
   Future<bool> deleteMe() async {
     var response = await http.delete(Uri.parse(url+deleteMeUrl),
         headers: {
-          'Authorization':
-          'Bearer ${GetStorage().read('token')}',
+          'Authorization': 'Bearer ${GetStorage().read('token')}',
         });
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {

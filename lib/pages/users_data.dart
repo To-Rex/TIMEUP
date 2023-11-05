@@ -47,9 +47,7 @@ class LoginUserData extends StatelessWidget {
     });
     phoneNumberController.text = phoneNumber ?? '';
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      //AssetImage('assets/images/user.png') vertical center
       body: SingleChildScrollView(
         child: SizedBox(
             width: w,
