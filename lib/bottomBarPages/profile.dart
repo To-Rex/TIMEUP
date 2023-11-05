@@ -1,14 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/elements/functions.dart';
-import 'package:time_up/main.dart';
-import 'package:time_up/pages/splash_screen.dart';
-
 import '../elements/bio_business.dart';
 import '../elements/btn_business.dart';
 import '../elements/btn_users.dart';
@@ -18,6 +13,7 @@ import '../pages/make_business.dart';
 import '../pages/user_bussines_edit.dart';
 import '../pages/user_edit.dart';
 import '../res/getController.dart';
+import 'package:photo_view/photo_view.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({Key? key}) : super(key: key);
@@ -78,8 +74,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                       onPressed: () {
                         ApiController().deleteMe().then((value) => {
-                              if (value == true)
-                                {
+                              if (value == true){
                                   GetStorage().remove('token'),
                                   getController.clearMeUser(),
                                   getController.clearCategory(),
@@ -420,11 +415,20 @@ class ProfilePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(width: w * 0.05),
-                            CircleAvatar(
-                              radius: w * 0.12,
-                              foregroundColor: Colors.blue,
-                              backgroundImage: NetworkImage(
-                                  '${getController.meUsers.value.res?.photoUrl}'),
+                            InkWell(
+                              hoverColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => PhotoView(imageProvider: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),),),);
+                              },
+                              child: CircleAvatar(
+                                radius: w * 0.12,
+                                foregroundColor: Colors.blue,
+                                backgroundImage: NetworkImage(
+                                    '${getController.meUsers.value.res?.photoUrl}'),
+                              ),
                             ),
                             const Expanded(child: SizedBox()),
                           ],
@@ -760,4 +764,5 @@ class ProfilePage extends StatelessWidget {
           )),
     );
   }
+
 }
