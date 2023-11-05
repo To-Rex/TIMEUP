@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -20,21 +19,13 @@ class MakeBusinessPage extends StatelessWidget {
   final TextEditingController nikNameController = TextEditingController();
   final TextEditingController experienceController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController nameInstitutionController =
-      TextEditingController();
-
-  //bio
+  final TextEditingController nameInstitutionController = TextEditingController();
   final TextEditingController bioController = TextEditingController();
-
-  //day off
   final TextEditingController dayOffController = TextEditingController();
-
-  //page controller
   final PageController pageController = PageController();
 
   getUsers() async {
-    getController.changeMeUser(
-        await ApiController().getUserData());
+    getController.changeMeUser(await ApiController().getUserData());
   }
 
   final ImagePicker _picker = ImagePicker();
@@ -582,12 +573,7 @@ class MakeBusinessPage extends StatelessWidget {
                                 getController.changeMeUser(value);
                               });
                             } else {
-                              Toast.showToast(
-                                context,
-                                'Error',
-                                Colors.red,
-                                Colors.white,
-                              );
+                              Toast.showToast(context, 'Error', Colors.red, Colors.white);
                             }
                           })
                       );

@@ -386,8 +386,7 @@ class ProfilePage extends StatelessWidget {
                           elevation: 0,
                           surfaceTintColor: Colors.transparent,
                           centerTitle: true,
-                          title: Text(
-                            getController.meUsers.value.res?.userName ?? '',
+                          title: Text(getController.meUsers.value.res?.userName ?? '',
                             style: TextStyle(
                               fontSize: w * 0.04,
                               color: Colors.black,
@@ -401,8 +400,7 @@ class ProfilePage extends StatelessWidget {
                                     onPressed: () {
                                       showClosDialogs(context);
                                     },
-                                    child: Text(
-                                      'Log out',
+                                    child: Text('Log out',
                                       style: TextStyle(
                                         fontSize: w * 0.04,
                                         fontWeight: FontWeight.w500,
@@ -444,7 +442,37 @@ class ProfilePage extends StatelessWidget {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => PhotoView(imageProvider: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),),),);
+                                    //Navigator.push(context, MaterialPageRoute(builder: (context) => PhotoView(imageProvider: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),),),);
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Scaffold(
+                                      backgroundColor: Colors.black,
+                                      body: Stack(
+                                        children: [
+                                          PhotoView(
+                                            imageProvider: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),
+                                          ),
+                                          Positioned(
+                                            top: h * 0.05,
+                                            left: w * 0.01,
+                                            child: Container(
+                                              padding: EdgeInsets.only(left: w * 0.01),
+                                              width: w * 0.1,
+                                              height: w * 0.1,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(w * 0.1),
+                                              ),
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),),);
+
                                   },
                                   child: CircleAvatar(
                                     radius: w * 0.12,
@@ -467,7 +495,6 @@ class ProfilePage extends StatelessWidget {
                                         _pickImage(ImageSource.gallery,context);
                                       },
                                       icon: HeroIcon(
-                                        //camera icon
                                         HeroIcons.camera,
                                         color: Colors.white,
                                         size: w * 0.05,
