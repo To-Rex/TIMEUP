@@ -18,20 +18,6 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
-    Timer(const Duration(seconds: 3), () {
-      if (GetStorage().read('token') != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => SamplePage()),
-        );
-        getUsers();
-      } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
-        );
-      }
-    });
 
     return Scaffold(
       body: Center(
