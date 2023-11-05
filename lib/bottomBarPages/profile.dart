@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/elements/functions.dart';
+import 'package:time_up/main.dart';
+import 'package:time_up/pages/splash_screen.dart';
 
 import '../elements/bio_business.dart';
 import '../elements/btn_business.dart';
@@ -162,13 +166,14 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
-                        );
-                        GetStorage().remove('token');
                         getController.clearMeUser();
                         getController.clearCategory();
+                        GetStorage().remove('token');
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginPage()),
+                        );
                       },
                       child: Row(
                         children: [

@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:time_up/bottomBarPages/home.dart';
+import '../api/api_controller.dart';
 import '../bottomBarPages/history.dart';
 import '../bottomBarPages/profile.dart';
 import '../bottomBarPages/search.dart';
+import '../elements/functions.dart';
 import '../res/getController.dart';
 import 'login_page.dart';
 
@@ -30,6 +34,7 @@ class SamplePage extends StatelessWidget {
     //_getController.clearMeUser();
   }
 
+
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
@@ -42,32 +47,30 @@ class SamplePage extends StatelessWidget {
     }
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: _getController.index.value != 3 ? Size.fromHeight(h * 0.06) : Size.fromHeight(h * 0),
-        child: Obx(() => _getController.index.value != 5
+          preferredSize: _getController.index.value != 3 ? Size.fromHeight(h * 0.06) : Size.fromHeight(h * 0),
+          child: Obx(() => _getController.index.value != 5
               ? Container(
-                  height: h * 0.06,
-                  margin: EdgeInsets.only(top: h * 0.045, bottom: h * 0.01),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: w * 0.04,
-                      ),
-                      Image(
-                        image: const AssetImage('assets/images/text.png'),
-                        width: w * 0.2,
-                        height: h * 0.05,
-                      ),
-                    ],
-                  ),
-                )
+            height: h * 0.06,
+            margin: EdgeInsets.only(top: h * 0.045, bottom: h * 0.01),
+            child: Row(
+              children: [
+                SizedBox(width: w * 0.04),
+                Image(
+                  image: const AssetImage('assets/images/text.png'),
+                  width: w * 0.2,
+                  height: h * 0.05,
+                ),
+              ],
+            ),
+          )
               : Container(height: h * 0.03)
-        )
+          )
       ),
       body: SingleChildScrollView(
         child: Obx(() => _widgetOptions.elementAt(_getController.index.value)),
       ),
       bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
+            () => BottomNavigationBar(
           backgroundColor: Colors.white,
           unselectedItemColor: Colors.black,
           showSelectedLabels: false,
@@ -80,7 +83,6 @@ class SamplePage extends StatelessWidget {
                 size: w * 0.07,
               ),
               label: 'Home',
-
               activeIcon: HeroIcon(
                 HeroIcons.home,
                 size: w * 0.07,
