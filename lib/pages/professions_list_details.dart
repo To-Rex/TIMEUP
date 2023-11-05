@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:photo_view/photo_view.dart';
 import '../api/api_controller.dart';
 import '../elements/functions.dart';
 import '../res/getController.dart';
@@ -397,10 +398,19 @@ class ProfessionsListDetails extends StatelessWidget {
                          ) : Row(
                               children: [
                                 SizedBox(width: w * 0.04),
-                                CircleAvatar(
-                                  radius: w * 0.18,
-                                  backgroundImage: NetworkImage(
-                                    "${_getController.getProfileById.value.res!.photoUrl}",
+                                InkWell(
+                                  hoverColor: Colors.transparent,
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => PhotoView(imageProvider: NetworkImage("${_getController.getProfileById.value.res!.photoUrl}",),),),);
+                                  },
+                                  child: CircleAvatar(
+                                    radius: w * 0.18,
+                                    backgroundImage: NetworkImage(
+                                      "${_getController.getProfileById.value.res!.photoUrl}",
+                                    ),
                                   ),
                                 ),
                               ],

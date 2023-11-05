@@ -426,8 +426,7 @@ class ProfilePage extends StatelessWidget {
                               child: CircleAvatar(
                                 radius: w * 0.12,
                                 foregroundColor: Colors.blue,
-                                backgroundImage: NetworkImage(
-                                    '${getController.meUsers.value.res?.photoUrl}'),
+                                backgroundImage: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),
                               ),
                             ),
                             const Expanded(child: SizedBox()),

@@ -47,7 +47,7 @@ class SamplePage extends StatelessWidget {
     }
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: _getController.index.value != 3 ? Size.fromHeight(h * 0.06) : Size.fromHeight(h * 0),
+          preferredSize: Size.fromHeight(h * 0.06),
           child: Obx(() => _getController.index.value != 5
               ? Container(
             height: h * 0.06,
