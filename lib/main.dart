@@ -41,6 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String? token = '';
   getToken() async {
     token = box.read('token');
+    print(token);
     return token;
   }
 

@@ -61,120 +61,6 @@ class ProfessionsListUsers extends StatelessWidget {
                   width: w * 0.9,
                   child: ListView.builder(
                     itemBuilder: (context, index) {
-                      /*return GestureDetector(
-                        onTap: () {
-                          _getController.profileByID.value = _getController.getByCategory.value.res![index].businessId!;
-                          _getController.clearProfileById();
-                          ApiController().profileById(_getController.profileByID.value).then((value) => {_getController.changeProfileById(value),});
-                          _getController.bookingBusinessGetListByID.value = _getController.getByCategory.value.res![index].businessId!;
-                          _getController.nextPagesUserDetails.value = 0;
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
-                        },
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                if (_getController.getByCategory.value.res?[index].photoUrl == null)
-                                  SizedBox(
-                                    width: w * 0.2,
-                                    height: w * 0.2,
-                                    child: const CircleAvatar(
-                                      backgroundImage: AssetImage(
-                                          'assets/images/doctor.png'),
-                                    ),
-                                  )
-                                else
-                                  SizedBox(
-                                    width: w * 0.2,
-                                    height: w * 0.2,
-                                    child: CircleAvatar(
-                                      backgroundImage: NetworkImage("http://${_getController.getByCategory.value.res![index].photoUrl}"),
-                                    ),
-                                  ),
-                                SizedBox(width: w * 0.05),
-                                //name and profession
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(_getController.getByCategory.value.res?[index].lastName ?? '',
-                                      style: TextStyle(
-                                        fontSize: w * 0.04,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    Text(_getController.getByCategory.value.res?[index].fistName ?? '',
-                                      style: TextStyle(
-                                        fontSize: w * 0.04,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const Expanded(child: SizedBox()),
-                                Obx(() => _getController.getByCategory.value.res?[index].followed == true
-                                    ? SizedBox(
-                                  height: h * 0.045,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      ApiController().unFollow(_getController.getByCategory.value.res?[index].businessId ?? 0).then((value) =>{
-                                        if(value == true) {
-                                          Toast.showToast(context, 'UnFollow', Colors.green, Colors.white),
-                                          ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value))
-                                        }else{
-                                          Toast.showToast(context, 'Error', Colors.red, Colors.white),
-                                        }
-                                      });
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      backgroundColor: Colors.grey,
-                                    ),
-                                    child: Text('Following',
-                                      style: TextStyle(
-                                        fontSize: w * 0.04,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                                    : SizedBox(
-                                  height: h * 0.045,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      ApiController().follow(_getController.getByCategory.value.res?[index].businessId ?? 0).then((value) =>{
-                                        if(value.status == true) {
-                                          Toast.showToast(context, 'Followed', Colors.green, Colors.white),
-                                          ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value))
-                                        }else{
-                                          Toast.showToast(context, 'Error', Colors.red, Colors.white),
-                                        }
-                                      });
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      backgroundColor: Colors.blue,
-                                    ),
-                                    child: Text('Follow',
-                                      style: TextStyle(
-                                        fontSize: w * 0.04,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                )),
-                              ],
-                            ),
-                            SizedBox(height: h * 0.02),
-                          ],
-                        ),
-                      );*/
                       return InkWell(
                         onTap: () {
                           _getController.profileByID.value = _getController.getByCategory.value.res![index].businessId!;
@@ -208,7 +94,6 @@ class ProfessionsListUsers extends StatelessWidget {
                                   ),
                                 ),
                               SizedBox(width: w * 0.05),
-                              //name and profession
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -229,12 +114,12 @@ class ProfessionsListUsers extends StatelessWidget {
                                 ],
                               ),
                               const Expanded(child: SizedBox()),
-                              Obx(() => _getController.getByCategory.value.res?[index].followed == true
-                                  ? SizedBox(
+                              if (_getController.getByCategory.value.res?[index].userId != _getController.meUsers.value.res?.business?.userId)
+                                Obx(() => _getController.getByCategory.value.res?[index].followed == true
+                                    ? SizedBox(
                                 height: h * 0.045,
                                 child: ElevatedButton(
-                                  onPressed: ()
-                                  {
+                                  onPressed: () {
                                     ApiController().unFollow(_getController.getByCategory.value.res?[index].businessId ?? 0).then((value) =>{
                                       if(value == true) {
                                         ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value))
@@ -258,9 +143,8 @@ class ProfessionsListUsers extends StatelessWidget {
                                   ),
                                 ),
                               )
-                                  : SizedBox(
-                                height: h * 0.045,
-                                child: ElevatedButton(
+                                    : SizedBox(height: h * 0.045,
+                                  child: ElevatedButton(
                                   onPressed: () {
                                     ApiController().follow(_getController.getByCategory.value.res?[index].businessId ?? 0).then((value) =>{
                                       if(value.status == true) {
