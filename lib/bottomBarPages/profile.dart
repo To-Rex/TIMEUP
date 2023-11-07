@@ -395,31 +395,26 @@ class ProfilePage extends StatelessWidget {
                             PopupMenuButton(
                               itemBuilder: (context) => [
                                 PopupMenuItem(
-                                  child: TextButton(
-                                    onPressed: () {
-                                      showClosDialogs(context);
-                                    },
-                                    child: Text('Log out',
-                                      style: TextStyle(
-                                        fontSize: w * 0.04,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.redAccent,
-                                      ),
+                                  onTap: () {
+                                    showClosDialogs(context);
+                                  },
+                                  child: Text('Log out',
+                                    style: TextStyle(
+                                      fontSize: w * 0.04,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.redAccent,
                                     ),
                                   ),
                                 ),
                                 PopupMenuItem(
-                                  child: TextButton(
-                                    onPressed: () {
-                                      showDialogs(context);
-                                    },
-                                    child: Text(
-                                      'Delete accaunt',
-                                      style: TextStyle(
-                                        fontSize: w * 0.04,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.redAccent,
-                                      ),
+                                  onTap: () {
+                                    showDialogs(context);
+                                  },
+                                  child: Text('Delete accaunt',
+                                    style: TextStyle(
+                                      fontSize: w * 0.04,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.redAccent,
                                     ),
                                   ),
                                 ),
