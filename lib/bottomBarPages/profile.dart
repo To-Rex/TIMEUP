@@ -376,8 +376,7 @@ class ProfilePage extends StatelessWidget {
       child: Obx(() => getController.meUsers.value.res != null
         ? SizedBox(
             width: w,
-            child: Obx(
-              () => getController.entersUser.value == 0
+            child: Obx(() => getController.entersUser.value == 0
                   ? Column(
                       children: [
                         SizedBox(height: h * 0.01),
@@ -514,8 +513,7 @@ class ProfilePage extends StatelessWidget {
                                 color: Colors.black,
                               )),
                         ),
-                        Obx(() =>
-                            getController.meUsers.value.res?.business != null
+                        Obx(() => getController.meUsers.value.res?.business != null
                                 ? Container(
                                     width: w * 0.9,
                                     margin: const EdgeInsets.only(top: 5),
@@ -548,16 +546,14 @@ class ProfilePage extends StatelessWidget {
                           color: Colors.blue,
                           icon: 'assets/images/user_call.png',
                         ),
-                        Obx(() =>
-                            getController.meUsers.value.res?.business != null
+                        Obx(() => getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
                                     text: '${getController.meUsers.value.res?.business?.officeAddress}',
                                     color: Colors.blue,
                                     icon: 'assets/images/user_location.png',
                                   )
                                 : const SizedBox()),
-                        Obx(() =>
-                            getController.meUsers.value.res?.business != null
+                        Obx(() => getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
                                     text: '${getController.meUsers.value.res?.business?.officeName}',
                                     color: Colors.blue,
@@ -767,11 +763,70 @@ class ProfilePage extends StatelessWidget {
                           : const SizedBox(),
             ),
           )
-        : const Center(
-            child: CircularProgressIndicator(
-              color: Colors.blue,
+        : Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AppBar(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  surfaceTintColor: Colors.transparent,
+                  centerTitle: true,
+                  title: Text(getController.meUsers.value.res?.userName ?? '',
+                    style: TextStyle(
+                      fontSize: w * 0.04,
+                      color: Colors.black,
+                    ),
+                  ),
+                  actions: [
+                    PopupMenuButton(
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: TextButton(
+                            onPressed: () {
+                              showClosDialogs(context);
+                            },
+                            child: Text('Log out',
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.redAccent,
+                              ),
+                            ),
+                          ),
+                        ),
+                        PopupMenuItem(
+                          child: TextButton(
+                            onPressed: () {
+                              showDialogs(context);
+                            },
+                            child: Text(
+                              'Delete accaunt',
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.redAccent,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                      icon: const Icon(
+                        Icons.menu,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: h * 0.3),
+                const CircularProgressIndicator(),
+                SizedBox(height: w * 0.05),
+                const Text('Loading...'),
+              ],
             ),
-          )),
+      )
+      ),
     );
   }
 
