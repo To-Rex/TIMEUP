@@ -442,14 +442,11 @@ class ProfilePage extends StatelessWidget {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    //Navigator.push(context, MaterialPageRoute(builder: (context) => PhotoView(imageProvider: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),),),);
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => Scaffold(
                                       backgroundColor: Colors.black,
                                       body: Stack(
                                         children: [
-                                          PhotoView(
-                                            imageProvider: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),
-                                          ),
+                                          PhotoView(imageProvider: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),),
                                           Positioned(
                                             top: h * 0.05,
                                             left: w * 0.01,
@@ -472,7 +469,6 @@ class ProfilePage extends StatelessWidget {
                                         ],
                                       ),
                                     ),),);
-
                                   },
                                   child: CircleAvatar(
                                     radius: w * 0.12,
@@ -563,26 +559,20 @@ class ProfilePage extends StatelessWidget {
                         Obx(() =>
                             getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
-                                    text:
-                                        '${getController.meUsers.value.res?.business?.officeName}',
+                                    text: '${getController.meUsers.value.res?.business?.officeName}',
                                     color: Colors.blue,
                                     icon: 'assets/images/user_work.png',
                                   )
                                 : const SizedBox()),
-                        Obx(() =>
-                            getController.meUsers.value.res?.business != null
+                        Obx(() => getController.meUsers.value.res?.business != null
                                 ? TextEditButton(
-                                    text:
-                                        '${getController.meUsers.value.res?.business?.dayOffs}',
+                                    text: '${getController.meUsers.value.res?.business?.dayOffs}',
                                     color: Colors.blue,
                                     icon: 'assets/images/user_time.png',
                                   )
                                 : const SizedBox()),
-                        SizedBox(
-                          height: h * 0.02,
-                        ),
-                        Obx(() =>
-                            getController.meUsers.value.res?.business == null
+                        SizedBox(height: h * 0.02,),
+                        Obx(() => getController.meUsers.value.res?.business == null
                                 ? EditButton(
                                     text: 'Make business profile',
                                     onPressed: () {
@@ -610,8 +600,7 @@ class ProfilePage extends StatelessWidget {
                                       ],
                                     ),
                                   )),
-                        Obx(() => getController.meUsers.value.res?.business ==
-                                null
+                        Obx(() => getController.meUsers.value.res?.business == null
                             ? EditButton(
                                 text: 'Edit profile',
                                 onPressed: () {
@@ -623,19 +612,14 @@ class ProfilePage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Obx(() => getController
-                                              .nextPagesUserDetails.value ==
-                                          0
+                                  Obx(() => getController.nextPagesUserDetails.value == 0
                                       ? SizedBox(
                                           width: w * 0.5,
                                           height: h * 0.062,
                                           child: BusinessEditButton(
                                             text: 'Biografiya',
                                             onPressed: () {
-                                              pageController.animateToPage(0,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
+                                              pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             color: Colors.blue,
                                             radius: 0,
@@ -647,28 +631,20 @@ class ProfilePage extends StatelessWidget {
                                           child: BusinessEditButton(
                                             text: 'Biografiya',
                                             onPressed: () {
-                                              pageController.animateToPage(0,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
+                                              pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             color: Colors.grey,
                                             radius: 0,
                                           ),
                                         )),
-                                  Obx(() => getController
-                                              .nextPagesUserDetails.value ==
-                                          1
+                                  Obx(() => getController.nextPagesUserDetails.value == 1
                                       ? SizedBox(
                                           width: w * 0.5,
                                           height: h * 0.062,
                                           child: BusinessEditButton(
                                             text: 'Ish jadvali',
                                             onPressed: () {
-                                              pageController.animateToPage(1,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
+                                              pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             color: Colors.blue,
                                             radius: 0,
@@ -680,10 +656,7 @@ class ProfilePage extends StatelessWidget {
                                           child: BusinessEditButton(
                                             text: 'Ish jadvali',
                                             onPressed: () {
-                                              pageController.animateToPage(1,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
+                                              pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             color: Colors.grey,
                                             radius: 0,
@@ -724,18 +697,15 @@ class ProfilePage extends StatelessWidget {
                                                             height: h * 0.205,
                                                             child: ListView.builder(
                                                                     shrinkWrap: true,
-                                                                    itemCount: getController.bookingBusinessGetList.value.res!.length,
-                                                                    itemBuilder:
-                                                                        (context,
-                                                                            index) {
+                                                                    itemCount: getController.bookingBusinessGetList1.value.res!.length,
+                                                                    itemBuilder: (context, index) {
                                                                       return Column(
                                                                         children: [
                                                                           Row(
                                                                             children: [
                                                                               SizedBox(
                                                                                 width: w * 0.08,
-                                                                                child: Text(
-                                                                                  '${index + 1}',
+                                                                                child: Text('${index + 1}',
                                                                                   style: TextStyle(
                                                                                     fontSize: w * 0.04,
                                                                                     fontWeight: FontWeight.w500,
@@ -744,8 +714,7 @@ class ProfilePage extends StatelessWidget {
                                                                               ),
                                                                               SizedBox(
                                                                                 width: w * 0.7,
-                                                                                child: Text(
-                                                                                  'Ushbu mijoz' ' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} ' '${getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                                                                child: Text('Ushbu mijoz' ' ${getController.bookingBusinessGetList1.value.res![index].date!.replaceAll('/', '-')} ' '${getController.bookingBusinessGetList1.value.res![index].time!} keladi',
                                                                                   style: TextStyle(
                                                                                     fontSize: w * 0.04,
                                                                                     fontWeight: FontWeight.w500,
@@ -761,30 +730,18 @@ class ProfilePage extends StatelessWidget {
                                                           ),
                                                           Row(
                                                             children: [
-                                                              const Expanded(
-                                                                  child:
-                                                                      SizedBox()),
+                                                              const Expanded(child: SizedBox()),
                                                               SizedBox(
-                                                                height:
-                                                                    h * 0.05,
-                                                                child:
-                                                                    TextButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    showBottomSheetList(
-                                                                        context);
+                                                                height: h * 0.05,
+                                                                child: TextButton(
+                                                                  onPressed: () {
+                                                                    showBottomSheetList(context);
                                                                   },
-                                                                  child: Text(
-                                                                    'Barchasini ko\'rish',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          w * 0.04,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: Colors
-                                                                          .blue,
+                                                                  child: Text('Barchasini ko\'rish',
+                                                                    style: TextStyle(
+                                                                      fontSize: w * 0.04,
+                                                                      fontWeight: FontWeight.w500,
+                                                                      color: Colors.blue,
                                                                     ),
                                                                   ),
                                                                 ),
