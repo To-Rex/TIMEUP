@@ -539,20 +539,18 @@ class MakeBusinessPage extends StatelessWidget {
                       Toast.showToast(context, 'Please enter a valid number', Colors.red, Colors.white,);
                       return;
                     }
-                    var experience;
+                    num experience;
                     if (experienceController.text.contains('.')) {
                       experience = double.parse(experienceController.text);
                     } else {
                       experience = int.parse(experienceController.text);
                     }
-                    if (getController.image.value != '') {
-                      ApiController().editUserPhoto(
-                          croppedImage.path).then((value) =>
+                    if (croppedImage!=null) {
+                      ApiController().editUserPhoto(croppedImage.path).then((value) =>
                           ApiController().editUser(
                               getController.meUsers.value.res?.fistName ?? '',
                               getController.meUsers.value.res?.lastName ?? '',
-                              getController.getRegion.value
-                                  .res![getController.regionIndex.value],
+                              getController.getRegion.value.res![getController.regionIndex.value],
                               nikNameController.text).then((value) {
                             if (value.status!) {
                               ApiController().getUserData().then((value) {
@@ -560,8 +558,7 @@ class MakeBusinessPage extends StatelessWidget {
                                     getController.subCategory.value.res![getController.subCategoryIndex.value].id!,
                                     getController.getRegion.value.res![getController.regionIndex.value],
                                     nameInstitutionController.text,
-                                    experience,
-                                    bioController.text,
+                                    experience, bioController.text,
                                     dayOffController.text).then((value) {
                                   if (value) {
                                     ApiController().getUserData().then((value) {getController.changeMeUser(value);});
@@ -581,8 +578,7 @@ class MakeBusinessPage extends StatelessWidget {
                       ApiController().editUser(
                           getController.meUsers.value.res?.fistName ?? '',
                           getController.meUsers.value.res?.lastName ?? '',
-                          getController.getRegion.value
-                              .res![getController.regionIndex.value],
+                          getController.getRegion.value.res![getController.regionIndex.value],
                           nikNameController.text).then((value) {
                         if (value.status!) {
                           ApiController().getUserData().then((value) {
