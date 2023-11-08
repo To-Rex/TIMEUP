@@ -113,6 +113,7 @@ class HomePage extends StatelessWidget {
         itemBuilder: (context, index) {
           return Column(
             children: [
+              SizedBox(height: h * 0.02,),
               if (_getController.followList.value.res?[index].photoUrl != null)
                 InkWell(
                   onTap: (){
