@@ -47,24 +47,33 @@ class SamplePage extends StatelessWidget {
     }
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(h * 0.06),
+          preferredSize: Size.fromHeight(h * 0.08),
           child: Obx(() => _getController.index.value != 5
               ? Container(
             height: h * 0.06,
             margin: EdgeInsets.only(top: h * 0.045, bottom: h * 0.01),
-            child: Row(
+            child: Column(
               children: [
-                SizedBox(width: w * 0.04),
-                Image(
-                  image: const AssetImage('assets/images/text.png'),
-                  width: w * 0.2,
-                  height: h * 0.05,
+                //SizedBox(height: h * 0.01),
+                Row(
+                  children: [
+                    SizedBox(width: w * 0.04),
+                    Image(
+                      image: const AssetImage('assets/images/text.png'),
+                      width: w * 0.2,
+                      height: h * 0.05,
+                    ),
+                  ],
+                ),
+                //line under the text
+                Container(
+                  height: h * 0.001,
+                  width: w,
+                  color: Colors.grey,
                 ),
               ],
-            ),
-          )
-              : Container(height: h * 0.03)
-          )
+            )
+          ) : Container(height: h * 0.03))
       ),
       body: SingleChildScrollView(
         child: Obx(() => _widgetOptions.elementAt(_getController.index.value)),
