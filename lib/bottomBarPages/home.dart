@@ -107,7 +107,7 @@ class HomePage extends StatelessWidget {
         ? SizedBox(width: w, height: h * 0.9, child: const Center(child: CircularProgressIndicator()),)
         : Obx(() => _getController.followList.value.res!.isNotEmpty
           ? SizedBox(
-      height:  h * 0.85,
+      height:  h * 0.83,
       child: ListView.builder(
 
           itemCount: _getController.followList.value.res?.length ?? 0,
