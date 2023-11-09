@@ -106,134 +106,136 @@ class HomePage extends StatelessWidget {
     return Obx(() => _getController.followList.value.res == null
         ? SizedBox(width: w, height: h * 0.9, child: const Center(child: CircularProgressIndicator()),)
         : Obx(() => _getController.followList.value.res!.isNotEmpty
-          ? Expanded(child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: _getController.followList.value.res?.length ?? 0,
-        itemBuilder: (context, index) {
-          return Column(
-            children: [
-              SizedBox(height: h * 0.02,),
-              if (_getController.followList.value.res?[index].photoUrl != null)
-                InkWell(
-                  onTap: (){
-                    ApiController().profileById(_getController.followList.value.res?[index].id ?? 0).then((value) => {_getController.changeProfileById(value),});
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: w * 0.9,
-                        child: Row(
-                          children: [
-                            SizedBox(width: w * 0.02,),
-                            SizedBox(
-                              width: w * 0.11,
-                              height: w * 0.11,
-                              child: CircleAvatar(backgroundImage: NetworkImage('${_getController.followList.value.res?[index].photoUrl}'),),
-                            ),
-                            SizedBox(width: w * 0.02,),
-                            SizedBox(
-                              width: w * 0.6,
-                              child: Text('${_getController.followList.value.res?[index].lastName} ${_getController.followList.value.res?[index].fistName}',
-                                style: TextStyle(
-                                  fontSize: w * 0.05,
-                                  fontWeight: FontWeight.w500,
+          ? SizedBox(
+      height:  h * 0.85,
+      child: ListView.builder(
+
+          itemCount: _getController.followList.value.res?.length ?? 0,
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                SizedBox(height: h * 0.02,),
+                if (_getController.followList.value.res?[index].photoUrl != null)
+                  InkWell(
+                    onTap: (){
+                      ApiController().profileById(_getController.followList.value.res?[index].id ?? 0).then((value) => {_getController.changeProfileById(value),});
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
+                    },
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: w * 0.9,
+                          child: Row(
+                            children: [
+                              SizedBox(width: w * 0.02,),
+                              SizedBox(
+                                width: w * 0.11,
+                                height: w * 0.11,
+                                child: CircleAvatar(backgroundImage: NetworkImage('${_getController.followList.value.res?[index].photoUrl}'),),
+                              ),
+                              SizedBox(width: w * 0.02,),
+                              SizedBox(
+                                width: w * 0.6,
+                                child: Text('${_getController.followList.value.res?[index].lastName} ${_getController.followList.value.res?[index].fistName}',
+                                  style: TextStyle(
+                                    fontSize: w * 0.05,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                SizedBox(height: h * 0.02,),
+                if (_getController.followList.value.res?[index].photoUrl != null)
+                  SizedBox(width: w , height: h * 0.33, child: Image.network('${_getController.followList.value.res?[index].photoUrl}', fit: BoxFit.cover,),),
+                SizedBox(height: h * 0.02,),
+                SizedBox(width: w * 0.95,
+                  child:Row(
+                    children: [
+                      SizedBox(
+                        height: w * 0.07,
+                        width: w * 0.07,
+                        child: IconButton(
+                            hoverColor: Colors.blue,
+                            iconSize: w * 0.07,
+                            padding: EdgeInsets.zero,
+                            onPressed: (){
+                              showDialogs(
+                                  context, _getController.followList.value.res?[index].phoneNumber ?? '','You will be charged for this call','Call',1);
+                            },
+                            icon: HeroIcon(HeroIcons.phone, color: Colors.blue, size: w * 0.07,)
+                        ),
+                      ),
+                      SizedBox(width: w * 0.01,),
+                      SizedBox(
+                        height: w * 0.07,
+                        width: w * 0.07,
+                        child: IconButton(
+                            hoverColor: Colors.blue,
+                            iconSize: w * 0.07,
+                            padding: EdgeInsets.zero,
+                            onPressed: (){showDialogs(context, 'Manzil',_getController.followList.value.res?[index].officeAddress ?? '','ok',2);},
+                            icon: HeroIcon(HeroIcons.mapPin, color: Colors.blue, size: w * 0.07,)
+                        ),
+                      ),
+                      SizedBox(width: w * 0.01),
+                      SizedBox(
+                        height: w * 0.07,
+                        width: w * 0.07,
+                        child: IconButton(
+                            hoverColor: Colors.blue,
+                            iconSize: w * 0.07,
+                            padding: EdgeInsets.zero,
+                            onPressed: (){showDialogs(context,_getController.followList.value.res?[index].categoryName ?? '',_getController.followList.value.res?[index].bio ?? '','ok',3);},
+                            icon: HeroIcon(HeroIcons.briefcase, color: Colors.blue, size: w * 0.07,)
                         ),
                       ),
                     ],
                   ),
                 ),
-              SizedBox(height: h * 0.02,),
-              if (_getController.followList.value.res?[index].photoUrl != null)
-                SizedBox(width: w , height: h * 0.33, child: Image.network('${_getController.followList.value.res?[index].photoUrl}', fit: BoxFit.cover,),),
-              SizedBox(height: h * 0.02,),
-              SizedBox(width: w * 0.95,
-                child:Row(
-                  children: [
-                    SizedBox(
-                      height: w * 0.07,
-                      width: w * 0.07,
-                      child: IconButton(
-                          hoverColor: Colors.blue,
-                          iconSize: w * 0.07,
-                          padding: EdgeInsets.zero,
-                          onPressed: (){
-                            showDialogs(
-                                context, _getController.followList.value.res?[index].phoneNumber ?? '','You will be charged for this call','Call',1);
-                          },
-                          icon: HeroIcon(HeroIcons.phone, color: Colors.blue, size: w * 0.07,)
-                      ),
+                SizedBox(height: h * 0.01),
+                SizedBox(
+                  width: w * 0.9,
+                  child: Text('${_getController.followList.value.res?[index].userName}',
+                    style: TextStyle(
+                      fontSize: w * 0.055,
+                      fontWeight: FontWeight.w500,
                     ),
-                    SizedBox(width: w * 0.01,),
-                    SizedBox(
-                      height: w * 0.07,
-                      width: w * 0.07,
-                      child: IconButton(
-                          hoverColor: Colors.blue,
-                          iconSize: w * 0.07,
-                          padding: EdgeInsets.zero,
-                          onPressed: (){showDialogs(context, 'Manzil',_getController.followList.value.res?[index].officeAddress ?? '','ok',2);},
-                          icon: HeroIcon(HeroIcons.mapPin, color: Colors.blue, size: w * 0.07,)
-                      ),
-                    ),
-                    SizedBox(width: w * 0.01),
-                    SizedBox(
-                      height: w * 0.07,
-                      width: w * 0.07,
-                      child: IconButton(
-                          hoverColor: Colors.blue,
-                          iconSize: w * 0.07,
-                          padding: EdgeInsets.zero,
-                          onPressed: (){showDialogs(context,_getController.followList.value.res?[index].categoryName ?? '',_getController.followList.value.res?[index].bio ?? '','ok',3);},
-                          icon: HeroIcon(HeroIcons.briefcase, color: Colors.blue, size: w * 0.07,)
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: h * 0.01),
-              SizedBox(
-                width: w * 0.9,
-                child: Text('${_getController.followList.value.res?[index].userName}',
-                  style: TextStyle(
-                    fontSize: w * 0.055,
-                    fontWeight: FontWeight.w500,
                   ),
                 ),
-              ),
 
-              SizedBox(
-                width: w * 0.9,
-                child: Text(
-                  '${_getController.followList.value.res?[index].categoryName}',
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.blue,
+                SizedBox(
+                  width: w * 0.9,
+                  child: Text(
+                    '${_getController.followList.value.res?[index].categoryName}',
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.blue,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                width: w * 0.9,
-                child: Text(
-                  '${_getController.followList.value.res?[index].bio}',
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
+                SizedBox(
+                  width: w * 0.9,
+                  child: Text(
+                    '${_getController.followList.value.res?[index].bio}',
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: h * 0.02,
-              ),
-            ],
-          );
-        }),)
+                SizedBox(
+                  height: h * 0.02,
+                ),
+              ],
+            );
+          }),
+    )
           : SizedBox(width: w, height: h * 0.9, child: const Center(child: Text('No data'),),)
         )
     );
