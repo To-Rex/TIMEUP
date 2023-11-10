@@ -33,6 +33,15 @@ class ProfessionsListDetails extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Container(
+                margin: EdgeInsets.only(top: h * 0.02),
+                width: w * 0.2,
+                height: h * 0.005,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
               SizedBox(height: h * 0.02),
               const Center(
                 child: Text('Kunni va vaqtni belgilang',
@@ -215,6 +224,15 @@ class ProfessionsListDetails extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Container(
+                margin: EdgeInsets.only(top: h * 0.02),
+                width: w * 0.2,
+                height: h * 0.005,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
               SizedBox(height: h * 0.1),
               Row(
                 children: [
