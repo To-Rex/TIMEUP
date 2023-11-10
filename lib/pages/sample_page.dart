@@ -52,26 +52,16 @@ class SamplePage extends StatelessWidget {
               ? Container(
             height: h * 0.06,
             margin: EdgeInsets.only(top: h * 0.045),
-            child: Column(
+            child: Row(
               children: [
-                Row(
-                  children: [
-                    SizedBox(width: w * 0.04),
-                    Image(
-                      image: const AssetImage('assets/images/text.png'),
-                      width: w * 0.2,
-                      height: h * 0.05,
-                    ),
-                  ],
-                ),
-                //line under the text
-                Container(
-                  height: h * 0.001,
-                  width: w,
-                  color: Colors.grey,
+                SizedBox(width: w * 0.04),
+                Image(
+                  image: const AssetImage('assets/images/text.png'),
+                  width: w * 0.2,
+                  height: h * 0.05,
                 ),
               ],
-            )
+            ),
           ) : Container(height: h * 0.03))
       ),
       body: SingleChildScrollView(
