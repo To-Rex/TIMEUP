@@ -80,8 +80,7 @@ class ProfessionsListUsers extends StatelessWidget {
                                   width: w * 0.15,
                                   height: w * 0.15,
                                   child: const CircleAvatar(backgroundImage: AssetImage('assets/images/doctor.png'),),
-                                )
-                              else
+                                ) else
                                 SizedBox(
                                   width: w * 0.15,
                                   height: w * 0.15,
