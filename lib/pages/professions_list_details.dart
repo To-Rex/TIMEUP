@@ -382,27 +382,14 @@ class ProfessionsListDetails extends StatelessWidget {
               child: Icon(Icons.arrow_back_ios, size: w * 0.05),
             ),
             title: Obx(() => _getController.getProfileById.value.res == null
-                ? Text(
-                    'No data',
-                    style: TextStyle(
-                      fontSize: w * 0.04,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                : Text(
-                    _getController.getProfileById.value.res!.userName ?? '',
-                    style: TextStyle(
-                      fontSize: w * 0.05,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )),
+                ? Text('No data', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500,),)
+                : Text(_getController.getProfileById.value.res!.userName ?? '', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500,),)),
             centerTitle: true,
           ),
           Obx(() => _getController.getProfileById.value.res == null
               ? const Center(child: CircularProgressIndicator())
               : SizedBox(
-                  child:
-                      _getController.getProfileById.value.res!.photoUrl == null
+                  child: _getController.getProfileById.value.res!.photoUrl == null
                         ? Row(
                           children: [
                              SizedBox(width: w * 0.04),
@@ -420,8 +407,6 @@ class ProfessionsListDetails extends StatelessWidget {
                                   focusColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () {
-                                    //Navigator.push(context, MaterialPageRoute(builder: (context) => PhotoView(imageProvider: NetworkImage("${_getController.getProfileById.value.res!.photoUrl}",),),),);
-                                    //icon button back and PhotoView
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => Scaffold(
                                         backgroundColor: Colors.black,
                                         body: Stack(
@@ -433,7 +418,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                               initialScale: PhotoViewComputedScale.contained,
                                               enableRotation: true,
                                               loadingBuilder: (context, event) => Center(
-                                                child: Container(
+                                                child: SizedBox(
                                                   width: 20.0,
                                                   height: 20.0,
                                                   child: CircularProgressIndicator(
@@ -539,12 +524,7 @@ class ProfessionsListDetails extends StatelessWidget {
                       SizedBox(width: w * 0.02,),
                       Obx(() => _getController.getProfileById.value.res == null
                           ? const SizedBox()
-                          : Text(_getController.getProfileById.value.res!.address ?? '',
-                              style: TextStyle(
-                                fontSize: w * 0.04,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            )),
+                          : Text(_getController.getProfileById.value.res!.address ?? '', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500,),)),
                     ],
                   ),
                   SizedBox(height: h * 0.01),
@@ -554,15 +534,10 @@ class ProfessionsListDetails extends StatelessWidget {
                         HeroIcons.briefcase,
                         color: Colors.blue,
                         size: w * 0.05,),
-                      SizedBox(
-                        width: w * 0.02,
-                      ),
+                      SizedBox(width: w * 0.02),
                       Obx(() => _getController.getProfileById.value.res == null
                           ? const SizedBox()
-                          : Text(
-                              _getController
-                                      .getProfileById.value.res!.officeName ??
-                                  '',
+                          : Text(_getController.getProfileById.value.res!.officeName ?? '',
                               style: TextStyle(
                                 fontSize: w * 0.04,
                                 fontWeight: FontWeight.w500,
@@ -570,9 +545,7 @@ class ProfessionsListDetails extends StatelessWidget {
                             )),
                     ],
                   ),
-                  SizedBox(
-                    height: h * 0.02,
-                  ),
+                  SizedBox(height: h * 0.02),
                   Row(
                     children: [
                       Container(
