@@ -358,9 +358,7 @@ class ProfessionsListDetails extends StatelessWidget {
             margin: EdgeInsets.only(top: h * 0.03, bottom: h * 0.01),
             child: Row(
               children: [
-                SizedBox(
-                  width: w * 0.04,
-                ),
+                SizedBox(width: w * 0.04),
                 Image(
                   image: const AssetImage('assets/images/text.png'),
                   width: w * 0.2,
