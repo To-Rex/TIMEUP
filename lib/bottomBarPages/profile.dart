@@ -332,6 +332,80 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
+  showBottomSheet(context) {
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.9,
+          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: h * 0.02),
+                width: w * 0.2,
+                height: h * 0.005,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              SizedBox(height: h * 0.1),
+              InkWell(
+                onTap: () {
+                  showClosDialogs(context);
+                },
+                child: SizedBox(
+                  width: w,
+                  height: h * 0.05,
+                  child: Row(
+                    children: [
+                      SizedBox(width: w * 0.05),
+                      HeroIcon(
+                        HeroIcons.arrowRightOnRectangle,
+                        color: Colors.red,
+                        size: w * 0.05,
+                      ),
+                      SizedBox(width: w * 0.03),
+                      const Text('Log out'),
+                    ],
+                  ),
+                ),
+              ),
+              const Divider(),
+              InkWell(
+                onTap: () {
+                  showDialogs(context);
+                },
+                child: SizedBox(
+                  width: w,
+                  height: h * 0.05,
+                  child: Row(
+                    children: [
+                      SizedBox(width: w * 0.05),
+                      HeroIcon(
+                        HeroIcons.trash,
+                        color: Colors.red,
+                        size: w * 0.05,
+                      ),
+                      SizedBox(width: w * 0.03),
+                      const Text('Delete accaunt'),
+                    ],
+                  ),
+                ),
+              ),
+              const Divider(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   final ImagePicker _picker = ImagePicker();
   var croppedImage;
 
@@ -399,7 +473,7 @@ class ProfilePage extends StatelessWidget {
                             ),
                           ),
                           actions: [
-                            PopupMenuButton(
+                            /*PopupMenuButton(
                               itemBuilder: (context) => [
                                 PopupMenuItem(
                                   onTap: () {
@@ -426,6 +500,15 @@ class ProfilePage extends StatelessWidget {
                                   ),
                                 ),
                               ],
+                              icon: const Icon(
+                                Icons.menu,
+                                color: Colors.black,
+                              ),
+                            ),*/
+                            IconButton(
+                              onPressed: () {
+                                showBottomSheet(context);
+                              },
                               icon: const Icon(
                                 Icons.menu,
                                 color: Colors.black,
