@@ -127,6 +127,17 @@ class ProfessionsListDetails extends StatelessWidget {
                         showTimePicker(
                           context: context,
                           initialTime: TimeOfDay.now(),
+                          builder: (context, child) {
+                            return MediaQuery(
+                              data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+                              child: child!,
+                            );
+                          },
+                          initialEntryMode: TimePickerEntryMode.input,
+                          hourLabelText: 'Soat',
+                          minuteLabelText: 'Daqiqa',
+                          helpText: 'Vaqtni tanlang',
+
                         ).then((value) =>
                             _timeController.text = '${value!.hour < 10 ? '0${value.hour}' : value.hour}:${value.minute < 10 ? '0${value.minute}' : value.minute}');
                       },
