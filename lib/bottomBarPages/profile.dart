@@ -17,7 +17,7 @@ import '../pages/user_edit.dart';
 import '../res/getController.dart';
 import 'package:photo_view/photo_view.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatelessWidget  {
   ProfilePage({Key? key}) : super(key: key);
 
   final GetController getController = Get.put(GetController());
