@@ -257,8 +257,8 @@ class ProfilePage extends StatelessWidget {
                       )
                     ),
                     hintText: 'MM / DD / YYYY',
-                    hintStyle: const TextStyle(
-                      fontSize: 16,
+                    hintStyle: TextStyle(
+                      fontSize: w * 0.04,
                       fontWeight: FontWeight.w500,
                       color: Colors.grey,
                     ),
@@ -308,10 +308,7 @@ class ProfilePage extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: w * 0.7,
-                                child: Text(
-                                  'Ushbu mijoz'
-                                      ' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
-                                      '${getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                child: Text('Ushbu mijoz'' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} ''${getController.bookingBusinessGetList.value.res![index].time!} keladi',
                                   style: TextStyle(
                                     fontSize: w * 0.04,
                                     fontWeight: FontWeight.w500,
