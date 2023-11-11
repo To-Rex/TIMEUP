@@ -27,7 +27,7 @@ class SamplePage extends StatelessWidget {
     _getController.clearCategory();
     _getController.clearSubCategory();
     _getController.changeIndex(index);
-    //_getController.clearMeUser();
+    _getController.nextPagesUserDetails.value = 0;
   }
 
 
@@ -36,10 +36,7 @@ class SamplePage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     if( GetStorage().read('token') == null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-      );
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()),);
     }
     return Scaffold(
       appBar: PreferredSize(
