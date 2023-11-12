@@ -18,7 +18,7 @@ class SamplePage extends StatelessWidget {
   static final List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     SearchPage(),
-    AddPostPage(),
+    //AddPostPage(),
     HistoryPage(),
     ProfilePage(),
   ];
@@ -57,8 +57,8 @@ class SamplePage extends StatelessWidget {
                 )
               : Container(height: h * 0.03))),
       body: SingleChildScrollView(
-        //child: Obx(() => _widgetOptions.elementAt(_getController.index.value)),
-        child: Obx(() => _getController.widgetOptions.elementAt(_getController.index.value)),
+        child: Obx(() => _widgetOptions.elementAt(_getController.index.value)),
+        //child: Obx(() => _getController.widgetOptions.elementAt(_getController.index.value)),
       ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
@@ -92,19 +92,19 @@ class SamplePage extends StatelessWidget {
                 color: Colors.blue,
               ),
             ),
-            if (_getController.meUsers.value.res?.business != null)
-              BottomNavigationBarItem(
-                icon: HeroIcon(
-                  HeroIcons.plusCircle,
-                  size: w * 0.07,
-                ),
-                label: 'add',
-                activeIcon: HeroIcon(
-                  HeroIcons.plusCircle,
-                  size: w * 0.07,
-                  color: Colors.blue,
-                ),
-              ),
+            // if (_getController.meUsers.value.res?.business != null)
+            //   BottomNavigationBarItem(
+            //     icon: HeroIcon(
+            //       HeroIcons.plusCircle,
+            //       size: w * 0.07,
+            //     ),
+            //     label: 'add',
+            //     activeIcon: HeroIcon(
+            //       HeroIcons.plusCircle,
+            //       size: w * 0.07,
+            //       color: Colors.blue,
+            //     ),
+            //   ),
             BottomNavigationBarItem(
               icon: HeroIcon(
                 HeroIcons.bell,
