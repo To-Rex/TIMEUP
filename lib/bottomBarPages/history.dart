@@ -147,12 +147,12 @@ class HistoryPage extends StatelessWidget {
                 onChanged: (value) {
                   if (value == '') {
                     if (_getController.meUsers.value.res?.business == null) {
-                      ApiController().bookingClientGetList('').then((value) => _getController.changeBookingBusinessGetList(value));
+                      ApiController().bookingClientGetList('');
                     } else {
                       if (_getController.nextPagesUserDetails.value == 1) {
-                        ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value));
+                        ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, '');
                       } else {
-                        ApiController().bookingClientGetList('').then((value) => _getController.changeBookingBusinessGetList1(value));
+                        ApiController().bookingClientGetList('');
                       }
                     }
                   }
@@ -162,21 +162,17 @@ class HistoryPage extends StatelessWidget {
                     onTap: () {
                       showDatePicker(
                         context: context,
-                        initialDate: _dateController.text == ''
-                            ? DateTime.now()
-                            : DateTime.parse('${_dateController.text.substring(6, 10)}-${_dateController.text.substring(3, 5)}-${_dateController.text.substring(0, 2)}'), firstDate: DateTime(1900), lastDate: DateTime(2025),).then((value) => {_dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
+                        initialDate: _dateController.text == '' ? DateTime.now() : DateTime.parse('${_dateController.text.substring(6, 10)}-${_dateController.text.substring(3, 5)}-${_dateController.text.substring(0, 2)}'), firstDate: DateTime(1900), lastDate: DateTime(2025),).then((value) => {_dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
                             if (_getController.meUsers.value.res?.business == null){
-                                ApiController().bookingClientGetList(_dateController.text).then((value) => _getController.changeBookingBusinessGetList(value))
+                                ApiController().bookingClientGetList(_dateController.text)
+                                //ApiController().bookingClientGetList(_dateController.text).then((value) => _getController.changeBookingBusinessGetList(value))
                               } else {
                                 if (_getController.nextPagesUserDetails.value == 1){
-                                    ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, _dateController.text).then((value) => _getController.changeBookingBusinessGetList(value)),
+                                    ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, _dateController.text)
+                                    //ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, _dateController.text).then((value) => _getController.changeBookingBusinessGetList(value)),
                                   } else {
-                                    ApiController()
-                                        .bookingClientGetList(
-                                            _dateController.text)
-                                        .then((value) => _getController
-                                            .changeBookingBusinessGetList1(
-                                                value))
+                                    //ApiController().bookingClientGetList(_dateController.text).then((value) => _getController.changeBookingBusinessGetList1(value))
+                                    ApiController().bookingClientGetList(_dateController.text)
                                   }
                               }
                           });
@@ -226,7 +222,6 @@ class HistoryPage extends StatelessWidget {
                             ApiController().bookingClientGetList('');
                           } else {
                             if (_getController.nextPagesUserDetails.value == 1) {
-                              print(_getController.meUsers.value.res?.business?.id);
                               ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, '');
                             } else {
                               ApiController().bookingClientGetList('');
@@ -411,7 +406,8 @@ class HistoryPage extends StatelessWidget {
                       ))
                   : const Center(
                       child: CircularProgressIndicator(),
-                    )),
+                    ),
+              ),
             if (_getController.meUsers.value.res?.business == null)
               Obx(() => _getController.bookingBusinessGetList.value.res != null
                   ? SizedBox(
@@ -483,7 +479,8 @@ class HistoryPage extends StatelessWidget {
                     )
                   : const Center(
                       child: CircularProgressIndicator(),
-                    )),
+                  ),
+              ),
           ],
         ),
       ),
