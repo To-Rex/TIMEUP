@@ -17,8 +17,12 @@ import '../models/profile_by_id.dart';
 import '../models/sub_category.dart';
 import '../models/verify_sms.dart';
 import '../models/me_user.dart';
+import '../res/getController.dart';
 
 class ApiController extends GetxController {
+
+  final GetController _getController = Get.put(GetController());
+
   //var url = 'http://16.16.182.36:443/api/v1/';
   var url = 'https://timeup.dizinfeksiya.uz/api/v1/';
   var smsUrl = 'sms/send';
@@ -345,6 +349,8 @@ class ApiController extends GetxController {
     );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      //_getController.bookingBusinessGetList.value = BookingBusinessGetList.fromJson(jsonDecode(response.body));
+      _getController.changeBookingBusinessGetList1(BookingBusinessGetList.fromJson(jsonDecode(response.body)));
       return BookingBusinessGetList.fromJson(jsonDecode(response.body));
     } else {
       return BookingBusinessGetList(res: [], status: false);
@@ -358,6 +364,8 @@ class ApiController extends GetxController {
       },
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
+      //_getController.bookingBusinessGetList1.value = BookingBusinessGetList.fromJson(jsonDecode(response.body));
+      _getController.changeBookingBusinessGetList(BookingBusinessGetList.fromJson(jsonDecode(response.body)));
       return BookingBusinessGetList.fromJson(jsonDecode(response.body));
     } else {
       return BookingBusinessGetList(res: [], status: false);

@@ -14,22 +14,18 @@ class HistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (GetStorage().read('token') == null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-      );
-    }
+    _getController.clearBookingBusinessGetList();
+    _getController.clearBookingBusinessGetList1();
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     _getController.nextPagesUserDetails.value = 0;
     var currentDate = '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
     currentDate = '';
     if (_getController.meUsers.value.res?.business == null) {
-      ApiController().bookingClientGetList(currentDate).then((value) => _getController.changeBookingBusinessGetList(value));
+      ApiController().bookingClientGetList('');
     } else {
-      ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value));
-      ApiController().bookingClientGetList(currentDate).then((value) => _getController.changeBookingBusinessGetList1(value));
+      ApiController().bookingClientGetList('');
+      ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, '');
     }
 
     return SizedBox(
@@ -44,7 +40,10 @@ class HistoryPage extends StatelessWidget {
                   ? SizedBox(
                       height: h * 0.05,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease,
+                          );
+                        },
                         child: Text(
                           'Eslatma',
                           style: TextStyle(
@@ -214,9 +213,7 @@ class HistoryPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              height: h * 0.02,
-            ),
+            SizedBox(height: h * 0.02),
             if (_getController.meUsers.value.res?.business != null)
               Obx(() => _getController.bookingBusinessGetList.value.res != null
                   ? SizedBox(
@@ -226,45 +223,44 @@ class HistoryPage extends StatelessWidget {
                           _getController.nextPagesUserDetails.value = index;
                           _dateController.text = '';
                           if (_getController.meUsers.value.res?.business == null) {
-                            ApiController().bookingClientGetList('').then((value) => _getController.changeBookingBusinessGetList(value));
+                            ApiController().bookingClientGetList('');
                           } else {
                             if (_getController.nextPagesUserDetails.value == 1) {
-                              ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value));
+                              print(_getController.meUsers.value.res?.business?.id);
+                              ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, '');
                             } else {
-                              ApiController().bookingClientGetList('').then((value) => _getController.changeBookingBusinessGetList1(value));
+                              ApiController().bookingClientGetList('');
                             }
                           }
                         },
                         controller: pageController,
                         children: [
                           SizedBox(
-                            child: Obx(() => _getController.bookingBusinessGetList1.value.res!.isEmpty
-                                ? const Center(
-                                    child: Text('Ma`lumot mavjud emas'),
-                                  )
+                            child: Obx(() => _getController.bookingBusinessGetList.value.res!.isEmpty
+                                ? const Center(child: Text('Ma`lumot mavjud emas'),)
                                 : SizedBox(
                                     height: h * 0.68,
                                     child: ListView.builder(
-                                      itemCount: _getController.bookingBusinessGetList1.value.res!.length,
+                                      itemCount: _getController.bookingBusinessGetList.value.res!.length,
                                       itemBuilder: (context, index) {
                                         return Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceAround,
                                           children: [
-                                            _getController.bookingBusinessGetList1.value.res![index].photoUrl == null
+                                            _getController.bookingBusinessGetList.value.res![index].photoUrl == null
                                                 ? CircleAvatar(
                                                     radius: w * 0.08,
                                                     backgroundImage: const AssetImage(
                                                       'assets/images/doctor.png',
                                                     ),
                                                   )
-                                                : CircleAvatar(radius: w * 0.08, backgroundImage: NetworkImage(_getController.bookingBusinessGetList1.value.res![index].photoUrl!,),),
+                                                : CircleAvatar(radius: w * 0.08, backgroundImage: NetworkImage(_getController.bookingBusinessGetList.value.res![index].photoUrl!,),),
                                             SizedBox(
                                               width: w * 0.6,
                                               child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(_getController.bookingBusinessGetList1.value.res![index].userName!,
+                                                  Text(_getController.bookingBusinessGetList.value.res![index].userName!,
                                                     style: TextStyle(
                                                       fontSize: w * 0.04,
                                                       fontWeight: FontWeight.w500,
@@ -273,7 +269,7 @@ class HistoryPage extends StatelessWidget {
                                                   ),
                                                   //User profession
                                                   Text(
-                                                    '${_getController.bookingBusinessGetList1.value.res![index].fistName!} ${_getController.bookingBusinessGetList1.value.res![index].lastName!}',
+                                                    '${_getController.bookingBusinessGetList.value.res![index].fistName!} ${_getController.bookingBusinessGetList.value.res![index].lastName!}',
                                                     style: TextStyle(
                                                       fontSize: w * 0.04,
                                                       fontWeight: FontWeight.w400,
@@ -287,7 +283,7 @@ class HistoryPage extends StatelessWidget {
                                                         color: Colors.blue,
                                                       ),
                                                       SizedBox(width: w * 0.01),
-                                                      Text(_getController.bookingBusinessGetList1.value.res![index].phoneNumber!,
+                                                      Text(_getController.bookingBusinessGetList.value.res![index].phoneNumber!,
                                                         style: TextStyle(
                                                           fontSize: w * 0.04,
                                                           fontWeight:
@@ -296,7 +292,7 @@ class HistoryPage extends StatelessWidget {
                                                       ),
                                                     ],
                                                   ),
-                                                  Text('Sizning navbatingiz: ${_getController.bookingBusinessGetList1.value.res![index].date!} ${_getController.bookingBusinessGetList1.value.res![index].time!}',
+                                                  Text('Sizning navbatingiz: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}',
                                                     style: TextStyle(
                                                       fontSize: w * 0.03,
                                                       fontWeight:
@@ -319,20 +315,18 @@ class HistoryPage extends StatelessWidget {
                                   )),
                           ),
                           SizedBox(
-                            child: Obx(() => _getController.bookingBusinessGetList.value.res!.isEmpty
-                                ? const Center(
-                                    child: Text('Ma`lumot mavjud emas'),
-                                  )
+                            child: Obx(() => _getController.bookingBusinessGetList1.value.res!.isEmpty
+                                ? const Center(child: Text('Ma`lumot mavjud emas'),)
                                 : SizedBox(
                                     height: h * 0.68,
                                     child: ListView.builder(
-                                      itemCount: _getController.bookingBusinessGetList.value.res!.length,
+                                      itemCount: _getController.bookingBusinessGetList1.value.res!.length,
                                       itemBuilder: (context, index) {
                                         return Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceAround,
                                           children: [
-                                            _getController.bookingBusinessGetList.value.res![index].photoUrl == null
+                                            _getController.bookingBusinessGetList1.value.res![index].photoUrl == null
                                                 ? CircleAvatar(
                                                     radius: w * 0.08,
                                                     backgroundImage: const AssetImage(
@@ -343,8 +337,8 @@ class HistoryPage extends StatelessWidget {
                                                     radius: w * 0.08,
                                                     backgroundImage:
                                                         NetworkImage(
-                                                      //"${ApiController().url.substring(0, ApiController().url.length - 1)}${_getController.bookingBusinessGetList.value.res![index].photoUrl!}",
-                                                      _getController.bookingBusinessGetList.value.res![index].photoUrl!,
+                                                      //"${ApiController().url.substring(0, ApiController().url.length - 1)}${_getController.bookingBusinessGetList1.value.res![index].photoUrl!}",
+                                                      _getController.bookingBusinessGetList1.value.res![index].photoUrl!,
                                                     ),
                                                   ),
                                             SizedBox(
@@ -353,7 +347,7 @@ class HistoryPage extends StatelessWidget {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(_getController.bookingBusinessGetList.value.res![index].userName!,
+                                                  Text(_getController.bookingBusinessGetList1.value.res![index].userName!,
                                                     style: TextStyle(
                                                       fontSize: w * 0.04,
                                                       fontWeight:
@@ -363,8 +357,8 @@ class HistoryPage extends StatelessWidget {
                                                   ),
                                                   //User profession
                                                   Text(
-                                                    '${_getController.bookingBusinessGetList.value.res![index].fistName!} '
-                                                    '${_getController.bookingBusinessGetList.value.res![index].lastName!}',
+                                                    '${_getController.bookingBusinessGetList1.value.res![index].fistName!} '
+                                                    '${_getController.bookingBusinessGetList1.value.res![index].lastName!}',
                                                     style: TextStyle(
                                                       fontSize: w * 0.04,
                                                       fontWeight:
@@ -381,7 +375,7 @@ class HistoryPage extends StatelessWidget {
                                                       SizedBox(
                                                         width: w * 0.01,
                                                       ),
-                                                      Text(_getController.bookingBusinessGetList.value.res![index].phoneNumber!,
+                                                      Text(_getController.bookingBusinessGetList1.value.res![index].phoneNumber!,
                                                         style: TextStyle(
                                                           fontSize: w * 0.04,
                                                           fontWeight:
@@ -391,7 +385,7 @@ class HistoryPage extends StatelessWidget {
                                                     ],
                                                   ),
                                                   Text(
-                                                    'Mijozingiz navbati: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}',
+                                                    'Mijozingiz navbati: ${_getController.bookingBusinessGetList1.value.res![index].date!} ${_getController.bookingBusinessGetList1.value.res![index].time!}',
                                                     style: TextStyle(
                                                       fontSize: w * 0.03,
                                                       fontWeight:
@@ -421,20 +415,15 @@ class HistoryPage extends StatelessWidget {
             if (_getController.meUsers.value.res?.business == null)
               Obx(() => _getController.bookingBusinessGetList.value.res != null
                   ? SizedBox(
-                      child: Obx(() => _getController
-                              .bookingBusinessGetList.value.res!.isEmpty
-                          ? const Center(
-                              child: Text('Ma`lumot mavjud emas'),
-                            )
+                      child: Obx(() => _getController.bookingBusinessGetList.value.res!.isEmpty
+                          ? const Center(child: Text('Ma`lumot mavjud emas'),)
                           : SizedBox(
                               height: h * 0.68,
                               child: ListView.builder(
-                                itemCount: _getController
-                                    .bookingBusinessGetList.value.res!.length,
+                                itemCount: _getController.bookingBusinessGetList.value.res!.length,
                                 itemBuilder: (context, index) {
                                   return Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
                                       _getController.bookingBusinessGetList.value.res![index].photoUrl == null
                                           ? CircleAvatar(radius: w * 0.08, backgroundImage: const AssetImage('assets/images/doctor.png',),)
@@ -465,11 +454,8 @@ class HistoryPage extends StatelessWidget {
                                                   size: w * 0.04,
                                                   color: Colors.blue,
                                                 ),
-                                                SizedBox(
-                                                  width: w * 0.01,
-                                                ),
-                                                Text(
-                                                  _getController.bookingBusinessGetList.value.res![index].phoneNumber!,
+                                                SizedBox(width: w * 0.01),
+                                                Text(_getController.bookingBusinessGetList.value.res![index].phoneNumber!,
                                                   style: TextStyle(
                                                     fontSize: w * 0.04,
                                                     fontWeight: FontWeight.w400,
@@ -483,12 +469,8 @@ class HistoryPage extends StatelessWidget {
                                                 fontWeight: FontWeight.w400,
                                               ),
                                             ),
-                                            const Divider(
-                                              color: Colors.grey,
-                                            ),
-                                            SizedBox(
-                                              height: w * 0.01,
-                                            )
+                                            const Divider(color: Colors.grey),
+                                            SizedBox(height: w * 0.01)
                                           ],
                                         ),
                                       ),
@@ -496,7 +478,8 @@ class HistoryPage extends StatelessWidget {
                                   );
                                 },
                               ),
-                            )),
+                            ),
+                      ),
                     )
                   : const Center(
                       child: CircularProgressIndicator(),
