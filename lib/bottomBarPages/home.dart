@@ -109,7 +109,6 @@ class HomePage extends StatelessWidget {
           ? SizedBox(
       height:  h * 0.83,
       child: ListView.builder(
-
           itemCount: _getController.followList.value.res?.length ?? 0,
           itemBuilder: (context, index) {
             return Column(
@@ -164,22 +163,10 @@ class HomePage extends StatelessWidget {
                             iconSize: w * 0.07,
                             padding: EdgeInsets.zero,
                             onPressed: (){
-                              showDialogs(
-                                  context, _getController.followList.value.res?[index].phoneNumber ?? '','You will be charged for this call','Call',1);
+                              ApiController().profileById(_getController.followList.value.res?[index].id ?? 0).then((value) => {_getController.changeProfileById(value),});
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
                             },
-                            icon: HeroIcon(HeroIcons.phone, color: Colors.blue, size: w * 0.07,)
-                        ),
-                      ),
-                      SizedBox(width: w * 0.01,),
-                      SizedBox(
-                        height: w * 0.07,
-                        width: w * 0.07,
-                        child: IconButton(
-                            hoverColor: Colors.blue,
-                            iconSize: w * 0.07,
-                            padding: EdgeInsets.zero,
-                            onPressed: (){showDialogs(context, 'Manzil',_getController.followList.value.res?[index].officeAddress ?? '','ok',2);},
-                            icon: HeroIcon(HeroIcons.mapPin, color: Colors.blue, size: w * 0.07,)
+                            icon: HeroIcon(HeroIcons.heart, color: Colors.blue, size: w * 0.07,)
                         ),
                       ),
                       SizedBox(width: w * 0.01),
@@ -190,10 +177,36 @@ class HomePage extends StatelessWidget {
                             hoverColor: Colors.blue,
                             iconSize: w * 0.07,
                             padding: EdgeInsets.zero,
+                            onPressed: (){
+                              showDialogs(context, _getController.followList.value.res?[index].phoneNumber ?? '','You will be charged for this call','Call',1);
+                            },
+                            icon: HeroIcon(HeroIcons.phone, color: Colors.blue, size: w * 0.07,)
+                        ),
+                      ),
+                      SizedBox(width: w * 0.01,),
+                      /*SizedBox(
+                        height: w * 0.07,
+                        width: w * 0.07,
+                        child: IconButton(
+                            hoverColor: Colors.blue,
+                            iconSize: w * 0.07,
+                            padding: EdgeInsets.zero,
+                            onPressed: (){showDialogs(context, 'Manzil',_getController.followList.value.res?[index].officeAddress ?? '','ok',2);},
+                            icon: HeroIcon(HeroIcons.mapPin, color: Colors.blue, size: w * 0.07,)
+                        ),
+                      ),*/
+                      /*SizedBox(width: w * 0.01),
+                      SizedBox(
+                        height: w * 0.07,
+                        width: w * 0.07,
+                        child: IconButton(
+                            hoverColor: Colors.blue,
+                            iconSize: w * 0.07,
+                            padding: EdgeInsets.zero,
                             onPressed: (){showDialogs(context,_getController.followList.value.res?[index].categoryName ?? '',_getController.followList.value.res?[index].bio ?? '','ok',3);},
                             icon: HeroIcon(HeroIcons.briefcase, color: Colors.blue, size: w * 0.07,)
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                 ),
@@ -212,8 +225,8 @@ class HomePage extends StatelessWidget {
                   width: w * 0.9,
                   child: Text(
                     '${_getController.followList.value.res?[index].categoryName}',
-                    style: const TextStyle(
-                      fontSize: 15,
+                    style: TextStyle(
+                      fontSize: w * 0.04,
                       fontWeight: FontWeight.w500,
                       color: Colors.blue,
                     ),
@@ -223,8 +236,8 @@ class HomePage extends StatelessWidget {
                   width: w * 0.9,
                   child: Text(
                     '${_getController.followList.value.res?[index].bio}',
-                    style: const TextStyle(
-                      fontSize: 15,
+                    style: TextStyle(
+                      fontSize: w * 0.04,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
