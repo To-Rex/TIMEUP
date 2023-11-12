@@ -1,7 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:time_up/bottomBarPages/home.dart';
 import 'package:time_up/models/category.dart';
 import 'package:time_up/models/get_follow_model.dart';
 import 'package:time_up/models/me_user.dart';
+import '../bottomBarPages/add_post.dart';
+import '../bottomBarPages/history.dart';
+import '../bottomBarPages/profile.dart';
+import '../bottomBarPages/search.dart';
 import '../models/booking_business_get.dart';
 import '../models/get_by_category.dart';
 import '../models/get_region.dart';
@@ -19,6 +25,24 @@ class GetController extends GetxController {
   var image = ''.obs;
   var nextPages = 0.obs;
   var nextPagesUserDetails = 0.obs;
+  var widgetOptions = <Widget>[];
+
+  void changeWidgetOptions() {
+    if (meUsers.value.res?.business == null) {
+      widgetOptions.clear();
+      widgetOptions.add(HomePage());
+      widgetOptions.add(SearchPage());
+      widgetOptions.add(HistoryPage());
+      widgetOptions.add(ProfilePage());
+    } else {
+      widgetOptions.clear();
+      widgetOptions.add(HomePage());
+      widgetOptions.add(SearchPage());
+      widgetOptions.add(AddPostPage());
+      widgetOptions.add(HistoryPage());
+      widgetOptions.add(ProfilePage());
+    }
+  }
 
   //var users = ApiController().getUserData();
   var meUsers = MeUser().obs;

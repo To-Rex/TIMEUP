@@ -419,55 +419,42 @@ class ProfessionsListDetails extends StatelessWidget {
                                   highlightColor: Colors.transparent,
                                   onTap: () {
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => Scaffold(
+                                      appBar: AppBar(
+                                        elevation: 0,
                                         backgroundColor: Colors.black,
-                                        body: Stack(
-                                          children: [
-                                            PhotoView(
-                                              imageProvider: NetworkImage("${_getController.getProfileById.value.res!.photoUrl}",),
-                                              minScale: PhotoViewComputedScale.contained * 0.8,
-                                              maxScale: PhotoViewComputedScale.covered * 2,
-                                              initialScale: PhotoViewComputedScale.contained,
-                                              enableRotation: true,
-                                              loadingBuilder: (context, event) => Center(
-                                                child: SizedBox(
-                                                  width: 20.0,
-                                                  height: 20.0,
-                                                  child: CircularProgressIndicator(
-                                                    value: event == null
-                                                        ? 0
-                                                        : event.cumulativeBytesLoaded /
-                                                            event.expectedTotalBytes!,
-                                                  ),
-                                                ),
+                                        leading: IconButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+                                        ),
+                                      ),
+                                        backgroundColor: Colors.black,
+                                        body: PhotoView(
+                                          imageProvider: NetworkImage("${_getController.getProfileById.value.res!.photoUrl}",),
+                                          minScale: PhotoViewComputedScale.contained * 0.8,
+                                          maxScale: PhotoViewComputedScale.covered * 2,
+                                          initialScale: PhotoViewComputedScale.contained,
+                                          enableRotation: true,
+                                          loadingBuilder: (context, event) => Center(
+                                            child: SizedBox(
+                                              width: 20.0,
+                                              height: 20.0,
+                                              child: CircularProgressIndicator(
+                                                value: event == null
+                                                    ? 0
+                                                    : event.cumulativeBytesLoaded /
+                                                    event.expectedTotalBytes!,
                                               ),
                                             ),
-                                            Positioned(
-                                              top: h * 0.05,
-                                              left: w * 0.01,
-                                              child: Container(
-                                                padding: EdgeInsets.only(left: w * 0.01),
-                                                width: w * 0.1,
-                                                height: w * 0.1,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius: BorderRadius.circular(w * 0.1),
-                                                ),
-                                                child: IconButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                          ),
                                         ),
                                       ),
                                     ),
                                     );
                                   },
                                   child: CircleAvatar(
-                                    radius: w * 0.18,
+                                    radius: w * 0.15,
                                     backgroundImage: NetworkImage(
                                       "${_getController.getProfileById.value.res!.photoUrl}",
                                     ),

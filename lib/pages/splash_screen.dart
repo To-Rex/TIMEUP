@@ -12,27 +12,11 @@ import 'login_page.dart';
 class SplashScreen extends StatelessWidget {
   SplashScreen({super.key});
 
-  final GetController _getController = Get.put(GetController());
-  getUsers() async {if (GetStorage().read('token') != null) {_getController.changeMeUser(await ApiController().getUserData());}}
+
 
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
-    /*Timer(const Duration(seconds: 3), () {
-      if (GetStorage().read('token') != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => SamplePage()),
-        );
-        getUsers();
-      } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
-        );
-      }
-    });*/
-
     return Scaffold(
       body: Center(
         child: Column(

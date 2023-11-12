@@ -225,8 +225,10 @@ class ApiController extends GetxController {
   }
 
   Future<GetSubCategory> getSubCategory(id) async {
-    var response = await http.get(
-        Uri.parse(url + subCategoryUrl + id.toString()));
+    var response = await http.get(Uri.parse(url + subCategoryUrl + id.toString()),
+    headers: {
+      'Authorization': 'Bearer ${GetStorage().read('token')}',
+    },);
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return GetSubCategory.fromJson(jsonDecode(response.body));
@@ -332,7 +334,10 @@ class ApiController extends GetxController {
   }
 
   Future<ProfileById> profileById(int id) async {
-    var response = await http.get(Uri.parse(url + profileByIdUrl + id.toString()));
+    var response = await http.get(Uri.parse(url + profileByIdUrl + id.toString()),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },);
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return ProfileById.fromJson(jsonDecode(response.body));

@@ -1,10 +1,14 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:time_up/pages/login_page.dart';
 import 'package:time_up/pages/sample_page.dart';
 import 'package:time_up/pages/splash_screen.dart';
+import 'package:time_up/res/getController.dart';
+
+import 'api/api_controller.dart';
 
 main() async {
   await GetStorage.init();
@@ -41,6 +45,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final GetController _getController = Get.put(GetController());
   final box = GetStorage();
   String? token = '';
   getToken() async {
@@ -52,17 +57,35 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     getToken();
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () async {
       if (token != null) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => SamplePage()),
         );
       } else {
-        Navigator.pushReplacement(
+
+        /*Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => LoginPage()),
-        );
+        );*/
+        if (GetStorage().read('token') != null) {
+          //_getController.changeMeUser(await ApiController().getUserData());
+          //if data != null changeMeUser(data); and Navigator.pushReplacement(
+          //           context,
+          //           MaterialPageRoute(builder: (context) => LoginPage()),
+          //         );
+          ApiController().getUserData().then((value) => {
+            _getController.changeMeUser(value),
+            _getController.changeWidgetOptions(),
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),)
+              });
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+          );
+        }
       }
     });
     super.initState();

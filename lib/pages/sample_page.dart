@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:time_up/bottomBarPages/home.dart';
+import '../bottomBarPages/add_post.dart';
 import '../bottomBarPages/history.dart';
 import '../bottomBarPages/profile.dart';
 import '../bottomBarPages/search.dart';
@@ -17,6 +18,7 @@ class SamplePage extends StatelessWidget {
   static final List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     SearchPage(),
+    AddPostPage(),
     HistoryPage(),
     ProfilePage(),
   ];
@@ -30,38 +32,36 @@ class SamplePage extends StatelessWidget {
     _getController.nextPagesUserDetails.value = 0;
   }
 
-
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
-    if( GetStorage().read('token') == null) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()),);
-    }
+    _getController.changeWidgetOptions();
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(h * 0.066),
           child: Obx(() => _getController.index.value != 5
               ? Container(
-            height: h * 0.06,
-            margin: EdgeInsets.only(top: h * 0.045),
-            child: Row(
-              children: [
-                SizedBox(width: w * 0.04),
-                Image(
-                  image: const AssetImage('assets/images/text.png'),
-                  width: w * 0.2,
-                  height: h * 0.05,
-                ),
-              ],
-            ),
-          ) : Container(height: h * 0.03))
-      ),
+                  height: h * 0.06,
+                  margin: EdgeInsets.only(top: h * 0.045),
+                  child: Row(
+                    children: [
+                      SizedBox(width: w * 0.04),
+                      Image(
+                        image: const AssetImage('assets/images/text.png'),
+                        width: w * 0.2,
+                        height: h * 0.05,
+                      ),
+                    ],
+                  ),
+                )
+              : Container(height: h * 0.03))),
       body: SingleChildScrollView(
-        child: Obx(() => _widgetOptions.elementAt(_getController.index.value)),
+        //child: Obx(() => _widgetOptions.elementAt(_getController.index.value)),
+        child: Obx(() => _getController.widgetOptions.elementAt(_getController.index.value)),
       ),
       bottomNavigationBar: Obx(
-            () => BottomNavigationBar(
+        () => BottomNavigationBar(
           backgroundColor: Colors.white,
           unselectedItemColor: Colors.black,
           showSelectedLabels: false,
@@ -92,6 +92,19 @@ class SamplePage extends StatelessWidget {
                 color: Colors.blue,
               ),
             ),
+            if (_getController.meUsers.value.res?.business != null)
+              BottomNavigationBarItem(
+                icon: HeroIcon(
+                  HeroIcons.plusCircle,
+                  size: w * 0.07,
+                ),
+                label: 'add',
+                activeIcon: HeroIcon(
+                  HeroIcons.plusCircle,
+                  size: w * 0.07,
+                  color: Colors.blue,
+                ),
+              ),
             BottomNavigationBarItem(
               icon: HeroIcon(
                 HeroIcons.bell,
