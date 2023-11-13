@@ -34,6 +34,7 @@ class AddPostPage extends StatelessWidget {
             ),
           ),
         ),
+        Camera
       ],
     );
   }
