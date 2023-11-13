@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/bottomBarPages/home.dart';
-import '../bottomBarPages/add_post.dart';
 import '../bottomBarPages/history.dart';
 import '../bottomBarPages/profile.dart';
 import '../bottomBarPages/search.dart';
 import '../res/getController.dart';
-import 'login_page.dart';
 
 class SamplePage extends StatelessWidget {
   SamplePage({super.key});
