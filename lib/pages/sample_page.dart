@@ -38,7 +38,6 @@ class SamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
-    //_getController.changeWidgetOptions();
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(h * 0.066),
