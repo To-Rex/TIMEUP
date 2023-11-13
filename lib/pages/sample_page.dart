@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/bottomBarPages/home.dart';
 import '../bottomBarPages/add_post.dart';
 import '../bottomBarPages/history.dart';
@@ -24,6 +25,7 @@ class SamplePage extends StatelessWidget {
   ];
 
   void _onItemTapped(int index) {
+    _getController.changeWidgetOptions();
     _getController.enters.value = 0;
     _getController.entersUser.value = 0;
     _getController.clearCategory();
@@ -36,7 +38,7 @@ class SamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
-    _getController.changeWidgetOptions();
+    //_getController.changeWidgetOptions();
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(h * 0.066),
@@ -57,8 +59,8 @@ class SamplePage extends StatelessWidget {
                 )
               : Container(height: h * 0.03))),
       body: SingleChildScrollView(
-        child: Obx(() => _widgetOptions.elementAt(_getController.index.value)),
-        //child: Obx(() => _getController.widgetOptions.elementAt(_getController.index.value)),
+        //child: Obx(() => _widgetOptions.elementAt(_getController.index.value)),
+        child: Obx(() => _getController.widgetOptions.elementAt(_getController.index.value)),
       ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
@@ -92,19 +94,19 @@ class SamplePage extends StatelessWidget {
                 color: Colors.blue,
               ),
             ),
-            // if (_getController.meUsers.value.res?.business != null)
-            //   BottomNavigationBarItem(
-            //     icon: HeroIcon(
-            //       HeroIcons.plusCircle,
-            //       size: w * 0.07,
-            //     ),
-            //     label: 'add',
-            //     activeIcon: HeroIcon(
-            //       HeroIcons.plusCircle,
-            //       size: w * 0.07,
-            //       color: Colors.blue,
-            //     ),
-            //   ),
+            if (_getController.meUsers.value.res?.business != null)
+              BottomNavigationBarItem(
+                icon: HeroIcon(
+                  HeroIcons.plusCircle,
+                  size: w * 0.07,
+                ),
+                label: 'add',
+                activeIcon: HeroIcon(
+                  HeroIcons.plusCircle,
+                  size: w * 0.07,
+                  color: Colors.blue,
+                ),
+              ),
             BottomNavigationBarItem(
               icon: HeroIcon(
                 HeroIcons.bell,

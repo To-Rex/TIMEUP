@@ -10,12 +10,10 @@ import '../res/getController.dart';
 import 'login_page.dart';
 
 class SplashScreen extends StatelessWidget {
-  SplashScreen({super.key});
-
-
-
+  const SplashScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    ApiController().getUserData();
     var h = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Center(

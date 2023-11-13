@@ -97,9 +97,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if( GetStorage().read('token') == null) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()),);
-    }
+    ApiController().getUserData();
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     ApiController().getFollowList().then((value) => _getController.changeFollowList(value));

@@ -25,11 +25,7 @@ class ProfilePage extends StatelessWidget  {
   final TextEditingController _dateController = TextEditingController();
 
   getUsers() async {
-    //getController.changeMeUser(await ApiController().getUserData());
-    ApiController().getUserData().then((value) => {
-      getController.changeMeUser(value),
-      getController.changeWidgetOptions(),
-    });
+    ApiController().getUserData();
   }
 
   showDialogs(BuildContext context) {
@@ -434,8 +430,7 @@ class ProfilePage extends StatelessWidget  {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    getUsers();
-    getController.changeWidgetOptions();
+    //getUsers();
     return WillPopScope(
       onWillPop: () async {
         if (getController.entersUser.value == 0) {
