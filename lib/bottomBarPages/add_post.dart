@@ -86,50 +86,6 @@ class _AddPostPage extends State<AddPostPage> {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.8,
       width: MediaQuery.of(context).size.width,
-      /*child: Stack(
-        children: [
-          CameraPreview(controller),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              width: MediaQuery.of(context).size.width,
-              color: Colors.black.withOpacity(0.5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      toggleFlash();
-                    },
-                    icon: HeroIcon(
-                      HeroIcons.bolt,
-                      color: Colors.white,
-                    ),
-                    color: Colors.white,
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: HeroIcon(
-                      HeroIcons.camera,
-                      color: Colors.white,
-                    ),
-                    color: Colors.white,
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: HeroIcon(
-                      HeroIcons.videoCamera,
-                      color: Colors.white,
-                    ),
-                    color: Colors.white,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),*/
       child: Stack(
         children: [
           SizedBox(
@@ -151,24 +107,64 @@ class _AddPostPage extends State<AddPostPage> {
           Positioned(
             bottom: 0,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.1,
+              height: MediaQuery.of(context).size.height * 0.15,
               width: MediaQuery.of(context).size.width,
               color: Colors.black.withOpacity(0.5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  //gallery button
                   IconButton(
                     onPressed: () {},
-                    icon: HeroIcon(
-                      HeroIcons.camera,
+                    icon: const HeroIcon(
+                      HeroIcons.photo,
                       color: Colors.white,
                     ),
                     color: Colors.white,
                   ),
+                  //press circle photo and video, if one of them is pressed, it will take a picture, if it is long pressed, it will take a video
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 30,
+                    child: IconButton(
+                      onPressed: () async {
+                        if (await Permission.camera.request().isGranted) {
+                          await controller.takePicture().then((value) {
+                          });
+                        }
+                      },
+                      icon: const HeroIcon(
+                        HeroIcons.camera,
+                        color: Colors.black,
+                      ),
+                      color: Colors.white,
+                    ),
+                  ),
+
+                  //caemra reverse button
                   IconButton(
-                    onPressed: () {},
-                    icon: HeroIcon(
-                      HeroIcons.videoCamera,
+                    onPressed: () {
+                      controller = CameraController(_cameras.last, ResolutionPreset.max);
+                      controller.initialize().then((_) {
+                        if (!mounted) {
+                          return;
+                        }
+                        setState(() {});
+                      }).catchError((Object e) {
+                        if (e is CameraException) {
+                          switch (e.code) {
+                            case 'CameraAccessDenied':
+                              break;
+                            default:
+                              break;
+                          }
+                        }
+                      });
+                      setState(() {
+                      });
+                    },
+                    icon: const HeroIcon(
+                      HeroIcons.arrowPath,
                       color: Colors.white,
                     ),
                     color: Colors.white,
