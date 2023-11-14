@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:time_up/bottomBarPages/home.dart';
@@ -27,6 +26,11 @@ class GetController extends GetxController {
   var nextPages = 0.obs;
   var nextPagesUserDetails = 0.obs;
   var widgetOptions = <Widget>[];
+  var postFile = ''.obs;
+
+  void changePostFile(String newPostFile) {
+    postFile.value = newPostFile;
+  }
 
   void changeWidgetOptions() {
     if (meUsers.value.res?.business == null) {

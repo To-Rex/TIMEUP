@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +18,7 @@ class AddPostPage extends StatefulWidget {
 }
 
 class _AddPostPage extends State<AddPostPage> {
+  final GetController _getController = Get.put(GetController());
   late CameraController controller;
   late bool isFlashOn = true;
 
@@ -59,11 +62,10 @@ class _AddPostPage extends State<AddPostPage> {
     try {
       await controller.setFlashMode(mode);
     } catch (e) {
-      print(e);
+      _getController.changePostFile('');
     }
   }
 
-  //flash on off function
   void toggleFlash() {
     if (controller.value.flashMode == FlashMode.off) {
       setFlashMode(FlashMode.torch);
@@ -81,28 +83,31 @@ class _AddPostPage extends State<AddPostPage> {
   @override
   Widget build(BuildContext context) {
     if (!controller.value.isInitialized) {
-      return Container();
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
     }
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.8,
+    return Obx(() => _getController.postFile.value == ''
+        ?SizedBox(
+      height: MediaQuery.of(context).size.height * 0.81,
       width: MediaQuery.of(context).size.width,
       child: Stack(
         children: [
           SizedBox(
-          height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: CameraPreview(controller),
           ),
           Positioned(
-              child: IconButton(
-            onPressed: () {
-              toggleFlash();
-            },
-            icon: const HeroIcon(
-              HeroIcons.bolt,
-              color: Colors.white,
+            child: IconButton(
+              onPressed: () {
+                toggleFlash();
+              },
+              icon: const HeroIcon(
+                HeroIcons.bolt,
+                color: Colors.white,
+              ),
             ),
-          ),
           ),
           Positioned(
             bottom: 0,
@@ -113,7 +118,6 @@ class _AddPostPage extends State<AddPostPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  //gallery button
                   IconButton(
                     onPressed: () {},
                     icon: const HeroIcon(
@@ -122,7 +126,6 @@ class _AddPostPage extends State<AddPostPage> {
                     ),
                     color: Colors.white,
                   ),
-                  //press circle photo and video, if one of them is pressed, it will take a picture, if it is long pressed, it will take a video
                   CircleAvatar(
                     backgroundColor: Colors.white,
                     radius: 30,
@@ -130,6 +133,7 @@ class _AddPostPage extends State<AddPostPage> {
                       onPressed: () async {
                         if (await Permission.camera.request().isGranted) {
                           await controller.takePicture().then((value) {
+                            _getController.changePostFile(value.path);
                           });
                         }
                       },
@@ -140,8 +144,6 @@ class _AddPostPage extends State<AddPostPage> {
                       color: Colors.white,
                     ),
                   ),
-
-                  //caemra reverse button
                   IconButton(
                     onPressed: () {
                       controller = CameraController(_cameras.last, ResolutionPreset.max);
@@ -175,7 +177,10 @@ class _AddPostPage extends State<AddPostPage> {
           ),
         ],
       ),
-
-    );
+    ) :SizedBox(
+      height: MediaQuery.of(context).size.height * 0.8,
+      width: MediaQuery.of(context).size.width,
+      child: Image.file(File(_getController.postFile.value)),
+    ));
   }
 }
