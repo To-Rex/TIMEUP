@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:time_up/bottomBarPages/home.dart';
@@ -176,5 +177,6 @@ class GetController extends GetxController {
   void changeRegionIndex(int newRegionIndex) {
     regionIndex.value = newRegionIndex;
   }
+
 
 }

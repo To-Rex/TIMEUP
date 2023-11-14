@@ -10,7 +10,9 @@ import '../res/getController.dart';
 import 'login_page.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+  SplashScreen({super.key});
+
+  final GetController _getController = Get.put(GetController());
   @override
   Widget build(BuildContext context) {
     ApiController().getUserData();
