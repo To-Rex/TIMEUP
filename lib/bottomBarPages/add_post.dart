@@ -267,6 +267,7 @@ class _AddPostPage extends State<AddPostPage> {
             height: MediaQuery.of(context).size.height * 0.06,
             child: ElevatedButton(
               onPressed: () {
+                _getController.changePostFile('');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
