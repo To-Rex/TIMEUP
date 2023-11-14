@@ -464,38 +464,6 @@ class ProfilePage extends StatelessWidget  {
                             ),
                           ),
                           actions: [
-                            /*PopupMenuButton(
-                              itemBuilder: (context) => [
-                                PopupMenuItem(
-                                  onTap: () {
-                                    showClosDialogs(context);
-                                  },
-                                  child: Text('Log out',
-                                    style: TextStyle(
-                                      fontSize: w * 0.04,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.redAccent,
-                                    ),
-                                  ),
-                                ),
-                                PopupMenuItem(
-                                  onTap: () {
-                                    showDialogs(context);
-                                  },
-                                  child: Text('Delete accaunt',
-                                    style: TextStyle(
-                                      fontSize: w * 0.04,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.redAccent,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                              icon: const Icon(
-                                Icons.menu,
-                                color: Colors.black,
-                              ),
-                            ),*/
                             IconButton(
                               onPressed: () {
                                 showBottomSheet(context);

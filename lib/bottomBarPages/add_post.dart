@@ -82,6 +82,8 @@ class _AddPostPage extends State<AddPostPage> {
 
   @override
   Widget build(BuildContext context) {
+    var h = MediaQuery.of(context).size.height;
+    var w = MediaQuery.of(context).size.width;
     if (!controller.value.isInitialized) {
       return const Center(
         child: CircularProgressIndicator(),
@@ -180,7 +182,105 @@ class _AddPostPage extends State<AddPostPage> {
     ) :SizedBox(
       height: MediaQuery.of(context).size.height * 0.8,
       width: MediaQuery.of(context).size.width,
-      child: Image.file(File(_getController.postFile.value)),
+      child: Column(
+        children: [
+          AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              onPressed: () {
+                _getController.changePostFile('');
+              },
+              icon: const HeroIcon(
+                HeroIcons.chevronLeft,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.3,
+            child: Image.file(File(_getController.postFile.value), fit: BoxFit.cover),
+          ),
+          SizedBox(height: h * 0.02),
+          //EditableText(controller: controller, focusNode: focusNode, style: style, cursorColor: cursorColor, backgroundCursorColor: backgroundCursorColor)
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.95,
+            height: MediaQuery.of(context).size.height * 0.06,
+            child:TextField(
+              //controller: _dateController,
+              decoration: InputDecoration(
+                hintText: 'Title',
+                hintStyle: TextStyle(
+                  fontSize: w * 0.034,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey[600],
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: Colors.grey[300]!,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: Colors.grey[300]!,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: Colors.grey[300]!,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: h * 0.02),
+          Container(
+            width: w * 0.95,
+            height: h * 0.2,
+            padding: EdgeInsets.only(right: w * 0.02, left: w * 0.02, bottom: h * 0.01),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.grey[300]!),
+            ),
+            child: TextField(
+              maxLines: 30,
+              maxLength: 600,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Description',
+                hintStyle: TextStyle(
+                  fontSize: w * 0.04,
+                ),
+              ),
+              style: TextStyle(
+                fontSize: w * 0.04,
+              ),
+            ),
+          ),
+          SizedBox(height: h * 0.02),
+          //button post yaratish
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.95,
+            height: MediaQuery.of(context).size.height * 0.06,
+            child: ElevatedButton(
+              onPressed: () {
+
+              },
+              child: Text('Post yaratish', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.white)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          ),
+        ],
+      )
     ));
   }
 }

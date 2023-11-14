@@ -59,21 +59,15 @@ class MakeBusinessPage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
 
-    fullNameController.text =
-        '${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res!.lastName}';
+    fullNameController.text = '${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res!.lastName}';
     nikNameController.text = getController.meUsers.value.res?.userName ?? '';
-    phoneNumberController.text =
-        getController.meUsers.value.res?.phoneNumber ?? '';
+    phoneNumberController.text = getController.meUsers.value.res?.phoneNumber ?? '';
 
-    ApiController().getRegion().then((value) {
-      getController.changeRegion(value);
-    });
+    ApiController().getRegion().then((value) {getController.changeRegion(value);});
     ApiController().getCategory().then((value) {
       getController.changeCategory(value);
       getController.categoryIndex.value = value.res![0].id!;
-      ApiController()
-          .getSubCategory(getController.categoryIndex.value)
-          .then((value) {
+      ApiController().getSubCategory(getController.categoryIndex.value).then((value) {
         getController.changeSubCategory(value);
         getController.subCategoryIndex.value = value.res![0].id!;
       });
@@ -85,7 +79,6 @@ class MakeBusinessPage extends StatelessWidget {
           width: w,
           height: h * 0.75,
           child: PageView(
-            //swipe to change page false
             physics: const NeverScrollableScrollPhysics(),
             controller: pageController,
             children: [
