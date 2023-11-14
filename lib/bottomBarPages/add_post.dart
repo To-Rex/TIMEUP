@@ -262,21 +262,19 @@ class _AddPostPage extends State<AddPostPage> {
             ),
           ),
           SizedBox(height: h * 0.02),
-          //button post yaratish
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.95,
             height: MediaQuery.of(context).size.height * 0.06,
             child: ElevatedButton(
               onPressed: () {
-
               },
-              child: Text('Post yaratish', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.white)),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
+              child: Text('Post yaratish', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.white)),
             ),
           ),
         ],
