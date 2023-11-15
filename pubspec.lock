@@ -504,6 +504,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.0"
+  photo_gallery:
+    dependency: "direct main"
+    description:
+      name: photo_gallery
+      sha256: "711e25c7fcd0364665e5381819c68fbce2bd398c1411a61167b724c6d05bda35"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.1"
   photo_view:
     dependency: "direct main"
     description:

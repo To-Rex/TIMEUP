@@ -4,7 +4,9 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:photo_gallery/photo_gallery.dart';
 import 'package:time_up/api/api_controller.dart';
 import '../res/getController.dart';
 
@@ -21,6 +23,16 @@ class _AddPostPage extends State<AddPostPage> {
   final GetController _getController = Get.put(GetController());
   late CameraController controller;
   late bool isFlashOn = true;
+
+  Future<void> _pickMedia() async {
+    if (await _promptPermissionSetting()) {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        _getController.changePostFile(pickedFile.path);
+      }
+    }
+  }
 
   initCamera() async {
     _cameras = await availableCameras();
@@ -52,6 +64,22 @@ class _AddPostPage extends State<AddPostPage> {
     });
   }
 
+  Future<bool> _promptPermissionSetting() async {
+    if (Platform.isIOS) {
+      if (await Permission.photos.request().isGranted || await Permission.storage.request().isGranted) {
+        return true;
+      }
+    }
+    if (Platform.isAndroid) {
+      if (await Permission.storage.request().isGranted ||
+          await Permission.photos.request().isGranted &&
+              await Permission.videos.request().isGranted) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   @override
   void dispose() {
     controller.dispose();
@@ -79,6 +107,8 @@ class _AddPostPage extends State<AddPostPage> {
       });
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +151,10 @@ class _AddPostPage extends State<AddPostPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _getController.changePostFile('');
+                      _pickMedia();
+                    },
                     icon: const HeroIcon(
                       HeroIcons.photo,
                       color: Colors.white,
@@ -148,24 +181,45 @@ class _AddPostPage extends State<AddPostPage> {
                   ),
                   IconButton(
                     onPressed: () {
-                      controller = CameraController(_cameras.last, ResolutionPreset.max);
-                      controller.initialize().then((_) {
-                        if (!mounted) {
-                          return;
-                        }
-                        setState(() {});
-                      }).catchError((Object e) {
-                        if (e is CameraException) {
-                          switch (e.code) {
-                            case 'CameraAccessDenied':
-                              break;
-                            default:
-                              break;
+                      if (controller.description == _cameras.first) {
+                        controller = CameraController(_cameras.last, ResolutionPreset.max);
+                        controller.initialize().then((_) {
+                          if (!mounted) {
+                            return;
                           }
-                        }
-                      });
-                      setState(() {
-                      });
+                          setState(() {});
+                        }).catchError((Object e) {
+                          if (e is CameraException) {
+                            switch (e.code) {
+                              case 'CameraAccessDenied':
+                                break;
+                              default:
+                                break;
+                            }
+                          }
+                        });
+                        setState(() {
+                        });
+                      } else {
+                        controller = CameraController(_cameras.first, ResolutionPreset.max);
+                        controller.initialize().then((_) {
+                          if (!mounted) {
+                            return;
+                          }
+                          setState(() {});
+                        }).catchError((Object e) {
+                          if (e is CameraException) {
+                            switch (e.code) {
+                              case 'CameraAccessDenied':
+                                break;
+                              default:
+                                break;
+                            }
+                          }
+                        });
+                        setState(() {
+                        });
+                      }
                     },
                     icon: const HeroIcon(
                       HeroIcons.arrowPath,
