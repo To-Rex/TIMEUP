@@ -34,6 +34,16 @@ class _AddPostPage extends State<AddPostPage> {
     }
   }
 
+  Future<void> _pickVideo() async {
+    if (await _promptPermissionSetting()) {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        _getController.changePostFile(pickedFile.path);
+      }
+    }
+  }
+
   initCamera() async {
     _cameras = await availableCameras();
     controller = CameraController(_cameras.first, ResolutionPreset.max);
@@ -108,6 +118,44 @@ class _AddPostPage extends State<AddPostPage> {
     }
   }
 
+  showGallery(){
+    //photo or video
+    showModalBottomSheet(
+      showDragHandle: true,
+      context: context,
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: MediaQuery.of(context).size.height * 0.5,
+          child: Column(
+            children: [
+              Text('Choose media type', style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05, fontWeight: FontWeight.w500)),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              ListTile(
+                leading: Icon(Icons.photo),
+                title: Text('Photo'),
+                onTap: () {
+                  _pickMedia();
+                  Navigator.pop(context);
+                },
+              ),
+              const Divider(
+                height: 1,
+                thickness: 1,
+              ),
+              ListTile(
+                leading: Icon(Icons.video_collection),
+                title: Text('Video'),
+                onTap: () {
+                  _pickVideo();
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
 
   @override
@@ -153,7 +201,7 @@ class _AddPostPage extends State<AddPostPage> {
                   IconButton(
                     onPressed: () {
                       _getController.changePostFile('');
-                      _pickMedia();
+                      showGallery();
                     },
                     icon: const HeroIcon(
                       HeroIcons.photo,
