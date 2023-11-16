@@ -661,6 +661,8 @@ class _AddPostPage extends State<AddPostPage> {
                                 _getController.changePostVideoFile(''),
                                 titleController.clear(),
                                 descriptionController.clear(),
+                              _getController.changeIndex(0),
+                                ApiController().getUserData(),
                                 Toast.showToast(context, 'Post created', Colors.green, Colors.white),
                               } else {
                                 Toast.showToast(context, 'Error', Colors.red, Colors.white),
