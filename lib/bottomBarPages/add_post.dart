@@ -404,8 +404,7 @@ class _AddPostPage extends State<AddPostPage> {
                     titleController.clear(),
                     descriptionController.clear(),
                     Toast.showToast(context, 'Post created', Colors.green, Colors.white),
-                  }
-                  else {
+                  } else {
                     Toast.showToast(context, 'Error', Colors.red, Colors.white),
                   }
                 });
