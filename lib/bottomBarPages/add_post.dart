@@ -330,7 +330,7 @@ class _AddPostPage extends State<AddPostPage> {
                 child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        Obx(() => _getController.postVideoFile.value != '' && _getController.postFile.value == ''
+                        Obx(() => _getController.postFile.value == ''
                         ?GestureDetector(
                           onTap: () {
                             _pickMedia();
@@ -366,7 +366,8 @@ class _AddPostPage extends State<AddPostPage> {
                             ),
                           ) ,
                         )
-                            : Column(
+                        :_getController.postVideoFile.value != '' && _getController.postFile.value != '' || _getController.postVideoFile.value != '' && _getController.postFile.value == ''
+                            ?Column(
                           children: [
                             Text('Rasm yoki video yuklang',
                                 style: TextStyle(
@@ -411,7 +412,10 @@ class _AddPostPage extends State<AddPostPage> {
                             ),
                             SizedBox(height: h * 0.01),
                           ],
-                        )),
+                        )
+                            : SizedBox()
+
+                        ),
                         Obx(() => _getController.postVideoFile.value != '' && _getController.postFile.value != '' || _getController.postVideoFile.value != '' && _getController.postFile.value == ''
                             ? Column(
                           children: [
@@ -526,12 +530,36 @@ class _AddPostPage extends State<AddPostPage> {
                               ),
                             )
                           ],
-                        ) : Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height * 0.32,
-                          margin: EdgeInsets.only(bottom: h * 0.02),
-                          padding: EdgeInsets.only(bottom: h * 0.02),
-                          child: Image.file(File(_getController.postFile.value), fit: BoxFit.cover),
+                        ) : Stack(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(bottom: h * 0.02),
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.32,
+                              child: Image.file(File(_getController.postFile.value), fit: BoxFit.cover),
+                            ),
+                            Positioned(
+                              bottom: h * 0.022,
+                              right: w * 0.01,
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.1,
+                                height: MediaQuery.of(context).size.height * 0.05,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: IconButton(
+                                  onPressed: () {
+                                    _pickMedia();
+                                  },
+                                  icon: const HeroIcon(
+                                    HeroIcons.pencil,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         ),
                         SizedBox(height: h * 0.02),
