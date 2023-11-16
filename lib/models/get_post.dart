@@ -1,14 +1,14 @@
-class GetPost {
-  List<GetPostRes>? res;
+class GetMePost {
+  List<GetMePostRes>? res;
   bool? status;
 
-  GetPost({this.res, this.status});
+  GetMePost({this.res, this.status});
 
-  GetPost.fromJson(Map<String, dynamic> json) {
+  GetMePost.fromJson(Map<String, dynamic> json) {
     if (json['res'] != null) {
-      res = <GetPostRes>[];
+      res = <GetMePostRes>[];
       json['res'].forEach((v) {
-        res!.add(GetPostRes.fromJson(v));
+        res!.add(GetMePostRes.fromJson(v));
       });
     }
     status = json['status'];
@@ -24,7 +24,7 @@ class GetPost {
   }
 }
 
-class GetPostRes {
+class GetMePostRes {
   int? id;
   String? mediaType;
   String? photo;
@@ -33,7 +33,7 @@ class GetPostRes {
   int? businessId;
   String? createdAt;
 
-  GetPostRes(
+  GetMePostRes(
       {this.id,
         this.mediaType,
         this.photo,
@@ -42,7 +42,7 @@ class GetPostRes {
         this.businessId,
         this.createdAt});
 
-  GetPostRes.fromJson(Map<String, dynamic> json) {
+  GetMePostRes.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     mediaType = json['media_type'];
     photo = json['photo'];

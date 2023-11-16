@@ -12,6 +12,7 @@ import '../models/category.dart';
 import '../models/follov_model.dart';
 import '../models/get_by_category.dart';
 import '../models/get_follow_model.dart';
+import '../models/get_post.dart';
 import '../models/get_region.dart';
 import '../models/profile_by_id.dart';
 import '../models/sub_category.dart';
@@ -55,6 +56,8 @@ class ApiController extends GetxController {
   //{{host}}/api/v1/business/{{business_id}}/unfollow
   var businessUnFollowUrl = 'business/';
   var businessUnFollowUrl2 = '/unfollow';
+  //{{host}}/api/v1/post/list/5
+  var postListUrl = 'post/list/';
   //{{host}}/api/v1/post/create
   var postCreateUrl = 'post/create';
 
@@ -437,40 +440,34 @@ class ApiController extends GetxController {
     }
   }
 
-//   var headers = {
-//     'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEwMzQwMTI1MzMyLCJpYXQiOjE3MDAxMjUzMzIsInN1YiI6IjEifQ.XCd7H090qeOm8ybjcU0h3AE1Jj2XuA7cv0btr3t-BOE'
-//   };
-//   var request = http.MultipartRequest('POST', Uri.parse('https://timeup.dizinfeksiya.uz/api/v1/post/create'));
-//   request.fields.addAll({
-//   'title': 'Bollalar uchun qollanma',
-//   'description': 'Yosh bollar mextik tish yuvish vositasidan qanday fydalanishlari kerak 🤔️️️️️️? Albata bu savol sizni qiziqtirgan bolishi mumkin. Javob quyidagicha:\nBolalarni tishlari nozik va sut tishlari bo\'lganligi uchun ko\'p ota-onalar e\'tiborsizlik qiladi. Ammo bunday qilish yaxshi oqibatga olib kelmaydi\nKichkintoylar tishlari yuvishni 4-5 yoshdan boshlab odatga aylantirish kerak. Farzandlaringizning har bir holati va qilayotgan ishida nazorat va e\'tibor qiling! Aks holda ulardagi yomon odatlarni shakillanishi sezmay qolishingiz mumkin. Yaxshi odatlarni esa shakillanmayotganini his qilmaysiz!',
-//   'business_id': '5'
-// });
-// request.files.add(await http.MultipartFile.fromPath('photo', '/Users/to-rex/Desktop/2023-11-16 14.37.00.jpg'));
-// request.files.add(await http.MultipartFile.fromPath('video', '/Users/sherlockabdullayev/Downloads/mixkit-child-brushing-their-teeth-11512-medium.mp4'));
-// request.headers.addAll(headers);
-//
-// http.StreamedResponse response = await request.send();
-//
-// if (response.statusCode == 200) {
-// print(await response.stream.bytesToString());
-// }
-// else {
-// print(response.reasonPhrase);
-// }
+  Future<GetMePost> getMePostList(id) async{
+    var response = await http.get(Uri.parse('$url$postListUrl$id'),
+      headers: {'Authorization': 'Bearer ${GetStorage().read('token')}',},
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return GetMePost.fromJson(jsonDecode(response.body));
+    } else {
+      return GetMePost(res: [], status: false);
+    }
+  }
 
-  Future<bool> createPost(title, description, businessId, photo,video) async {
-    var headers = {'Authorization': 'Bearer ${GetStorage().read('token')}',};
+  Future<bool> createPost(String title, String description, businessId, photo) async {
+    print(photo);
+    print(title);
+    print(description);
+    print(businessId);
+    var headers = {
+      'Authorization': 'Bearer ${GetStorage().read('token')}',
+    };
     var request = http.MultipartRequest('POST', Uri.parse(url + postCreateUrl));
     request.fields.addAll({
       'title': title,
       'description': description,
-      'business_id': businessId,
+      'business_id': businessId.toString(),
     });
-    request.files.add(await http.MultipartFile.fromPath('photo', photo));
-    if (video != null) {
-      request.files.add(await http.MultipartFile.fromPath('video', video));
-    }
+    //photo = _getController.postFile.value
+    request.files.add(await http.MultipartFile.fromPath('photo', _getController.postFile.value));
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -479,4 +476,5 @@ class ApiController extends GetxController {
       return false;
     }
   }
+
 }

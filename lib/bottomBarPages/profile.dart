@@ -431,6 +431,8 @@ class ProfilePage extends StatelessWidget  {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     //getUsers();
+    //getMePostList
+    ApiController().getMePostList(5);
     return WillPopScope(
       onWillPop: () async {
         if (getController.entersUser.value == 0) {

@@ -392,14 +392,23 @@ class _AddPostPage extends State<AddPostPage> {
             height: MediaQuery.of(context).size.height * 0.06,
             child: ElevatedButton(
               onPressed: () {
-                _getController.changePostFile('');
-                ApiController().createPost(titleController.text, descriptionController.text, _getController.meUsers.value.res!.id!, _getController.postFile.value,_getController.postFile.value).then((value) => {
-                      if (value == true){
-                        Toast.showToast(context, 'Post yaratildi', Colors.green, Colors.white),
-                      }else{
-                        Toast.showToast(context, 'Post yaratilmadi', Colors.red, Colors.white),
-                      }
-                    });
+                //String title, String description, int businessId, String photo
+                ApiController().createPost(
+                  titleController.text,
+                  descriptionController.text,
+                  _getController.meUsers.value.res!.business!.id!,
+                  _getController.postFile.value.toString(),
+                ).then((value) => {
+                  if (value){
+                    _getController.changePostFile(''),
+                    titleController.clear(),
+                    descriptionController.clear(),
+                    Toast.showToast(context, 'Post created', Colors.green, Colors.white),
+                  }
+                  else {
+                    Toast.showToast(context, 'Error', Colors.red, Colors.white),
+                  }
+                });
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
