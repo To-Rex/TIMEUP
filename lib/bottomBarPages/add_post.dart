@@ -20,6 +20,8 @@ class AddPostPage extends StatefulWidget {
 
 class _AddPostPage extends State<AddPostPage> {
   final GetController _getController = Get.put(GetController());
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
   late CameraController controller;
   late bool isFlashOn = true;
 
@@ -92,6 +94,8 @@ class _AddPostPage extends State<AddPostPage> {
   @override
   void dispose() {
     controller.dispose();
+    titleController.dispose();
+    descriptionController.dispose();
     super.dispose();
   }
 
@@ -327,7 +331,7 @@ class _AddPostPage extends State<AddPostPage> {
             width: MediaQuery.of(context).size.width * 0.95,
             height: MediaQuery.of(context).size.height * 0.06,
             child:TextField(
-              //controller: _dateController,
+              controller: titleController,
               decoration: InputDecoration(
                 hintText: 'Title',
                 hintStyle: TextStyle(
@@ -366,6 +370,7 @@ class _AddPostPage extends State<AddPostPage> {
               border: Border.all(color: Colors.grey[300]!),
             ),
             child: TextField(
+              controller: descriptionController,
               maxLines: 30,
               maxLength: 600,
               decoration: InputDecoration(
@@ -387,6 +392,7 @@ class _AddPostPage extends State<AddPostPage> {
             child: ElevatedButton(
               onPressed: () {
                 _getController.changePostFile('');
+                
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
