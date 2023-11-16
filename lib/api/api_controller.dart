@@ -446,8 +446,10 @@ class ApiController extends GetxController {
     );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      _getController.changeGetPostList(GetMePost.fromJson(jsonDecode(response.body)));
       return GetMePost.fromJson(jsonDecode(response.body));
     } else {
+      _getController.changeGetPostList(GetMePost(res: [], status: false));
       return GetMePost(res: [], status: false);
     }
   }

@@ -430,9 +430,7 @@ class ProfilePage extends StatelessWidget  {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    //getUsers();
-    //getMePostList
-    ApiController().getMePostList(5);
+    ApiController().getMePostList(getController.meUsers.value.res!.business?.id);
     return WillPopScope(
       onWillPop: () async {
         if (getController.entersUser.value == 0) {
@@ -562,7 +560,7 @@ class ProfilePage extends StatelessWidget  {
                         Obx(() => getController.meUsers.value.res?.business != null
                                 ? Container(
                                     width: w * 0.9,
-                                    margin: const EdgeInsets.only(top: 5),
+                                    margin: EdgeInsets.only(top: h * 0.005),
                                     child: Row(
                                       children: [
                                         Text(
@@ -654,12 +652,13 @@ class ProfilePage extends StatelessWidget  {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
+                                  //My Post
                                   Obx(() => getController.nextPagesUserDetails.value == 0
-                                      ? SizedBox(
-                                          width: w * 0.5,
+                                      ?SizedBox(
+                                          width: w * 0.333,
                                           height: h * 0.062,
                                           child: BusinessEditButton(
-                                            text: 'Biografiya',
+                                            text: 'My Post',
                                             onPressed: () {
                                               pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
@@ -668,10 +667,10 @@ class ProfilePage extends StatelessWidget  {
                                           ),
                                         )
                                       : SizedBox(
-                                          width: w * 0.5,
+                                          width: w * 0.333,
                                           height: h * 0.062,
                                           child: BusinessEditButton(
-                                            text: 'Biografiya',
+                                            text: 'My Post',
                                             onPressed: () {
                                               pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
@@ -681,10 +680,10 @@ class ProfilePage extends StatelessWidget  {
                                         )),
                                   Obx(() => getController.nextPagesUserDetails.value == 1
                                       ? SizedBox(
-                                          width: w * 0.5,
+                                          width: w * 0.333,
                                           height: h * 0.062,
                                           child: BusinessEditButton(
-                                            text: 'Ish jadvali',
+                                            text: 'Bio',
                                             onPressed: () {
                                               pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
@@ -693,12 +692,37 @@ class ProfilePage extends StatelessWidget  {
                                           ),
                                         )
                                       : SizedBox(
-                                          width: w * 0.5,
+                                          width: w * 0.333,
+                                          height: h * 0.062,
+                                          child: BusinessEditButton(
+                                            text: 'Bio',
+                                            onPressed: () {
+                                              pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                                            },
+                                            color: Colors.grey,
+                                            radius: 0,
+                                          ),
+                                        )),
+                                  Obx(() => getController.nextPagesUserDetails.value == 2
+                                      ? SizedBox(
+                                          width: w * 0.333,
                                           height: h * 0.062,
                                           child: BusinessEditButton(
                                             text: 'Ish jadvali',
                                             onPressed: () {
-                                              pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                                              pageController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                                            },
+                                            color: Colors.blue,
+                                            radius: 0,
+                                          ),
+                                        )
+                                      : SizedBox(
+                                          width: w * 0.333,
+                                          height: h * 0.062,
+                                          child: BusinessEditButton(
+                                            text: 'Ish jadvali',
+                                            onPressed: () {
+                                              pageController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             color: Colors.grey,
                                             radius: 0,
@@ -718,12 +742,127 @@ class ProfilePage extends StatelessWidget  {
                                         },
                                         controller: pageController,
                                         children: [
+                                          SizedBox(
+                                            width: w * 0.9,
+                                            height: h * 0.22,
+                                            child: Obx(() => getController.getPostList.value.res == null
+                                                  ? const Center(child: Text('Ma\'lumotlar topilmadi'))
+                                                  : Container(
+                                              padding: EdgeInsets.only(bottom: h * 0.01,top: h * 0.01),
+                                              child: SizedBox(
+                                                height: h * 0.22,
+                                                child: ListView.builder(
+                                                  //shrinkWrap: true,
+                                                    itemCount: getController.getPostList.value.res!.length,
+                                                    itemBuilder: (context, index) {
+                                                      return Container(
+                                                        padding: EdgeInsets.only(bottom: h * 0.01),
+                                                        child: Row(
+                                                          children: [
+                                                            //image network
+                                                            SizedBox(
+                                                              width: w * 0.3,
+                                                              height: h * 0.13,
+                                                              child: InkWell(
+                                                                onTap: () {
+                                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Scaffold(
+                                                                    backgroundColor: Colors.black,
+                                                                    body: Stack(
+                                                                      children: [
+                                                                        PhotoView(imageProvider: NetworkImage('${getController.getPostList.value.res![index].photo}'),),
+                                                                        Positioned(
+                                                                          top: h * 0.05,
+                                                                          left: w * 0.01,
+                                                                          child: Container(
+                                                                            padding: EdgeInsets.only(left: w * 0.01),
+                                                                            width: w * 0.1,
+                                                                            height: w * 0.1,
+                                                                            decoration: BoxDecoration(
+                                                                              color: Colors.white,
+                                                                              borderRadius: BorderRadius.circular(w * 0.1),
+                                                                            ),
+                                                                            child: IconButton(
+                                                                              onPressed: () {
+                                                                                Navigator.pop(context);
+                                                                              },
+                                                                              icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),),);
+                                                                },
+                                                                child: Container(
+                                                                  margin: EdgeInsets.only(right: w * 0.02),
+                                                                  decoration: BoxDecoration(
+                                                                    borderRadius: BorderRadius.circular(3),
+                                                                    image: DecorationImage(
+                                                                      image: NetworkImage('${getController.getPostList.value.res![index].photo}'),
+                                                                      fit: BoxFit.cover,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Expanded(child:
+                                                            Column(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: h * 0.03,
+                                                                  child: Text('${getController.getPostList.value.res![index].title}',
+                                                                    style: TextStyle(
+                                                                      fontSize: w * 0.04,
+                                                                      fontWeight: FontWeight.w500,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: h * 0.04,
+                                                                  child: Text('${getController.getPostList.value.res![index].description}',
+                                                                    style: TextStyle(
+                                                                      fontSize: w * 0.04,
+                                                                      fontWeight: FontWeight.w500,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: h * 0.04,
+                                                                  //0001-01-01T00:00:00Z
+                                                                  child: Text(getController.getPostList.value.res![index].createdAt.toString().substring(0, 10),
+                                                                    style: TextStyle(
+                                                                      fontSize: w * 0.04,
+                                                                      fontWeight: FontWeight.w500,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            )),
+                                                            SizedBox(
+                                                                child: IconButton(
+                                                                  onPressed: () {  },
+                                                                  icon: HeroIcon(
+                                                                    HeroIcons.pencil,
+                                                                    color: Colors.blue,
+                                                                    size: w * 0.05,
+                                                                  ),
+                                                                )
+                                                            )
+                                                          ],
+                                                        ),
+                                                      );
+                                                    }),
+                                              ),
+                                            )
+                                            ),
+                                          ),
                                           BioBusiness(text: getController.meUsers.value.res?.business?.bio ?? '',),
                                           SizedBox(
                                             width: w * 0.9,
                                             height: h * 0.22,
-                                            child: Obx(
-                                              () => getController.bookingBusinessGetList.value.res == null
+                                            child: Obx(() => getController.bookingBusinessGetList.value.res == null
                                                   ? const Center(child: Text('Ma\'lumotlar topilmadi'))
                                                   : Container(
                                                       height: h * 0.22,
