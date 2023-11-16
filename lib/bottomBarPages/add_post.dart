@@ -413,7 +413,7 @@ class _AddPostPage extends State<AddPostPage> {
                             SizedBox(height: h * 0.01),
                           ],
                         )
-                            : SizedBox()
+                            : const SizedBox()
 
                         ),
                         Obx(() => _getController.postVideoFile.value != '' && _getController.postFile.value != '' || _getController.postVideoFile.value != '' && _getController.postFile.value == ''
