@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_gallery/photo_gallery.dart';
 import 'package:time_up/api/api_controller.dart';
+import 'package:time_up/elements/functions.dart';
 import '../res/getController.dart';
 
 late List<CameraDescription> _cameras;
@@ -392,7 +393,13 @@ class _AddPostPage extends State<AddPostPage> {
             child: ElevatedButton(
               onPressed: () {
                 _getController.changePostFile('');
-                
+                ApiController().createPost(titleController.text, descriptionController.text, _getController.meUsers.value.res!.id!, _getController.postFile.value,_getController.postFile.value).then((value) => {
+                      if (value == true){
+                        Toast.showToast(context, 'Post yaratildi', Colors.green, Colors.white),
+                      }else{
+                        Toast.showToast(context, 'Post yaratilmadi', Colors.red, Colors.white),
+                      }
+                    });
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
