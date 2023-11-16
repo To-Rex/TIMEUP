@@ -454,7 +454,7 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> createPost(String title, String description, businessId, photo) async {
+  Future<bool> createPost(String title, String description, businessId, photo,video) async {
     print(photo);
     print(title);
     print(description);
@@ -468,8 +468,10 @@ class ApiController extends GetxController {
       'description': description,
       'business_id': businessId.toString(),
     });
-    //photo = _getController.postFile.value
     request.files.add(await http.MultipartFile.fromPath('photo', _getController.postFile.value));
+    if (video != null) {
+      request.files.add(await http.MultipartFile.fromPath('video', video));
+    }
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {

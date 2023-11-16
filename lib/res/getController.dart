@@ -28,9 +28,14 @@ class GetController extends GetxController {
   var nextPagesUserDetails = 0.obs;
   var widgetOptions = <Widget>[];
   var postFile = ''.obs;
+  var postVideoFile = ''.obs;
 
   void changePostFile(String newPostFile) {
     postFile.value = newPostFile;
+  }
+
+  void changePostVideoFile(String newPostVideoFile) {
+    postVideoFile.value = newPostVideoFile;
   }
 
   void changeWidgetOptions() {
