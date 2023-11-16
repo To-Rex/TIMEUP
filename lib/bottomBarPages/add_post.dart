@@ -302,11 +302,6 @@ class _AddPostPage extends State<AddPostPage> {
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.3,
-              ///data/user/0/time.up.time_up/cache/fa1f3012-4ae2-4bc0-b880-0eb71a3ec218/VID_20231116_001216.mp4
-              // child: Chewie(
-              //   controller: _chewieController,
-              // ),
-              //video player
               child: Container(
                 decoration: const BoxDecoration(
                   color: Colors.white12,
