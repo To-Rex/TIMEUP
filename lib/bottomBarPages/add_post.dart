@@ -519,6 +519,28 @@ class _AddPostPage extends State<AddPostPage> {
                                                 ],
                                               )),
                                         ),
+                                        //edit icon button bottom, end
+                                        Positioned(
+                                          bottom: h * 0.015,
+                                          right: w * 0.01,
+                                          child: Container(
+                                            width: MediaQuery.of(context).size.width * 0.1,
+                                            height: MediaQuery.of(context).size.height * 0.05,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            child: IconButton(
+                                              onPressed: () {
+                                                _pickVideo();
+                                              },
+                                              icon: const HeroIcon(
+                                                HeroIcons.pencil,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     );
                                   } else {
@@ -627,6 +649,10 @@ class _AddPostPage extends State<AddPostPage> {
                           height: MediaQuery.of(context).size.height * 0.05,
                           child: ElevatedButton(
                             onPressed: () {
+                              if (_getController.postFile.value == '') {
+                                Toast.showToast(context, 'Iltimos, rasm yuklang', Colors.red, Colors.white);
+                                return;
+                              }
                               ApiController().createPost(titleController.text, descriptionController.text, _getController.meUsers.value.res!.business!.id!,
                                   _getController.postFile.value.toString(),
                                   _getController.postVideoFile.value.toString()
