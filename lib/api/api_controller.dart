@@ -469,7 +469,7 @@ class ApiController extends GetxController {
       'business_id': businessId.toString(),
     });
     request.files.add(await http.MultipartFile.fromPath('photo', _getController.postFile.value));
-    if (video != null) {
+    if (video != '') {
       request.files.add(await http.MultipartFile.fromPath('video', video));
     }
     request.headers.addAll(headers);
