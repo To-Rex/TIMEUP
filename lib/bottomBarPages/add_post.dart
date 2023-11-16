@@ -8,7 +8,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_gallery/photo_gallery.dart';
 import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/elements/functions.dart';
+import 'package:video_player/video_player.dart';
 import '../res/getController.dart';
+
 
 late List<CameraDescription> _cameras;
 
@@ -26,6 +28,10 @@ class _AddPostPage extends State<AddPostPage> {
   late CameraController controller;
   late bool isFlashOn = true;
 
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
+
+
   Future<void> _pickMedia() async {
     if (await _promptPermissionSetting()) {
       final picker = ImagePicker();
@@ -41,7 +47,11 @@ class _AddPostPage extends State<AddPostPage> {
       final picker = ImagePicker();
       final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
       if (pickedFile != null) {
+        print(pickedFile.path);
         _getController.changePostFile(pickedFile.path);
+        _controller = VideoPlayerController.file(File(pickedFile.path));
+        _initializeVideoPlayerFuture = _controller.initialize();
+        _controller.setLooping(true);
       }
     }
   }
@@ -72,6 +82,7 @@ class _AddPostPage extends State<AddPostPage> {
   void initState() {
     super.initState();
     initCamera();
+    _getController.changePostFile('');
     setState(() {
     });
   }
@@ -296,6 +307,7 @@ class _AddPostPage extends State<AddPostPage> {
             leading: IconButton(
               onPressed: () {
                 _getController.changePostFile('');
+                _controller.dispose();
               },
               icon: const HeroIcon(
                 HeroIcons.chevronLeft,
@@ -305,21 +317,108 @@ class _AddPostPage extends State<AddPostPage> {
           ),
           if (_getController.postFile.value.contains('.mp4') || _getController.postFile.value.contains('.mov'))
             SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white12,
-                ),
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  child: const HeroIcon(
-                    HeroIcons.videoCamera,
-                    color: Colors.black,
-                  ),
-                )
-              )
+              child: FutureBuilder(
+                future: _initializeVideoPlayerFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return Stack(
+                      children: [
+                        Container(
+                          width: w,
+                          height: h * 0.32,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(1),
+                          ),
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: SizedBox(
+                              width: _controller.value.size.width,
+                              height: _controller.value.size.height,
+                              child: VideoPlayer(_controller),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.065,
+                            width: MediaQuery.of(context).size.width,
+                            color: Colors.black.withOpacity(0.5),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.05,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds - 10));
+                                        },
+                                        icon: const HeroIcon(
+                                          HeroIcons.arrowLeft,
+                                          color: Colors.white,
+                                        ),
+                                        color: Colors.white,
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          if (_controller.value.isPlaying) {
+                                            _controller.pause();
+                                          } else {
+                                            _controller.play();
+                                          }
+                                          setState(() {
+
+                                          });
+                                        },
+                                        icon: _controller.value.isPlaying ? const HeroIcon(
+                                          HeroIcons.pause,
+                                          color: Colors.white,
+                                        ) : const HeroIcon(
+                                          HeroIcons.play,
+                                          color: Colors.white,
+                                        ),
+                                        color: Colors.white,
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds + 10));
+                                        },
+                                        icon: const HeroIcon(
+                                          HeroIcons.arrowRight,
+                                          color: Colors.white,
+                                        ),
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  child: VideoProgressIndicator(
+                                    _controller,
+                                    allowScrubbing: true,
+                                    colors: VideoProgressColors(
+                                      playedColor: Colors.blue,
+                                      bufferedColor: Colors.grey,
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ),
+                        ),
+                      ],
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
             ) else
             SizedBox(
               width: MediaQuery.of(context).size.width,
