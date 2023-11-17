@@ -30,18 +30,55 @@ class PostDetailsPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.pop(context);
-            getController.changeStartVideo();
+            if (getController.startVideo == true){
+              _controller.pause();
+              getController.changeStartVideo();
+            }else{
+              _controller.pause();
+            }
           },
         ),
         centerTitle: true,
         title: const Text('My post'),
         actions: [
-          IconButton(
-            onPressed: () {
-              //menu delete item and edit item
+          //PopupMenuButton delete and edit post item
+          PopupMenuButton<String>(
+            itemBuilder: (BuildContext context) {
+              return {'Delete','Edit'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  onTap: (){
+                    if (choice == 'Delete'){
+                      ApiController().deletePost(getController.getPostById.value.res?.id);
+                      Navigator.pop(context);
+                      ApiController().getMePostList(getController.meUsers.value.res!.business?.id);
+                    }
+                  },
+                  value: choice,
+                  child: Row(
+                    children: [
+                      HeroIcon(
+                        choice == 'Delete'
+                            ? HeroIcons.trash
+                            : HeroIcons.pencilSquare,
+                        color: choice == 'Delete'
+                            ? Colors.red
+                            : Colors.blue,
+                      ),
+                      SizedBox(width: w * 0.02),
+                      Text(
+                        choice,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: w * 0.04,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList();
             },
-            icon: const Icon(Icons.more_vert),
-          ),],
+          ),
+        ],
       ),
       body: Obx(() => getController.getPostById.value.res == null
           ? const Center(child: Text('No data'))
@@ -244,7 +281,7 @@ class PostDetailsPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: h * 0.02),
+          SizedBox(height: h * 0.01),
           SizedBox(
             width: w * 0.95,
             child: Padding(
@@ -252,7 +289,7 @@ class PostDetailsPage extends StatelessWidget {
               child: Text(
                 getController.getPostById.value.res!.description!,
                 style: TextStyle(
-                  fontSize: w * 0.04,
+                  fontSize: w * 0.03,
                   fontWeight: FontWeight.w500,
                 ),
               ),
