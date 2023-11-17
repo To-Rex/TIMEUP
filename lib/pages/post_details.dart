@@ -39,7 +39,7 @@ class PostDetailsPage extends StatelessWidget {
           },
         ),
         centerTitle: true,
-        title: const Text('My post'),
+        title: Text(getController.getPostById.value.res!.title!, style: TextStyle(color: Colors.black, fontSize: w * 0.05)),
         actions: [
           //PopupMenuButton delete and edit post item
           PopupMenuButton<String>(
@@ -230,18 +230,13 @@ class PostDetailsPage extends StatelessWidget {
               SizedBox(width: w * 0.03),
               GestureDetector(
                 onTap: () {
-                  //ApiController().profileById(_getController.followList.value.res?[index].id ?? 0).then((value) => {_getController.changeProfileById(value),});
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
                   ApiController().profileById(getController.getPostById.value.res!.businessId!).then((value) => {getController.changeProfileById(value),});
                   Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
                 },
-                child:
-              CircleAvatar(
+                child: CircleAvatar(
                 backgroundColor: Colors.grey,
                 radius: w * 0.06,
-                backgroundImage: NetworkImage(
-                    getController.getPostById.value.res!.photo!),
-              ),
+                backgroundImage: NetworkImage(getController.getPostById.value.res!.photo!),),
               ),
               SizedBox(width: w * 0.03),
               GestureDetector(
@@ -258,7 +253,6 @@ class PostDetailsPage extends StatelessWidget {
                   ),
                 ),
               ),
-
               const Expanded(child: SizedBox()),
               IconButton(
                 onPressed: () {},

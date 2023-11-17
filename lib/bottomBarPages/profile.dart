@@ -408,6 +408,91 @@ class ProfilePage extends StatelessWidget  {
     );
   }
 
+  showBottomSheetEllips(context) {
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.9,
+          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: h * 0.02),
+                width: w * 0.2,
+                height: h * 0.005,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              SizedBox(height: h * 0.1),
+              InkWell(
+                onTap: () {
+                  showClosDialogs(context);
+                },
+                child: SizedBox(
+                  width: w,
+                  height: h * 0.05,
+                  child: Row(
+                    children: [
+                      SizedBox(width: w * 0.05),
+                      HeroIcon(
+                        HeroIcons.pencilSquare,
+                        color: Colors.blue,
+                        size: w * 0.05,
+                      ),
+                      SizedBox(width: w * 0.03),
+                      const Text('Edit post'),
+                    ],
+                  ),
+                ),
+              ),
+              const Divider(),
+              InkWell(
+                onTap: () {
+                  ApiController().deletePost(getController.getPostList.value.res![0].id).then((value) => {
+                    if (value == true){
+                      getUsers(),
+                      Toast.showToast(context, 'Post muvaffaqiyatli o\'chirildi', Colors.green, Colors.white)
+                    } else {
+                      Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.white)
+                    }
+                  });
+                  Navigator.pop(context);
+                  ApiController().getMePostList(getController.meUsers.value.res!.business?.id);
+                },
+                child: SizedBox(
+                  width: w,
+                  height: h * 0.05,
+                  child: Row(
+                    children: [
+                      SizedBox(width: w * 0.05),
+                      HeroIcon(
+                        HeroIcons.trash,
+                        color: Colors.red,
+                        size: w * 0.05,
+                      ),
+                      SizedBox(width: w * 0.03),
+                      const Text('Delete post'),
+                    ],
+                  ),
+                ),
+              ),
+              const Divider(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+
+
   final ImagePicker _picker = ImagePicker();
   var croppedImage;
 
@@ -804,10 +889,12 @@ class ProfilePage extends StatelessWidget  {
                                                               )),
                                                               SizedBox(
                                                                   child: IconButton(
-                                                                    onPressed: () {  },
+                                                                    onPressed: () {
+                                                                      showBottomSheetEllips(context);
+                                                                    },
                                                                     icon: HeroIcon(
-                                                                      HeroIcons.pencil,
-                                                                      color: Colors.blue,
+                                                                      HeroIcons.ellipsisVertical,
+                                                                      color: Colors.black,
                                                                       size: w * 0.05,
                                                                     ),
                                                                   )
