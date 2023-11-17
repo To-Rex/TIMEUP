@@ -12,6 +12,7 @@ import '../models/category.dart';
 import '../models/follov_model.dart';
 import '../models/get_by_category.dart';
 import '../models/get_follow_model.dart';
+import '../models/get_id_post.dart';
 import '../models/get_post.dart';
 import '../models/get_region.dart';
 import '../models/profile_by_id.dart';
@@ -60,6 +61,8 @@ class ApiController extends GetxController {
   var postListUrl = 'post/list/';
   //{{host}}/api/v1/post/create
   var postCreateUrl = 'post/create';
+  //{{host}}/api/v1/post/get/2
+  var postGetUrl = 'post/get/';
 
   Future<String> sendSms(String phoneNumber) async {
     var response = await http.post(
@@ -478,6 +481,20 @@ class ApiController extends GetxController {
       return true;
     } else {
       return false;
+    }
+  }
+
+  Future<GetByIdPostModel> getByIdPost(id) async{
+    var response = await http.get(Uri.parse('$url$postGetUrl$id'),
+      headers: {'Authorization': 'Bearer ${GetStorage().read('token')}',},
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      _getController.changeGetByIdPost(GetByIdPostModel.fromJson(jsonDecode(response.body)));
+      return GetByIdPostModel.fromJson(jsonDecode(response.body));
+    } else {
+      _getController.changeGetByIdPost(GetByIdPostModel(res: GetByIdPostModelRes(), status: false));
+      return GetByIdPostModel(res: GetByIdPostModelRes(), status: false);
     }
   }
 

@@ -10,6 +10,7 @@ import '../bottomBarPages/profile.dart';
 import '../bottomBarPages/search.dart';
 import '../models/booking_business_get.dart';
 import '../models/get_by_category.dart';
+import '../models/get_id_post.dart';
 import '../models/get_post.dart';
 import '../models/get_region.dart';
 import '../models/profile_by_id.dart';
@@ -66,6 +67,7 @@ class GetController extends GetxController {
   var bookingBusinessGetList1 = BookingBusinessGetList().obs;
   var followList = GetFollowModel().obs;
   var getPostList = GetMePost().obs;
+  var getPostById = GetByIdPostModel().obs;
   var categoryIndex = 0.obs;
   var subCategoryIndex = 0.obs;
   var regionIndex = 0.obs;
@@ -73,6 +75,10 @@ class GetController extends GetxController {
   var profileByID = 0.obs;
   var bookingBusinessGetListByID = 0.obs;
   var titleListElements = ''.obs;
+
+  void changeGetByIdPost(GetByIdPostModel newGetByIdPost) {
+    getPostById.value = newGetByIdPost;
+  }
 
   void changeGetPostList(GetMePost newGetPostList) {
     getPostList.value = newGetPostList;

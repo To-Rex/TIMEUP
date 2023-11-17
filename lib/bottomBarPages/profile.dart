@@ -6,6 +6,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/elements/functions.dart';
+import 'package:time_up/pages/post_details.dart';
 import '../elements/bio_business.dart';
 import '../elements/btn_business.dart';
 import '../elements/btn_users.dart';
@@ -752,105 +753,63 @@ class ProfilePage extends StatelessWidget  {
                                               child: SizedBox(
                                                 height: h * 0.22,
                                                 child: ListView.builder(
-                                                  //shrinkWrap: true,
                                                     itemCount: getController.getPostList.value.res!.length,
                                                     itemBuilder: (context, index) {
-                                                      return Container(
-                                                        padding: EdgeInsets.only(bottom: h * 0.01),
-                                                        child: Row(
-                                                          children: [
-                                                            //image network
-                                                            SizedBox(
-                                                              width: w * 0.3,
-                                                              height: h * 0.13,
-                                                              child: InkWell(
-                                                                onTap: () {
-                                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Scaffold(
-                                                                    backgroundColor: Colors.black,
-                                                                    body: Stack(
-                                                                      children: [
-                                                                        PhotoView(imageProvider: NetworkImage('${getController.getPostList.value.res![index].photo}'),),
-                                                                        Positioned(
-                                                                          top: h * 0.05,
-                                                                          left: w * 0.01,
-                                                                          child: Container(
-                                                                            padding: EdgeInsets.only(left: w * 0.01),
-                                                                            width: w * 0.1,
-                                                                            height: w * 0.1,
-                                                                            decoration: BoxDecoration(
-                                                                              color: Colors.white,
-                                                                              borderRadius: BorderRadius.circular(w * 0.1),
-                                                                            ),
-                                                                            child: IconButton(
-                                                                              onPressed: () {
-                                                                                Navigator.pop(context);
-                                                                              },
-                                                                              icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),),);
-                                                                },
-                                                                child: Container(
+                                                      return InkWell(
+                                                        onTap: () {
+                                                          Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: getController.getPostList.value.res![index].id,)));
+                                                        },
+                                                        child: Container(
+                                                          padding: EdgeInsets.only(bottom: h * 0.01),
+                                                          child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                            children: [
+                                                              Container(
+                                                                  width: w * 0.3,
+                                                                  height: h * 0.13,
+                                                                  padding: EdgeInsets.all(w * 0.01),
                                                                   margin: EdgeInsets.only(right: w * 0.02),
-                                                                  decoration: BoxDecoration(
-                                                                    borderRadius: BorderRadius.circular(3),
-                                                                    image: DecorationImage(
-                                                                      image: NetworkImage('${getController.getPostList.value.res![index].photo}'),
-                                                                      fit: BoxFit.cover,
-                                                                    ),
-                                                                  ),
-                                                                ),
+                                                                  child:PhotoView(
+                                                                    disableGestures: true,
+                                                                    imageProvider: NetworkImage('${getController.getPostList.value.res![index].photo}'),)
                                                               ),
-                                                            ),
-                                                            Expanded(child:
-                                                            Column(
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                              children: [
-                                                                SizedBox(
-                                                                  height: h * 0.03,
-                                                                  child: Text('${getController.getPostList.value.res![index].title}',
-                                                                    style: TextStyle(
-                                                                      fontSize: w * 0.04,
-                                                                      fontWeight: FontWeight.w500,
+                                                              Expanded(child: Column(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                children: [
+                                                                  SizedBox(
+                                                                    height: h * 0.03,
+                                                                    child: Text('${getController.getPostList.value.res![index].title}',
+                                                                      style: TextStyle(
+                                                                        fontSize: w * 0.04,
+                                                                        fontWeight: FontWeight.w500,
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                                SizedBox(
-                                                                  height: h * 0.04,
-                                                                  child: Text('${getController.getPostList.value.res![index].description}',
-                                                                    style: TextStyle(
-                                                                      fontSize: w * 0.04,
-                                                                      fontWeight: FontWeight.w500,
+                                                                  SizedBox(
+                                                                    height: h * 0.04,
+                                                                    child: Text('${getController.getPostList.value.res![index].description}',
+                                                                      style: TextStyle(
+                                                                        fontSize: w * 0.04,
+                                                                        fontWeight: FontWeight.w500,
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                                SizedBox(
-                                                                  height: h * 0.04,
-                                                                  //0001-01-01T00:00:00Z
-                                                                  child: Text(getController.getPostList.value.res![index].createdAt.toString().substring(0, 10),
-                                                                    style: TextStyle(
-                                                                      fontSize: w * 0.04,
-                                                                      fontWeight: FontWeight.w500,
+                                                                ],
+                                                              )),
+                                                              SizedBox(
+                                                                  child: IconButton(
+                                                                    onPressed: () {  },
+                                                                    icon: HeroIcon(
+                                                                      HeroIcons.pencil,
+                                                                      color: Colors.blue,
+                                                                      size: w * 0.05,
                                                                     ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            )),
-                                                            SizedBox(
-                                                                child: IconButton(
-                                                                  onPressed: () {  },
-                                                                  icon: HeroIcon(
-                                                                    HeroIcons.pencil,
-                                                                    color: Colors.blue,
-                                                                    size: w * 0.05,
-                                                                  ),
-                                                                )
-                                                            )
-                                                          ],
+                                                                  )
+                                                              )
+                                                            ],
+                                                          ),
                                                         ),
                                                       );
                                                     }),
