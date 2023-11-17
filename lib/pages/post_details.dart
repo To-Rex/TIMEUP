@@ -19,7 +19,6 @@ class PostDetailsPage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     ApiController().getByIdPost(postId).then((value) => {
       if (getController.getPostById.value.res!.mediaType == 'video'){
-          //_controller = VideoPlayerController.network(getController.getPostById.value.res!.video!,),
           _controller = VideoPlayerController.networkUrl(Uri.parse(getController.getPostById.value.res!.video!)),
           _initializeVideoPlayerFuture = _controller.initialize(),
         },
