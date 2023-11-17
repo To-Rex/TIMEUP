@@ -35,6 +35,7 @@ class ProfileByIdRes {
   String? phoneNumber;
   String? address;
   String? photoUrl;
+  bool? followed;
 
   ProfileByIdRes(
       {this.id,
@@ -51,7 +52,9 @@ class ProfileByIdRes {
         this.userName,
         this.phoneNumber,
         this.address,
-        this.photoUrl});
+        this.photoUrl,
+        this.followed
+      });
 
   ProfileByIdRes.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -69,6 +72,7 @@ class ProfileByIdRes {
     phoneNumber = json['phone_number'];
     address = json['address'];
     photoUrl = json['photo_url'];
+    followed = json['followed'];
   }
 
   Map<String, dynamic> toJson() {
@@ -88,6 +92,7 @@ class ProfileByIdRes {
     data['phone_number'] = phoneNumber;
     data['address'] = address;
     data['photo_url'] = photoUrl;
+    data['followed'] = followed;
     return data;
   }
 }

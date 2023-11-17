@@ -671,7 +671,9 @@ class ProfessionsListDetails extends StatelessWidget {
                                   ),
                                 ))),
                       const Expanded(child: SizedBox()),
-                      Container(
+                      //if followed true
+                      Obx(() => _getController.getProfileById.value.res!.followed == false
+                          ? Container(
                         alignment: Alignment.center,
                         width: w * 0.1,
                         height: h * 0.05,
@@ -680,23 +682,55 @@ class ProfessionsListDetails extends StatelessWidget {
                           borderRadius: BorderRadius.circular(3),
                         ),
                         child: IconButton(
-                          color: Colors.white,
-                          onPressed: () {
-                            ApiController().follow(_getController.getProfileById.value.res!.id ?? 0).then((value) => {
-                                      if (value.status == true){
-                                          Toast.showToast(context, 'Followed', Colors.green, Colors.white),
-                                        } else {
-                                          Toast.showToast(context, 'Error', Colors.red, Colors.white),
-                                        }
-                                    });
-                          },
-                          icon: HeroIcon(
-                            HeroIcons.userPlus,
                             color: Colors.white,
-                            size: w * 0.1,
-                          )
+                            onPressed: () {
+                              ApiController().follow(_getController.getProfileById.value.res!.id ?? 0).then((value) => {
+                                if (value.status == true){
+                                  Toast.showToast(context, 'Followed', Colors.green, Colors.white),
+                              ApiController().profileById(_getController.profileByID.value).then((value) => {_getController.changeProfileById(value),}),
+                              _getController.clearByCategory(),
+                              ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value)),
+                              } else {
+                                  Toast.showToast(context, 'Error', Colors.red, Colors.white),
+                                }
+                              });
+                            },
+                            icon: HeroIcon(
+                              HeroIcons.userPlus,
+                              color: Colors.white,
+                              size: w * 0.1,
+                            )
                         ),
-                      ),
+                      )
+                          : Container(
+                        alignment: Alignment.center,
+                        width: w * 0.1,
+                        height: h * 0.05,
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                        child: IconButton(
+                            color: Colors.white,
+                            onPressed: () {
+                              ApiController().unFollow(_getController.getProfileById.value.res!.id ?? 0).then((value) => {
+                                if (value == true){
+                                  Toast.showToast(context, 'Followed', Colors.green, Colors.white),
+                              ApiController().profileById(_getController.profileByID.value).then((value) => {_getController.changeProfileById(value),}),
+                              _getController.clearByCategory(),
+                              ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value))
+                              } else {
+                                  Toast.showToast(context, 'Error', Colors.red, Colors.white),
+                                }
+                              });
+                            },
+                            icon: HeroIcon(
+                              HeroIcons.userPlus,
+                              color: Colors.white,
+                              size: w * 0.1,
+                            )
+                        ),
+                      )),
                       const Expanded(child: SizedBox()),
                     ],
                   ),
