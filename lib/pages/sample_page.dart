@@ -53,10 +53,19 @@ class SamplePage extends StatelessWidget {
                   ),
                 )
               : Container(height: h * 0.03))),
-      body: SingleChildScrollView(
+      /*body: SingleChildScrollView(
         //child: Obx(() => _widgetOptions.elementAt(_getController.index.value)),
         child: Obx(() => _getController.widgetOptions.elementAt(_getController.index.value)),
-      ),
+      ),*/
+      //if _getController.index.value == 3 Column else SingleChildScrollView
+      body: Obx(() => _getController.index.value == 3
+          ? SizedBox(
+              height: h * 0.9, child: _getController.widgetOptions.elementAt(_getController.index.value),
+            )
+          : SingleChildScrollView(
+              child: _getController.widgetOptions
+                  .elementAt(_getController.index.value),
+            )),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
           backgroundColor: Colors.white,
