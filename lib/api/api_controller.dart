@@ -63,6 +63,8 @@ class ApiController extends GetxController {
   var postCreateUrl = 'post/create';
   //{{host}}/api/v1/post/get/2
   var postGetUrl = 'post/get/';
+  //{{host}}/api/v1/post/delete/3
+  var postDeleteUrl = 'post/delete/';
 
   Future<String> sendSms(String phoneNumber) async {
     var response = await http.post(
@@ -495,6 +497,20 @@ class ApiController extends GetxController {
     } else {
       _getController.changeGetByIdPost(GetByIdPostModel(res: GetByIdPostModelRes(), status: false));
       return GetByIdPostModel(res: GetByIdPostModelRes(), status: false);
+    }
+  }
+
+  Future<bool> deletePost(id) async{
+    var response = await http.delete(Uri.parse('$url$postDeleteUrl$id'),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
     }
   }
 

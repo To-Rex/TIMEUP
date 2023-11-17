@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
+import 'package:time_up/pages/professions_list_details.dart';
 import 'package:video_player/video_player.dart';
 
 import '../res/getController.dart';
@@ -36,7 +37,9 @@ class PostDetailsPage extends StatelessWidget {
         title: const Text('My post'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              //menu delete item and edit item
+            },
             icon: const Icon(Icons.more_vert),
           ),],
       ),
@@ -188,20 +191,37 @@ class PostDetailsPage extends StatelessWidget {
           Row(
             children: [
               SizedBox(width: w * 0.03),
+              GestureDetector(
+                onTap: () {
+                  //ApiController().profileById(_getController.followList.value.res?[index].id ?? 0).then((value) => {_getController.changeProfileById(value),});
+                  //Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
+                  ApiController().profileById(getController.getPostById.value.res!.businessId!).then((value) => {getController.changeProfileById(value),});
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
+                },
+                child:
               CircleAvatar(
                 backgroundColor: Colors.grey,
                 radius: w * 0.06,
                 backgroundImage: NetworkImage(
                     getController.getPostById.value.res!.photo!),
               ),
+              ),
               SizedBox(width: w * 0.03),
-              Text(
-                getController.getPostById.value.res!.posterName!,
-                style: TextStyle(
-                  fontSize: w * 0.04,
-                  fontWeight: FontWeight.w500,
+              GestureDetector(
+                onTap: () {
+                  ApiController().profileById(getController.getPostById.value.res!.businessId!).then((value) => {getController.changeProfileById(value),});
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
+                },
+                child:
+                Text(
+                  getController.getPostById.value.res!.posterName!,
+                  style: TextStyle(
+                    fontSize: w * 0.04,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
+
               const Expanded(child: SizedBox()),
               IconButton(
                 onPressed: () {},
