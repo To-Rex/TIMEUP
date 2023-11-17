@@ -25,10 +25,101 @@ class PostDetailsPage extends StatelessWidget {
         centerTitle: true,
         title: const Text('My post'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(''),
-      ),
+      body: Obx(() => getController.getPostById.value.res == null
+          ? const Center(child: Text('No data'))
+          : Column(
+        children: [
+          Row(
+            children: [
+              SizedBox(width: w * 0.03),
+              CircleAvatar(
+                backgroundColor: Colors.grey,
+                radius: w * 0.06,
+                backgroundImage: NetworkImage(
+                    getController.getPostById.value.res!.photo!),
+              ),
+              SizedBox(width: w * 0.03),
+              Text(
+                getController.getPostById.value.res!.posterName!,
+                style: TextStyle(
+                  fontSize: w * 0.04,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const Expanded(child: SizedBox()),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.more_vert),
+              ),
+            ],
+          ),
+          SizedBox(height: h * 0.02),
+          SizedBox(
+            height: h * 0.4,
+            width: w ,
+            child: Image.network(
+              getController.getPostById.value.res!.photo!,
+              fit: BoxFit.cover,
+            ),
+          ),
+          SizedBox(height: h * 0.02),
+          Row(
+            children: [
+              SizedBox(width: w * 0.03),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.favorite_border),
+              ),
+              SizedBox(width: w * 0.03),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.comment_outlined),
+              ),
+              SizedBox(width: w * 0.03),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.share_outlined),
+              ),
+              const Expanded(child: SizedBox()),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.bookmark_border),
+              ),
+              SizedBox(width: w * 0.03),
+            ],
+          ),
+          SizedBox(height: h * 0.02),
+          //title
+          SizedBox(
+            width: w * 0.95,
+            child: Padding(
+              padding: EdgeInsets.only(left: w * 0.03, right: w * 0.03),
+              child: Text(
+                getController.getPostById.value.res!.title!,
+                style: TextStyle(
+                  fontSize: w * 0.04,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: h * 0.02),
+          //description
+          SizedBox(
+            width: w * 0.95,
+            child: Padding(
+              padding: EdgeInsets.only(left: w * 0.03, right: w * 0.03),
+              child: Text(
+                getController.getPostById.value.res!.description!,
+                style: TextStyle(
+                  fontSize: w * 0.04,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+        ],
+      )),
     );
   }
 }
