@@ -179,7 +179,6 @@ class _AddPostPage extends State<AddPostPage> {
         child: CircularProgressIndicator(),
       );
     }
-
     return WillPopScope(
       onWillPop: () async {
         if (_getController.postFile.value == '') {

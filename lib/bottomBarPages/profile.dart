@@ -17,6 +17,7 @@ import '../pages/user_bussines_edit.dart';
 import '../pages/user_edit.dart';
 import '../res/getController.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:video_player/video_player.dart';
 
 class ProfilePage extends StatelessWidget  {
   ProfilePage({Key? key}) : super(key: key);
@@ -24,6 +25,9 @@ class ProfilePage extends StatelessWidget  {
   final GetController getController = Get.put(GetController());
   final PageController pageController = PageController();
   final TextEditingController _dateController = TextEditingController();
+
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
 
   getUsers() async {
     ApiController().getUserData();

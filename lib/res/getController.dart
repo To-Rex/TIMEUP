@@ -75,6 +75,16 @@ class GetController extends GetxController {
   var profileByID = 0.obs;
   var bookingBusinessGetListByID = 0.obs;
   var titleListElements = ''.obs;
+  var startVideo = false.obs;
+  var pauseVideo = false.obs;
+
+  void changeStartVideo() {
+    startVideo.value = !startVideo.value;
+  }
+
+  void changePauseVideo() {
+    pauseVideo.value = !pauseVideo.value;
+  }
 
   void changeGetByIdPost(GetByIdPostModel newGetByIdPost) {
     getPostById.value = newGetByIdPost;
