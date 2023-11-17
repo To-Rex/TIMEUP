@@ -24,11 +24,26 @@ class PostDetailsPage extends StatelessWidget {
         ),
         centerTitle: true,
         title: const Text('My post'),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.more_vert),
+          ),],
       ),
       body: Obx(() => getController.getPostById.value.res == null
           ? const Center(child: Text('No data'))
           : Column(
         children: [
+          SizedBox(height: h * 0.02),
+          SizedBox(
+            height: h * 0.4,
+            width: w ,
+            child: Image.network(
+              getController.getPostById.value.res!.photo!,
+              fit: BoxFit.cover,
+            ),
+          ),
+          SizedBox(height: h * 0.02),
           Row(
             children: [
               SizedBox(width: w * 0.03),
@@ -45,40 +60,6 @@ class PostDetailsPage extends StatelessWidget {
                   fontSize: w * 0.04,
                   fontWeight: FontWeight.w500,
                 ),
-              ),
-              const Expanded(child: SizedBox()),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.more_vert),
-              ),
-            ],
-          ),
-          SizedBox(height: h * 0.02),
-          SizedBox(
-            height: h * 0.4,
-            width: w ,
-            child: Image.network(
-              getController.getPostById.value.res!.photo!,
-              fit: BoxFit.cover,
-            ),
-          ),
-          SizedBox(height: h * 0.02),
-          Row(
-            children: [
-              SizedBox(width: w * 0.03),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.favorite_border),
-              ),
-              SizedBox(width: w * 0.03),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.comment_outlined),
-              ),
-              SizedBox(width: w * 0.03),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.share_outlined),
               ),
               const Expanded(child: SizedBox()),
               IconButton(
@@ -104,7 +85,6 @@ class PostDetailsPage extends StatelessWidget {
             ),
           ),
           SizedBox(height: h * 0.02),
-          //description
           SizedBox(
             width: w * 0.95,
             child: Padding(
