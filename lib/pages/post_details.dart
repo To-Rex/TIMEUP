@@ -70,7 +70,6 @@ class PostDetailsPage extends StatelessWidget {
             ],
           ),
           SizedBox(height: h * 0.02),
-          //title
           SizedBox(
             width: w * 0.95,
             child: Padding(
