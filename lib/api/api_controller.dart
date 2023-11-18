@@ -350,6 +350,8 @@ class ApiController extends GetxController {
       },);
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      //changeProfileById
+      _getController.changeProfileById(ProfileById.fromJson(jsonDecode(response.body)));
       return ProfileById.fromJson(jsonDecode(response.body));
     } else {
       return ProfileById(res: ProfileByIdRes(), status: false);

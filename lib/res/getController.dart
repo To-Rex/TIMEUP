@@ -96,6 +96,11 @@ class GetController extends GetxController {
     getPostById.value = newGetByIdPost;
   }
 
+  //clear data GetPostById
+  void clearGetByIdPost() {
+    getPostById.value = GetByIdPostModel();
+  }
+
   void changeGetPostList(GetMePost newGetPostList) {
     getPostList.value = newGetPostList;
   }

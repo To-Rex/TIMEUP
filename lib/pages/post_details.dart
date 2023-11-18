@@ -16,14 +16,15 @@ class PostDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
-    var w = MediaQuery.of(context).size.width;
+    getController.clearGetByIdPost();
     ApiController().getByIdPost(postId).then((value) => {
       if (getController.getPostById.value.res!.mediaType == 'video'){
           _controller = VideoPlayerController.networkUrl(Uri.parse(getController.getPostById.value.res!.video!)),
           _initializeVideoPlayerFuture = _controller.initialize(),
         },
     });
+    var h = MediaQuery.of(context).size.height;
+    var w = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -39,9 +40,10 @@ class PostDetailsPage extends StatelessWidget {
           },
         ),
         centerTitle: true,
-        title: Text(getController.getPostById.value.res!.title!, style: TextStyle(color: Colors.black, fontSize: w * 0.05)),
+        title: Obx(() => getController.getPostById.value.res == null || getController.getPostById.value.res!.id == null
+            ? Center(child: Text('No data', style: TextStyle(color: Colors.black, fontSize: w * 0.04)))
+            : Text(getController.getPostById.value.res!.title!, style: const TextStyle(color: Colors.black, fontSize: 18))),
         actions: [
-          //PopupMenuButton delete and edit post item
           PopupMenuButton<String>(
             itemBuilder: (BuildContext context) {
               return {'Delete','Edit'}.map((String choice) {
@@ -80,7 +82,7 @@ class PostDetailsPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Obx(() => getController.getPostById.value.res == null
+      body: Obx(() => getController.getPostById.value.res == null || getController.getPostById.value.res!.id == null
           ? const Center(child: Text('No data'))
           : Column(
         children: [

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:time_up/pages/post_details.dart';
 import '../api/api_controller.dart';
 import '../elements/functions.dart';
 import '../res/getController.dart';
@@ -361,7 +362,10 @@ class ProfessionsListDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
+    ApiController().profileById(_getController.profileByID.value);
     ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value,'').then((value) => _getController.changeBookingBusinessGetList(value));
+    print(_getController.getProfileById.value.res!.userId);
+    //ApiController().getMePostList(_getController.getProfileById.value.res?.id);
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(h * 0.1),
@@ -543,6 +547,28 @@ class ProfessionsListDetails extends StatelessWidget {
                             )),
                     ],
                   ),
+                  SizedBox(height: h * 0.01),
+                  Row(
+                    children: [
+                      //bio
+                      HeroIcon(
+                        HeroIcons.user,
+                        color: Colors.blue,
+                        size: w * 0.05,),
+                      SizedBox(width: w * 0.02),
+                      Obx(() => _getController.getProfileById.value.res == null
+                          ? const SizedBox()
+                          : Text(
+                              _getController.getProfileById.value.res!.bio!.length > 35
+                                  ? '${_getController.getProfileById.value.res!.bio?.substring(0,35)}...'
+                                  : _getController.getProfileById.value.res!.bio ?? '',
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                              ),
+                      )),
+                    ],
+                  ),
                   SizedBox(height: h * 0.02),
                   Row(
                     children: [
@@ -550,8 +576,7 @@ class ProfessionsListDetails extends StatelessWidget {
                         alignment: Alignment.center,
                         width: w * 0.2,
                         height: h * 0.05,
-                        child: Obx(
-                          () => _getController.nextPagesUserDetails.value == 0
+                        child: Obx(() => _getController.nextPagesUserDetails.value == 0
                               ? ElevatedButton(
                                   onPressed: () {
                                     _getController.nextPagesUserDetails.value = 0;
@@ -739,13 +764,12 @@ class ProfessionsListDetails extends StatelessWidget {
                     width: w,
                     height: h * 0.3,
                     child: PageView(
-                      //physics: const NeverScrollableScrollPhysics(),
                       onPageChanged: (index) {
                         _getController.nextPagesUserDetails.value = index;
                       },
                       controller: pageController,
                       children: [
-                        Container(
+                        /*Container(
                           width: w,
                           padding: EdgeInsets.only(
                               left: w * 0.02,
@@ -759,8 +783,7 @@ class ProfessionsListDetails extends StatelessWidget {
                             ),
                           ),
                           child: Obx(
-                            () =>
-                                _getController.getProfileById.value.res == null
+                            () => _getController.getProfileById.value.res == null
                                     ? const SizedBox()
                                     : Text(_getController.getProfileById.value.res!.bio ?? '',
                                         style: TextStyle(
@@ -768,6 +791,66 @@ class ProfessionsListDetails extends StatelessWidget {
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
+                          ),
+                        ),*/
+                        SizedBox(
+                          width: w,
+                          height: h * 0.2,
+                          child: Obx(
+                            () => _getController.getPostList.value.res == null
+                                ? Center(child: Text('No data', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500,),))
+                                : ListView.builder(
+                                itemCount: _getController.getPostList.value.res!.length,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      //_getController.clearGetByIdPost();
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getPostList.value.res![index].id,)));
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.only(bottom: h * 0.01),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                              width: w * 0.3,
+                                              height: h * 0.13,
+                                              padding: EdgeInsets.all(w * 0.01),
+                                              margin: EdgeInsets.only(right: w * 0.02),
+                                              child:PhotoView(
+                                                disableGestures: true,
+                                                imageProvider: NetworkImage('${_getController.getPostList.value.res![index].photo}'),)
+                                          ),
+                                          Expanded(child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                height: h * 0.03,
+                                                child: Text('${_getController.getPostList.value.res![index].title}',
+                                                  style: TextStyle(
+                                                    fontSize: w * 0.04,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: h * 0.04,
+                                                child: Text('${_getController.getPostList.value.res![index].description}',
+                                                  style: TextStyle(
+                                                    fontSize: w * 0.04,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          )),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }),
                           ),
                         ),
                         SizedBox(
