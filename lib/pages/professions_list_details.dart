@@ -363,7 +363,6 @@ class ProfessionsListDetails extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     ApiController().profileById(_getController.profileByID.value);
-    print('=====  ${_getController.getProfileById.value.res!.userId} ====');
     _getController.clearGetPostList();
     ApiController().getMePostList(_getController.getProfileById.value.res?.id ?? 0);
     ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value,'').then((value) => _getController.changeBookingBusinessGetList(value));
@@ -575,7 +574,7 @@ class ProfessionsListDetails extends StatelessWidget {
                     children: [
                       Container(
                         alignment: Alignment.center,
-                        width: w * 0.2,
+                        width: w * 0.21,
                         height: h * 0.05,
                         child: Obx(() => _getController.nextPagesUserDetails.value == 0
                               ? ElevatedButton(
@@ -587,7 +586,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3),),
                                     backgroundColor: Colors.blue,
                                   ),
-                                  child: Text('Bio',
+                                  child: Text('Post',
                                     style: TextStyle(
                                       fontSize: w * 0.04,
                                       fontWeight: FontWeight.w500,
@@ -604,7 +603,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3),),
                                     backgroundColor: Colors.grey,
                                   ),
-                                  child: Text('Bio',
+                                  child: Text('Post',
                                     style: TextStyle(
                                       fontSize: w * 0.04,
                                       fontWeight: FontWeight.w500,
