@@ -12,6 +12,7 @@ import '../models/category.dart';
 import '../models/follov_model.dart';
 import '../models/get_by_category.dart';
 import '../models/get_follow_model.dart';
+import '../models/get_follow_post.dart';
 import '../models/get_id_post.dart';
 import '../models/get_post.dart';
 import '../models/get_region.dart';
@@ -65,6 +66,8 @@ class ApiController extends GetxController {
   var postGetUrl = 'post/get/';
   //{{host}}/api/v1/post/delete/3
   var postDeleteUrl = 'post/delete/';
+  //{{host}}/api/v1/post/list/followed-profiles
+  var postListFollowedProfilesUrl = 'post/list/followed-profiles';
 
   Future<String> sendSms(String phoneNumber) async {
     var response = await http.post(
@@ -511,6 +514,20 @@ class ApiController extends GetxController {
       return true;
     } else {
       return false;
+    }
+  }
+
+  Future<GetFollowPost> getFollowPostList() async{
+    var response = await http.get(Uri.parse('$url$postListFollowedProfilesUrl'),
+      headers: {'Authorization': 'Bearer ${GetStorage().read('token')}',},
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      _getController.changeGetFollowPost(GetFollowPost.fromJson(jsonDecode(response.body)));
+      return GetFollowPost.fromJson(jsonDecode(response.body));
+    } else {
+      _getController.changeGetFollowPost(GetFollowPost(res: [], status: false));
+      return GetFollowPost(res: [], status: false);
     }
   }
 

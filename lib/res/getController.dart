@@ -10,6 +10,7 @@ import '../bottomBarPages/profile.dart';
 import '../bottomBarPages/search.dart';
 import '../models/booking_business_get.dart';
 import '../models/get_by_category.dart';
+import '../models/get_follow_post.dart';
 import '../models/get_id_post.dart';
 import '../models/get_post.dart';
 import '../models/get_region.dart';
@@ -68,6 +69,7 @@ class GetController extends GetxController {
   var followList = GetFollowModel().obs;
   var getPostList = GetMePost().obs;
   var getPostById = GetByIdPostModel().obs;
+  var getFollowPost = GetFollowPost().obs;
   var categoryIndex = 0.obs;
   var subCategoryIndex = 0.obs;
   var regionIndex = 0.obs;
@@ -77,6 +79,10 @@ class GetController extends GetxController {
   var titleListElements = ''.obs;
   var startVideo = false.obs;
   var pauseVideo = false.obs;
+
+  void changeGetFollowPost(GetFollowPost newGetFollowPost) {
+    getFollowPost.value = newGetFollowPost;
+  }
 
   void changeStartVideo() {
     startVideo.value = !startVideo.value;

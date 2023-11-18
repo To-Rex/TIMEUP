@@ -236,7 +236,7 @@ class PostDetailsPage extends StatelessWidget {
                 child: CircleAvatar(
                 backgroundColor: Colors.grey,
                 radius: w * 0.06,
-                backgroundImage: NetworkImage(getController.getPostById.value.res!.photo!),),
+                backgroundImage: NetworkImage(getController.getPostById.value.res!.posterPhotoUrl!)),
               ),
               SizedBox(width: w * 0.03),
               GestureDetector(

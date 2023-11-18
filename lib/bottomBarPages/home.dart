@@ -98,9 +98,11 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ApiController().getUserData();
+    ApiController().getFollowPostList();
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     ApiController().getFollowList().then((value) => _getController.changeFollowList(value));
+
     return Obx(() => _getController.followList.value.res == null
         ? SizedBox(width: w, height: h * 0.9, child: const Center(child: CircularProgressIndicator()),)
         : Obx(() => _getController.followList.value.res!.isNotEmpty
@@ -182,7 +184,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: w * 0.01,),
-                      /*SizedBox(
+                      SizedBox(
                         height: w * 0.07,
                         width: w * 0.07,
                         child: IconButton(
@@ -192,8 +194,8 @@ class HomePage extends StatelessWidget {
                             onPressed: (){showDialogs(context, 'Manzil',_getController.followList.value.res?[index].officeAddress ?? '','ok',2);},
                             icon: HeroIcon(HeroIcons.mapPin, color: Colors.blue, size: w * 0.07,)
                         ),
-                      ),*/
-                      /*SizedBox(width: w * 0.01),
+                      ),
+                      SizedBox(width: w * 0.01),
                       SizedBox(
                         height: w * 0.07,
                         width: w * 0.07,
@@ -204,7 +206,7 @@ class HomePage extends StatelessWidget {
                             onPressed: (){showDialogs(context,_getController.followList.value.res?[index].categoryName ?? '',_getController.followList.value.res?[index].bio ?? '','ok',3);},
                             icon: HeroIcon(HeroIcons.briefcase, color: Colors.blue, size: w * 0.07,)
                         ),
-                      ),*/
+                      ),
                     ],
                   ),
                 ),
@@ -246,8 +248,7 @@ class HomePage extends StatelessWidget {
               ],
             );
           }),
-    )
-          : SizedBox(width: w, height: h * 0.9, child: const Center(child: Text('No data'),),)
+    ): SizedBox(width: w, height: h * 0.9, child: const Center(child: Text('No data'),),)
         )
     );
   }
