@@ -363,9 +363,10 @@ class ProfessionsListDetails extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     ApiController().profileById(_getController.profileByID.value);
+    print('=====  ${_getController.getProfileById.value.res!.userId} ====');
+    _getController.clearGetPostList();
+    ApiController().getMePostList(_getController.getProfileById.value.res?.id ?? 0);
     ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value,'').then((value) => _getController.changeBookingBusinessGetList(value));
-    print(_getController.getProfileById.value.res!.userId);
-    //ApiController().getMePostList(_getController.getProfileById.value.res?.id);
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(h * 0.1),
@@ -796,8 +797,7 @@ class ProfessionsListDetails extends StatelessWidget {
                         SizedBox(
                           width: w,
                           height: h * 0.2,
-                          child: Obx(
-                            () => _getController.getPostList.value.res == null
+                          child: Obx(() => _getController.getPostList.value.res == null
                                 ? Center(child: Text('No data', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500,),))
                                 : ListView.builder(
                                 itemCount: _getController.getPostList.value.res!.length,

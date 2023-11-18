@@ -105,6 +105,11 @@ class GetController extends GetxController {
     getPostList.value = newGetPostList;
   }
 
+  //clear data GetPostList
+  void clearGetPostList() {
+    getPostList.value = GetMePost();
+  }
+
   void changeTitleListElements(String newTitleListElements) {
     titleListElements.value = newTitleListElements;
   }
