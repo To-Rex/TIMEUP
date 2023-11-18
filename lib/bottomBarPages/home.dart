@@ -275,55 +275,58 @@ class HomePage extends StatelessWidget {
             () => _getController.getFollowPost.value.res!.isNotEmpty
                 ? SizedBox(
                     width: w,
-                    height: h * 0.9,
+                    height: h * 0.83,
                     child: ListView.builder(
                         itemCount: _getController.getFollowPost.value.res?.length ?? 0,
                         itemBuilder: (context, index) {
                           return Column(
                             children: [
-                              SizedBox(
-                                height: h * 0.02,
-                              ),
-                              if (_getController.getFollowPost.value.res?[index].photo != null)
-                                InkWell(
-                                  onTap: () {
-                                    ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {_getController.changeProfileById(value),});
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
-                                  },
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: w * 0.9,
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                              width: w * 0.11,
-                                              height: w * 0.11,
-                                              child: CircleAvatar(
-                                                backgroundImage: NetworkImage('${_getController.getFollowPost.value.res?[index].photo}'),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: w * 0.02,
-                                            ),
-                                            SizedBox(
-                                              width: w * 0.6,
-                                              child: Text('${_getController.getFollowPost.value.res?[index].posterName}',
-                                                style: TextStyle(
-                                                  fontSize: w * 0.05,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                              SizedBox(height: h * 0.02),
+                              Obx(() => _getController.getFollowPost.value.res?[index].posterPhotoUrl == null
+                                  ? SizedBox(
+                                      width: w,
+                                      height: h * 0.33,
+                                      child: const Center(
+                                        child: Text('photo not found'),
                                       ),
-                                    ],
-                                  ),
+                                    )
+                                  : InkWell(
+                                onTap: () {
+                                  ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {_getController.changeProfileById(value),});
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
+                                },
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: w * 0.9,
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: w * 0.11,
+                                            height: w * 0.11,
+                                            child: CircleAvatar(
+                                              backgroundImage: NetworkImage('${_getController.getFollowPost.value.res?[index].posterPhotoUrl}'),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: w * 0.02,
+                                          ),
+                                          SizedBox(
+                                            width: w * 0.6,
+                                            child: Text('${_getController.getFollowPost.value.res?[index].posterName}',
+                                              style: TextStyle(
+                                                fontSize: w * 0.05,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              SizedBox(
-                                height: h * 0.02,
-                              ),
+                              ),),
+                              SizedBox(height: h * 0.02),
                               if (_getController.getFollowPost.value.res?[index].photo != null)
                                 SizedBox(
                                   width: w,
@@ -333,9 +336,7 @@ class HomePage extends StatelessWidget {
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                              SizedBox(
-                                height: h * 0.02,
-                              ),
+                              SizedBox(height: h * 0.02),
                               SizedBox(
                                 width: w * 0.95,
                                 child: Row(
@@ -348,13 +349,8 @@ class HomePage extends StatelessWidget {
                                           iconSize: w * 0.07,
                                           padding: EdgeInsets.zero,
                                           onPressed: () {
-                                            ApiController()
-                                                .profileById(_getController.getFollowPost.value.res?[index].id ??
-                                                    0)
-                                                .then((value) => {
-                                                      _getController.changeProfileById(value),
-                                                    });
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
+                                              ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {_getController.changeProfileById(value),});
+                                              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
                                           },
                                           icon: HeroIcon(
                                             HeroIcons.heart,
@@ -362,9 +358,7 @@ class HomePage extends StatelessWidget {
                                             size: w * 0.07,
                                           )),
                                     ),
-                                    SizedBox(
-                                      width: w * 0.01,
-                                    ),
+                                    SizedBox(width: w * 0.01,),
                                     SizedBox(
                                       height: w * 0.07,
                                       width: w * 0.07,
@@ -373,7 +367,6 @@ class HomePage extends StatelessWidget {
                                           iconSize: w * 0.07,
                                           padding: EdgeInsets.zero,
                                           onPressed: () {
-
                                           },
                                           icon: HeroIcon(
                                             HeroIcons.phone,
@@ -381,28 +374,8 @@ class HomePage extends StatelessWidget {
                                             size: w * 0.07,
                                           )),
                                     ),
-                                    SizedBox(
-                                      width: w * 0.01,
-                                    ),
-                                    SizedBox(
-                                      height: w * 0.07,
-                                      width: w * 0.07,
-                                      child: IconButton(
-                                          hoverColor: Colors.blue,
-                                          iconSize: w * 0.07,
-                                          padding: EdgeInsets.zero,
-                                          onPressed: () {
-
-                                          },
-                                          icon: HeroIcon(
-                                            HeroIcons.mapPin,
-                                            color: Colors.blue,
-                                            size: w * 0.07,
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      width: w * 0.01,
-                                    ),
+                                    SizedBox(width: w * 0.01,),
+                                    const Expanded(child: SizedBox()),
                                     SizedBox(
                                       height: w * 0.07,
                                       width: w * 0.07,
@@ -411,10 +384,9 @@ class HomePage extends StatelessWidget {
                                           iconSize: w * 0.07,
                                           padding: EdgeInsets.zero,
                                           onPressed: () {
-
                                           },
                                           icon: HeroIcon(
-                                            HeroIcons.briefcase,
+                                            HeroIcons.bookmark,
                                             color: Colors.blue,
                                             size: w * 0.07,
                                           )),
@@ -422,6 +394,29 @@ class HomePage extends StatelessWidget {
                             ],
                           ),
                         ),
+                              SizedBox(height: h * 0.02),
+                              SizedBox(
+                                width: w * 0.9,
+                                child: Text(
+                                  '${_getController.getFollowPost.value.res?[index].title}',
+                                  style: TextStyle(
+                                    fontSize: w * 0.04,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: w * 0.9,
+                                child: Text(
+                                  '${_getController.getFollowPost.value.res?[index].description}',
+                                  style: TextStyle(
+                                    fontSize: w * 0.035,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black54,
+                                  ),
+                                ),
+                              ),
+
                         SizedBox(
                           height: h * 0.01,
                         ),
