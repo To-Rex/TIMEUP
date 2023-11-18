@@ -287,11 +287,7 @@ class HomePage extends StatelessWidget {
                               if (_getController.getFollowPost.value.res?[index].photo != null)
                                 InkWell(
                                   onTap: () {
-                                    ApiController()
-                                        .profileById(_getController.getFollowPost.value.res?[index].id ?? 0)
-                                        .then((value) => {
-                                              _getController.changeProfileById(value),
-                                            });
+                                    ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {_getController.changeProfileById(value),});
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
                                   },
                                   child: Row(
@@ -304,8 +300,7 @@ class HomePage extends StatelessWidget {
                                               width: w * 0.11,
                                               height: w * 0.11,
                                               child: CircleAvatar(
-                                                backgroundImage: NetworkImage(
-                                                    '${_getController.getFollowPost.value.res?[index].photo}'),
+                                                backgroundImage: NetworkImage('${_getController.getFollowPost.value.res?[index].photo}'),
                                               ),
                                             ),
                                             SizedBox(
@@ -313,8 +308,7 @@ class HomePage extends StatelessWidget {
                                             ),
                                             SizedBox(
                                               width: w * 0.6,
-                                              child: Text(
-                                                '${_getController.getFollowPost.value.res?[index].posterName}',
+                                              child: Text('${_getController.getFollowPost.value.res?[index].posterName}',
                                                 style: TextStyle(
                                                   fontSize: w * 0.05,
                                                   fontWeight: FontWeight.w500,
