@@ -58,7 +58,6 @@ class EditUserPage extends StatelessWidget {
       width: w,
       child: Column(
         children: [
-          SizedBox(height: h * 0.01),
           AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -102,7 +101,7 @@ class EditUserPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: h * 0.05),
+          SizedBox(height: h * 0.03),
           TextFildWidget(
             controller: nameController,
             labelText: 'Name',
@@ -171,7 +170,7 @@ class EditUserPage extends StatelessWidget {
               }
             },
           ),
-          SizedBox(height: h * 0.05),
+          SizedBox(height: h * 0.01),
         ],
       ),
     );

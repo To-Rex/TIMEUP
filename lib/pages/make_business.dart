@@ -77,7 +77,7 @@ class MakeBusinessPage extends StatelessWidget {
       children: [
         SizedBox(
           width: w,
-          height: h * 0.75,
+          height: h * 0.74,
           child: PageView(
             physics: const NeverScrollableScrollPhysics(),
             controller: pageController,
@@ -615,7 +615,7 @@ class MakeBusinessPage extends StatelessWidget {
                   },
                 ),
         ),
-        SizedBox(height: h * 0.05),
+        SizedBox(height: h * 0.01),
       ],
     );
   }

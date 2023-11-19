@@ -17,7 +17,6 @@ import '../pages/user_bussines_edit.dart';
 import '../pages/user_edit.dart';
 import '../res/getController.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:video_player/video_player.dart';
 
 class ProfilePage extends StatelessWidget  {
   ProfilePage({Key? key}) : super(key: key);
@@ -354,6 +353,56 @@ class ProfilePage extends StatelessWidget  {
                 ),
               ),
               SizedBox(height: h * 0.1),
+              InkWell(
+                onTap: () {
+                  getController.entersUser.value = 1;
+                  Navigator.pop(context);
+                },
+                child: SizedBox(
+                  width: w,
+                  height: h * 0.05,
+                  child: Row(
+                    children: [
+                      SizedBox(width: w * 0.05),
+                      HeroIcon(
+                        HeroIcons.pencilSquare,
+                        color: Colors.blue,
+                        size: w * 0.05,
+                      ),
+                      SizedBox(width: w * 0.03),
+                      const Text('Edit profile'),
+                    ],
+                  ),
+                ),
+              ),
+              Obx(() => getController.meUsers.value.res?.business != null
+                  ? const SizedBox()
+                  : const Divider()),
+              Obx(() => getController.meUsers.value.res?.business != null
+                  ? const SizedBox()
+                  : InkWell(
+                      onTap: () {
+                        getController.entersUser.value = 2;
+                        Navigator.pop(context);
+                      },
+                      child: SizedBox(
+                        width: w,
+                        height: h * 0.05,
+                        child: Row(
+                          children: [
+                            SizedBox(width: w * 0.05),
+                            HeroIcon(
+                              HeroIcons.pencilSquare,
+                              color: Colors.blue,
+                              size: w * 0.05,
+                            ),
+                            SizedBox(width: w * 0.03),
+                            const Text('Make business profile'),
+                          ],
+                        ),
+                      ),
+                    )),
+              const Divider(),
               InkWell(
                 onTap: () {
                   showClosDialogs(context);
