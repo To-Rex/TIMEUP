@@ -23,9 +23,20 @@ class PostDetailsPage extends StatelessWidget {
           _initializeVideoPlayerFuture = _controller.initialize(),
         },
     });
+    if (getController.startVideo == true){
+      getController.changeStartVideo();
+    }
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: (){
+          if (getController.startVideo == true){
+            _controller.pause();
+            getController.changeStartVideo();
+          }
+          return Future.value(true);
+        },
+        child: Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
@@ -193,7 +204,7 @@ class PostDetailsPage extends StatelessWidget {
               },
             ),
           )
-          : Stack(
+              : Stack(
             children: [
               SizedBox(
                 height: h * 0.4,
@@ -236,9 +247,9 @@ class PostDetailsPage extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
                 },
                 child: CircleAvatar(
-                backgroundColor: Colors.grey,
-                radius: w * 0.06,
-                backgroundImage: NetworkImage(getController.getPostById.value.res!.posterPhotoUrl!)),
+                    backgroundColor: Colors.grey,
+                    radius: w * 0.06,
+                    backgroundImage: NetworkImage(getController.getPostById.value.res!.posterPhotoUrl!)),
               ),
               SizedBox(width: w * 0.03),
               GestureDetector(
@@ -293,6 +304,6 @@ class PostDetailsPage extends StatelessWidget {
           ),
         ],
       )),
-    );
+    ));
   }
 }
