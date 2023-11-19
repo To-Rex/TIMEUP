@@ -4,15 +4,21 @@ import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/pages/professions_list_details.dart';
 import 'package:video_player/video_player.dart';
-
+import 'package:chewie/chewie.dart';
 import '../res/getController.dart';
 
 class PostDetailsPage extends StatelessWidget {
   var postId;
   PostDetailsPage({Key? key, this.postId}) : super(key: key);
+
   final GetController getController = Get.put(GetController());
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
+  var _chewieController = ChewieController(
+    videoPlayerController: VideoPlayerController.networkUrl(Uri.parse('')),
+    autoPlay: true,
+    looping: true,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +27,11 @@ class PostDetailsPage extends StatelessWidget {
       if (getController.getPostById.value.res!.mediaType == 'video'){
           _controller = VideoPlayerController.networkUrl(Uri.parse(getController.getPostById.value.res!.video!)),
           _initializeVideoPlayerFuture = _controller.initialize(),
+        _chewieController = ChewieController(
+          videoPlayerController: _controller,
+          autoPlay: true,
+          looping: true,
+        ),
         },
     });
     if (getController.startVideo == true && getController.pauseVideo == false){
@@ -235,6 +246,15 @@ class PostDetailsPage extends StatelessWidget {
                   : const SizedBox(),
             ],
           ),),
+
+          SizedBox(
+            width: w,
+            height: h * 0.4,
+            child: Chewie(
+              controller: _chewieController,
+            ),
+          ),
+
           SizedBox(height: h * 0.02),
           Row(
             children: [

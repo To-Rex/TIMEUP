@@ -52,6 +52,7 @@ dependencies:
   camera: ^0.10.5+5
   photo_gallery: ^2.1.1
   video_player: ^2.8.1
+  chewie: ^1.7.1
 
 dev_dependencies:
   flutter_test:
