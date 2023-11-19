@@ -282,60 +282,51 @@ class HomePage extends StatelessWidget {
                           return Column(
                             children: [
                               SizedBox(height: h * 0.02),
-                              Obx(() => _getController.getFollowPost.value.res?[index].posterPhotoUrl == null
-                                  ? SizedBox(
-                                    width: w * 0.11,
-                                    height: w * 0.11,
-                                    child: HeroIcon(
-                                        HeroIcons.userCircle,
-                                        color: Colors.blue,
-                                        size: w * 0.11,
-                                    ))
-                                  : InkWell(
-                                onTap: () {
-                                  ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {_getController.changeProfileById(value),});
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: w * 0.9,
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            width: w * 0.11,
-                                            height: w * 0.11,
-                                            child: CircleAvatar(
-                                              backgroundImage: NetworkImage('${_getController.getFollowPost.value.res?[index].posterPhotoUrl}'),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: w * 0.02,
-                                          ),
-                                          SizedBox(
-                                            width: w * 0.6,
-                                            child: Text('${_getController.getFollowPost.value.res?[index].posterName}',
-                                              style: TextStyle(
-                                                fontSize: w * 0.05,
-                                                fontWeight: FontWeight.w500,
+                              if (_getController.getFollowPost.value.res?[index].posterPhotoUrl != null)
+                                InkWell(
+                                  onTap: () {
+                                    ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {_getController.changeProfileById(value),});
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: w * 0.9,
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: w * 0.11,
+                                              height: w * 0.11,
+                                              child: CircleAvatar(
+                                                backgroundImage: NetworkImage('${_getController.getFollowPost.value.res?[index].posterPhotoUrl}'),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                            SizedBox(
+                                              width: w * 0.02,
+                                            ),
+                                            SizedBox(
+                                              width: w * 0.6,
+                                              child: Text('${_getController.getFollowPost.value.res?[index].posterName}',
+                                                style: TextStyle(
+                                                  fontSize: w * 0.05,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),),
                               SizedBox(height: h * 0.02),
-                              Obx(() => _getController.getFollowPost.value.res?[index].photo == null
-                                  ? const SizedBox()
-                                  : SizedBox(
-                                      width: w,
-                                      height: h * 0.33,
-                                      child: Image.network('${_getController.getFollowPost.value.res?[index].photo}',
+                              if (_getController.getFollowPost.value.res?[index].photo != null)
+                                SizedBox(
+                                  width: w,
+                                  height: h * 0.33,
+                                  child: Image.network('${_getController.getFollowPost.value.res?[index].photo}',
                                       fit: BoxFit.cover),
-                                    ),),
+                                ),
                               SizedBox(height: h * 0.02),
                               SizedBox(
                                 width: w * 0.95,
