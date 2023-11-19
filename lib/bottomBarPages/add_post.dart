@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -174,11 +175,6 @@ class _AddPostPage extends State<AddPostPage> {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    if (!controller.value.isInitialized) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
     return WillPopScope(
       onWillPop: () async {
         if (_getController.postFile.value == '') {
@@ -330,7 +326,7 @@ class _AddPostPage extends State<AddPostPage> {
                     child: Column(
                       children: [
                         Obx(() => _getController.postFile.value == ''
-                        ?GestureDetector(
+                            ?GestureDetector(
                           onTap: () {
                             _pickMedia();
                           },
@@ -365,7 +361,7 @@ class _AddPostPage extends State<AddPostPage> {
                             ),
                           ) ,
                         )
-                        :_getController.postVideoFile.value != '' && _getController.postFile.value != '' || _getController.postVideoFile.value != '' && _getController.postFile.value == ''
+                            :_getController.postVideoFile.value != '' && _getController.postFile.value != '' || _getController.postVideoFile.value != '' && _getController.postFile.value == ''
                             ?Column(
                           children: [
                             Text('Rasm yoki video yuklang',
@@ -660,7 +656,7 @@ class _AddPostPage extends State<AddPostPage> {
                                 _getController.changePostVideoFile(''),
                                 titleController.clear(),
                                 descriptionController.clear(),
-                              _getController.changeIndex(0),
+                                _getController.changeIndex(0),
                                 ApiController().getUserData(),
                                 Toast.showToast(context, 'Post created', Colors.green, Colors.white),
                               } else {
