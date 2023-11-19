@@ -111,109 +111,14 @@ class PostDetailsPage extends StatelessWidget {
           SizedBox(height: h * 0.02),
           Obx(() => getController.startVideo == true
               ? SizedBox(
-            child: FutureBuilder(
-              future: _initializeVideoPlayerFuture,
-              initialData: null,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return Stack(
-                    children: [
-                      Container(
-                        width: w,
-                        height: h * 0.32,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(1),
-                        ),
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: SizedBox(
-                            width: _controller.value.size.width,
-                            height: _controller.value.size.height,
-                            child: VideoPlayer(_controller),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        child: Container(
-                            height: MediaQuery.of(context).size.height * 0.065,
-                            width: MediaQuery.of(context).size.width,
-                            color: Colors.black.withOpacity(0.5),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height * 0.05,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds - 10));
-                                        },
-                                        icon: const HeroIcon(
-                                          HeroIcons.chevronLeft,
-                                          color: Colors.white,
-                                        ),
-                                        color: Colors.white,
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          if (_controller.value.isPlaying) {
-                                            _controller.pause();
-                                          } else {
-                                            _controller.play();
-                                          }
-                                          getController.changePauseVideo();
-                                        },
-                                        icon: Obx(() => getController.pauseVideo == true
-                                            ? const HeroIcon(
-                                          HeroIcons.pause,
-                                          color: Colors.white,
-                                        ) : const HeroIcon(
-                                          HeroIcons.play,
-                                          color: Colors.white,
-                                        )),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds + 10));
-                                        },
-                                        icon: const HeroIcon(
-                                          HeroIcons.chevronRight,
-                                          color: Colors.white,
-                                        ),
-                                        color: Colors.white,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  child: VideoProgressIndicator(
-                                    _controller,
-                                    allowScrubbing: true,
-                                    colors: const VideoProgressColors(
-                                      playedColor: Colors.blue,
-                                      bufferedColor: Colors.grey,
-                                      backgroundColor: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
-                      ),
-                    ],
-                  );
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
+            child: SizedBox(
+              width: w,
+              height: h * 0.4,
+              child: Chewie(
+                controller: _chewieController,
+              ),
             ),
-          )
-              : Stack(
+          ) : Stack(
             children: [
               SizedBox(
                 height: h * 0.4,
@@ -246,14 +151,6 @@ class PostDetailsPage extends StatelessWidget {
                   : const SizedBox(),
             ],
           ),),
-
-          SizedBox(
-            width: w,
-            height: h * 0.4,
-            child: Chewie(
-              controller: _chewieController,
-            ),
-          ),
 
           SizedBox(height: h * 0.02),
           Row(
