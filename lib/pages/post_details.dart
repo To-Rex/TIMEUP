@@ -18,6 +18,7 @@ class PostDetailsPage extends StatelessWidget {
     videoPlayerController: VideoPlayerController.networkUrl(Uri.parse('')),
     autoPlay: true,
     looping: true,
+    zoomAndPan: true,
   );
 
   @override
@@ -42,19 +43,14 @@ class PostDetailsPage extends StatelessWidget {
           placeholder: Container(
             color: Colors.black,
           ),
-          autoInitialize: true,
-          allowMuting: true,
-          allowedScreenSleep: false,
-          showControls: true,
-          fullScreenByDefault: false,
           materialProgressColors: ChewieProgressColors(
             playedColor: Colors.blue,
             handleColor: Colors.blue,
             backgroundColor: Colors.grey,
-            bufferedColor: Colors.blueGrey,
+            bufferedColor: Colors.grey,
           ),
           zoomAndPan: false,
-
+          useRootNavigator: true,
         ),
         },
     });

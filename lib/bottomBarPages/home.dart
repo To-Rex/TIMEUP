@@ -109,10 +109,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ApiController().getUserData();
-    ApiController().getFollowPostList();
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
+    //ApiController().getUserData();
     ApiController().getFollowPostList();
     return Obx(() => _getController.getFollowPost.value.res == null
         ? SizedBox(

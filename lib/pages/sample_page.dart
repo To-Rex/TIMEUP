@@ -58,8 +58,7 @@ class SamplePage extends StatelessWidget {
               height: h * 0.9, child: _getController.widgetOptions.elementAt(_getController.index.value),
             )
           : SingleChildScrollView(
-              child: _getController.widgetOptions
-                  .elementAt(_getController.index.value),
+              child: _getController.widgetOptions.elementAt(_getController.index.value),
             )),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
