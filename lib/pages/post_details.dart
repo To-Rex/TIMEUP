@@ -205,21 +205,21 @@ class PostDetailsPage extends StatelessWidget {
               ),
               getController.getPostById.value.res!.mediaType == 'video'
                   ? Positioned(
-                  top: h * 0.15,
-                  left: w * 0.4,
-                  right: w * 0.4,
-                  bottom: h * 0.15,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(w * 0.1),
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        _controller.play();
-                        getController.changeStartVideo();
-                      },
-                      icon: Icon(Icons.play_arrow, color: Colors.white, size: w * 0.08),
+                  height: h * 0.4,
+                  width: w ,
+                  child: Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(w * 0.1),
+                      ),
+                      child: IconButton(
+                        onPressed: () {
+                          _controller.play();
+                          getController.changeStartVideo();
+                        },
+                        icon: Icon(Icons.play_arrow, color: Colors.white, size: w * 0.08),
+                      ),
                     ),
                   )
               )

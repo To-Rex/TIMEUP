@@ -893,28 +893,30 @@ class ProfessionsListDetails extends StatelessWidget {
                                                                     ),
                                                                   ),
                                                                   Positioned(
-                                                                    top: h * 0.05,
-                                                                    left: w * 0.1,
-                                                                    child: InkWell(
-                                                                      onTap: () {
-                                                                        Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getPostList.value.res![index].id,)));
-                                                                      },
-                                                                      child: Container(
-                                                                        width: w * 0.1,
-                                                                        height: h * 0.05,
-                                                                        decoration: BoxDecoration(
-                                                                          color: Colors.black.withOpacity(0.5),
-                                                                          borderRadius: BorderRadius.circular(w * 0.1),
-                                                                        ),
-                                                                        child: Center(
-                                                                          child: Icon(
-                                                                            Icons.play_arrow,
-                                                                            color: Colors.white,
-                                                                            size: w * 0.05,
+                                                                    height: h * 0.13,
+                                                                    width: w * 0.3,
+                                                                    child: Center(
+                                                                      child: InkWell(
+                                                                        onTap: () {
+                                                                          Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getPostList.value.res![index].id,)));
+                                                                        },
+                                                                        child: Container(
+                                                                          width: w * 0.1,
+                                                                          height: h * 0.05,
+                                                                          decoration: BoxDecoration(
+                                                                            color: Colors.black.withOpacity(0.5),
+                                                                            borderRadius: BorderRadius.circular(w * 0.1),
+                                                                          ),
+                                                                          child: Center(
+                                                                            child: Icon(
+                                                                              Icons.play_arrow,
+                                                                              color: Colors.white,
+                                                                              size: w * 0.05,
+                                                                            ),
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                    ),
+                                                                    )
                                                                   ),
                                                                 ],) : Container(
                                                                 width: w * 0.3,
