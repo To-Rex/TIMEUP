@@ -134,9 +134,9 @@ class HomePage extends StatelessWidget {
                               if (_getController.getFollowPost.value.res?[index].posterPhotoUrl != null)
                                 InkWell(
                                   onTap: () {
-                                    //show dialog circle progress bar
                                     showDialog(
                                       context: context,
+                                      barrierColor: Colors.black.withOpacity(0.5),
                                       builder: (context) => AlertDialog(
                                         content: SizedBox(
                                           width: w * 0.1,
