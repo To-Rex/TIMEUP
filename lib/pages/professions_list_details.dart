@@ -968,22 +968,14 @@ class ProfessionsListDetails extends StatelessWidget {
                                     width: w,
                                     height: h * 0.22,
                                     child: Obx(
-                                      () => _getController
-                                                  .bookingBusinessGetList
-                                                  .value
-                                                  .res ==
-                                              null
+                                      () => _getController.bookingBusinessGetList.value.res == null
                                           ? const SizedBox()
                                           : Container(
                                               width: w,
-                                              padding: EdgeInsets.only(
-                                                  left: w * 0.02,
-                                                  right: w * 0.02,
-                                                  top: h * 0.01),
+                                              padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02, top: h * 0.01),
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(3),
+                                                borderRadius: BorderRadius.circular(3),
                                                 border: Border.all(
                                                   color: Colors.grey,
                                                 ),
@@ -994,11 +986,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                                     height: h * 0.23,
                                                     child: ListView.builder(
                                                         shrinkWrap: true,
-                                                        itemCount: _getController
-                                                            .bookingBusinessGetList
-                                                            .value
-                                                            .res!
-                                                            .length,
+                                                        itemCount: _getController.bookingBusinessGetList.value.res!.length,
                                                         itemBuilder:
                                                             (context, index) {
                                                           return Column(
@@ -1006,32 +994,22 @@ class ProfessionsListDetails extends StatelessWidget {
                                                               Row(
                                                                 children: [
                                                                   SizedBox(
-                                                                    width: w *
-                                                                        0.08,
-                                                                    child: Text(
-                                                                      '${index + 1}',
-                                                                      style:
-                                                                          TextStyle(
-                                                                        fontSize:
-                                                                            w * 0.04,
-                                                                        fontWeight:
-                                                                            FontWeight.w500,
+                                                                    width: w * 0.08,
+                                                                    child: Text('${index + 1}',
+                                                                      style: TextStyle(
+                                                                        fontSize: w * 0.04,
+                                                                        fontWeight: FontWeight.w500,
                                                                       ),
                                                                     ),
                                                                   ),
                                                                   SizedBox(
-                                                                    width:
-                                                                        w * 0.7,
-                                                                    child: Text(
-                                                                      'Ushbu mijoz'
+                                                                    width: w * 0.7,
+                                                                    child: Text('Ushbu mijoz'
                                                                       ' ${_getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
                                                                       '${_getController.bookingBusinessGetList.value.res![index].time!} keladi',
-                                                                      style:
-                                                                          TextStyle(
-                                                                        fontSize:
-                                                                            w * 0.04,
-                                                                        fontWeight:
-                                                                            FontWeight.w500,
+                                                                      style: TextStyle(
+                                                                        fontSize: w * 0.04,
+                                                                        fontWeight: FontWeight.w500,
                                                                       ),
                                                                     ),
                                                                   ),
