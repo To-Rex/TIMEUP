@@ -284,12 +284,13 @@ class HomePage extends StatelessWidget {
                               SizedBox(height: h * 0.02),
                               Obx(() => _getController.getFollowPost.value.res?[index].posterPhotoUrl == null
                                   ? SizedBox(
-                                      width: w,
-                                      height: h * 0.33,
-                                      child: const Center(
-                                        child: Text('photo not found'),
-                                      ),
-                                    )
+                                    width: w * 0.11,
+                                    height: w * 0.11,
+                                    child: HeroIcon(
+                                        HeroIcons.userCircle,
+                                        color: Colors.blue,
+                                        size: w * 0.11,
+                                    ))
                                   : InkWell(
                                 onTap: () {
                                   ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {_getController.changeProfileById(value),});
