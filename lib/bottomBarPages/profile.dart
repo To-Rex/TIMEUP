@@ -851,7 +851,6 @@ class ProfilePage extends StatelessWidget  {
                                       width: w * 0.95,
                                       height: h * 0.3,
                                       child: PageView(
-                                        //physics: const NeverScrollableScrollPhysics(),
                                         onPageChanged: (index) {
                                           getController.nextPagesUserDetails.value = index;
                                         },
@@ -879,7 +878,7 @@ class ProfilePage extends StatelessWidget  {
                                                             mainAxisAlignment: MainAxisAlignment.start,
                                                             crossAxisAlignment: CrossAxisAlignment.center,
                                                             children: [
-                                                              Container(
+                                                              /*Container(
                                                                   width: w * 0.3,
                                                                   height: h * 0.13,
                                                                   padding: EdgeInsets.all(w * 0.01),
@@ -887,6 +886,20 @@ class ProfilePage extends StatelessWidget  {
                                                                   child:PhotoView(
                                                                     disableGestures: true,
                                                                     imageProvider: NetworkImage('${getController.getPostList.value.res![index].photo}'),)
+                                                              ),*/
+                                                              //pohoto radius 10
+                                                              Container(
+                                                                width: w * 0.25,
+                                                                height: h * 0.12,
+                                                                margin: EdgeInsets.only(right: w * 0.05),
+                                                                padding: EdgeInsets.all(w * 0.01),
+                                                                decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(3),
+                                                                  image: DecorationImage(
+                                                                    image: NetworkImage('${getController.getPostList.value.res![index].photo}'),
+                                                                    fit: BoxFit.fitWidth,
+                                                                  ),
+                                                                ),
                                                               ),
                                                               Expanded(child: Column(
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
