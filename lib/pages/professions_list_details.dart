@@ -381,7 +381,7 @@ class ProfessionsListDetails extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     ApiController().profileById(_getController.profileByID.value);
     _getController.clearGetPostList();
-    ApiController().getMePostList(_getController.getProfileById.value.res?.id ?? 0);
+    ApiController().getMePostList(_getController.getProfileById.value.res?.id);
     ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value));
     return Scaffold(
       appBar: PreferredSize(

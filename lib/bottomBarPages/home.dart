@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
+import '../models/get_id_post.dart';
 import '../pages/post_details.dart';
 import '../pages/professions_list_details.dart';
 import '../res/getController.dart';
@@ -133,8 +134,41 @@ class HomePage extends StatelessWidget {
                               if (_getController.getFollowPost.value.res?[index].posterPhotoUrl != null)
                                 InkWell(
                                   onTap: () {
-                                    ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {_getController.changeProfileById(value),});
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
+                                    //show dialog circle progress bar
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        content: SizedBox(
+                                          width: w * 0.1,
+                                          height: w * 0.2,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              const Expanded(child: SizedBox()),
+                                              SizedBox(
+                                                width: w * 0.1,
+                                                height: w * 0.1,
+                                                child: const CircularProgressIndicator(color: Colors.blue,backgroundColor: Colors.white,strokeWidth: 2,),
+                                              ),
+                                              SizedBox(width: w * 0.07,),
+                                              Text(
+                                                'Loading...',
+                                                style: TextStyle(
+                                                  fontSize: w * 0.04,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              const Expanded(child: SizedBox()),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                    ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {
+                                      _getController.changeProfileById(value),
+                                      Navigator.pop(context),
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()))
+                                    });
                                   },
                                   child: Row(
                                     children: [
@@ -178,8 +212,7 @@ class HomePage extends StatelessWidget {
                                             SizedBox(
                                               width: w,
                                               height: h * 0.33,
-                                              child: Image.network(
-                                                '${_getController.getFollowPost.value.res?[index].photo}',
+                                              child: Image.network('${_getController.getFollowPost.value.res?[index].photo}',
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
@@ -194,7 +227,7 @@ class HomePage extends StatelessWidget {
                                                     ),
                                                     child: IconButton(
                                                         onPressed: () {
-                                                          Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getFollowPost.value.res?[index].id ?? 0,)));
+                                                          Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getFollowPost.value.res?[index].id)));
                                                           },
                                                         icon: Icon(
                                                           Icons.play_arrow,
@@ -209,13 +242,12 @@ class HomePage extends StatelessWidget {
                                         )
                                       : InkWell(
                                           onTap: () {
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getFollowPost.value.res?[index].id ?? 0,)));
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getFollowPost.value.res?[index].id)));
                                           },
                                           child: SizedBox(
                                             width: w,
                                             height: h * 0.33,
-                                            child: Image.network(
-                                              '${_getController.getFollowPost.value.res?[index].photo}',
+                                            child: Image.network('${_getController.getFollowPost.value.res?[index].photo}',
                                               fit: BoxFit.cover,
                                             ),
                                           ),
