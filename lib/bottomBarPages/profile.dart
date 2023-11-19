@@ -745,7 +745,7 @@ class ProfilePage extends StatelessWidget  {
                                     icon: 'assets/images/user_time.png',
                                   )
                                 : const SizedBox()),
-                        SizedBox(height: h * 0.02,),
+                        SizedBox(height: h * 0.01),
                         Obx(() => getController.meUsers.value.res?.business == null
                                 ? EditButton(
                                     text: 'Make business profile',
@@ -754,26 +754,7 @@ class ProfilePage extends StatelessWidget  {
                                       getController.entersUser.value = 2;
                                     },
                                   )
-                                : SizedBox(
-                                    width: w * 0.9,
-                                    height: h * 0.06,
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: w * 0.4,
-                                          height: h * 0.063,
-                                          child: BusinessEditButton(
-                                            text: 'Edit profile',
-                                            onPressed: () {
-                                              getController.entersUser.value = 1;
-                                            },
-                                            color: Colors.blue,
-                                            radius: 3,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )),
+                                : const SizedBox()),
                         Obx(() => getController.meUsers.value.res?.business == null
                             ? EditButton(
                                 text: 'Edit profile',
