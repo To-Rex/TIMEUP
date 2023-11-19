@@ -6,6 +6,7 @@ import 'package:time_up/pages/post_details.dart';
 import '../api/api_controller.dart';
 import '../elements/functions.dart';
 import '../res/getController.dart';
+import 'package:readmore/readmore.dart';
 
 class ProfessionsListDetails extends StatelessWidget {
   ProfessionsListDetails({Key? key}) : super(key: key);
@@ -626,16 +627,23 @@ class ProfessionsListDetails extends StatelessWidget {
                                   size: w * 0.05,
                                 ),
                                 SizedBox(width: w * 0.02),
-                                Obx(() => _getController.getProfileById.value.res == null
-                                        ? const SizedBox()
-                                        : Text(_getController.getProfileById.value.res!.bio!.length > 35
-                                                ? '${_getController.getProfileById.value.res!.bio?.substring(0, 35)}...'
-                                                : _getController.getProfileById.value.res!.bio ?? '',
-                                            style: TextStyle(
-                                              fontSize: w * 0.04,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          )),
+                                SizedBox(
+                                  width: w * 0.8,
+                                  child: Obx(() => _getController.getProfileById.value.res == null
+                                          ? const SizedBox()
+                                          : ReadMoreText(
+                                              _getController.getProfileById.value.res!.bio ?? '',
+                                              trimLines: 2,
+                                              colorClickableText: Colors.blue,
+                                              trimMode: TrimMode.Line,
+                                              trimCollapsedText: ' more',
+                                              trimExpandedText: ' less',
+                                              style: TextStyle(
+                                                fontSize: w * 0.04,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            )),
+                                ),
                               ],
                             ),
                             SizedBox(height: h * 0.02),
