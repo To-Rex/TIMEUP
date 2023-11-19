@@ -17,6 +17,7 @@ import '../pages/user_bussines_edit.dart';
 import '../pages/user_edit.dart';
 import '../res/getController.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:readmore/readmore.dart';
 
 class ProfilePage extends StatelessWidget  {
   ProfilePage({Key? key}) : super(key: key);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:readmore/readmore.dart';
 
 class TextEditButton extends StatelessWidget {
   String text;
@@ -18,30 +19,47 @@ class TextEditButton extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
     return Container(
       width: w * 0.9,
-      height: h * 0.032,
-      margin: const EdgeInsets.only(top: 5),
+      //height: h * 0.032,
+      margin: const EdgeInsets.only(bottom: 5),
       child: Row(
         children: [
-          SizedBox(
-            width: w * 0.06,
-            height: h * 0.05,
+
+
+          CircleAvatar(
+            backgroundColor: color,
+            radius: w * 0.03,
             child: Image(
               image: AssetImage(icon),
-              width: w * 0.05,
-              height: h * 0.05,
               fit: BoxFit.fill,
             ),
           ),
+          SizedBox(width: w * 0.02),
           SizedBox(
-            width: w * 0.01,
-          ),
-          Text(
-            text,
-            style: TextStyle(
-              fontSize: w * 0.04,
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-            ),
+            width: w * 0.8,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ReadMoreText(
+                  text,
+                  trimLines: 1,
+                  colorClickableText: Colors.pink,
+                  trimMode: TrimMode.Line,
+                  trimCollapsedText: ' more',
+                  trimExpandedText: ' less',
+                  moreStyle: TextStyle(
+                    fontSize: w * 0.04,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.blue,
+                  ),
+                  style: TextStyle(
+                    fontSize: w * 0.04,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            )
           ),
         ],
       ),
