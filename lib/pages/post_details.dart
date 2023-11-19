@@ -31,6 +31,30 @@ class PostDetailsPage extends StatelessWidget {
           videoPlayerController: _controller,
           autoPlay: true,
           looping: true,
+          //fit : BoxFit.cover,
+          errorBuilder: (context, errorMessage) {
+            return Center(
+              child: Text(
+                errorMessage,
+                style: TextStyle(color: Colors.white),
+              ),
+            );
+          },
+          placeholder: Container(
+            color: Colors.black,
+          ),
+          autoInitialize: true,
+          allowMuting: true,
+          allowedScreenSleep: false,
+          showControls: true,
+          fullScreenByDefault: false,
+          materialProgressColors: ChewieProgressColors(
+            playedColor: Colors.blue,
+            handleColor: Colors.blue,
+            backgroundColor: Colors.grey,
+            bufferedColor: Colors.lightGreen,
+          ),
+          zoomAndPan: false,
         ),
         },
     });
