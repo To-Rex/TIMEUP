@@ -328,15 +328,14 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),),
                               SizedBox(height: h * 0.02),
-                              if (_getController.getFollowPost.value.res?[index].photo != null)
-                                SizedBox(
-                                  width: w,
-                                  height: h * 0.33,
-                                  child: Image.network(
-                                    '${_getController.getFollowPost.value.res?[index].photo}',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                              Obx(() => _getController.getFollowPost.value.res?[index].photo == null
+                                  ? const SizedBox()
+                                  : SizedBox(
+                                      width: w,
+                                      height: h * 0.33,
+                                      child: Image.network('${_getController.getFollowPost.value.res?[index].photo}',
+                                      fit: BoxFit.cover),
+                                    ),),
                               SizedBox(height: h * 0.02),
                               SizedBox(
                                 width: w * 0.95,

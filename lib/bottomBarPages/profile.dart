@@ -26,9 +26,6 @@ class ProfilePage extends StatelessWidget  {
   final PageController pageController = PageController();
   final TextEditingController _dateController = TextEditingController();
 
-  late VideoPlayerController _controller;
-  late Future<void> _initializeVideoPlayerFuture;
-
   getUsers() async {
     ApiController().getUserData();
   }
@@ -490,8 +487,6 @@ class ProfilePage extends StatelessWidget  {
       },
     );
   }
-
-
 
   final ImagePicker _picker = ImagePicker();
   var croppedImage;
