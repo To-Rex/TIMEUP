@@ -14,7 +14,7 @@ class PostDetailsPage extends StatelessWidget {
   final GetController getController = Get.put(GetController());
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
-  var _chewieController = ChewieController(
+  var _cheWieController = ChewieController(
     videoPlayerController: VideoPlayerController.networkUrl(Uri.parse('')),
     autoPlay: true,
     looping: true,
@@ -27,16 +27,15 @@ class PostDetailsPage extends StatelessWidget {
       if (getController.getPostById.value.res!.mediaType == 'video'){
           _controller = VideoPlayerController.networkUrl(Uri.parse(getController.getPostById.value.res!.video!)),
           _initializeVideoPlayerFuture = _controller.initialize(),
-        _chewieController = ChewieController(
+        _cheWieController = ChewieController(
           videoPlayerController: _controller,
           autoPlay: true,
           looping: true,
-          //fit : BoxFit.cover,
           errorBuilder: (context, errorMessage) {
             return Center(
               child: Text(
                 errorMessage,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
             );
           },
@@ -139,7 +138,7 @@ class PostDetailsPage extends StatelessWidget {
               width: w,
               height: h * 0.4,
               child: Chewie(
-                controller: _chewieController,
+                controller: _cheWieController,
               ),
             ),
           ) : Stack(
