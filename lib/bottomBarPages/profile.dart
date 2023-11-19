@@ -878,17 +878,44 @@ class ProfilePage extends StatelessWidget  {
                                                             mainAxisAlignment: MainAxisAlignment.start,
                                                             crossAxisAlignment: CrossAxisAlignment.center,
                                                             children: [
-                                                              /*Container(
-                                                                  width: w * 0.3,
-                                                                  height: h * 0.13,
-                                                                  padding: EdgeInsets.all(w * 0.01),
-                                                                  margin: EdgeInsets.only(right: w * 0.02),
-                                                                  child:PhotoView(
-                                                                    disableGestures: true,
-                                                                    imageProvider: NetworkImage('${getController.getPostList.value.res![index].photo}'),)
-                                                              ),*/
-                                                              //pohoto radius 10
-                                                              Container(
+                                                              Obx(() => getController.getPostList.value.res![index].mediaType == 'video'
+                                                                  ? Stack(
+                                                                children: [
+                                                                  Container(
+                                                                    width: w * 0.25,
+                                                                    height: h * 0.12,
+                                                                    margin: EdgeInsets.only(right: w * 0.05),
+                                                                    padding: EdgeInsets.all(w * 0.01),
+                                                                    decoration: BoxDecoration(
+                                                                      borderRadius: BorderRadius.circular(3),
+                                                                      image: DecorationImage(
+                                                                        image: NetworkImage('${getController.getPostList.value.res![index].photo}'),
+                                                                        fit: BoxFit.fitWidth,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Positioned(
+                                                                    top: h * 0.04,
+                                                                    left: w * 0.08,
+                                                                    child: Container(
+                                                                      width: w * 0.1,
+                                                                      height: h * 0.05,
+                                                                      decoration: BoxDecoration(
+                                                                        color: Colors.black.withOpacity(0.5),
+                                                                        borderRadius: BorderRadius.circular(w * 0.1),
+                                                                      ),
+                                                                      child: Center(
+                                                                        child: HeroIcon(
+                                                                          HeroIcons.play,
+                                                                          color: Colors.white,
+                                                                          size: w * 0.05,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              )
+                                                                  : Container(
                                                                 width: w * 0.25,
                                                                 height: h * 0.12,
                                                                 margin: EdgeInsets.only(right: w * 0.05),
@@ -901,6 +928,8 @@ class ProfilePage extends StatelessWidget  {
                                                                   ),
                                                                 ),
                                                               ),
+                                                              ),
+
                                                               Expanded(child: Column(
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                 mainAxisAlignment: MainAxisAlignment.center,
