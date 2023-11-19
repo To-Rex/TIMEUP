@@ -51,9 +51,10 @@ class PostDetailsPage extends StatelessWidget {
             playedColor: Colors.blue,
             handleColor: Colors.blue,
             backgroundColor: Colors.grey,
-            bufferedColor: Colors.lightGreen,
+            bufferedColor: Colors.blueGrey,
           ),
           zoomAndPan: false,
+
         ),
         },
     });
