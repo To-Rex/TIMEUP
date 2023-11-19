@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
-import '../models/get_id_post.dart';
 import '../pages/post_details.dart';
 import '../pages/professions_list_details.dart';
 import '../res/getController.dart';
