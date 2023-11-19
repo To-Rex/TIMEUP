@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
@@ -51,6 +52,10 @@ class PostDetailsPage extends StatelessWidget {
           ),
           zoomAndPan: false,
           useRootNavigator: true,
+          fullScreenByDefault: false,
+          allowPlaybackSpeedChanging: false,
+          systemOverlaysAfterFullScreen: SystemUiOverlay.values,
+          autoInitialize: true,
         ),
         },
     });
