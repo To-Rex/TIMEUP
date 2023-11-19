@@ -16,10 +16,8 @@ class TextEditButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
-    var h = MediaQuery.of(context).size.height;
     return Container(
       width: w * 0.9,
-      //height: h * 0.032,
       margin: const EdgeInsets.only(bottom: 5),
       child: Row(
         children: [
