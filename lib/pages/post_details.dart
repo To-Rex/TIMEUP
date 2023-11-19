@@ -23,7 +23,7 @@ class PostDetailsPage extends StatelessWidget {
           _initializeVideoPlayerFuture = _controller.initialize(),
         },
     });
-    if (getController.startVideo == true){
+    if (getController.startVideo == true && getController.pauseVideo == false){
       getController.changeStartVideo();
     }
     var h = MediaQuery.of(context).size.height;
@@ -142,7 +142,7 @@ class PostDetailsPage extends StatelessWidget {
                                           _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds - 10));
                                         },
                                         icon: const HeroIcon(
-                                          HeroIcons.arrowLeft,
+                                          HeroIcons.chevronLeft,
                                           color: Colors.white,
                                         ),
                                         color: Colors.white,
@@ -151,18 +151,16 @@ class PostDetailsPage extends StatelessWidget {
                                         onPressed: () {
                                           if (_controller.value.isPlaying) {
                                             _controller.pause();
-                                            getController.changePauseVideo();
                                           } else {
                                             _controller.play();
-                                            getController.changePauseVideo();
                                           }
+                                          getController.changePauseVideo();
                                         },
                                         icon: Obx(() => getController.pauseVideo == true
                                             ? const HeroIcon(
                                           HeroIcons.pause,
                                           color: Colors.white,
-                                        )
-                                            : const HeroIcon(
+                                        ) : const HeroIcon(
                                           HeroIcons.play,
                                           color: Colors.white,
                                         )),
@@ -172,7 +170,7 @@ class PostDetailsPage extends StatelessWidget {
                                           _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds + 10));
                                         },
                                         icon: const HeroIcon(
-                                          HeroIcons.arrowRight,
+                                          HeroIcons.chevronRight,
                                           color: Colors.white,
                                         ),
                                         color: Colors.white,
