@@ -21,6 +21,7 @@ import '../models/sub_category.dart';
 import '../models/verify_sms.dart';
 import '../models/me_user.dart';
 import '../res/getController.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ApiController extends GetxController {
 
@@ -484,6 +485,8 @@ class ApiController extends GetxController {
     }
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
+
+
     if (response.statusCode == 200) {
       return true;
     } else {
