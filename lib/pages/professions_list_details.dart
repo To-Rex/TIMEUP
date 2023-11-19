@@ -649,13 +649,8 @@ class ProfessionsListDetails extends StatelessWidget {
                                     () => _getController.nextPagesUserDetails.value == 0
                                         ? ElevatedButton(
                                             onPressed: () {
-                                              _getController
-                                                  .nextPagesUserDetails
-                                                  .value = 0;
-                                              pageController.animateToPage(0,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
+                                              _getController.nextPagesUserDetails.value = 0;
+                                              pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             style: ElevatedButton.styleFrom(
                                               shape: RoundedRectangleBorder(
@@ -987,8 +982,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                                     child: ListView.builder(
                                                         shrinkWrap: true,
                                                         itemCount: _getController.bookingBusinessGetList.value.res!.length,
-                                                        itemBuilder:
-                                                            (context, index) {
+                                                        itemBuilder: (context, index) {
                                                           return Column(
                                                             children: [
                                                               Row(
@@ -1022,25 +1016,18 @@ class ProfessionsListDetails extends StatelessWidget {
                                                   ),
                                                   Row(
                                                     children: [
-                                                      const Expanded(
-                                                          child: SizedBox()),
+                                                      const Expanded(child: SizedBox()),
                                                       SizedBox(
                                                         height: h * 0.05,
                                                         child: TextButton(
                                                           onPressed: () {
-                                                            showBottomSheetList(
-                                                                context);
+                                                            showBottomSheetList(context);
                                                           },
-                                                          child: Text(
-                                                            'Barchasini ko\'rish',
+                                                          child: Text('Barchasini ko\'rish',
                                                             style: TextStyle(
-                                                              fontSize:
-                                                                  w * 0.04,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color:
-                                                                  Colors.blue,
+                                                              fontSize: w * 0.04,
+                                                              fontWeight: FontWeight.w500,
+                                                              color: Colors.blue,
                                                             ),
                                                           ),
                                                         ),
@@ -1069,13 +1056,11 @@ class ProfessionsListDetails extends StatelessWidget {
                                           },
                                           style: ElevatedButton.styleFrom(
                                             shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(3),
+                                              borderRadius: BorderRadius.circular(3),
                                             ),
                                             backgroundColor: Colors.blue,
                                           ),
-                                          child: Text(
-                                            'Vaqtni tanlang',
+                                          child: Text('Vaqtni tanlang',
                                             style: TextStyle(
                                               fontSize: w * 0.04,
                                               fontWeight: FontWeight.w500,
