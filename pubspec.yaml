@@ -53,6 +53,7 @@ dependencies:
   photo_gallery: ^2.1.1
   video_player: ^2.8.1
   chewie: ^1.7.1
+  readmore: ^2.2.0
 
 dev_dependencies:
   flutter_test:
