@@ -881,7 +881,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                                             ? Stack(
                                                                 children: [
                                                                   Container(
-                                                                    width: w * 0.3,
+                                                                    width: w * 0.28,
                                                                     height: h * 0.13,
                                                                     margin: EdgeInsets.only(right: w * 0.02),
                                                                     decoration: BoxDecoration(
@@ -893,8 +893,8 @@ class ProfessionsListDetails extends StatelessWidget {
                                                                     ),
                                                                   ),
                                                                   Positioned(
-                                                                    height: h * 0.13,
-                                                                    width: w * 0.3,
+                                                                      width: w * 0.28,
+                                                                      height: h * 0.13,
                                                                     child: Center(
                                                                       child: InkWell(
                                                                         onTap: () {
@@ -919,8 +919,8 @@ class ProfessionsListDetails extends StatelessWidget {
                                                                     )
                                                                   ),
                                                                 ],) : Container(
-                                                                width: w * 0.3,
-                                                                height: h * 0.13,
+                                                          width: w * 0.28,
+                                                          height: h * 0.13,
                                                                 margin: EdgeInsets.only(right: w * 0.02),
                                                                 decoration: BoxDecoration(
                                                                   borderRadius: BorderRadius.circular(3),

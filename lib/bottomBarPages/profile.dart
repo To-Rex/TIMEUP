@@ -882,8 +882,8 @@ class ProfilePage extends StatelessWidget  {
                                                                   ? Stack(
                                                                 children: [
                                                                   Container(
-                                                                    width: w * 0.25,
-                                                                    height: h * 0.12,
+                                                                    width: w * 0.28,
+                                                                    height: h * 0.13,
                                                                     margin: EdgeInsets.only(right: w * 0.05),
                                                                     padding: EdgeInsets.all(w * 0.01),
                                                                     decoration: BoxDecoration(
@@ -895,29 +895,28 @@ class ProfilePage extends StatelessWidget  {
                                                                     ),
                                                                   ),
                                                                   Positioned(
-                                                                    top: h * 0.04,
-                                                                    left: w * 0.08,
-                                                                    child: Container(
-                                                                      width: w * 0.1,
-                                                                      height: h * 0.05,
-                                                                      decoration: BoxDecoration(
-                                                                        color: Colors.black.withOpacity(0.5),
-                                                                        borderRadius: BorderRadius.circular(w * 0.1),
-                                                                      ),
-                                                                      child: Center(
+                                                                      width: w * 0.28,
+                                                                      height: h * 0.13,
+                                                                    child: Center(
+                                                                      child: Container(
+                                                                        padding: EdgeInsets.all(w * 0.025),
+                                                                        decoration: BoxDecoration(
+                                                                          color: Colors.black.withOpacity(0.5),
+                                                                          borderRadius: BorderRadius.circular(w * 0.1),
+                                                                        ),
                                                                         child: HeroIcon(
                                                                           HeroIcons.play,
                                                                           color: Colors.white,
                                                                           size: w * 0.05,
                                                                         ),
                                                                       ),
-                                                                    ),
+                                                                    )
                                                                   ),
                                                                 ],
                                                               )
                                                                   : Container(
-                                                                width: w * 0.25,
-                                                                height: h * 0.12,
+                                                                width: w * 0.28,
+                                                                height: h * 0.13,
                                                                 margin: EdgeInsets.only(right: w * 0.05),
                                                                 padding: EdgeInsets.all(w * 0.01),
                                                                 decoration: BoxDecoration(
