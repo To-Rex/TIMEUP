@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
-import '../pages/login_page.dart';
 import '../pages/post_details.dart';
 import '../pages/professions_list_details.dart';
 import '../res/getController.dart';
