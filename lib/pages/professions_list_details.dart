@@ -524,29 +524,22 @@ class ProfessionsListDetails extends StatelessWidget {
                                   ))),
                     SizedBox(height: h * 0.02),
                     Container(
-                        margin:
-                            EdgeInsets.only(left: w * 0.04, right: w * 0.04),
+                        margin: EdgeInsets.only(left: w * 0.04, right: w * 0.04),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Obx(() =>
-                                _getController.getProfileById.value.res == null
+                            Obx(() => _getController.getProfileById.value.res == null
                                     ? const SizedBox()
-                                    : Text(
-                                        "${_getController.getProfileById.value.res!.fistName} ${_getController.getProfileById.value.res!.lastName}",
+                                    : Text("${_getController.getProfileById.value.res!.fistName} ${_getController.getProfileById.value.res!.lastName}",
                                         style: TextStyle(
                                           fontSize: w * 0.05,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       )),
-                            SizedBox(
-                              height: h * 0.01,
-                            ),
+                            SizedBox(height: h * 0.01,),
                             Row(
                               children: [
-                                Obx(() =>
-                                    _getController.getProfileById.value.res ==
-                                            null
+                                Obx(() => _getController.getProfileById.value.res == null
                                         ? const SizedBox()
                                         : Text(
                                             _getController.getProfileById.value.res!.categoryName ?? '',
@@ -557,12 +550,9 @@ class ProfessionsListDetails extends StatelessWidget {
                                             ),
                                           )),
                                 SizedBox(width: w * 0.02),
-                                Obx(() =>
-                                    _getController.getProfileById.value.res ==
-                                            null
+                                Obx(() => _getController.getProfileById.value.res == null
                                         ? const SizedBox()
-                                        : Text(
-                                            "${_getController.getProfileById.value.res!.experience} yillik ish tajribasi",
+                                        : Text("${_getController.getProfileById.value.res!.experience} yillik ish tajribasi",
                                             style: TextStyle(
                                               fontSize: w * 0.04,
                                               fontWeight: FontWeight.w500,
@@ -570,9 +560,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                           )),
                               ],
                             ),
-                            SizedBox(
-                              height: h * 0.01,
-                            ),
+                            SizedBox(height: h * 0.01,),
                             Row(
                               children: [
                                 HeroIcon(
@@ -580,17 +568,10 @@ class ProfessionsListDetails extends StatelessWidget {
                                   color: Colors.blue,
                                   size: w * 0.05,
                                 ),
-                                SizedBox(
-                                  width: w * 0.02,
-                                ),
-                                Obx(() =>
-                                    _getController.getProfileById.value.res ==
-                                            null
+                                SizedBox(width: w * 0.02,),
+                                Obx(() => _getController.getProfileById.value.res == null
                                         ? const SizedBox()
-                                        : Text(
-                                            _getController.getProfileById.value
-                                                    .res!.phoneNumber ??
-                                                '',
+                                        : Text(_getController.getProfileById.value.res!.phoneNumber ?? '',
                                             style: TextStyle(
                                               fontSize: w * 0.04,
                                               fontWeight: FontWeight.w500,
@@ -598,9 +579,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                           )),
                               ],
                             ),
-                            SizedBox(
-                              height: h * 0.01,
-                            ),
+                            SizedBox(height: h * 0.01,),
                             Row(
                               children: [
                                 HeroIcon(
@@ -608,17 +587,10 @@ class ProfessionsListDetails extends StatelessWidget {
                                   color: Colors.blue,
                                   size: w * 0.05,
                                 ),
-                                SizedBox(
-                                  width: w * 0.02,
-                                ),
-                                Obx(() =>
-                                    _getController.getProfileById.value.res ==
-                                            null
+                                SizedBox(width: w * 0.02,),
+                                Obx(() => _getController.getProfileById.value.res == null
                                         ? const SizedBox()
-                                        : Text(
-                                            _getController.getProfileById.value
-                                                    .res!.address ??
-                                                '',
+                                        : Text(_getController.getProfileById.value.res!.address ?? '',
                                             style: TextStyle(
                                               fontSize: w * 0.04,
                                               fontWeight: FontWeight.w500,
@@ -635,14 +607,9 @@ class ProfessionsListDetails extends StatelessWidget {
                                   size: w * 0.05,
                                 ),
                                 SizedBox(width: w * 0.02),
-                                Obx(() =>
-                                    _getController.getProfileById.value.res ==
-                                            null
+                                Obx(() => _getController.getProfileById.value.res == null
                                         ? const SizedBox()
-                                        : Text(
-                                            _getController.getProfileById.value
-                                                    .res!.officeName ??
-                                                '',
+                                        : Text(_getController.getProfileById.value.res!.officeName ?? '',
                                             style: TextStyle(
                                               fontSize: w * 0.04,
                                               fontWeight: FontWeight.w500,
@@ -653,25 +620,17 @@ class ProfessionsListDetails extends StatelessWidget {
                             SizedBox(height: h * 0.01),
                             Row(
                               children: [
-                                //bio
                                 HeroIcon(
                                   HeroIcons.user,
                                   color: Colors.blue,
                                   size: w * 0.05,
                                 ),
                                 SizedBox(width: w * 0.02),
-                                Obx(() =>
-                                    _getController.getProfileById.value.res ==
-                                            null
+                                Obx(() => _getController.getProfileById.value.res == null
                                         ? const SizedBox()
-                                        : Text(
-                                            _getController.getProfileById.value
-                                                        .res!.bio!.length >
-                                                    35
+                                        : Text(_getController.getProfileById.value.res!.bio!.length > 35
                                                 ? '${_getController.getProfileById.value.res!.bio?.substring(0, 35)}...'
-                                                : _getController.getProfileById
-                                                        .value.res!.bio ??
-                                                    '',
+                                                : _getController.getProfileById.value.res!.bio ?? '',
                                             style: TextStyle(
                                               fontSize: w * 0.04,
                                               fontWeight: FontWeight.w500,
@@ -687,9 +646,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                   width: w * 0.21,
                                   height: h * 0.05,
                                   child: Obx(
-                                    () => _getController
-                                                .nextPagesUserDetails.value ==
-                                            0
+                                    () => _getController.nextPagesUserDetails.value == 0
                                         ? ElevatedButton(
                                             onPressed: () {
                                               _getController
@@ -718,23 +675,16 @@ class ProfessionsListDetails extends StatelessWidget {
                                           )
                                         : ElevatedButton(
                                             onPressed: () {
-                                              _getController
-                                                  .nextPagesUserDetails
-                                                  .value = 0;
-                                              pageController.animateToPage(0,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
+                                              _getController.nextPagesUserDetails.value = 0;
+                                              pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             style: ElevatedButton.styleFrom(
                                               shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(3),
+                                                borderRadius: BorderRadius.circular(3),
                                               ),
                                               backgroundColor: Colors.grey,
                                             ),
-                                            child: Text(
-                                              'Post',
+                                            child: Text('Post',
                                               style: TextStyle(
                                                 fontSize: w * 0.04,
                                                 fontWeight: FontWeight.w500,
@@ -748,28 +698,19 @@ class ProfessionsListDetails extends StatelessWidget {
                                 SizedBox(
                                     height: h * 0.05,
                                     child: Obx(
-                                      () => _getController
-                                                  .nextPagesUserDetails.value ==
-                                              1
+                                      () => _getController.nextPagesUserDetails.value == 1
                                           ? ElevatedButton(
                                               onPressed: () {
-                                                _getController
-                                                    .nextPagesUserDetails
-                                                    .value = 1;
-                                                pageController.animateToPage(1,
-                                                    duration: const Duration(
-                                                        milliseconds: 500),
-                                                    curve: Curves.ease);
+                                                _getController.nextPagesUserDetails.value = 1;
+                                                pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                               },
                                               style: ElevatedButton.styleFrom(
                                                 shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(3),
+                                                  borderRadius: BorderRadius.circular(3),
                                                 ),
                                                 backgroundColor: Colors.blue,
                                               ),
-                                              child: Text(
-                                                'Ish jadvali',
+                                              child: Text('Ish jadvali',
                                                 style: TextStyle(
                                                   fontSize: w * 0.04,
                                                   fontWeight: FontWeight.w500,
@@ -779,23 +720,16 @@ class ProfessionsListDetails extends StatelessWidget {
                                             )
                                           : ElevatedButton(
                                               onPressed: () {
-                                                _getController
-                                                    .nextPagesUserDetails
-                                                    .value = 1;
-                                                pageController.animateToPage(1,
-                                                    duration: const Duration(
-                                                        milliseconds: 500),
-                                                    curve: Curves.ease);
+                                                _getController.nextPagesUserDetails.value = 1;
+                                                pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                               },
                                               style: ElevatedButton.styleFrom(
                                                 shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(3),
+                                                  borderRadius: BorderRadius.circular(3),
                                                 ),
                                                 backgroundColor: Colors.grey,
                                               ),
-                                              child: Text(
-                                                'Ish jadvali',
+                                              child: Text('Ish jadvali',
                                                 style: TextStyle(
                                                   fontSize: w * 0.04,
                                                   fontWeight: FontWeight.w500,
@@ -807,29 +741,20 @@ class ProfessionsListDetails extends StatelessWidget {
                                 const Expanded(child: SizedBox()),
                                 SizedBox(
                                     height: h * 0.05,
-                                    child: Obx(() => _getController
-                                                .nextPagesUserDetails.value ==
-                                            2
+                                    child: Obx(() => _getController.nextPagesUserDetails.value == 2
                                         ? SizedBox(
                                             child: ElevatedButton(
                                               onPressed: () {
-                                                _getController
-                                                    .nextPagesUserDetails
-                                                    .value = 2;
-                                                pageController.animateToPage(2,
-                                                    duration: const Duration(
-                                                        milliseconds: 500),
-                                                    curve: Curves.ease);
+                                                _getController.nextPagesUserDetails.value = 2;
+                                                pageController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                               },
                                               style: ElevatedButton.styleFrom(
                                                 shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(3),
+                                                  borderRadius: BorderRadius.circular(3),
                                                 ),
                                                 backgroundColor: Colors.blue,
                                               ),
-                                              child: Text(
-                                                'Booking',
+                                              child: Text('Booking',
                                                 style: TextStyle(
                                                   fontSize: w * 0.04,
                                                   fontWeight: FontWeight.w500,
@@ -841,23 +766,16 @@ class ProfessionsListDetails extends StatelessWidget {
                                         : SizedBox(
                                             child: ElevatedButton(
                                               onPressed: () {
-                                                _getController
-                                                    .nextPagesUserDetails
-                                                    .value = 2;
-                                                pageController.animateToPage(2,
-                                                    duration: const Duration(
-                                                        milliseconds: 500),
-                                                    curve: Curves.ease);
+                                                _getController.nextPagesUserDetails.value = 2;
+                                                pageController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                               },
                                               style: ElevatedButton.styleFrom(
                                                 shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(3),
+                                                  borderRadius: BorderRadius.circular(3),
                                                 ),
                                                 backgroundColor: Colors.grey,
                                               ),
-                                              child: Text(
-                                                'Booking',
+                                              child: Text('Booking',
                                                 style: TextStyle(
                                                   fontSize: w * 0.04,
                                                   fontWeight: FontWeight.w500,
@@ -867,67 +785,26 @@ class ProfessionsListDetails extends StatelessWidget {
                                             ),
                                           ))),
                                 const Expanded(child: SizedBox()),
-                                //if followed true
-                                Obx(() => _getController.getProfileById.value
-                                            .res!.followed ==
-                                        false
+                                Obx(() => _getController.getProfileById.value.res!.followed == false
                                     ? Container(
                                         alignment: Alignment.center,
                                         width: w * 0.1,
                                         height: h * 0.05,
                                         decoration: BoxDecoration(
                                           color: Colors.blue,
-                                          borderRadius:
-                                              BorderRadius.circular(3),
+                                          borderRadius: BorderRadius.circular(3),
                                         ),
                                         child: IconButton(
                                             color: Colors.white,
                                             onPressed: () {
-                                              ApiController()
-                                                  .follow(_getController
-                                                          .getProfileById
-                                                          .value
-                                                          .res!
-                                                          .id ??
-                                                      0)
-                                                  .then((value) => {
-                                                        if (value.status ==
-                                                            true)
-                                                          {
-                                                            Toast.showToast(
-                                                                context,
-                                                                'Followed',
-                                                                Colors.green,
-                                                                Colors.white),
-                                                            ApiController()
-                                                                .profileById(
-                                                                    _getController
-                                                                        .profileByID
-                                                                        .value)
-                                                                .then(
-                                                                    (value) => {
-                                                                          _getController
-                                                                              .changeProfileById(value),
-                                                                        }),
-                                                            _getController
-                                                                .clearByCategory(),
-                                                            ApiController()
-                                                                .getByCategory(
-                                                                    _getController
-                                                                        .categoryByID
-                                                                        .value)
-                                                                .then((value) =>
-                                                                    _getController
-                                                                        .changeByCategory(
-                                                                            value)),
-                                                          }
-                                                        else
-                                                          {
-                                                            Toast.showToast(
-                                                                context,
-                                                                'Error',
-                                                                Colors.red,
-                                                                Colors.white),
+                                              ApiController().follow(_getController.getProfileById.value.res!.id ?? 0).then((value) => {
+                                                        if (value.status == true){
+                                                            Toast.showToast(context, 'Followed', Colors.green, Colors.white),
+                                                            ApiController().profileById(_getController.profileByID.value).then((value) => {_getController.changeProfileById(value),}),
+                                                            _getController.clearByCategory(),
+                                                            ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value)),
+                                                          } else {
+                                                            Toast.showToast(context, 'Error', Colors.red, Colors.white),
                                                           }
                                                       });
                                             },
@@ -943,56 +820,19 @@ class ProfessionsListDetails extends StatelessWidget {
                                         height: h * 0.05,
                                         decoration: BoxDecoration(
                                           color: Colors.grey,
-                                          borderRadius:
-                                              BorderRadius.circular(3),
+                                          borderRadius: BorderRadius.circular(3),
                                         ),
                                         child: IconButton(
                                             color: Colors.white,
                                             onPressed: () {
-                                              ApiController()
-                                                  .unFollow(_getController
-                                                          .getProfileById
-                                                          .value
-                                                          .res!
-                                                          .id ??
-                                                      0)
-                                                  .then((value) => {
-                                                        if (value == true)
-                                                          {
-                                                            Toast.showToast(
-                                                                context,
-                                                                'Followed',
-                                                                Colors.green,
-                                                                Colors.white),
-                                                            ApiController()
-                                                                .profileById(
-                                                                    _getController
-                                                                        .profileByID
-                                                                        .value)
-                                                                .then(
-                                                                    (value) => {
-                                                                          _getController
-                                                                              .changeProfileById(value),
-                                                                        }),
-                                                            _getController
-                                                                .clearByCategory(),
-                                                            ApiController()
-                                                                .getByCategory(
-                                                                    _getController
-                                                                        .categoryByID
-                                                                        .value)
-                                                                .then((value) =>
-                                                                    _getController
-                                                                        .changeByCategory(
-                                                                            value))
-                                                          }
-                                                        else
-                                                          {
-                                                            Toast.showToast(
-                                                                context,
-                                                                'Error',
-                                                                Colors.red,
-                                                                Colors.white),
+                                              ApiController().unFollow(_getController.getProfileById.value.res!.id ?? 0).then((value) => {
+                                                        if (value == true){
+                                                            Toast.showToast(context, 'Followed', Colors.green, Colors.white),
+                                                            ApiController().profileById(_getController.profileByID.value).then((value) => {_getController.changeProfileById(value),}),
+                                                            _getController.clearByCategory(),
+                                                            ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value))
+                                                          } else {
+                                                            Toast.showToast(context, 'Error', Colors.red, Colors.white),
                                                           }
                                                       });
                                             },
@@ -1005,50 +845,21 @@ class ProfessionsListDetails extends StatelessWidget {
                                 const Expanded(child: SizedBox()),
                               ],
                             ),
-                            SizedBox(
-                              height: h * 0.02,
-                            ),
+                            SizedBox(height: h * 0.02,),
                             SizedBox(
                               width: w,
                               height: h * 0.3,
                               child: PageView(
                                 onPageChanged: (index) {
-                                  _getController.nextPagesUserDetails.value =
-                                      index;
+                                  _getController.nextPagesUserDetails.value = index;
                                 },
                                 controller: pageController,
                                 children: [
-                                  /*Container(
-                          width: w,
-                          padding: EdgeInsets.only(
-                              left: w * 0.02,
-                              right: w * 0.02,
-                              bottom: h * 0.01),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(3),
-                            border: Border.all(
-                              color: Colors.grey,
-                            ),
-                          ),
-                          child: Obx(
-                            () => _getController.getProfileById.value.res == null
-                                    ? const SizedBox()
-                                    : Text(_getController.getProfileById.value.res!.bio ?? '',
-                                        style: TextStyle(
-                                          fontSize: w * 0.04,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                          ),
-                        ),*/
                                   SizedBox(
                                     width: w,
                                     height: h * 0.2,
                                     child: Obx(
-                                      () => _getController
-                                                  .getPostList.value.res ==
-                                              null
+                                      () => _getController.getPostList.value.res == null
                                           ? Center(
                                               child: Text(
                                               'No data',
@@ -1058,89 +869,89 @@ class ProfessionsListDetails extends StatelessWidget {
                                               ),
                                             ))
                                           : ListView.builder(
-                                              itemCount: _getController
-                                                  .getPostList
-                                                  .value
-                                                  .res!
-                                                  .length,
+                                              itemCount: _getController.getPostList.value.res!.length,
                                               itemBuilder: (context, index) {
                                                 return InkWell(
                                                   onTap: () {
                                                     //_getController.clearGetByIdPost();
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                PostDetailsPage(
-                                                                  postId: _getController
-                                                                      .getPostList
-                                                                      .value
-                                                                      .res![
-                                                                          index]
-                                                                      .id,
-                                                                )));
+                                                    Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getPostList.value.res![index].id,)));
                                                   },
                                                   child: Container(
-                                                    padding: EdgeInsets.only(
-                                                        bottom: h * 0.01),
+                                                    padding: EdgeInsets.only(bottom: h * 0.01),
                                                     child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
+                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
                                                       children: [
-                                                        Container(
-                                                            width: w * 0.3,
-                                                            height: h * 0.13,
-                                                            padding: EdgeInsets
-                                                                .all(w * 0.01),
-                                                            margin:
-                                                                EdgeInsets.only(
-                                                                    right: w *
-                                                                        0.02),
-                                                            child: PhotoView(
-                                                              disableGestures:
-                                                                  true,
-                                                              imageProvider:
-                                                                  NetworkImage(
-                                                                      '${_getController.getPostList.value.res![index].photo}'),
-                                                            )),
+                                                        Obx(() => _getController.getPostList.value.res![index].mediaType == 'video'
+                                                            ? Stack(
+                                                                children: [
+                                                                  Container(
+                                                                    width: w * 0.3,
+                                                                    height: h * 0.13,
+                                                                    margin: EdgeInsets.only(right: w * 0.02),
+                                                                    decoration: BoxDecoration(
+                                                                      borderRadius: BorderRadius.circular(3),
+                                                                      image: DecorationImage(
+                                                                        image: NetworkImage('${_getController.getPostList.value.res![index].photo}'),
+                                                                        fit: BoxFit.cover,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Positioned(
+                                                                    top: h * 0.05,
+                                                                    left: w * 0.1,
+                                                                    child: InkWell(
+                                                                      onTap: () {
+                                                                        Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getPostList.value.res![index].id,)));
+                                                                      },
+                                                                      child: Container(
+                                                                        width: w * 0.1,
+                                                                        height: h * 0.05,
+                                                                        decoration: BoxDecoration(
+                                                                          color: Colors.black.withOpacity(0.5),
+                                                                          borderRadius: BorderRadius.circular(w * 0.1),
+                                                                        ),
+                                                                        child: Center(
+                                                                          child: Icon(
+                                                                            Icons.play_arrow,
+                                                                            color: Colors.white,
+                                                                            size: w * 0.05,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],) : Container(
+                                                                width: w * 0.3,
+                                                                height: h * 0.13,
+                                                                margin: EdgeInsets.only(right: w * 0.02),
+                                                                decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(3),
+                                                                  image: DecorationImage(
+                                                                    image: NetworkImage('${_getController.getPostList.value.res![index].photo}'),
+                                                                    fit: BoxFit.cover,
+                                                                  ),
+                                                                ),
+                                                              )),
                                                         Expanded(
-                                                            child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
+                                                            child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                                          mainAxisAlignment: MainAxisAlignment.center,
                                                           children: [
                                                             SizedBox(
                                                               height: h * 0.03,
-                                                              child: Text(
-                                                                '${_getController.getPostList.value.res![index].title}',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize:
-                                                                      w * 0.04,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
+                                                              child: Text('${_getController.getPostList.value.res![index].title}',
+                                                                style: TextStyle(
+                                                                  fontSize: w * 0.04,
+                                                                  fontWeight: FontWeight.w500,
                                                                 ),
                                                               ),
                                                             ),
                                                             SizedBox(
                                                               height: h * 0.04,
-                                                              child: Text(
-                                                                '${_getController.getPostList.value.res![index].description}',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize:
-                                                                      w * 0.04,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
+                                                              child: Text('${_getController.getPostList.value.res![index].description}',
+                                                                style: TextStyle(
+                                                                  fontSize: w * 0.04,
+                                                                  fontWeight: FontWeight.w500,
                                                                 ),
                                                               ),
                                                             ),
