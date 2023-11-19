@@ -6,6 +6,7 @@ import '../pages/post_details.dart';
 import '../pages/professions_list_details.dart';
 import '../res/getController.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:readmore/readmore.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -321,10 +322,16 @@ class HomePage extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              SizedBox(height: h * 0.01),
                               SizedBox(
                                 width: w * 0.9,
-                                child: Text(
+                                child: ReadMoreText(
                                   '${_getController.getFollowPost.value.res?[index].description}',
+                                  trimLines: 2,
+                                  colorClickableText: Colors.blue,
+                                  trimMode: TrimMode.Line,
+                                  trimCollapsedText: 'more',
+                                  trimExpandedText: ' less',
                                   style: TextStyle(
                                     fontSize: w * 0.035,
                                     fontWeight: FontWeight.w400,
