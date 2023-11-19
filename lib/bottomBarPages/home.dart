@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
 import '../pages/login_page.dart';
+import '../pages/post_details.dart';
 import '../pages/professions_list_details.dart';
 import '../res/getController.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
@@ -324,8 +325,55 @@ class HomePage extends StatelessWidget {
                                 SizedBox(
                                   width: w,
                                   height: h * 0.33,
-                                  child: Image.network('${_getController.getFollowPost.value.res?[index].photo}',
-                                      fit: BoxFit.cover),
+                                  //child: Image.network('${_getController.getFollowPost.value.res?[index].photo}', fit: BoxFit.cover),
+                                  child: Obx(() => _getController.getFollowPost.value.res?[index].mediaType == 'video'
+                                      ? Stack(
+                                          children: [
+                                            SizedBox(
+                                              width: w,
+                                              height: h * 0.33,
+                                              child: Image.network(
+                                                '${_getController.getFollowPost.value.res?[index].photo}',
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                            Positioned(
+                                              height: h * 0.33,
+                                                width: w,
+                                                child: Center(
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.black.withOpacity(0.5),
+                                                      borderRadius: BorderRadius.circular(100),
+                                                    ),
+                                                    child: IconButton(
+                                                        onPressed: () {
+                                                          Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getFollowPost.value.res?[index].id ?? 0,)));
+                                                          },
+                                                        icon: Icon(
+                                                          Icons.play_arrow,
+                                                          color: Colors.white,
+                                                          size: w * 0.1,
+                                                        )
+                                                    ),
+                                                  ),
+                                                )
+                                            ),
+                                          ],
+                                        )
+                                      : InkWell(
+                                          onTap: () {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getFollowPost.value.res?[index].id ?? 0,)));
+                                          },
+                                          child: SizedBox(
+                                            width: w,
+                                            height: h * 0.33,
+                                            child: Image.network(
+                                              '${_getController.getFollowPost.value.res?[index].photo}',
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        )),
                                 ),
                               SizedBox(height: h * 0.02),
                               SizedBox(
