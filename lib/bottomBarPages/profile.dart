@@ -339,7 +339,7 @@ class ProfilePage extends StatelessWidget  {
       isScrollControlled: true,
       builder: (context) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.9,
+          height: MediaQuery.of(context).size.height * 0.5,
           decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -353,7 +353,15 @@ class ProfilePage extends StatelessWidget  {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              SizedBox(height: h * 0.1),
+              SizedBox(height: h * 0.02),
+              Text('${getController.meUsers.value.res?.userName}',
+                style: TextStyle(
+                  fontSize: w * 0.05,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(height: h * 0.05),
               InkWell(
                 onTap: () {
                   getController.entersUser.value = 1;
@@ -443,6 +451,28 @@ class ProfilePage extends StatelessWidget  {
                       ),
                       SizedBox(width: w * 0.03),
                       const Text('Delete accaunt'),
+                    ],
+                  ),
+                ),
+              ),
+              const Divider(),
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: SizedBox(
+                  width: w,
+                  height: h * 0.05,
+                  child: Row(
+                    children: [
+                      SizedBox(width: w * 0.05),
+                      HeroIcon(
+                        HeroIcons.cog6Tooth,
+                        color: Colors.blue,
+                        size: w * 0.05,
+                      ),
+                      SizedBox(width: w * 0.03),
+                      const Text('Settings'),
                     ],
                   ),
                 ),
