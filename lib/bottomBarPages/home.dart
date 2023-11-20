@@ -185,9 +185,7 @@ class HomePage extends StatelessWidget {
                                                 backgroundImage: NetworkImage('${_getController.getFollowPost.value.res?[index].posterPhotoUrl}'),
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: w * 0.02,
-                                            ),
+                                            SizedBox(width: w * 0.02),
                                             SizedBox(
                                               width: w * 0.6,
                                               child: Text('${_getController.getFollowPost.value.res?[index].posterName}',
@@ -316,8 +314,7 @@ class HomePage extends StatelessWidget {
                               SizedBox(height: h * 0.02),
                               SizedBox(
                                 width: w * 0.9,
-                                child: Text(
-                                  '${_getController.getFollowPost.value.res?[index].title}',
+                                child: Text('${_getController.getFollowPost.value.res?[index].title}',
                                   style: TextStyle(
                                     fontSize: w * 0.04,
                                     fontWeight: FontWeight.w500,
@@ -341,7 +338,7 @@ class HomePage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                        SizedBox(height: h * 0.01,),
+                              SizedBox(height: h * 0.01,),
                         ],
                       );
                     }),
