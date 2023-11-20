@@ -354,9 +354,9 @@ class ProfilePage extends StatelessWidget  {
                 ),
               ),
               SizedBox(height: h * 0.02),
-              Text('${getController.meUsers.value.res?.userName}',
+              Text('Options',
                 style: TextStyle(
-                  fontSize: w * 0.05,
+                  fontSize: w * 0.04,
                   fontWeight: FontWeight.w500,
                   color: Colors.black,
                 ),
