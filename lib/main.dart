@@ -7,7 +7,6 @@ import 'package:time_up/pages/login_page.dart';
 import 'package:time_up/pages/sample_page.dart';
 import 'package:time_up/pages/splash_screen.dart';
 import 'package:time_up/res/getController.dart';
-
 import 'api/api_controller.dart';
 
 main() async {

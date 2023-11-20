@@ -24,7 +24,6 @@ class PostDetailsPage extends StatelessWidget {
     getController.clearGetByIdPost();
     ApiController().getByIdPost(postId).then((value) => {
       if (getController.getPostById.value.res!.mediaType == 'video'){
-        //loading dialog
         showDialog(
           context: context,
           barrierDismissible: false,
@@ -64,6 +63,8 @@ class PostDetailsPage extends StatelessWidget {
         },
     });
     if (getController.startVideo == true){
+      _controller.pause();
+      _customVideoPlayerController.playedOnceNotifier.value = false;
       getController.changeStartVideo();
     }
     var h = MediaQuery.of(context).size.height;
@@ -144,10 +145,10 @@ class PostDetailsPage extends StatelessWidget {
           SizedBox(height: h * 0.02),
           Obx(() => getController.startVideo == true
               ? SizedBox(
-            height: h * 0.4,
-            width: w,
-            child: WillPopScope(
-              onWillPop: (){
+                  height: h * 0.4,
+                  width: w,
+                  child: WillPopScope(
+                    onWillPop: (){
                 Navigator.pop(context);
                 _controller.dispose();
                 _customVideoPlayerController.dispose();
@@ -157,9 +158,7 @@ class PostDetailsPage extends StatelessWidget {
                 }
                 return Future.value(true);
               },
-              child: CustomVideoPlayer(
-                  customVideoPlayerController: _customVideoPlayerController
-              ),
+                    child: CustomVideoPlayer(customVideoPlayerController: _customVideoPlayerController),
             )
           ) : Stack(
             children: [
@@ -191,10 +190,7 @@ class PostDetailsPage extends StatelessWidget {
                     ),
                   )
               )
-                  : const SizedBox(),
-            ],
-          ),),
-
+                  : const SizedBox(),],),),
           SizedBox(height: h * 0.02),
           Row(
             children: [
@@ -227,7 +223,7 @@ class PostDetailsPage extends StatelessWidget {
               const Expanded(child: SizedBox()),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.bookmark_border),
+                icon: const Icon(Icons.bookmark_border, color: Colors.black),
               ),
               SizedBox(width: w * 0.03),
             ],

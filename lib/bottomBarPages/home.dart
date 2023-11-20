@@ -112,6 +112,9 @@ class HomePage extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     //ApiController().getUserData();
+    if (_getController.meUsers.value.res == null) {
+      ApiController().getUserData();
+    }
     ApiController().getFollowPostList();
     return Obx(() => _getController.getFollowPost.value.res == null
         ? SizedBox(
@@ -150,8 +153,7 @@ class HomePage extends StatelessWidget {
                                                 child: const CircularProgressIndicator(color: Colors.blue,backgroundColor: Colors.white,strokeWidth: 2,),
                                               ),
                                               SizedBox(width: w * 0.07,),
-                                              Text(
-                                                'Loading...',
+                                              Text('Loading...',
                                                 style: TextStyle(
                                                   fontSize: w * 0.04,
                                                   fontWeight: FontWeight.w500,
@@ -175,6 +177,7 @@ class HomePage extends StatelessWidget {
                                         width: w * 0.9,
                                         child: Row(
                                           children: [
+                                            SizedBox(width: w * 0.03),
                                             SizedBox(
                                               width: w * 0.11,
                                               height: w * 0.11,
