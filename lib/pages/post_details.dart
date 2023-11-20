@@ -19,7 +19,6 @@ class PostDetailsPage extends StatelessWidget {
   late Future<void> _initializeVideoPlayerFuture;
   late CustomVideoPlayerController _customVideoPlayerController;
 
-
   @override
   Widget build(BuildContext context) {
     getController.clearGetByIdPost();
