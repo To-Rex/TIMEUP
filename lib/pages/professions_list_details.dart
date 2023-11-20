@@ -7,6 +7,7 @@ import '../api/api_controller.dart';
 import '../elements/functions.dart';
 import '../res/getController.dart';
 import 'package:readmore/readmore.dart';
+import 'package:readmore/readmore.dart';
 
 class ProfessionsListDetails extends StatelessWidget {
   ProfessionsListDetails({Key? key}) : super(key: key);
@@ -72,8 +73,7 @@ class ProfessionsListDetails extends StatelessWidget {
                             firstDate: DateTime(2000),
                             lastDate: DateTime(2025),
                           ).then((value) => {
-                                _dateController.text =
-                                    '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
+                                _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
                               });
                         },
                         child: HeroIcon(
@@ -426,9 +426,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                   ),
                                 )
                               : Text(
-                                  _getController
-                                          .getProfileById.value.res!.userName ??
-                                      '',
+                                  _getController.getProfileById.value.res!.userName ?? '',
                                   style: TextStyle(
                                     fontSize: w * 0.05,
                                     fontWeight: FontWeight.w500,
@@ -439,9 +437,7 @@ class ProfessionsListDetails extends StatelessWidget {
                     Obx(() => _getController.getProfileById.value.res == null
                         ? const Center(child: CircularProgressIndicator())
                         : SizedBox(
-                            child: _getController
-                                        .getProfileById.value.res!.photoUrl ==
-                                    null
+                            child: _getController.getProfileById.value.res!.photoUrl == null
                                 ? Row(
                                     children: [
                                       SizedBox(width: w * 0.04),
@@ -478,34 +474,17 @@ class ProfessionsListDetails extends StatelessWidget {
                                                 ),
                                                 backgroundColor: Colors.black,
                                                 body: PhotoView(
-                                                  imageProvider: NetworkImage(
-                                                    "${_getController.getProfileById.value.res!.photoUrl}",
-                                                  ),
-                                                  minScale:
-                                                      PhotoViewComputedScale
-                                                              .contained *
-                                                          0.8,
-                                                  maxScale:
-                                                      PhotoViewComputedScale
-                                                              .covered *
-                                                          2,
-                                                  initialScale:
-                                                      PhotoViewComputedScale
-                                                          .contained,
+                                                  imageProvider: NetworkImage("${_getController.getProfileById.value.res!.photoUrl}",),
+                                                  minScale: PhotoViewComputedScale.contained * 0.8,
+                                                  maxScale: PhotoViewComputedScale.covered * 2,
+                                                  initialScale: PhotoViewComputedScale.contained,
                                                   enableRotation: true,
-                                                  loadingBuilder:
-                                                      (context, event) =>
-                                                          Center(
+                                                  loadingBuilder: (context, event) => Center(
                                                     child: SizedBox(
                                                       width: 20.0,
                                                       height: 20.0,
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                        value: event == null
-                                                            ? 0
-                                                            : event.cumulativeBytesLoaded /
-                                                                event
-                                                                    .expectedTotalBytes!,
+                                                      child: CircularProgressIndicator(
+                                                        value: event == null ? 0 : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
                                                       ),
                                                     ),
                                                   ),
@@ -651,7 +630,7 @@ class ProfessionsListDetails extends StatelessWidget {
                               children: [
                                 Container(
                                   alignment: Alignment.center,
-                                  width: w * 0.21,
+                                  width: w * 0.22,
                                   height: h * 0.05,
                                   child: Obx(
                                     () => _getController.nextPagesUserDetails.value == 0
@@ -667,14 +646,25 @@ class ProfessionsListDetails extends StatelessWidget {
                                               ),
                                               backgroundColor: Colors.blue,
                                             ),
-                                            child: Text(
-                                              'Post',
+                                            /*child: Text('Post',
                                               style: TextStyle(
                                                 fontSize: w * 0.04,
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.white,
                                               ),
-                                            ),
+                                            ),*/
+                                            child: ReadMoreText('Post',
+                                              trimLines: 1,
+                                              colorClickableText: Colors.white,
+                                              trimMode: TrimMode.Line,
+                                              trimCollapsedText: '',
+                                              trimExpandedText: '',
+                                              style: TextStyle(
+                                                fontSize: w * 0.04,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white,
+                                                ),
+                                              ),
                                           )
                                         : ElevatedButton(
                                             onPressed: () {
