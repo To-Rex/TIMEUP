@@ -1,3 +1,4 @@
+import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -5,8 +6,9 @@ import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/pages/professions_list_details.dart';
 import 'package:video_player/video_player.dart';
-import 'package:chewie/chewie.dart';
+//import 'package:chewie/chewie.dart';
 import '../res/getController.dart';
+import 'package:video_player/video_player.dart';
 
 class PostDetailsPage extends StatelessWidget {
   var postId;
@@ -15,51 +17,54 @@ class PostDetailsPage extends StatelessWidget {
   final GetController getController = Get.put(GetController());
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
-  var _cheWieController = ChewieController(
-    videoPlayerController: VideoPlayerController.networkUrl(Uri.parse('')),
-    autoPlay: true,
-    looping: true,
-    zoomAndPan: true,
-  );
+  late CustomVideoPlayerController _customVideoPlayerController;
+
 
   @override
   Widget build(BuildContext context) {
     getController.clearGetByIdPost();
     ApiController().getByIdPost(postId).then((value) => {
       if (getController.getPostById.value.res!.mediaType == 'video'){
-          _controller = VideoPlayerController.networkUrl(Uri.parse(getController.getPostById.value.res!.video!)),
-          _initializeVideoPlayerFuture = _controller.initialize(),
-        _cheWieController = ChewieController(
-          videoPlayerController: _controller,
-          autoPlay: true,
-          looping: true,
-          errorBuilder: (context, errorMessage) {
-            return Center(
-              child: Text(
-                errorMessage,
-                style: const TextStyle(color: Colors.white),
+        //loading dialog
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return Dialog(
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.2,
+                width: MediaQuery.of(context).size.width * 0.2,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CircularProgressIndicator(
+                      color: Colors.blue,
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+                    const Text('Loading...'),
+                  ],
+                ),
               ),
             );
           },
-          placeholder: Container(
-            color: Colors.black,
+        ),
+          _controller = VideoPlayerController.networkUrl(Uri.parse(getController.getPostById.value.res!.video!)),
+          _initializeVideoPlayerFuture = _controller.initialize().then((value) => {
+            Navigator.pop(context),
+            _controller.setLooping(true),
+            _controller.pause(),
+          }),
+        _customVideoPlayerController = CustomVideoPlayerController(
+          customVideoPlayerSettings: CustomVideoPlayerSettings(
+            customAspectRatio: _controller.value.aspectRatio,
+            exitFullscreenOnEnd: false,
           ),
-          materialProgressColors: ChewieProgressColors(
-            playedColor: Colors.blue,
-            handleColor: Colors.blue,
-            backgroundColor: Colors.grey,
-            bufferedColor: Colors.grey,
-          ),
-          zoomAndPan: false,
-          useRootNavigator: true,
-          fullScreenByDefault: false,
-          allowPlaybackSpeedChanging: false,
-          systemOverlaysAfterFullScreen: SystemUiOverlay.values,
-          autoInitialize: true,
+          videoPlayerController: _controller,
+            context: context
         ),
         },
     });
-    if (getController.startVideo == true && getController.pauseVideo == false){
+    if (getController.startVideo == true){
       getController.changeStartVideo();
     }
     var h = MediaQuery.of(context).size.height;
@@ -68,6 +73,8 @@ class PostDetailsPage extends StatelessWidget {
         onWillPop: (){
           if (getController.startVideo == true){
             _controller.pause();
+            _controller.dispose();
+            _customVideoPlayerController.dispose();
             getController.changeStartVideo();
           }
           return Future.value(true);
@@ -78,6 +85,8 @@ class PostDetailsPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.pop(context);
+            _controller.dispose();
+            _customVideoPlayerController.dispose();
             if (getController.startVideo == true){
               _controller.pause();
               getController.changeStartVideo();
@@ -136,13 +145,23 @@ class PostDetailsPage extends StatelessWidget {
           SizedBox(height: h * 0.02),
           Obx(() => getController.startVideo == true
               ? SizedBox(
-            child: SizedBox(
-              width: w,
-              height: h * 0.4,
-              child: Chewie(
-                controller: _cheWieController,
+            height: h * 0.4,
+            width: w,
+            child: WillPopScope(
+              onWillPop: (){
+                Navigator.pop(context);
+                _controller.dispose();
+                _customVideoPlayerController.dispose();
+                if (getController.startVideo == true){
+                  _controller.pause();
+                  getController.changeStartVideo();
+                }
+                return Future.value(true);
+              },
+              child: CustomVideoPlayer(
+                  customVideoPlayerController: _customVideoPlayerController
               ),
-            ),
+            )
           ) : Stack(
             children: [
               SizedBox(
