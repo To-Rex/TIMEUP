@@ -229,6 +229,26 @@ class ProfessionsListDetails extends StatelessWidget {
     );
   }
 
+  //loading dialog function
+  showLoadingDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      content: Row(
+        children: [
+          const CircularProgressIndicator(),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+          Container(margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05),child: Text("Loading...", style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04, fontWeight: FontWeight.w500),)),
+        ],
+      ),
+    );
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   showBottomSheetList(context) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
@@ -298,11 +318,14 @@ class ProfessionsListDetails extends StatelessWidget {
               ),
               const Divider(),
               SizedBox(
-                height: h * 0.6,
+                height: h * 0.65,
                 child: PageView(
                   controller: pageSheetController,
                   onPageChanged: (index) {
                     _getController.changeSheetPages(index);
+                    if (index == 0) {
+                      ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value));
+                    }
                   },
                   children: [
                     SizedBox(
@@ -559,30 +582,21 @@ class ProfessionsListDetails extends StatelessWidget {
                             height: h * 0.07,
                             child: ElevatedButton(
                               onPressed: () {
-                                ApiController()
-                                    .createBookingClientCreate(
+                                showLoadingDialog(context);
+                                ApiController().createBookingClientCreate(
                                   _getController.getProfileById.value.res!.id ?? 0,
                                   _dateController.text,
                                   _timeController.text,
-                                )
-                                    .then((value) => {
-                                  if (value == true)
-                                    {
-                                      ApiController()
-                                          .bookingBusinessGetList(
-                                          _getController
-                                              .bookingBusinessGetListByID.value,
-                                          '')
-                                          .then((value) => _getController
-                                          .changeBookingBusinessGetList(value)),
+                                ).then((value) => {
+                                  if (value == true){
+                                      ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value)),
                                       Navigator.pop(context),
-                                      Toast.showToast(context, 'Booking yaratildi',
-                                          Colors.green, Colors.white),
-                                    }
-                                  else
-                                    {
-                                      Toast.showToast(context, 'Error', Colors.red,
-                                          Colors.white),
+                                      Toast.showToast(context, 'Booking yaratildi', Colors.green, Colors.white),
+                                      pageSheetController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease)
+                                }
+                                  else {
+                                      Navigator.pop(context),
+                                      Toast.showToast(context, 'Error', Colors.red, Colors.white),
                                     }
                                 });
                               },
@@ -608,7 +622,6 @@ class ProfessionsListDetails extends StatelessWidget {
                   ],
                 ),
               )
-
             ],
           )
 
@@ -844,34 +857,6 @@ class ProfessionsListDetails extends StatelessWidget {
                             SizedBox(height: h * 0.01),
                             Row(
                               children: [
-                                HeroIcon(
-                                  HeroIcons.user,
-                                  color: Colors.blue,
-                                  size: w * 0.05,
-                                ),
-                                SizedBox(width: w * 0.02),
-                                SizedBox(
-                                  width: w * 0.8,
-                                  child: Obx(() => _getController.getProfileById.value.res == null
-                                          ? const SizedBox()
-                                          : ReadMoreText(
-                                              _getController.getProfileById.value.res!.bio ?? '',
-                                              trimLines: 2,
-                                              colorClickableText: Colors.blue,
-                                              trimMode: TrimMode.Line,
-                                              trimCollapsedText: ' more',
-                                              trimExpandedText: ' less',
-                                              style: TextStyle(
-                                                fontSize: w * 0.04,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            )),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: h * 0.02),
-                            Row(
-                              children: [
                                 Container(
                                   alignment: Alignment.center,
                                   width: w * 0.22,
@@ -921,48 +906,11 @@ class ProfessionsListDetails extends StatelessWidget {
                                   ),
                                 ),
                                 const Expanded(child: SizedBox()),
-                                /*SizedBox(
-                                    height: h * 0.05,
-                                    child: Obx(() => _getController.nextPagesUserDetails.value == 1
-                                          ? ElevatedButton(
-                                              onPressed: () {
-                                                _getController.nextPagesUserDetails.value = 1;
-                                                pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
-                                                backgroundColor: Colors.blue,
-                                              ),
-                                              child: Text('Ish jadvali',
-                                                style: TextStyle(
-                                                  fontSize: w * 0.04,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            )
-                                          : ElevatedButton(
-                                              onPressed: () {
-                                                _getController.nextPagesUserDetails.value = 1;
-                                                pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3),),
-                                                backgroundColor: Colors.grey,
-                                              ),
-                                              child: Text('Ish jadvali',
-                                                style: TextStyle(
-                                                  fontSize: w * 0.04,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            ),
-                                    )),*/
                                 SizedBox(
                                     height: h * 0.05,
                                     child: ElevatedButton(
                                       onPressed: () {
+                                        _getController.changeSheetPages(0);
                                         showBottomSheetList(context);
                                       },
                                       style: ElevatedButton.styleFrom(
@@ -994,7 +942,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                                 ),
                                                 backgroundColor: Colors.blue,
                                               ),
-                                              child: Text('Booking',
+                                              child: Text('Bio',
                                                 style: TextStyle(
                                                   fontSize: w * 0.04,
                                                   fontWeight: FontWeight.w500,
@@ -1015,7 +963,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                                 ),
                                                 backgroundColor: Colors.grey,
                                               ),
-                                              child: Text('Booking',
+                                              child: Text('Bio',
                                                 style: TextStyle(
                                                   fontSize: w * 0.04,
                                                   fontWeight: FontWeight.w500,
@@ -1296,26 +1244,23 @@ class ProfessionsListDetails extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(3),
                                         border: Border.all(color: Colors.grey),
                                       ),
-                                      child: Center(
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            showBottomSheet(context);
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(3),
-                                            ),
-                                            backgroundColor: Colors.blue,
-                                          ),
-                                          child: Text('Vaqtni tanlang',
+                                    //text bio
+                                    child: Obx(() => _getController.getProfileById.value.res == null
+                                        ? const SizedBox()
+                                        : ReadMoreText(
+                                            _getController.getProfileById.value.res!.bio ?? '',
+                                            trimLines: 10,
+                                            colorClickableText: Colors.blue,
+                                            trimMode: TrimMode.Line,
+                                            trimCollapsedText: ' more',
+                                            trimExpandedText: ' less',
                                             style: TextStyle(
                                               fontSize: w * 0.04,
                                               fontWeight: FontWeight.w500,
-                                              color: Colors.white,
                                             ),
-                                          ),
-                                        ),
-                                      )),
+                                          )),
+
+                                  ),
                                 ],
                               ),
                             ),
