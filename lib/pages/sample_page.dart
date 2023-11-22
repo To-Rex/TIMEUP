@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
@@ -53,12 +55,68 @@ class SamplePage extends StatelessWidget {
                   ),
                 )
               : Container(height: h * 0.03))),
-      body: Obx(() => _getController.index.value == 3
+      /*body: Obx(() => _getController.index.value == 3
           ? SizedBox(
               height: h * 0.9, child: _getController.widgetOptions.elementAt(_getController.index.value),
             )
           : SingleChildScrollView(
               child: _getController.widgetOptions.elementAt(_getController.index.value),
+            )),*/
+      body: Obx(() => _getController.index.value == 3
+          ? Column(
+              children: [
+                SizedBox(
+                  child: _getController.widgetOptions
+                      .elementAt(_getController.index.value),
+                ),
+              ],
+            )
+          : Column(
+              children: [
+                Obx(() => _getController.uplAodVideo.value == true
+                    ? SizedBox(
+                        width: w * 0.95,
+                        height: h * 0.05,
+                        child: Row(
+                          children: [
+                            SizedBox(width: w * 0.02),
+                            _getController.postFile.value != ''
+                                ? Container(
+                                    width: w * 0.1,
+                                    height: h * 0.05,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                        image: Image.file(
+                                          File(_getController.postFile.value),
+                                        ).image,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
+                            SizedBox(width: w * 0.02),
+                            //text
+                            Text(
+                              'Uploading...',
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Expanded(child: Container()),
+                            const CircularProgressIndicator(
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.blue),
+                            ),
+                            SizedBox(width: w * 0.02),
+                          ],
+                        ))
+                    : const SizedBox()),
+                SingleChildScrollView(
+                  child: _getController.widgetOptions.elementAt(_getController.index.value),
+                ),
+              ],
             )),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(

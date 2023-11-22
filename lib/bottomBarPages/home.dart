@@ -124,225 +124,615 @@ class HomePage extends StatelessWidget {
           )
         : Obx(
             () => _getController.getFollowPost.value.res!.isNotEmpty
-                ? SizedBox(
-                    width: w,
-                    height: h * 0.83,
-                    child: ListView.builder(
-                        itemCount: _getController.getFollowPost.value.res?.length ?? 0,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              SizedBox(height: h * 0.02),
-                              if (_getController.getFollowPost.value.res?[index].posterPhotoUrl != null)
-                                InkWell(
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      barrierColor: Colors.black.withOpacity(0.5),
-                                      builder: (context) => AlertDialog(
-                                        content: SizedBox(
-                                          width: w * 0.1,
-                                          height: w * 0.2,
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              const Expanded(child: SizedBox()),
-                                              SizedBox(
-                                                width: w * 0.1,
-                                                height: w * 0.1,
-                                                child: const CircularProgressIndicator(color: Colors.blue,backgroundColor: Colors.white,strokeWidth: 2,),
+                ? Obx(() => _getController.uplAodVideo.value == true
+                    ? SizedBox(
+                        width: w,
+                        height: h * 0.75,
+                        child: ListView.builder(
+                            itemCount: _getController
+                                    .getFollowPost.value.res?.length ??
+                                0,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  SizedBox(height: h * 0.02),
+                                  if (_getController.getFollowPost.value
+                                          .res?[index].posterPhotoUrl !=
+                                      null)
+                                    InkWell(
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          barrierColor:
+                                              Colors.black.withOpacity(0.5),
+                                          builder: (context) => AlertDialog(
+                                            content: SizedBox(
+                                              width: w * 0.1,
+                                              height: w * 0.2,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  const Expanded(
+                                                      child: SizedBox()),
+                                                  SizedBox(
+                                                    width: w * 0.1,
+                                                    height: w * 0.1,
+                                                    child:
+                                                        const CircularProgressIndicator(
+                                                      color: Colors.blue,
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      strokeWidth: 2,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: w * 0.07,
+                                                  ),
+                                                  Text(
+                                                    'Loading...',
+                                                    style: TextStyle(
+                                                      fontSize: w * 0.04,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                  const Expanded(
+                                                      child: SizedBox()),
+                                                ],
                                               ),
-                                              SizedBox(width: w * 0.07,),
-                                              Text('Loading...',
-                                                style: TextStyle(
-                                                  fontSize: w * 0.04,
-                                                  fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        );
+                                        ApiController()
+                                            .profileById(int.parse(
+                                                _getController
+                                                    .getFollowPost
+                                                    .value
+                                                    .res![index]
+                                                    .businessId
+                                                    .toString()))
+                                            .then((value) => {
+                                                  _getController
+                                                      .changeProfileById(value),
+                                                  Navigator.pop(context),
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ProfessionsListDetails()))
+                                                });
+                                      },
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: w * 0.9,
+                                            child: Row(
+                                              children: [
+                                                SizedBox(width: w * 0.03),
+                                                SizedBox(
+                                                  width: w * 0.11,
+                                                  height: w * 0.11,
+                                                  child: CircleAvatar(
+                                                    backgroundImage: NetworkImage(
+                                                        '${_getController.getFollowPost.value.res?[index].posterPhotoUrl}'),
+                                                  ),
+                                                ),
+                                                SizedBox(width: w * 0.02),
+                                                SizedBox(
+                                                  width: w * 0.6,
+                                                  child: Text(
+                                                    '${_getController.getFollowPost.value.res?[index].posterName}',
+                                                    style: TextStyle(
+                                                      fontSize: w * 0.05,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  SizedBox(height: h * 0.02),
+                                  if (_getController.getFollowPost.value
+                                          .res?[index].photo !=
+                                      null)
+                                    SizedBox(
+                                      width: w,
+                                      height: h * 0.33,
+                                      child: Obx(() => _getController
+                                                  .getFollowPost
+                                                  .value
+                                                  .res?[index]
+                                                  .mediaType ==
+                                              'video'
+                                          ? Stack(
+                                              children: [
+                                                SizedBox(
+                                                  width: w,
+                                                  height: h * 0.33,
+                                                  child: Image.network(
+                                                    '${_getController.getFollowPost.value.res?[index].photo}',
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                    height: h * 0.33,
+                                                    width: w,
+                                                    child: Center(
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.black
+                                                              .withOpacity(0.5),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      100),
+                                                        ),
+                                                        child: IconButton(
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) => PostDetailsPage(
+                                                                          postId: _getController
+                                                                              .getFollowPost
+                                                                              .value
+                                                                              .res?[index]
+                                                                              .id)));
+                                                            },
+                                                            icon: Icon(
+                                                              Icons.play_arrow,
+                                                              color:
+                                                                  Colors.white,
+                                                              size: w * 0.1,
+                                                            )),
+                                                      ),
+                                                    )),
+                                              ],
+                                            )
+                                          : InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            PostDetailsPage(
+                                                                postId: _getController
+                                                                    .getFollowPost
+                                                                    .value
+                                                                    .res?[index]
+                                                                    .id)));
+                                              },
+                                              child: SizedBox(
+                                                width: w,
+                                                height: h * 0.33,
+                                                child: Image.network(
+                                                  '${_getController.getFollowPost.value.res?[index].photo}',
+                                                  fit: BoxFit.cover,
                                                 ),
                                               ),
-                                              const Expanded(child: SizedBox()),
-                                            ],
+                                            )),
+                                    ),
+                                  SizedBox(height: h * 0.02),
+                                  SizedBox(
+                                    width: w * 0.95,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          height: w * 0.07,
+                                          width: w * 0.07,
+                                          child: IconButton(
+                                              hoverColor: Colors.blue,
+                                              iconSize: w * 0.07,
+                                              padding: EdgeInsets.zero,
+                                              onPressed: () {
+                                                ApiController()
+                                                    .profileById(int.parse(
+                                                        _getController
+                                                            .getFollowPost
+                                                            .value
+                                                            .res![index]
+                                                            .businessId
+                                                            .toString()))
+                                                    .then((value) => {
+                                                          _getController
+                                                              .changeProfileById(
+                                                                  value),
+                                                        });
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ProfessionsListDetails()));
+                                              },
+                                              icon: HeroIcon(
+                                                HeroIcons.heart,
+                                                color: Colors.blue,
+                                                size: w * 0.07,
+                                              )),
+                                        ),
+                                        SizedBox(
+                                          width: w * 0.01,
+                                        ),
+                                        SizedBox(
+                                          height: w * 0.07,
+                                          width: w * 0.07,
+                                          child: IconButton(
+                                              hoverColor: Colors.blue,
+                                              iconSize: w * 0.07,
+                                              padding: EdgeInsets.zero,
+                                              onPressed: () {},
+                                              icon: HeroIcon(
+                                                HeroIcons.phone,
+                                                color: Colors.blue,
+                                                size: w * 0.07,
+                                              )),
+                                        ),
+                                        SizedBox(
+                                          width: w * 0.01,
+                                        ),
+                                        const Expanded(child: SizedBox()),
+                                        SizedBox(
+                                          height: w * 0.07,
+                                          width: w * 0.07,
+                                          child: IconButton(
+                                              hoverColor: Colors.blue,
+                                              iconSize: w * 0.07,
+                                              padding: EdgeInsets.zero,
+                                              onPressed: () {},
+                                              icon: HeroIcon(
+                                                HeroIcons.bookmark,
+                                                color: Colors.blue,
+                                                size: w * 0.07,
+                                              )),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: h * 0.02),
+                                  SizedBox(
+                                    width: w * 0.9,
+                                    child: Text(
+                                      '${_getController.getFollowPost.value.res?[index].title}',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: h * 0.01),
+                                  SizedBox(
+                                    width: w * 0.9,
+                                    child: ReadMoreText(
+                                      '${_getController.getFollowPost.value.res?[index].description}',
+                                      trimLines: 2,
+                                      colorClickableText: Colors.blue,
+                                      trimMode: TrimMode.Line,
+                                      trimCollapsedText: 'more',
+                                      trimExpandedText: ' less',
+                                      style: TextStyle(
+                                        fontSize: w * 0.035,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: h * 0.01,
+                                  ),
+                                ],
+                              );
+                            }),
+                      )
+                    : SizedBox(
+              width: w,
+              height: h * 0.83,
+              child: ListView.builder(
+                  itemCount: _getController
+                      .getFollowPost.value.res?.length ??
+                      0,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        SizedBox(height: h * 0.02),
+                        if (_getController.getFollowPost.value
+                            .res?[index].posterPhotoUrl !=
+                            null)
+                          InkWell(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                barrierColor:
+                                Colors.black.withOpacity(0.5),
+                                builder: (context) => AlertDialog(
+                                  content: SizedBox(
+                                    width: w * 0.1,
+                                    height: w * 0.2,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      children: [
+                                        const Expanded(
+                                            child: SizedBox()),
+                                        SizedBox(
+                                          width: w * 0.1,
+                                          height: w * 0.1,
+                                          child:
+                                          const CircularProgressIndicator(
+                                            color: Colors.blue,
+                                            backgroundColor:
+                                            Colors.white,
+                                            strokeWidth: 2,
                                           ),
                                         ),
-                                      ),
-                                    );
-                                    ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {
-                                      _getController.changeProfileById(value),
-                                      Navigator.pop(context),
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()))
-                                    });
-                                  },
+                                        SizedBox(
+                                          width: w * 0.07,
+                                        ),
+                                        Text(
+                                          'Loading...',
+                                          style: TextStyle(
+                                            fontSize: w * 0.04,
+                                            fontWeight:
+                                            FontWeight.w500,
+                                          ),
+                                        ),
+                                        const Expanded(
+                                            child: SizedBox()),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                              ApiController()
+                                  .profileById(int.parse(
+                                  _getController
+                                      .getFollowPost
+                                      .value
+                                      .res![index]
+                                      .businessId
+                                      .toString()))
+                                  .then((value) => {
+                                _getController
+                                    .changeProfileById(value),
+                                Navigator.pop(context),
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ProfessionsListDetails()))
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: w * 0.9,
                                   child: Row(
                                     children: [
+                                      SizedBox(width: w * 0.03),
                                       SizedBox(
-                                        width: w * 0.9,
-                                        child: Row(
-                                          children: [
-                                            SizedBox(width: w * 0.03),
-                                            SizedBox(
-                                              width: w * 0.11,
-                                              height: w * 0.11,
-                                              child: CircleAvatar(
-                                                backgroundImage: NetworkImage('${_getController.getFollowPost.value.res?[index].posterPhotoUrl}'),
-                                              ),
-                                            ),
-                                            SizedBox(width: w * 0.02),
-                                            SizedBox(
-                                              width: w * 0.6,
-                                              child: Text('${_getController.getFollowPost.value.res?[index].posterName}',
-                                                style: TextStyle(
-                                                  fontSize: w * 0.05,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                        width: w * 0.11,
+                                        height: w * 0.11,
+                                        child: CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                              '${_getController.getFollowPost.value.res?[index].posterPhotoUrl}'),
+                                        ),
+                                      ),
+                                      SizedBox(width: w * 0.02),
+                                      SizedBox(
+                                        width: w * 0.6,
+                                        child: Text(
+                                          '${_getController.getFollowPost.value.res?[index].posterName}',
+                                          style: TextStyle(
+                                            fontSize: w * 0.05,
+                                            fontWeight:
+                                            FontWeight.w500,
+                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              SizedBox(height: h * 0.02),
-                              if (_getController.getFollowPost.value.res?[index].photo != null)
+                              ],
+                            ),
+                          ),
+                        SizedBox(height: h * 0.02),
+                        if (_getController.getFollowPost.value
+                            .res?[index].photo !=
+                            null)
+                          SizedBox(
+                            width: w,
+                            height: h * 0.33,
+                            child: Obx(() => _getController
+                                .getFollowPost
+                                .value
+                                .res?[index]
+                                .mediaType ==
+                                'video'
+                                ? Stack(
+                              children: [
                                 SizedBox(
                                   width: w,
                                   height: h * 0.33,
-                                  child: Obx(() => _getController.getFollowPost.value.res?[index].mediaType == 'video'
-                                      ? Stack(
-                                          children: [
-                                            SizedBox(
-                                              width: w,
-                                              height: h * 0.33,
-                                              child: Image.network('${_getController.getFollowPost.value.res?[index].photo}',
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                            Positioned(
-                                              height: h * 0.33,
-                                                width: w,
-                                                child: Center(
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.black.withOpacity(0.5),
-                                                      borderRadius: BorderRadius.circular(100),
-                                                    ),
-                                                    child: IconButton(
-                                                        onPressed: () {
-                                                          Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getFollowPost.value.res?[index].id)));
-                                                          },
-                                                        icon: Icon(
-                                                          Icons.play_arrow,
-                                                          color: Colors.white,
-                                                          size: w * 0.1,
-                                                        )
-                                                    ),
-                                                  ),
-                                                )
-                                            ),
-                                          ],
-                                        )
-                                      : InkWell(
-                                          onTap: () {
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getFollowPost.value.res?[index].id)));
-                                          },
-                                          child: SizedBox(
-                                            width: w,
-                                            height: h * 0.33,
-                                            child: Image.network('${_getController.getFollowPost.value.res?[index].photo}',
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        )),
+                                  child: Image.network(
+                                    '${_getController.getFollowPost.value.res?[index].photo}',
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              SizedBox(height: h * 0.02),
+                                Positioned(
+                                    height: h * 0.33,
+                                    width: w,
+                                    child: Center(
+                                      child: Container(
+                                        decoration:
+                                        BoxDecoration(
+                                          color: Colors.black
+                                              .withOpacity(0.5),
+                                          borderRadius:
+                                          BorderRadius
+                                              .circular(
+                                              100),
+                                        ),
+                                        child: IconButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) => PostDetailsPage(
+                                                          postId: _getController
+                                                              .getFollowPost
+                                                              .value
+                                                              .res?[index]
+                                                              .id)));
+                                            },
+                                            icon: Icon(
+                                              Icons.play_arrow,
+                                              color:
+                                              Colors.white,
+                                              size: w * 0.1,
+                                            )),
+                                      ),
+                                    )),
+                              ],
+                            )
+                                : InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PostDetailsPage(
+                                                postId: _getController
+                                                    .getFollowPost
+                                                    .value
+                                                    .res?[index]
+                                                    .id)));
+                              },
+                              child: SizedBox(
+                                width: w,
+                                height: h * 0.33,
+                                child: Image.network(
+                                  '${_getController.getFollowPost.value.res?[index].photo}',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )),
+                          ),
+                        SizedBox(height: h * 0.02),
+                        SizedBox(
+                          width: w * 0.95,
+                          child: Row(
+                            children: [
                               SizedBox(
-                                width: w * 0.95,
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      height: w * 0.07,
-                                      width: w * 0.07,
-                                      child: IconButton(
-                                          hoverColor: Colors.blue,
-                                          iconSize: w * 0.07,
-                                          padding: EdgeInsets.zero,
-                                          onPressed: () {
-                                              ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {_getController.changeProfileById(value),});
-                                              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
-                                          },
-                                          icon: HeroIcon(
-                                            HeroIcons.heart,
-                                            color: Colors.blue,
-                                            size: w * 0.07,
-                                          )),
-                                    ),
-                                    SizedBox(width: w * 0.01,),
-                                    SizedBox(
-                                      height: w * 0.07,
-                                      width: w * 0.07,
-                                      child: IconButton(
-                                          hoverColor: Colors.blue,
-                                          iconSize: w * 0.07,
-                                          padding: EdgeInsets.zero,
-                                          onPressed: () {
-                                          },
-                                          icon: HeroIcon(
-                                            HeroIcons.phone,
-                                            color: Colors.blue,
-                                            size: w * 0.07,
-                                          )),
-                                    ),
-                                    SizedBox(width: w * 0.01,),
-                                    const Expanded(child: SizedBox()),
-                                    SizedBox(
-                                      height: w * 0.07,
-                                      width: w * 0.07,
-                                      child: IconButton(
-                                          hoverColor: Colors.blue,
-                                          iconSize: w * 0.07,
-                                          padding: EdgeInsets.zero,
-                                          onPressed: () {
-                                          },
-                                          icon: HeroIcon(
-                                            HeroIcons.bookmark,
-                                            color: Colors.blue,
-                                            size: w * 0.07,
-                                          )),
-                                    ),
+                                height: w * 0.07,
+                                width: w * 0.07,
+                                child: IconButton(
+                                    hoverColor: Colors.blue,
+                                    iconSize: w * 0.07,
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () {
+                                      ApiController()
+                                          .profileById(int.parse(
+                                          _getController
+                                              .getFollowPost
+                                              .value
+                                              .res![index]
+                                              .businessId
+                                              .toString()))
+                                          .then((value) => {
+                                        _getController
+                                            .changeProfileById(
+                                            value),
+                                      });
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProfessionsListDetails()));
+                                    },
+                                    icon: HeroIcon(
+                                      HeroIcons.heart,
+                                      color: Colors.blue,
+                                      size: w * 0.07,
+                                    )),
+                              ),
+                              SizedBox(
+                                width: w * 0.01,
+                              ),
+                              SizedBox(
+                                height: w * 0.07,
+                                width: w * 0.07,
+                                child: IconButton(
+                                    hoverColor: Colors.blue,
+                                    iconSize: w * 0.07,
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () {},
+                                    icon: HeroIcon(
+                                      HeroIcons.phone,
+                                      color: Colors.blue,
+                                      size: w * 0.07,
+                                    )),
+                              ),
+                              SizedBox(
+                                width: w * 0.01,
+                              ),
+                              const Expanded(child: SizedBox()),
+                              SizedBox(
+                                height: w * 0.07,
+                                width: w * 0.07,
+                                child: IconButton(
+                                    hoverColor: Colors.blue,
+                                    iconSize: w * 0.07,
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () {},
+                                    icon: HeroIcon(
+                                      HeroIcons.bookmark,
+                                      color: Colors.blue,
+                                      size: w * 0.07,
+                                    )),
+                              ),
                             ],
                           ),
                         ),
-                              SizedBox(height: h * 0.02),
-                              SizedBox(
-                                width: w * 0.9,
-                                child: Text('${_getController.getFollowPost.value.res?[index].title}',
-                                  style: TextStyle(
-                                    fontSize: w * 0.04,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: h * 0.01),
-                              SizedBox(
-                                width: w * 0.9,
-                                child: ReadMoreText(
-                                  '${_getController.getFollowPost.value.res?[index].description}',
-                                  trimLines: 2,
-                                  colorClickableText: Colors.blue,
-                                  trimMode: TrimMode.Line,
-                                  trimCollapsedText: 'more',
-                                  trimExpandedText: ' less',
-                                  style: TextStyle(
-                                    fontSize: w * 0.035,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black54,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: h * 0.01,),
-                        ],
-                      );
-                    }),
-                  )
+                        SizedBox(height: h * 0.02),
+                        SizedBox(
+                          width: w * 0.9,
+                          child: Text(
+                            '${_getController.getFollowPost.value.res?[index].title}',
+                            style: TextStyle(
+                              fontSize: w * 0.04,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: h * 0.01),
+                        SizedBox(
+                          width: w * 0.9,
+                          child: ReadMoreText(
+                            '${_getController.getFollowPost.value.res?[index].description}',
+                            trimLines: 2,
+                            colorClickableText: Colors.blue,
+                            trimMode: TrimMode.Line,
+                            trimCollapsedText: 'more',
+                            trimExpandedText: ' less',
+                            style: TextStyle(
+                              fontSize: w * 0.035,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: h * 0.01,
+                        ),
+                      ],
+                    );
+                  }),
+            ))
                 : SizedBox(
                     width: w,
                     height: h * 0.9,

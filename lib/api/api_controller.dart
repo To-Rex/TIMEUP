@@ -1,10 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
-import 'package:time_up/elements/functions.dart';
 import 'package:time_up/models/last_send_sms.dart';
 import 'package:time_up/models/register_model.dart';
 import '../models/booking_business_get.dart';
@@ -21,7 +19,10 @@ import '../models/sub_category.dart';
 import '../models/verify_sms.dart';
 import '../models/me_user.dart';
 import '../res/getController.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:dio/dio.dart';
+import 'package:dio/src/form_data.dart' as dioFormData;
+import 'package:get/get_connect/http/src/multipart/form_data.dart' as getFormData;
+
 
 class ApiController extends GetxController {
 
@@ -465,35 +466,6 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> createPost(String title, String description, businessId, photo,video) async {
-    print(photo);
-    print(title);
-    print(description);
-    print(businessId);
-    var headers = {
-      'Authorization': 'Bearer ${GetStorage().read('token')}',
-    };
-    var request = http.MultipartRequest('POST', Uri.parse(url + postCreateUrl));
-    request.fields.addAll({
-      'title': title,
-      'description': description,
-      'business_id': businessId.toString(),
-    });
-    request.files.add(await http.MultipartFile.fromPath('photo', _getController.postFile.value));
-    if (video != '') {
-      request.files.add(await http.MultipartFile.fromPath('video', video));
-    }
-    request.headers.addAll(headers);
-    http.StreamedResponse response = await request.send();
-
-
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   Future<GetByIdPostModel> getByIdPost(id) async{
     var response = await http.get(Uri.parse('$url$postGetUrl$id'),
       headers: {'Authorization': 'Bearer ${GetStorage().read('token')}',},
@@ -516,6 +488,7 @@ class ApiController extends GetxController {
     );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      getMePostList(_getController.meUsers.value.res?.business?.id);
       return true;
     } else {
       return false;
@@ -533,6 +506,56 @@ class ApiController extends GetxController {
     } else {
       _getController.changeGetFollowPost(GetFollowPost(res: [], status: false));
       return GetFollowPost(res: [], status: false);
+    }
+  }
+
+  /*Future<bool> createPost(String title, String description, businessId, photo,video) async {
+    var headers = {
+      'Authorization': 'Bearer ${GetStorage().read('token')}',
+    };
+    var request = http.MultipartRequest('POST', Uri.parse(url + postCreateUrl));
+    request.fields.addAll({
+      'title': title,
+      'description': description,
+      'business_id': businessId.toString(),
+    });
+    request.files.add(await http.MultipartFile.fromPath('photo', _getController.postFile.value));
+    if (video != '') {
+      request.files.add(await http.MultipartFile.fromPath('video', video));
+    }
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }*/
+  Future<bool> createPost(String title, String description, businessId, photo,video) async {
+    _getController.uplAodVideo.value = true;
+    var headers = {
+      'Authorization': 'Bearer ${GetStorage().read('token')}',
+    };
+    var request = http.MultipartRequest('POST', Uri.parse(url + postCreateUrl));
+    request.fields.addAll({
+      'title': title,
+      'description': description,
+      'business_id': businessId.toString(),
+    });
+    request.files.add(await http.MultipartFile.fromPath('photo', _getController.postFile.value));
+    if (video != '') {
+      request.files.add(await http.MultipartFile.fromPath('video', video));
+    }
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      _getController.uplAodVideo.value = false;
+      return true;
+    } else {
+      _getController.uplAodVideo.value = false;
+      return false;
     }
   }
 

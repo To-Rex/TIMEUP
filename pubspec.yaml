@@ -57,6 +57,7 @@ dependencies:
   lecle_yoyo_player: ^0.0.8
   appinio_video_player: ^1.2.2
   double_tap_player_view: ^2.0.3
+  dio: ^5.3.3
 
 dev_dependencies:
   flutter_test:

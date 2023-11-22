@@ -79,6 +79,7 @@ class GetController extends GetxController {
   var titleListElements = ''.obs;
   var startVideo = false.obs;
   var pauseVideo = false.obs;
+  var uplAodVideo = false.obs;
 
   void changeGetFollowPost(GetFollowPost newGetFollowPost) {
     getFollowPost.value = newGetFollowPost;
