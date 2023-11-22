@@ -456,28 +456,6 @@ class ProfilePage extends StatelessWidget  {
                 ),
               ),
               const Divider(),
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: SizedBox(
-                  width: w,
-                  height: h * 0.05,
-                  child: Row(
-                    children: [
-                      SizedBox(width: w * 0.05),
-                      HeroIcon(
-                        HeroIcons.cog6Tooth,
-                        color: Colors.blue,
-                        size: w * 0.05,
-                      ),
-                      SizedBox(width: w * 0.03),
-                      const Text('Settings'),
-                    ],
-                  ),
-                ),
-              ),
-              const Divider(),
             ],
           ),
         );

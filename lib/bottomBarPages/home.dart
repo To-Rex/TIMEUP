@@ -547,12 +547,7 @@ class HomePage extends StatelessWidget {
                           SizedBox(
                             width: w,
                             height: h * 0.33,
-                            child: Obx(() => _getController
-                                .getFollowPost
-                                .value
-                                .res?[index]
-                                .mediaType ==
-                                'video'
+                            child: Obx(() => _getController.getFollowPost.value.res?[index].mediaType == 'video'
                                 ? Stack(
                               children: [
                                 SizedBox(
@@ -601,8 +596,7 @@ class HomePage extends StatelessWidget {
                             )
                                 : InkWell(
                               onTap: () {
-                                Navigator.push(
-                                    context,
+                                Navigator.push(context,
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             PostDetailsPage(
@@ -622,82 +616,6 @@ class HomePage extends StatelessWidget {
                               ),
                             )),
                           ),
-                        SizedBox(height: h * 0.02),
-                        SizedBox(
-                          width: w * 0.95,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                height: w * 0.07,
-                                width: w * 0.07,
-                                child: IconButton(
-                                    hoverColor: Colors.blue,
-                                    iconSize: w * 0.07,
-                                    padding: EdgeInsets.zero,
-                                    onPressed: () {
-                                      ApiController()
-                                          .profileById(int.parse(
-                                          _getController
-                                              .getFollowPost
-                                              .value
-                                              .res![index]
-                                              .businessId
-                                              .toString()))
-                                          .then((value) => {
-                                        _getController
-                                            .changeProfileById(
-                                            value),
-                                      });
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ProfessionsListDetails()));
-                                    },
-                                    icon: HeroIcon(
-                                      HeroIcons.heart,
-                                      color: Colors.blue,
-                                      size: w * 0.07,
-                                    )),
-                              ),
-                              SizedBox(
-                                width: w * 0.01,
-                              ),
-                              SizedBox(
-                                height: w * 0.07,
-                                width: w * 0.07,
-                                child: IconButton(
-                                    hoverColor: Colors.blue,
-                                    iconSize: w * 0.07,
-                                    padding: EdgeInsets.zero,
-                                    onPressed: () {},
-                                    icon: HeroIcon(
-                                      HeroIcons.phone,
-                                      color: Colors.blue,
-                                      size: w * 0.07,
-                                    )),
-                              ),
-                              SizedBox(
-                                width: w * 0.01,
-                              ),
-                              const Expanded(child: SizedBox()),
-                              SizedBox(
-                                height: w * 0.07,
-                                width: w * 0.07,
-                                child: IconButton(
-                                    hoverColor: Colors.blue,
-                                    iconSize: w * 0.07,
-                                    padding: EdgeInsets.zero,
-                                    onPressed: () {},
-                                    icon: HeroIcon(
-                                      HeroIcons.bookmark,
-                                      color: Colors.blue,
-                                      size: w * 0.07,
-                                    )),
-                              ),
-                            ],
-                          ),
-                        ),
                         SizedBox(height: h * 0.02),
                         SizedBox(
                           width: w * 0.9,
