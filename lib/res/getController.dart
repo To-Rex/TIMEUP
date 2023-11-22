@@ -27,10 +27,15 @@ class GetController extends GetxController {
   var code = ''.obs;
   var image = ''.obs;
   var nextPages = 0.obs;
+  var sheetPages = 0.obs;
   var nextPagesUserDetails = 0.obs;
   var widgetOptions = <Widget>[];
   var postFile = ''.obs;
   var postVideoFile = ''.obs;
+
+  void changeSheetPages(int newSheetPages) {
+    sheetPages.value = newSheetPages;
+  }
 
   void changePostFile(String newPostFile) {
     postFile.value = newPostFile;
