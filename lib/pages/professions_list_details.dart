@@ -385,6 +385,7 @@ class ProfessionsListDetails extends StatelessWidget {
     ApiController().getMePostList(_getController.getProfileById.value.res?.id);
     ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value));
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(h * 0.1),
           child: Container(
