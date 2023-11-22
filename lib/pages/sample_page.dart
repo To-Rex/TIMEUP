@@ -36,6 +36,7 @@ class SamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
+    //_getController.uplAodVideo.value = true;
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(h * 0.066),
@@ -66,8 +67,7 @@ class SamplePage extends StatelessWidget {
           ? Column(
               children: [
                 SizedBox(
-                  child: _getController.widgetOptions
-                      .elementAt(_getController.index.value),
+                  child: _getController.widgetOptions.elementAt(_getController.index.value),
                 ),
               ],
             )
@@ -79,7 +79,6 @@ class SamplePage extends StatelessWidget {
                         height: h * 0.05,
                         child: Row(
                           children: [
-                            SizedBox(width: w * 0.02),
                             _getController.postFile.value != ''
                                 ? Container(
                                     width: w * 0.1,
@@ -105,11 +104,11 @@ class SamplePage extends StatelessWidget {
                               ),
                             ),
                             Expanded(child: Container()),
-                            const CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.blue),
-                            ),
-                            SizedBox(width: w * 0.02),
+                            const SizedBox(
+                              width: 30,
+                              height: 30,
+                              child: CircularProgressIndicator(),
+                            )
                           ],
                         ))
                     : const SizedBox()),

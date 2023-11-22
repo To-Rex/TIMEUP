@@ -34,7 +34,7 @@ class ProfessionsList extends StatelessWidget {
         Obx(() => _getController.category.value.res == null
             ? const Center(child: Text('No data'))
             : Obx(() => _getController.category.value.res!.isNotEmpty
-            ?SizedBox(
+            ? SizedBox(
           width: w,
           height: h * 0.74,
           child: ListView.builder(
