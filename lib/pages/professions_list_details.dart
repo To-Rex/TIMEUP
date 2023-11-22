@@ -388,6 +388,7 @@ class ProfessionsListDetails extends StatelessWidget {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(h * 0.1),
           child: Container(
+            color: Colors.transparent,
             margin: EdgeInsets.only(top: h * 0.03, bottom: h * 0.01),
             child: Row(
               children: [
@@ -399,7 +400,8 @@ class ProfessionsListDetails extends StatelessWidget {
                 ),
               ],
             ),
-          )),
+          )
+      ),
       body: SingleChildScrollView(
         child: Obx(() => _getController.getProfileById.value.res == null
               ? const Expanded(child: Center(child: CircularProgressIndicator()))
