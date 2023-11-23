@@ -356,6 +356,7 @@ class ApiController extends GetxController {
       _getController.changeProfileById(ProfileById.fromJson(jsonDecode(response.body)));
       return ProfileById.fromJson(jsonDecode(response.body));
     } else {
+      _getController.changeProfileById(ProfileById(res: ProfileByIdRes(), status: false));
       return ProfileById(res: ProfileByIdRes(), status: false);
     }
   }

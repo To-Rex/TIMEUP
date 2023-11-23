@@ -5,6 +5,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:time_up/pages/post_details.dart';
 import '../api/api_controller.dart';
 import '../elements/functions.dart';
+import '../elements/user_detials.dart';
 import '../res/getController.dart';
 import 'package:readmore/readmore.dart';
 import 'package:readmore/readmore.dart';
@@ -483,84 +484,150 @@ class ProfessionsListDetails extends StatelessWidget {
                         ? const Center(child: CircularProgressIndicator())
                         : SizedBox(
                             child: _getController.getProfileById.value.res!.photoUrl == null
-                                ? Row(
-                                    children: [
-                                      SizedBox(width: w * 0.04),
-                                      const CircleAvatar(
-                                        backgroundImage: AssetImage(
-                                            'assets/images/doctor.png'),
-                                      ),
-                                    ],
-                                  )
-                                : Row(
-                                    children: [
-                                      SizedBox(width: w * 0.04),
-                                      InkWell(
-                                        hoverColor: Colors.transparent,
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => Scaffold(
-                                                appBar: AppBar(
-                                                  elevation: 0,
-                                                  backgroundColor: Colors.black,
-                                                  leading: IconButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    icon: const Icon(
-                                                        Icons.arrow_back_ios,
-                                                        color: Colors.white),
-                                                  ),
-                                                ),
-                                                backgroundColor: Colors.black,
-                                                body: PhotoView(
-                                                  imageProvider: NetworkImage("${_getController.getProfileById.value.res!.photoUrl}",),
-                                                  minScale: PhotoViewComputedScale.contained * 0.8,
-                                                  maxScale: PhotoViewComputedScale.covered * 2,
-                                                  initialScale: PhotoViewComputedScale.contained,
-                                                  enableRotation: true,
-                                                  loadingBuilder: (context, event) => Center(
-                                                    child: SizedBox(
-                                                      width: 20.0,
-                                                      height: 20.0,
-                                                      child: CircularProgressIndicator(
-                                                        value: event == null ? 0 : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
+                                ? SizedBox(
+                              width: w,
+                              child: InkWell(
+                                hoverColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Scaffold(
+                                        appBar: AppBar(
+                                          elevation: 0,
+                                          backgroundColor: Colors.black,
+                                          leading: IconButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            icon: const Icon(
+                                                Icons.arrow_back_ios,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                        backgroundColor: Colors.black,
+                                        body: PhotoView(
+                                          imageProvider: const AssetImage(
+                                              'assets/images/doctor.png'),
+                                          minScale: PhotoViewComputedScale.contained * 0.8,
+                                          maxScale: PhotoViewComputedScale.covered * 2,
+                                          initialScale: PhotoViewComputedScale.contained,
+                                          enableRotation: true,
+                                          loadingBuilder: (context, event) => Center(
+                                            child: SizedBox(
+                                              width: 20.0,
+                                              height: 20.0,
+                                              child: CircularProgressIndicator(
+                                                value: event == null ? 0 : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
                                               ),
                                             ),
-                                          );
-                                        },
-                                        child: CircleAvatar(
-                                          radius: w * 0.15,
-                                          backgroundImage: NetworkImage(
-                                            "${_getController.getProfileById.value.res!.photoUrl}",
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ))),
+                                    ),
+                                  );
+                                },
+                                child: CircleAvatar(
+                                  radius: w * 0.15,
+                                  backgroundImage: const AssetImage(
+                                      'assets/images/doctor.png'),
+                                ),
+                              ),
+                            )
+                                : SizedBox(width: w, child: InkWell(
+                                hoverColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Scaffold(
+                                        appBar: AppBar(
+                                          elevation: 0,
+                                          backgroundColor: Colors.black,
+                                          leading: IconButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            icon: const Icon(
+                                                Icons.arrow_back_ios,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                        backgroundColor: Colors.black,
+                                        body: PhotoView(
+                                          imageProvider: NetworkImage("${_getController.getProfileById.value.res!.photoUrl}",),
+                                          minScale: PhotoViewComputedScale.contained * 0.8,
+                                          maxScale: PhotoViewComputedScale.covered * 2,
+                                          initialScale: PhotoViewComputedScale.contained,
+                                          enableRotation: true,
+                                          loadingBuilder: (context, event) => Center(
+                                            child: SizedBox(
+                                              width: 20.0,
+                                              height: 20.0,
+                                              child: CircularProgressIndicator(
+                                                value: event == null ? 0 : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: CircleAvatar(
+                                  radius: w * 0.15,
+                                  backgroundImage: NetworkImage(
+                                    "${_getController.getProfileById.value.res!.photoUrl}",
+                                  ),
+                                ),
+                              ),)),),
+                    SizedBox(height: h * 0.02),
+                    Center(
+                      child: Obx(() => _getController.getProfileById.value.res == null
+                          ? const SizedBox()
+                          : Text("${_getController.getProfileById.value.res!.fistName} ${_getController.getProfileById.value.res!.lastName}",
+                        style: TextStyle(
+                          fontSize: w * 0.05,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )),
+                    ),
+                    SizedBox(height: h * 0.01),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Obx(() => _getController.getProfileById.value.res == null
+                                ? const SizedBox()
+                                : UserDetIalWidget(
+                                    labelText: 'Post',
+                                    labelTextCount: '${_getController.getProfileById.value.res!.postsCount}',
+                                  )),
+                        Obx(() => _getController.getProfileById.value.res == null
+                                ? const SizedBox()
+                                : UserDetIalWidget(
+                                    labelText: 'Followers',
+                                    labelTextCount: '${_getController.getProfileById.value.res!.followersCount}',
+                                  )),
+                        Obx(() => _getController.getProfileById.value.res == null
+                                ? const SizedBox()
+                                : UserDetIalWidget(
+                                    labelText: 'Following',
+                                    labelTextCount: '${_getController.getProfileById.value.res!.followingCount}',
+                                  )),
+                      ],
+                    ),
                     SizedBox(height: h * 0.02),
                     Container(
                         margin: EdgeInsets.only(left: w * 0.04, right: w * 0.04),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Obx(() => _getController.getProfileById.value.res == null
-                                    ? const SizedBox()
-                                    : Text("${_getController.getProfileById.value.res!.fistName} ${_getController.getProfileById.value.res!.lastName}",
-                                        style: TextStyle(
-                                          fontSize: w * 0.05,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      )),
                             SizedBox(height: h * 0.01,),
                             Row(
                               children: [
@@ -773,16 +840,18 @@ class ProfessionsListDetails extends StatelessWidget {
                                         child: IconButton(
                                             color: Colors.white,
                                             onPressed: () {
+                                              showLoadingDialog(context);
                                               ApiController().follow(_getController.getProfileById.value.res!.id ?? 0).then((value) => {
                                                         if (value.status == true){
                                                             Toast.showToast(context, 'Followed', Colors.green, Colors.white),
                                                             ApiController().profileById(_getController.profileByID.value).then((value) => {_getController.changeProfileById(value),}),
-                                                            _getController.clearByCategory(),
                                                             ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value)),
+                                                            Navigator.pop(context),
                                                           } else {
+                                                            Navigator.pop(context),
                                                             Toast.showToast(context, 'Error', Colors.red, Colors.white),
-                                                          }
-                                                      });
+                                                          }}
+                                                      );
                                             },
                                             icon: HeroIcon(
                                               HeroIcons.userPlus,
@@ -801,15 +870,17 @@ class ProfessionsListDetails extends StatelessWidget {
                                         child: IconButton(
                                             color: Colors.white,
                                             onPressed: () {
+                                              showLoadingDialog(context);
                                               ApiController().unFollow(_getController.getProfileById.value.res!.id ?? 0).then((value) => {
                                                         if (value == true){
                                                             Toast.showToast(context, 'Followed', Colors.green, Colors.white),
                                                             ApiController().profileById(_getController.profileByID.value).then((value) => {_getController.changeProfileById(value),}),
-                                                            _getController.clearByCategory(),
-                                                            ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value))
+                                                            ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value)),
+                                                            Navigator.pop(context),
                                                           } else {
+                                                            Navigator.pop(context),
                                                             Toast.showToast(context, 'Error', Colors.red, Colors.white),
-                                                          }
+                                                        },
                                                       });
                                             },
                                             icon: HeroIcon(

@@ -35,7 +35,10 @@ class ProfileByIdRes {
   String? phoneNumber;
   String? address;
   String? photoUrl;
+  int? followingCount;
+  int? followersCount;
   bool? followed;
+  int? postsCount;
 
   ProfileByIdRes(
       {this.id,
@@ -53,8 +56,10 @@ class ProfileByIdRes {
         this.phoneNumber,
         this.address,
         this.photoUrl,
-        this.followed
-      });
+        this.followingCount,
+        this.followersCount,
+        this.followed,
+        this.postsCount});
 
   ProfileByIdRes.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -72,7 +77,10 @@ class ProfileByIdRes {
     phoneNumber = json['phone_number'];
     address = json['address'];
     photoUrl = json['photo_url'];
+    followingCount = json['following_count'];
+    followersCount = json['followers_count'];
     followed = json['followed'];
+    postsCount = json['posts_count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -92,7 +100,10 @@ class ProfileByIdRes {
     data['phone_number'] = phoneNumber;
     data['address'] = address;
     data['photo_url'] = photoUrl;
+    data['following_count'] = followingCount;
+    data['followers_count'] = followersCount;
     data['followed'] = followed;
+    data['posts_count'] = postsCount;
     return data;
   }
 }
