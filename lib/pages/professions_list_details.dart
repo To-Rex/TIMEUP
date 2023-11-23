@@ -423,8 +423,8 @@ class ProfessionsListDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    ApiController().profileById(_getController.profileByID.value);
-    _getController.clearGetPostList();
+    //ProfileById
+    //ApiController().profileById(_getController.profileByID.value);
     ApiController().getMePostList(_getController.getProfileById.value.res?.id);
     ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value));
     return Scaffold(
@@ -841,10 +841,11 @@ class ProfessionsListDetails extends StatelessWidget {
                                             color: Colors.white,
                                             onPressed: () {
                                               showLoadingDialog(context);
-                                              ApiController().follow(_getController.getProfileById.value.res!.id ?? 0).then((value) => {
+                                              ApiController().follow(_getController.getProfileById.value.res!.id).then((value) => {
                                                         if (value.status == true){
-                                                            Toast.showToast(context, 'Followed', Colors.green, Colors.white),
-                                                            ApiController().profileById(_getController.profileByID.value).then((value) => {_getController.changeProfileById(value),}),
+                                                            Toast.showToast(context, 'Followed ${_getController.profileByID.value}', Colors.green, Colors.white),
+                                                            //ApiController().profileById(_getController.getProfileById.value.res?.id),
+                                                            ApiController().profileById(int.parse(_getController.getProfileById.value.res!.id.toString())),
                                                             ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value)),
                                                             Navigator.pop(context),
                                                           } else {
@@ -871,10 +872,10 @@ class ProfessionsListDetails extends StatelessWidget {
                                             color: Colors.white,
                                             onPressed: () {
                                               showLoadingDialog(context);
-                                              ApiController().unFollow(_getController.getProfileById.value.res!.id ?? 0).then((value) => {
+                                              ApiController().unFollow(_getController.getProfileById.value.res!.id).then((value) => {
                                                         if (value == true){
-                                                            Toast.showToast(context, 'Followed', Colors.green, Colors.white),
-                                                            ApiController().profileById(_getController.profileByID.value).then((value) => {_getController.changeProfileById(value),}),
+                                                            Toast.showToast(context, 'Followed ${_getController.profileByID.value}', Colors.green, Colors.white),
+                                                            ApiController().profileById(int.parse(_getController.getProfileById.value.res!.id.toString())),
                                                             ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value)),
                                                             Navigator.pop(context),
                                                           } else {
