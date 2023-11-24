@@ -24,11 +24,7 @@ class ProfessionsList extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text('Kasblar royhati',
-          style: TextStyle(
-            fontSize: w * 0.05,
-            fontWeight: FontWeight.w500,
-          ),
+        Text('Kasblar royhati', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500,),
         ),
         SizedBox(height: h * 0.02),
         Obx(() => _getController.category.value.res == null
@@ -43,7 +39,6 @@ class ProfessionsList extends StatelessWidget {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  print(_getController.category.value.res?[index].id.toString() ?? '');
                   onTap(_getController.category.value.res?[index].id?? 0);
                 },
                 child: Container(
@@ -54,8 +49,7 @@ class ProfessionsList extends StatelessWidget {
                     borderRadius: BorderRadius.circular(w * 0.02),
                   ),
                   child: Center(
-                    child: Text(
-                      _getController.category.value.res?[index].name ?? '',
+                    child: Text(_getController.category.value.res?[index].name ?? '',
                       style: TextStyle(
                         fontSize: w * 0.04,
                         fontWeight: FontWeight.w500,
