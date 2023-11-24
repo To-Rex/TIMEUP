@@ -8,10 +8,7 @@ class ProfessionsList extends StatelessWidget {
 
   final Function(int) onTap;
 
-  ProfessionsList({
-    Key? key,
-    required this.onTap,
-  }) : super(key: key);
+  ProfessionsList({Key? key, required this.onTap,}) : super(key: key);
 
   final GetController _getController = Get.put(GetController());
 
@@ -24,8 +21,7 @@ class ProfessionsList extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text('Kasblar royhati', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500,),
-        ),
+        Text('Kasblar royhati', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500,),),
         SizedBox(height: h * 0.02),
         Obx(() => _getController.category.value.res == null
             ? const Center(child: Text('No data'))

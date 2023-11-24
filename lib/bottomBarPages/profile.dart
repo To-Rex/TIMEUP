@@ -11,6 +11,7 @@ import '../elements/bio_business.dart';
 import '../elements/btn_business.dart';
 import '../elements/btn_users.dart';
 import '../elements/txt_business.dart';
+import '../pages/edit_post_details.dart';
 import '../pages/login_page.dart';
 import '../pages/make_business.dart';
 import '../pages/user_bussines_edit.dart';
@@ -463,7 +464,7 @@ class ProfilePage extends StatelessWidget  {
     );
   }
 
-  showBottomSheetEllips(context) {
+  showBottomSheetEllips(context,id) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     showModalBottomSheet(
@@ -488,7 +489,7 @@ class ProfilePage extends StatelessWidget  {
               SizedBox(height: h * 0.1),
               InkWell(
                 onTap: () {
-                  showClosDialogs(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => EditPostDetails(postId: id)));
                 },
                 child: SizedBox(
                   width: w,
@@ -922,8 +923,7 @@ class ProfilePage extends StatelessWidget  {
                                                                     )
                                                                   ),
                                                                 ],
-                                                              )
-                                                                  : Container(
+                                                              ) : Container(
                                                                 width: w * 0.28,
                                                                 height: h * 0.13,
                                                                 margin: EdgeInsets.only(right: w * 0.05),
@@ -965,7 +965,8 @@ class ProfilePage extends StatelessWidget  {
                                                               SizedBox(
                                                                   child: IconButton(
                                                                     onPressed: () {
-                                                                      showBottomSheetEllips(context);
+                                                                      print(getController.getPostList.value.res![index].id);
+                                                                      showBottomSheetEllips(context,getController.getPostList.value.res![index].id);
                                                                     },
                                                                     icon: HeroIcon(
                                                                       HeroIcons.ellipsisVertical,

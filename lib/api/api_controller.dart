@@ -70,6 +70,8 @@ class ApiController extends GetxController {
   var postDeleteUrl = 'post/delete/';
   //{{host}}/api/v1/post/list/followed-profiles
   var postListFollowedProfilesUrl = 'post/list/followed-profiles';
+  //{{host}}/api/v1/post/update/2
+  var postUpdateUrl = 'post/update/';
 
   Future<String> sendSms(String phoneNumber) async {
     var response = await http.post(
@@ -560,4 +562,27 @@ class ApiController extends GetxController {
     }
   }
 
+  Future<bool> updatePost(String title, String description, businessId,id,mediaType) async {
+    _getController.uplAodVideo.value = true;
+    var response = await http.put(Uri.parse('$url$postUpdateUrl$id'),
+      body: jsonEncode({
+        "title": title,
+        "description": description,
+        "business_id": businessId,
+        "media_type": mediaType,
+      }),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+        'Content-Type': 'application/json'
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      _getController.uplAodVideo.value = false;
+      return true;
+    } else {
+      _getController.uplAodVideo.value = false;
+      return false;
+    }
+  }
 }

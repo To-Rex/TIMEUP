@@ -15,6 +15,52 @@ class ProfessionsListUsers extends StatelessWidget {
 
   final GetController _getController = Get.put(GetController());
 
+  showLoadingDialog(BuildContext context) {
+    var w = MediaQuery.of(context).size.width;
+    showDialog(
+      context: context,
+      barrierColor: Colors.black.withOpacity(0.5),
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        content: SizedBox(
+          width: w * 0.1,
+          height: w * 0.2,
+          child: Row(
+            mainAxisAlignment:
+            MainAxisAlignment.center,
+            children: [
+              const Expanded(child: SizedBox()),
+              SizedBox(
+                width: w * 0.1,
+                height: w * 0.1,
+                child: const CircularProgressIndicator(
+                  color: Colors.blue,
+                  backgroundColor:
+                  Colors.grey,
+                  strokeWidth: 2,
+                ),
+              ),
+              SizedBox(
+                width: w * 0.07,
+              ),
+              Text(
+                'Loading...',
+                style: TextStyle(
+                  fontSize: w * 0.04,
+                  fontWeight:
+                  FontWeight.w500,
+                ),
+              ),
+              const Expanded(
+                  child: SizedBox()),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
@@ -64,10 +110,14 @@ class ProfessionsListUsers extends StatelessWidget {
                         onTap: () {
                           //_getController.profileByID.value = _getController.getByCategory.value.res![index].businessId!;
                           //_getController.clearProfileById();
-                          ApiController().profileById(_getController.getByCategory.value.res![index].businessId!);
-                          _getController.bookingBusinessGetListByID.value = _getController.getByCategory.value.res![index].businessId!;
-                          _getController.nextPagesUserDetails.value = 0;
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
+                          showLoadingDialog(context);
+                          ApiController().profileById(_getController.getByCategory.value.res![index].businessId!).then((value) => {
+                            Navigator.pop(context),
+                          _getController.bookingBusinessGetListByID.value = _getController.getByCategory.value.res![index].businessId!,
+                              _getController.nextPagesUserDetails.value = 0,
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails())),
+
+                          });
                         },
                         child: Container(
                           height: h * 0.1,

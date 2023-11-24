@@ -86,6 +86,7 @@ class GetController extends GetxController {
   var pauseVideo = false.obs;
   var uplAodVideo = false.obs;
   var loading = false.obs;
+  var show = false.obs;
 
   void changeLoading() {
     loading.value = !loading.value;
