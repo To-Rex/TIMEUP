@@ -27,6 +27,7 @@ class MeRes {
   String? phoneNumber;
   String? address;
   String? photoUrl;
+  int? followingCount;
   Business? business;
 
   MeRes(
@@ -37,6 +38,7 @@ class MeRes {
         this.phoneNumber,
         this.address,
         this.photoUrl,
+        this.followingCount,
         this.business});
 
   MeRes.fromJson(Map<String, dynamic> json) {
@@ -47,6 +49,7 @@ class MeRes {
     phoneNumber = json['phone_number'];
     address = json['address'];
     photoUrl = json['photo_url'];
+    followingCount = json['following_count'];
     business = json['business'] != null
         ? Business.fromJson(json['business'])
         : null;
@@ -61,6 +64,7 @@ class MeRes {
     data['phone_number'] = phoneNumber;
     data['address'] = address;
     data['photo_url'] = photoUrl;
+    data['following_count'] = followingCount;
     if (business != null) {
       data['business'] = business!.toJson();
     }
@@ -78,6 +82,8 @@ class Business {
   int? experience;
   String? bio;
   String? dayOffs;
+  int? followersCount;
+  int? postsCount;
 
   Business(
       {this.id,
@@ -88,7 +94,9 @@ class Business {
         this.officeName,
         this.experience,
         this.bio,
-        this.dayOffs});
+        this.dayOffs,
+        this.followersCount,
+        this.postsCount});
 
   Business.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -100,6 +108,8 @@ class Business {
     experience = json['experience'];
     bio = json['bio'];
     dayOffs = json['day_offs'];
+    followersCount = json['followers_count'];
+    postsCount = json['posts_count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -113,7 +123,8 @@ class Business {
     data['experience'] = experience;
     data['bio'] = bio;
     data['day_offs'] = dayOffs;
+    data['followers_count'] = followersCount;
+    data['posts_count'] = postsCount;
     return data;
   }
 }
-

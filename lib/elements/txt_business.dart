@@ -17,12 +17,10 @@ class TextEditButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     return Container(
-      width: w * 0.9,
+      width: w ,
       margin: const EdgeInsets.only(bottom: 5),
       child: Row(
         children: [
-
-
           CircleAvatar(
             backgroundColor: color,
             radius: w * 0.03,

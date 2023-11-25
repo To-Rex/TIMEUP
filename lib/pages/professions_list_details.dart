@@ -408,6 +408,7 @@ class ProfessionsListDetails extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     //ProfileById
     //ApiController().profileById(_getController.profileByID.value);
+    _getController.show.value = false;
     ApiController().getMePostList(_getController.getProfileById.value.res?.id);
     ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value));
     return Scaffold(
@@ -424,8 +425,7 @@ class ProfessionsListDetails extends StatelessWidget {
         ),
         body: Obx(
           () => _getController.getProfileById.value.res == null
-              ? const Expanded(
-                  child: Center(child: CircularProgressIndicator()))
+              ? const Expanded(child: Center(child: CircularProgressIndicator()))
               : Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -540,7 +540,6 @@ class ProfessionsListDetails extends StatelessWidget {
                                                                 onPressed: () {
                                                                   Navigator.pop(context);
                                                                 },
-                                                                //arrow_back_ios
                                                                 icon: HeroIcon(
                                                                   HeroIcons.chevronLeft,
                                                                   color: Colors.black,
@@ -579,10 +578,13 @@ class ProfessionsListDetails extends StatelessWidget {
                                         //circular avatar with image from network and image cover with photo view
                                         child: CircleAvatar(
                                           radius: w * 0.15,
+                                          foregroundColor: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
                                           child: ClipOval(
                                             child: Image.network(
                                               "${_getController.getProfileById.value.res!.photoUrl}",
                                               fit: BoxFit.fill,
+
                                             ),
                                           ),
                                         ),
