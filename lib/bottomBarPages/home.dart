@@ -633,7 +633,7 @@ class HomePage extends StatelessWidget {
                           child: ReadMoreText(
                             '${_getController.getFollowPost.value.res?[index].description}',
                             trimLines: 2,
-                            colorClickableText: Colors.blue,
+                            colorClickableText: Colors.grey,
                             trimMode: TrimMode.Line,
                             trimCollapsedText: 'more',
                             trimExpandedText: ' less',

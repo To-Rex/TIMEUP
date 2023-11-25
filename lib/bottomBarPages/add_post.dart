@@ -648,6 +648,10 @@ class _AddPostPage extends State<AddPostPage> {
                                 Toast.showToast(context, 'Iltimos, rasm yuklang', Colors.red, Colors.white);
                                 return;
                               }
+                              if (titleController.text == '') {
+                                Toast.showToast(context, 'Iltimos, title kiriting', Colors.red, Colors.white);
+                                return;
+                              }
                               ApiController().createPost(titleController.text, descriptionController.text, _getController.meUsers.value.res!.business!.id!,
                                   _getController.postFile.value.toString(),
                                   _getController.postVideoFile.value.toString()
