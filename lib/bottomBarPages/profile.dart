@@ -32,6 +32,52 @@ class ProfilePage extends StatelessWidget  {
     ApiController().getUserData();
   }
 
+  showLoadingDialog(BuildContext context,w) {
+
+    showDialog(
+      context: context,
+      barrierColor: Colors.black.withOpacity(0.5),
+      builder: (context) => AlertDialog(
+        content: SizedBox(
+          width: w * 0.1,
+          height: w * 0.2,
+          child: Row(
+            mainAxisAlignment:
+            MainAxisAlignment.center,
+            children: [
+              const Expanded(
+                  child: SizedBox()),
+              SizedBox(
+                width: w * 0.1,
+                height: w * 0.1,
+                child:
+                const CircularProgressIndicator(
+                  color: Colors.blue,
+                  backgroundColor:
+                  Colors.white,
+                  strokeWidth: 2,
+                ),
+              ),
+              SizedBox(
+                width: w * 0.07,
+              ),
+              Text(
+                'Loading...',
+                style: TextStyle(
+                  fontSize: w * 0.04,
+                  fontWeight:
+                  FontWeight.w500,
+                ),
+              ),
+              const Expanded(
+                  child: SizedBox()),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   showDialogs(BuildContext context) {
     showDialog(
       context: context,
@@ -490,8 +536,12 @@ class ProfilePage extends StatelessWidget  {
               SizedBox(height: h * 0.1),
               InkWell(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => EditPostDetails(postId: id)));
-                },
+                  showLoadingDialog(context, w);
+                  ApiController().getByIdPost(id).then((value) => {
+                    Navigator.pop(context),
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => EditPostDetails(postId: id))),
+                  });
+                  },
                 child: SizedBox(
                   width: w,
                   height: h * 0.05,

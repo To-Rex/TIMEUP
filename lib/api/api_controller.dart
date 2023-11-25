@@ -562,22 +562,21 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> updatePost(String title, String description, businessId,id,mediaType) async {
+  Future<bool> updatePost(id, businessId,String title, String description) async {
     _getController.uplAodVideo.value = true;
-    var response = await http.put(Uri.parse('$url$postUpdateUrl$id'),
-      body: jsonEncode({
-        "title": title,
-        "description": description,
-        "business_id": businessId,
-        "media_type": mediaType,
-      }),
-      headers: {
-        'Authorization': 'Bearer ${GetStorage().read('token')}',
-        'Content-Type': 'application/json'
-      },
-    );
-    print(response.body);
-    if (response.statusCode == 200 || response.statusCode == 201) {
+    var headers = {
+      'Authorization': 'Bearer ${GetStorage().read('token')}',
+    };
+    var request = http.MultipartRequest('PUT', Uri.parse('$url$postUpdateUrl$id'));
+    request.fields.addAll({
+      'title': title,
+      'description': description,
+      'business_id': businessId.toString(),
+    });
+
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
       _getController.uplAodVideo.value = false;
       return true;
     } else {

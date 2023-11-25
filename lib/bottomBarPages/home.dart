@@ -129,22 +129,17 @@ class HomePage extends StatelessWidget {
                         width: w,
                         height: h * 0.75,
                         child: ListView.builder(
-                            itemCount: _getController
-                                    .getFollowPost.value.res?.length ??
-                                0,
+                            itemCount: _getController.getFollowPost.value.res?.length ?? 0,
                             itemBuilder: (context, index) {
                               return Column(
                                 children: [
                                   SizedBox(height: h * 0.02),
-                                  if (_getController.getFollowPost.value
-                                          .res?[index].posterPhotoUrl !=
-                                      null)
+                                  if (_getController.getFollowPost.value.res?[index].posterPhotoUrl != null)
                                     InkWell(
                                       onTap: () {
                                         showDialog(
                                           context: context,
-                                          barrierColor:
-                                              Colors.black.withOpacity(0.5),
+                                          barrierColor: Colors.black.withOpacity(0.5),
                                           builder: (context) => AlertDialog(
                                             content: SizedBox(
                                               width: w * 0.1,
