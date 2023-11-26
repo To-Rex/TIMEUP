@@ -498,8 +498,8 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<GetFollowPost> getFollowPostList() async{
-    var response = await http.get(Uri.parse('$url$postListFollowedProfilesUrl'),
+  Future<GetFollowPost> getFollowPostList(limit,offset) async{
+    var response = await http.get(Uri.parse('$url$postListFollowedProfilesUrl?limit=$limit&offset=$offset'),
       headers: {'Authorization': 'Bearer ${GetStorage().read('token')}',},
     );
     print(response.body);
