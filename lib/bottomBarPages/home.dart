@@ -303,9 +303,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 SizedBox(height: h * 0.02),
-                if (_getController.getFollowPost.value
-                    .res?[index].photo !=
-                    null)
+                if (_getController.getFollowPost.value.res?[index].photo != null)
                   SizedBox(
                     width: w,
                     height: h * 0.33,
@@ -759,8 +757,7 @@ class HomePage extends StatelessWidget {
             }),
       ),
 
-    ))
-        : SizedBox(
+    )) : SizedBox(
       width: w,
       height: h * 0.9,
       child: const Center(
