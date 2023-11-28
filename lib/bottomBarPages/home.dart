@@ -165,16 +165,16 @@ class HomePage extends StatelessWidget {
     if (_getController.meUsers.value.res == null) {
       ApiController().getUserData();
     }
-    ApiController().getFollowPostList(4,0);
+    ApiController().getFollowPostList(1000,0);
 
     void _onRefresh() async{
-      await Future.delayed(Duration(milliseconds: 1000));
-      _refreshController.refreshCompleted();
+      _getController.getFollowPost.value.res?.clear();
+      ApiController().getFollowPostList(1000,0).then((value) => {
+        _refreshController.refreshCompleted(),
+      });
     }
 
     void _onLoading() async{
-      // monitor network fetch
-      await Future.delayed(Duration(milliseconds: 1000));
       _refreshController.loadComplete();
     }
 
@@ -504,10 +504,10 @@ class HomePage extends StatelessWidget {
           builder: (BuildContext context, RefreshStatus? mode) {
             Widget body;
             if (mode == RefreshStatus.idle) {
-              body =  Text("pull down refresh");
+              body =  const Text("Ma`lumotlarni yangilash uchun tashlang");
             }
             else if (mode == RefreshStatus.refreshing) {
-              body =  CircularProgressIndicator(
+              body =  const CircularProgressIndicator(
                 color: Colors.blue,
                 backgroundColor:
                 Colors.white,
@@ -515,15 +515,44 @@ class HomePage extends StatelessWidget {
               );
             }
             else if (mode == RefreshStatus.failed) {
-              body = Text("Load Failed!Click retry!");
+              body = const Text("Load Failed!Click retry!");
             }
             else if (mode == RefreshStatus.canRefresh) {
-              body = Text("Ma`lumotlarni yangilash uchun tashlang");
+              body = const Text("Ma`lumotlarni yangilash uchun tashlang");
             }
             else {
-              body = Text("No more Data");
+              body = const Text("Ma`lumotlar yangilandi");
             }
-            return Container(
+            return SizedBox(
+              height: h * 0.1,
+              child: Center(child: body),
+            );
+          },
+        ),
+        footer: CustomFooter(
+          builder: (BuildContext context, LoadStatus? mode) {
+            Widget body;
+            if (mode == LoadStatus.idle) {
+              body = const SizedBox();
+            }
+            else if (mode == LoadStatus.loading) {
+              body = const CircularProgressIndicator(
+                color: Colors.blue,
+                backgroundColor:
+                Colors.white,
+                strokeWidth: 2,
+              );
+            }
+            else if (mode == LoadStatus.failed) {
+              body = const Text("Load Failed!Click retry!");
+            }
+            else if (mode == LoadStatus.canLoading) {
+              body = const SizedBox();
+            }
+            else {
+              body = const Text("Ma`lumotlar yangilandi");
+            }
+            return SizedBox(
               height: h * 0.1,
               child: Center(child: body),
             );

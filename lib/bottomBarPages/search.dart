@@ -41,12 +41,6 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (GetStorage().read('token') == null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-      );
-    }
     var h = MediaQuery.of(context).size.height;
     return WillPopScope(
         onWillPop: () async {
