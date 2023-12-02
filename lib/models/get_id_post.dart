@@ -5,7 +5,8 @@ class GetByIdPostModel {
   GetByIdPostModel({this.res, this.status});
 
   GetByIdPostModel.fromJson(Map<String, dynamic> json) {
-    res = json['res'] != null ? GetByIdPostModelRes.fromJson(json['res']) : null;
+    res =
+        json['res'] != null ? GetByIdPostModelRes.fromJson(json['res']) : null;
     status = json['status'];
   }
 
@@ -33,15 +34,15 @@ class GetByIdPostModelRes {
 
   GetByIdPostModelRes(
       {this.id,
-        this.mediaType,
-        this.photo,
-        this.video,
-        this.title,
-        this.description,
-        this.businessId,
-        this.createdAt,
-        this.posterPhotoUrl,
-        this.posterName});
+      this.mediaType,
+      this.photo,
+      this.video,
+      this.title,
+      this.description,
+      this.businessId,
+      this.createdAt,
+      this.posterPhotoUrl,
+      this.posterName});
 
   GetByIdPostModelRes.fromJson(Map<String, dynamic> json) {
     id = json['id'];

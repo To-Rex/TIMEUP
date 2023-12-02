@@ -24,7 +24,7 @@ class Register {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (res != null) {
       data['res'] = res!.toJson();
-    }else{
+    } else {
       data['res'] = Responses(
           user: User(
               id: 0,
@@ -48,15 +48,16 @@ class Responses {
   Responses({this.user, this.token});
 
   Responses.fromJson(Map<String, dynamic> json) {
-    user = json['user'] != null ? User.fromJson(json['user']) : User(
-        id: 0,
-        fistName: '',
-        lastName: '',
-        userName: '',
-        phoneNumber: '',
-        address: '',
-        photoUrl: ''
-    );
+    user = json['user'] != null
+        ? User.fromJson(json['user'])
+        : User(
+            id: 0,
+            fistName: '',
+            lastName: '',
+            userName: '',
+            phoneNumber: '',
+            address: '',
+            photoUrl: '');
     token = json['token'] ?? '';
   }
 
@@ -64,7 +65,7 @@ class Responses {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (user != null) {
       data['user'] = user!.toJson();
-    }else{
+    } else {
       data['user'] = User(
           id: 0,
           fistName: '',
@@ -72,8 +73,7 @@ class Responses {
           userName: '',
           phoneNumber: '',
           address: '',
-          photoUrl: ''
-      );
+          photoUrl: '');
     }
     data['token'] = token ?? '';
     return data;

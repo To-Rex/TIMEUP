@@ -39,16 +39,16 @@ class GetFollowModelRes {
 
   GetFollowModelRes(
       {this.id,
-        this.categoryName,
-        this.officeAddress,
-        this.officeName,
-        this.bio,
-        this.dayOffs,
-        this.fistName,
-        this.lastName,
-        this.userName,
-        this.phoneNumber,
-        this.photoUrl});
+      this.categoryName,
+      this.officeAddress,
+      this.officeName,
+      this.bio,
+      this.dayOffs,
+      this.fistName,
+      this.lastName,
+      this.userName,
+      this.phoneNumber,
+      this.photoUrl});
 
   GetFollowModelRes.fromJson(Map<String, dynamic> json) {
     id = json['id'];

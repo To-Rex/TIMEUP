@@ -17,7 +17,7 @@ class TextEditButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     return Container(
-      width: w ,
+      width: w,
       margin: const EdgeInsets.only(bottom: 5),
       child: Row(
         children: [
@@ -31,32 +31,31 @@ class TextEditButton extends StatelessWidget {
           ),
           SizedBox(width: w * 0.02),
           SizedBox(
-            width: w * 0.8,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ReadMoreText(
-                  text,
-                  trimLines: 1,
-                  colorClickableText: Colors.pink,
-                  trimMode: TrimMode.Line,
-                  trimCollapsedText: ' more',
-                  trimExpandedText: ' less',
-                  moreStyle: TextStyle(
-                    fontSize: w * 0.04,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.blue,
+              width: w * 0.8,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ReadMoreText(
+                    text,
+                    trimLines: 1,
+                    colorClickableText: Colors.pink,
+                    trimMode: TrimMode.Line,
+                    trimCollapsedText: ' more',
+                    trimExpandedText: ' less',
+                    moreStyle: TextStyle(
+                      fontSize: w * 0.04,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.blue,
+                    ),
+                    style: TextStyle(
+                      fontSize: w * 0.04,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
                   ),
-                  style: TextStyle(
-                    fontSize: w * 0.04,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            )
-          ),
+                ],
+              )),
         ],
       ),
     );

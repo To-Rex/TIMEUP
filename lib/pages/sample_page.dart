@@ -66,7 +66,8 @@ class SamplePage extends StatelessWidget {
           ? Column(
               children: [
                 SizedBox(
-                  child: _getController.widgetOptions.elementAt(_getController.index.value),
+                  child: _getController.widgetOptions
+                      .elementAt(_getController.index.value),
                 ),
               ],
             )
@@ -112,7 +113,8 @@ class SamplePage extends StatelessWidget {
                         ))
                     : const SizedBox()),
                 SingleChildScrollView(
-                  child: _getController.widgetOptions.elementAt(_getController.index.value),
+                  child: _getController.widgetOptions
+                      .elementAt(_getController.index.value),
                 ),
               ],
             )),

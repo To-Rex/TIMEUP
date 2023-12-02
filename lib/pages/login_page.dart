@@ -231,14 +231,22 @@ class LoginPage extends StatelessWidget {
                                     const Text('Kodni qayta yuborish ',
                                         style: TextStyle(fontSize: 16)),
                                     TextButton(
-                                      style: TextButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7),),),
+                                      style: TextButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(7),
+                                        ),
+                                      ),
                                       onPressed: () {
                                         nameController.changeOnFinished();
                                         _codeController.clear();
                                         Timer(const Duration(seconds: 1), () {
                                           startCountdown();
                                         });
-                                        ApiController().sendSms(code + _controller.text).then((value) => nameController.changeCode(value));
+                                        ApiController()
+                                            .sendSms(code + _controller.text)
+                                            .then((value) => nameController
+                                                .changeCode(value));
                                       },
                                       child: const Text('Kod yet kelmadimi?'),
                                     ),
@@ -264,7 +272,8 @@ class LoginPage extends StatelessWidget {
                 ),
                 onPressed: () {
                   if (_controller.text.isEmpty) {
-                    Toast.showToast(context, 'Telefon raqamni kiriting', Colors.red, Colors.red);
+                    Toast.showToast(context, 'Telefon raqamni kiriting',
+                        Colors.red, Colors.red);
                     return;
                   }
                   if (!nameController.onFinished.value) {
@@ -285,31 +294,63 @@ class LoginPage extends StatelessWidget {
                       ApiController()
                           .verifySms(phone, _codeController.text)
                           .then((value) => {
-                                if (value.status == true){
+                                if (value.status == true)
+                                  {
                                     _codeController.clear(),
-                                    if (value.res!.token != ''){
-                                        GetStorage().write('token', value.res?.token),
+                                    if (value.res!.token != '')
+                                      {
+                                        GetStorage()
+                                            .write('token', value.res?.token),
                                         nameController.code.value = '',
                                         _codeController.clear(),
-                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),),
-                                      } else {
-                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUserData(phoneNumber: code + _controller.text,)),),
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SamplePage()),
+                                        ),
                                       }
-                                  } else {
+                                    else
+                                      {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginUserData(
+                                                    phoneNumber:
+                                                        code + _controller.text,
+                                                  )),
+                                        ),
+                                      }
+                                  }
+                                else
+                                  {
                                     _codeController.clear(),
-                                    Toast.showToast(context, 'Kodni noto`g`ri kiritdingiz', Colors.red, Colors.red),
+                                    Toast.showToast(
+                                        context,
+                                        'Kodni noto`g`ri kiritdingiz',
+                                        Colors.red,
+                                        Colors.red),
                                   }
                               });
                       return;
                     } else {
                       _codeController.clear();
-                      Toast.showToast(context, 'Kodni noto`g`ri kiritdingiz', Colors.red, Colors.red);
+                      Toast.showToast(context, 'Kodni noto`g`ri kiritdingiz',
+                          Colors.red, Colors.red);
                     }
                   }
                 },
                 child: Obx(
                   () => nameController.sendCode.value
-                      ? Text('Tasdiqlash', style: TextStyle(color: Colors.white, fontSize: w * 0.04 > 20 ? 20 : w * 0.04, fontWeight: FontWeight.bold,),)
+                      ? Text(
+                          'Tasdiqlash',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: w * 0.04 > 20 ? 20 : w * 0.04,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
                       : Text(
                           'Kodni yuborish',
                           style: TextStyle(

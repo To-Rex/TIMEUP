@@ -23,9 +23,14 @@ class SplashScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(child: Container()),
-            SizedBox(height: h * 0.15, child: const Image(image: AssetImage('assets/images/logoss.png')),),
+            SizedBox(
+              height: h * 0.15,
+              child: const Image(image: AssetImage('assets/images/logoss.png')),
+            ),
             SizedBox(height: h * 0.015),
-            Image(image: const AssetImage('assets/images/text.png'), height: h * 0.05),
+            Image(
+                image: const AssetImage('assets/images/text.png'),
+                height: h * 0.05),
             Expanded(child: Container()),
             const Text('Vaqtingizni tejang!'),
             SizedBox(height: h * 0.06),

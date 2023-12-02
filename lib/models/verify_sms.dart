@@ -55,13 +55,13 @@ class VerifyUser {
 
   VerifyUser(
       {this.iD,
-        this.fistName,
-        this.lastName,
-        this.password,
-        this.userName,
-        this.phoneNumber,
-        this.address,
-        this.photoUrl});
+      this.fistName,
+      this.lastName,
+      this.password,
+      this.userName,
+      this.phoneNumber,
+      this.address,
+      this.photoUrl});
 
   VerifyUser.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];

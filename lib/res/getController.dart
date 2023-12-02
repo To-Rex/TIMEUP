@@ -178,10 +178,13 @@ class GetController extends GetxController {
     getByCategory.value = newGetByCategory;
   }
 
-  void changeBookingBusinessGetList(BookingBusinessGetList newBookingBusinessGetList) {
+  void changeBookingBusinessGetList(
+      BookingBusinessGetList newBookingBusinessGetList) {
     bookingBusinessGetList.value = newBookingBusinessGetList;
   }
-  void changeBookingBusinessGetList1(BookingBusinessGetList newBookingBusinessGetList) {
+
+  void changeBookingBusinessGetList1(
+      BookingBusinessGetList newBookingBusinessGetList) {
     bookingBusinessGetList1.value = newBookingBusinessGetList;
   }
 
@@ -201,6 +204,7 @@ class GetController extends GetxController {
   void clearBookingBusinessGetList() {
     bookingBusinessGetList.value = BookingBusinessGetList();
   }
+
   void clearBookingBusinessGetList1() {
     bookingBusinessGetList1.value = BookingBusinessGetList();
   }
@@ -236,6 +240,4 @@ class GetController extends GetxController {
   void changeRegionIndex(int newRegionIndex) {
     regionIndex.value = newRegionIndex;
   }
-
-
 }

@@ -35,13 +35,12 @@ class ResGetByCategory {
 
   ResGetByCategory(
       {this.businessId,
-        this.userId,
-        this.experience,
-        this.fistName,
-        this.lastName,
-        this.photoUrl,
-        this.followed
-      });
+      this.userId,
+      this.experience,
+      this.fistName,
+      this.lastName,
+      this.photoUrl,
+      this.followed});
 
   ResGetByCategory.fromJson(Map<String, dynamic> json) {
     businessId = json['business_id'];

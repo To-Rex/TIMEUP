@@ -13,7 +13,7 @@ class CameraService {
   Future<CameraDescription> _getCameraDescription() async {
     List<CameraDescription> cameras = await availableCameras();
     return cameras.firstWhere((CameraDescription camera) =>
-    camera.lensDirection == CameraLensDirection.front);
+        camera.lensDirection == CameraLensDirection.front);
   }
 
   Future _setupCameraController({

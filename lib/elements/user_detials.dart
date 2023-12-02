@@ -5,7 +5,8 @@ class UserDetIalWidget extends StatelessWidget {
   final String labelText;
   final String labelTextCount;
 
-  const UserDetIalWidget({super.key,
+  const UserDetIalWidget({
+    super.key,
     required this.labelText,
     required this.labelTextCount,
   });
@@ -16,7 +17,7 @@ class UserDetIalWidget extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     return SizedBox(
       width: w * 0.3,
-      child:Column(
+      child: Column(
         children: [
           Text(
             labelText,
@@ -37,4 +38,3 @@ class UserDetIalWidget extends StatelessWidget {
     );
   }
 }
-

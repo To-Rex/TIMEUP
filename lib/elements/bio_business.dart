@@ -14,7 +14,8 @@ class BioBusiness extends StatelessWidget {
     return Container(
       width: w * 0.95,
       height: h * 0.26,
-      margin: EdgeInsets.only(top: h * 0.02, bottom: h * 0.02, left: w * 0.02, right: w * 0.02),
+      margin: EdgeInsets.only(
+          top: h * 0.02, bottom: h * 0.02, left: w * 0.02, right: w * 0.02),
       padding: EdgeInsets.all(w * 0.02),
       decoration: BoxDecoration(
         border: Border.all(

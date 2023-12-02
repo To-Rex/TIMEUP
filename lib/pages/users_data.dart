@@ -33,8 +33,12 @@ class LoginUserData extends StatelessWidget {
   }
 
   Future<void> _cropImage(String imagePath) async {
-    croppedImage = await ImageCropper.platform
-        .cropImage(sourcePath: imagePath, aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),compressQuality: 100,compressFormat: ImageCompressFormat.jpg,);
+    croppedImage = await ImageCropper.platform.cropImage(
+      sourcePath: imagePath,
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+      compressQuality: 100,
+      compressFormat: ImageCompressFormat.jpg,
+    );
     getController.changeImage(croppedImage.path);
   }
 
@@ -56,15 +60,30 @@ class LoginUserData extends StatelessWidget {
                 SizedBox(height: h * 0.08),
                 const Image(image: AssetImage('assets/images/text.png')),
                 SizedBox(height: h * 0.01),
-                const Text('Ilovadan foydalanish uchun ma’lumotlarni toldiring',),
-                SizedBox(height: h * 0.01),
-                IconButton(onPressed: (){
-                  _pickImage(ImageSource.gallery);
-                },
-                  icon: Obx(() => getController.image.value == '' ? HeroIcon(HeroIcons.userCircle,color: Colors.blue,size: w * 0.2 > 100 ? 100 : w * 0.2,) :
-                  CircleAvatar(backgroundImage: FileImage(File(getController.image.value)),radius: 50,),),
+                const Text(
+                  'Ilovadan foydalanish uchun ma’lumotlarni toldiring',
                 ),
-                Text('Upload image',
+                SizedBox(height: h * 0.01),
+                IconButton(
+                  onPressed: () {
+                    _pickImage(ImageSource.gallery);
+                  },
+                  icon: Obx(
+                    () => getController.image.value == ''
+                        ? HeroIcon(
+                            HeroIcons.userCircle,
+                            color: Colors.blue,
+                            size: w * 0.2 > 100 ? 100 : w * 0.2,
+                          )
+                        : CircleAvatar(
+                            backgroundImage:
+                                FileImage(File(getController.image.value)),
+                            radius: 50,
+                          ),
+                  ),
+                ),
+                Text(
+                  'Upload image',
                   style: TextStyle(
                     fontSize: w * 0.05,
                     fontWeight: FontWeight.bold,
@@ -103,7 +122,8 @@ class LoginUserData extends StatelessWidget {
                             initialDate: DateTime.now(),
                             firstDate: DateTime(1900),
                             lastDate: DateTime(2025),
-                          ).then((value) => _dateController.text = '${value!.day}/${value.month}/${value.year}');
+                          ).then((value) => _dateController.text =
+                              '${value!.day}/${value.month}/${value.year}');
                         },
                         child: HeroIcon(
                           HeroIcons.calendar,
@@ -137,49 +157,64 @@ class LoginUserData extends StatelessWidget {
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Obx(() => getController.getRegion.value.res == null ? const Center(child: CircularProgressIndicator(),) :
-                      DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      value: getController.getRegion.value.res![getController.regionIndex.value],
-                      onChanged: (String? newValue) {
-                        getController.changeRegionIndex(getController.getRegion.value.res!.indexOf(newValue!));
-                      },
-                      items: getController.getRegion.value.res!.map<DropdownMenuItem<String>>(
-                        (String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        },
-                      ).toList(),
-                    ),
-                  ),),
+                  child: Obx(
+                    () => getController.getRegion.value.res == null
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              value: getController.getRegion.value
+                                  .res![getController.regionIndex.value],
+                              onChanged: (String? newValue) {
+                                getController.changeRegionIndex(getController
+                                    .getRegion.value.res!
+                                    .indexOf(newValue!));
+                              },
+                              items: getController.getRegion.value.res!
+                                  .map<DropdownMenuItem<String>>(
+                                (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                },
+                              ).toList(),
+                            ),
+                          ),
+                  ),
                 ),
                 SizedBox(height: h * 0.05),
                 ElevatedButton(
                   onPressed: () {
                     if (getController.image.value == '') {
-                      Toast.showToast(context, 'Iltimos Rasm tanlang!', Colors.red, Colors.white);
+                      Toast.showToast(context, 'Iltimos Rasm tanlang!',
+                          Colors.red, Colors.white);
                       return;
                     }
                     if (nameController.text.isEmpty) {
-                      Toast.showToast(context, 'Ismingizni kiriting!', Colors.red, Colors.white);
+                      Toast.showToast(context, 'Ismingizni kiriting!',
+                          Colors.red, Colors.white);
                       return;
                     }
                     if (surnameController.text.isEmpty) {
-                      Toast.showToast(context, 'Familiyaningizni kiriting!', Colors.red, Colors.white);
+                      Toast.showToast(context, 'Familiyaningizni kiriting!',
+                          Colors.red, Colors.white);
                       return;
                     }
                     if (nikNameController.text.isEmpty) {
-                      Toast.showToast(context, 'Nikname ni toldiring', Colors.red, Colors.white);
+                      Toast.showToast(context, 'Nikname ni toldiring',
+                          Colors.red, Colors.white);
                       return;
                     }
                     if (phoneNumberController.text.isEmpty) {
-                      Toast.showToast(context, 'Telefon raqamingizni kiriting!', Colors.red, Colors.white);
+                      Toast.showToast(context, 'Telefon raqamingizni kiriting!',
+                          Colors.red, Colors.white);
                       return;
                     }
                     if (_dateController.text.isEmpty) {
-                      Toast.showToast(context, 'Tugilgan kuningizni kiriting!', Colors.red, Colors.white);
+                      Toast.showToast(context, 'Tugilgan kuningizni kiriting!',
+                          Colors.red, Colors.white);
                       return;
                     }
                     //_dateController if exampel 12/2/2021 to 12/02/2021
@@ -187,22 +222,30 @@ class LoginUserData extends StatelessWidget {
                       _dateController.text = '0${_dateController.text}';
                     }
                     if (_dateController.text.split('/')[1].length == 1) {
-                      _dateController.text = '${_dateController.text.split('/')[0]}/0${_dateController.text.split('/')[1]}/${_dateController.text.split('/')[2]}';
+                      _dateController.text =
+                          '${_dateController.text.split('/')[0]}/0${_dateController.text.split('/')[1]}/${_dateController.text.split('/')[2]}';
                     }
-                    ApiController().registerUser(
+                    ApiController()
+                        .registerUser(
                       nameController.text.toString(),
                       surnameController.text.toString(),
                       nikNameController.text.toString(),
                       phoneNumberController.text.toString(),
-                      getController.getRegion.value.res![getController.regionIndex.value],
+                      getController.getRegion.value
+                          .res![getController.regionIndex.value],
                       getController.image.value,
                       _dateController.text.toString(),
-                    ).then((value) {
-                      if(value.status == true){
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()));
+                    )
+                        .then((value) {
+                      if (value.status == true) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SamplePage()));
                         GetStorage().write('token', value.res?.token);
-                      }else{
-                        Toast.showToast(context, 'Exx Nimadur xato ketdi', Colors.red, Colors.white);
+                      } else {
+                        Toast.showToast(context, 'Exx Nimadur xato ketdi',
+                            Colors.red, Colors.white);
                       }
                     });
                   },

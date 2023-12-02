@@ -13,7 +13,7 @@ class LastSendSms {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (res != null) {
       data['res'] = res!.toJson();
-    }else{
+    } else {
       data['res'] = Res(
         iD: 0,
         phoneNumber: '',

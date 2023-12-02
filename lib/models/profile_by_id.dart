@@ -42,24 +42,24 @@ class ProfileByIdRes {
 
   ProfileByIdRes(
       {this.id,
-        this.userId,
-        this.categoryId,
-        this.categoryName,
-        this.officeAddress,
-        this.officeName,
-        this.experience,
-        this.bio,
-        this.dayOffs,
-        this.fistName,
-        this.lastName,
-        this.userName,
-        this.phoneNumber,
-        this.address,
-        this.photoUrl,
-        this.followingCount,
-        this.followersCount,
-        this.followed,
-        this.postsCount});
+      this.userId,
+      this.categoryId,
+      this.categoryName,
+      this.officeAddress,
+      this.officeName,
+      this.experience,
+      this.bio,
+      this.dayOffs,
+      this.fistName,
+      this.lastName,
+      this.userName,
+      this.phoneNumber,
+      this.address,
+      this.photoUrl,
+      this.followingCount,
+      this.followersCount,
+      this.followed,
+      this.postsCount});
 
   ProfileByIdRes.fromJson(Map<String, dynamic> json) {
     id = json['id'];

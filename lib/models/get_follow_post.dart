@@ -38,15 +38,15 @@ class GetFollowPostRes {
 
   GetFollowPostRes(
       {this.id,
-        this.mediaType,
-        this.photo,
-        this.video,
-        this.title,
-        this.description,
-        this.businessId,
-        this.createdAt,
-        this.posterPhotoUrl,
-        this.posterName});
+      this.mediaType,
+      this.photo,
+      this.video,
+      this.title,
+      this.description,
+      this.businessId,
+      this.createdAt,
+      this.posterPhotoUrl,
+      this.posterName});
 
   GetFollowPostRes.fromJson(Map<String, dynamic> json) {
     id = json['id'];

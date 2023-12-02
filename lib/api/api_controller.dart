@@ -21,11 +21,10 @@ import '../models/me_user.dart';
 import '../res/getController.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/src/form_data.dart' as dioFormData;
-import 'package:get/get_connect/http/src/multipart/form_data.dart' as getFormData;
-
+import 'package:get/get_connect/http/src/multipart/form_data.dart'
+    as getFormData;
 
 class ApiController extends GetxController {
-
   final GetController _getController = Get.put(GetController());
 
   //var url = 'http://16.16.182.36:443/api/v1/';
@@ -118,7 +117,8 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<Register> registerUser(String fistName, String lastName, userName, phoneNumber, address, profilePhoto, birthDate) async {
+  Future<Register> registerUser(String fistName, String lastName, userName,
+      phoneNumber, address, profilePhoto, birthDate) async {
     print(lastName);
     print(userName);
     print(phoneNumber);
@@ -135,12 +135,13 @@ class ApiController extends GetxController {
       'address': address,
       'birth_date': birthDate,
     });
-    request.files.add(await http.MultipartFile.fromPath('profile_photo', profilePhoto));
+    request.files
+        .add(await http.MultipartFile.fromPath('profile_photo', profilePhoto));
     try {
       http.StreamedResponse response = await request.send();
       print(response.statusCode);
       print(response.reasonPhrase);
-      if (response.statusCode == 200|| response.statusCode == 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final responseBody = await response.stream.bytesToString();
         return Register.fromJson(jsonDecode(responseBody));
       } else {
@@ -175,11 +176,9 @@ class ApiController extends GetxController {
 
   Future<MeUser> getUserData() async {
     print(GetStorage().read('token'));
-    var response = await http.get(Uri.parse(url + meUrl),
-        headers: {
-          'Authorization':
-          'Bearer ${GetStorage().read('token')}',
-        });
+    var response = await http.get(Uri.parse(url + meUrl), headers: {
+      'Authorization': 'Bearer ${GetStorage().read('token')}',
+    });
     print(response.body);
     print(response.statusCode);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -201,7 +200,8 @@ class ApiController extends GetxController {
   }
 
   Future<MeUser> editUser(name, surName, address, nikName) async {
-    var response = await http.put(Uri.parse(url + editMeUrl),
+    var response = await http.put(
+      Uri.parse(url + editMeUrl),
       body: jsonEncode({
         "fist_name": name,
         "last_name": surName,
@@ -241,10 +241,12 @@ class ApiController extends GetxController {
   }
 
   Future<GetSubCategory> getSubCategory(id) async {
-    var response = await http.get(Uri.parse(url + subCategoryUrl + id.toString()),
-    headers: {
-      'Authorization': 'Bearer ${GetStorage().read('token')}',
-    },);
+    var response = await http.get(
+      Uri.parse(url + subCategoryUrl + id.toString()),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },
+    );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return GetSubCategory.fromJson(jsonDecode(response.body));
@@ -263,7 +265,8 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> createBusiness(int categoryId, officeAddress, officeName, experience, bio, dayOffs) async {
+  Future<bool> createBusiness(int categoryId, officeAddress, officeName,
+      experience, bio, dayOffs) async {
     var response = await http.post(Uri.parse(url + businessCreateUrl),
         body: jsonEncode({
           "category_id": categoryId,
@@ -285,7 +288,8 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> updateBusiness(int id, int categoryId, officeAddress, officeName, experience, bio, dayOffs) async {
+  Future<bool> updateBusiness(int id, int categoryId, officeAddress, officeName,
+      experience, bio, dayOffs) async {
     var response = await http.put(Uri.parse(url + businessUpdateMeUrl),
         body: jsonEncode({
           "id": id,
@@ -309,9 +313,12 @@ class ApiController extends GetxController {
   }
 
   Future<bool> editUserPhoto(photo) async {
-    var headers = {'Authorization': 'Bearer ${GetStorage().read('token')}',};
+    var headers = {
+      'Authorization': 'Bearer ${GetStorage().read('token')}',
+    };
     var request = http.MultipartRequest('PUT', Uri.parse(url + editPhotoUrl));
-    request.files.add(await http.MultipartFile.fromPath('profile_photo', photo));
+    request.files
+        .add(await http.MultipartFile.fromPath('profile_photo', photo));
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -322,10 +329,9 @@ class ApiController extends GetxController {
   }
 
   Future<bool> deleteMe() async {
-    var response = await http.delete(Uri.parse(url+deleteMeUrl),
-        headers: {
-          'Authorization': 'Bearer ${GetStorage().read('token')}',
-        });
+    var response = await http.delete(Uri.parse(url + deleteMeUrl), headers: {
+      'Authorization': 'Bearer ${GetStorage().read('token')}',
+    });
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
@@ -337,8 +343,7 @@ class ApiController extends GetxController {
   Future<GetByCategory> getByCategory(int id) async {
     var response = await http.get(
         Uri.parse(url + getByCategoryUrl + id.toString()),
-        headers: {'Authorization': 'Bearer ${GetStorage().read('token')}'}
-    );
+        headers: {'Authorization': 'Bearer ${GetStorage().read('token')}'});
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return GetByCategory.fromJson(jsonDecode(response.body));
@@ -348,23 +353,28 @@ class ApiController extends GetxController {
   }
 
   Future<ProfileById> profileById(int id) async {
-    var response = await http.get(Uri.parse(url + profileByIdUrl + id.toString()),
+    var response = await http.get(
+      Uri.parse(url + profileByIdUrl + id.toString()),
       headers: {
         'Authorization': 'Bearer ${GetStorage().read('token')}',
-      },);
+      },
+    );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       //changeProfileById
-      _getController.changeProfileById(ProfileById.fromJson(jsonDecode(response.body)));
+      _getController
+          .changeProfileById(ProfileById.fromJson(jsonDecode(response.body)));
       return ProfileById.fromJson(jsonDecode(response.body));
     } else {
-      _getController.changeProfileById(ProfileById(res: ProfileByIdRes(), status: false));
+      _getController
+          .changeProfileById(ProfileById(res: ProfileByIdRes(), status: false));
       return ProfileById(res: ProfileByIdRes(), status: false);
     }
   }
 
-  Future<BookingBusinessGetList> bookingBusinessGetList(id,date) async {
-    var response = await http.get(Uri.parse('$url$bookingBusinessGetListUrl$id?date=$date'),
+  Future<BookingBusinessGetList> bookingBusinessGetList(id, date) async {
+    var response = await http.get(
+      Uri.parse('$url$bookingBusinessGetListUrl$id?date=$date'),
       headers: {
         'Authorization': 'Bearer ${GetStorage().read('token')}',
       },
@@ -372,7 +382,8 @@ class ApiController extends GetxController {
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       //_getController.bookingBusinessGetList.value = BookingBusinessGetList.fromJson(jsonDecode(response.body));
-      _getController.changeBookingBusinessGetList1(BookingBusinessGetList.fromJson(jsonDecode(response.body)));
+      _getController.changeBookingBusinessGetList1(
+          BookingBusinessGetList.fromJson(jsonDecode(response.body)));
       return BookingBusinessGetList.fromJson(jsonDecode(response.body));
     } else {
       return BookingBusinessGetList(res: [], status: false);
@@ -380,22 +391,25 @@ class ApiController extends GetxController {
   }
 
   Future<BookingBusinessGetList> bookingClientGetList(date) async {
-    var response = await http.get(Uri.parse(url + bookingClientGetListUrl + date),
+    var response = await http.get(
+      Uri.parse(url + bookingClientGetListUrl + date),
       headers: {
         'Authorization': 'Bearer ${GetStorage().read('token')}',
       },
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       //_getController.bookingBusinessGetList1.value = BookingBusinessGetList.fromJson(jsonDecode(response.body));
-      _getController.changeBookingBusinessGetList(BookingBusinessGetList.fromJson(jsonDecode(response.body)));
+      _getController.changeBookingBusinessGetList(
+          BookingBusinessGetList.fromJson(jsonDecode(response.body)));
       return BookingBusinessGetList.fromJson(jsonDecode(response.body));
     } else {
       return BookingBusinessGetList(res: [], status: false);
     }
   }
 
-  Future<FollowModel> follow(id) async{
-    var response = await http.post(Uri.parse('$url$businessFollowUrl$id/follow'),
+  Future<FollowModel> follow(id) async {
+    var response = await http.post(
+      Uri.parse('$url$businessFollowUrl$id/follow'),
       headers: {
         'Authorization': 'Bearer ${GetStorage().read('token')}',
       },
@@ -408,8 +422,9 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<GetFollowModel> getFollowList() async{
-    var response = await http.get(Uri.parse('$url$businessFollowedListUrl'),
+  Future<GetFollowModel> getFollowList() async {
+    var response = await http.get(
+      Uri.parse('$url$businessFollowedListUrl'),
       headers: {
         'Authorization': 'Bearer ${GetStorage().read('token')}',
       },
@@ -441,8 +456,9 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> unFollow(id) async{
-    var response = await http.delete(Uri.parse('$url$businessFollowUrl$id$businessUnFollowUrl2'),
+  Future<bool> unFollow(id) async {
+    var response = await http.delete(
+      Uri.parse('$url$businessFollowUrl$id$businessUnFollowUrl2'),
       headers: {
         'Authorization': 'Bearer ${GetStorage().read('token')}',
       },
@@ -455,13 +471,17 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<GetMePost> getMePostList(id) async{
-    var response = await http.get(Uri.parse('$url$postListUrl$id'),
-      headers: {'Authorization': 'Bearer ${GetStorage().read('token')}',},
+  Future<GetMePost> getMePostList(id) async {
+    var response = await http.get(
+      Uri.parse('$url$postListUrl$id'),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },
     );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
-      _getController.changeGetPostList(GetMePost.fromJson(jsonDecode(response.body)));
+      _getController
+          .changeGetPostList(GetMePost.fromJson(jsonDecode(response.body)));
       return GetMePost.fromJson(jsonDecode(response.body));
     } else {
       _getController.changeGetPostList(GetMePost(res: [], status: false));
@@ -469,22 +489,28 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<GetByIdPostModel> getByIdPost(id) async{
-    var response = await http.get(Uri.parse('$url$postGetUrl$id'),
-      headers: {'Authorization': 'Bearer ${GetStorage().read('token')}',},
+  Future<GetByIdPostModel> getByIdPost(id) async {
+    var response = await http.get(
+      Uri.parse('$url$postGetUrl$id'),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },
     );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
-      _getController.changeGetByIdPost(GetByIdPostModel.fromJson(jsonDecode(response.body)));
+      _getController.changeGetByIdPost(
+          GetByIdPostModel.fromJson(jsonDecode(response.body)));
       return GetByIdPostModel.fromJson(jsonDecode(response.body));
     } else {
-      _getController.changeGetByIdPost(GetByIdPostModel(res: GetByIdPostModelRes(), status: false));
+      _getController.changeGetByIdPost(
+          GetByIdPostModel(res: GetByIdPostModelRes(), status: false));
       return GetByIdPostModel(res: GetByIdPostModelRes(), status: false);
     }
   }
 
-  Future<bool> deletePost(id) async{
-    var response = await http.delete(Uri.parse('$url$postDeleteUrl$id'),
+  Future<bool> deletePost(id) async {
+    var response = await http.delete(
+      Uri.parse('$url$postDeleteUrl$id'),
       headers: {
         'Authorization': 'Bearer ${GetStorage().read('token')}',
       },
@@ -498,13 +524,17 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<GetFollowPost> getFollowPostList(limit,offset) async{
-    var response = await http.get(Uri.parse('$url$postListFollowedProfilesUrl?limit=$limit&offset=$offset'),
-      headers: {'Authorization': 'Bearer ${GetStorage().read('token')}',},
+  Future<GetFollowPost> getFollowPostList(limit, offset) async {
+    var response = await http.get(
+      Uri.parse('$url$postListFollowedProfilesUrl?limit=$limit&offset=$offset'),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },
     );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
-      _getController.changeGetFollowPost(GetFollowPost.fromJson(jsonDecode(response.body)));
+      _getController.changeGetFollowPost(
+          GetFollowPost.fromJson(jsonDecode(response.body)));
       return GetFollowPost.fromJson(jsonDecode(response.body));
     } else {
       _getController.changeGetFollowPost(GetFollowPost(res: [], status: false));
@@ -536,7 +566,8 @@ class ApiController extends GetxController {
       return false;
     }
   }*/
-  Future<bool> createPost(String title, String description, businessId, photo,video) async {
+  Future<bool> createPost(
+      String title, String description, businessId, photo, video) async {
     _getController.uplAodVideo.value = true;
     var headers = {
       'Authorization': 'Bearer ${GetStorage().read('token')}',
@@ -547,7 +578,8 @@ class ApiController extends GetxController {
       'description': description,
       'business_id': businessId.toString(),
     });
-    request.files.add(await http.MultipartFile.fromPath('photo', _getController.postFile.value));
+    request.files.add(await http.MultipartFile.fromPath(
+        'photo', _getController.postFile.value));
     if (video != '') {
       request.files.add(await http.MultipartFile.fromPath('video', video));
     }
@@ -562,12 +594,14 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> updatePost(id, businessId,String title, String description) async {
+  Future<bool> updatePost(
+      id, businessId, String title, String description) async {
     _getController.uplAodVideo.value = true;
     var headers = {
       'Authorization': 'Bearer ${GetStorage().read('token')}',
     };
-    var request = http.MultipartRequest('PUT', Uri.parse('$url$postUpdateUrl$id'));
+    var request =
+        http.MultipartRequest('PUT', Uri.parse('$url$postUpdateUrl$id'));
     request.fields.addAll({
       'title': title,
       'description': description,

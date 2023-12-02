@@ -19,7 +19,8 @@ class MakeBusinessPage extends StatelessWidget {
   final TextEditingController nikNameController = TextEditingController();
   final TextEditingController experienceController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController nameInstitutionController = TextEditingController();
+  final TextEditingController nameInstitutionController =
+      TextEditingController();
   final TextEditingController bioController = TextEditingController();
   final TextEditingController dayOffController = TextEditingController();
   final PageController pageController = PageController();
@@ -47,11 +48,10 @@ class MakeBusinessPage extends StatelessWidget {
     );
     if (croppedImage != null) {
       getController.changeImage(croppedImage.path);
-    }else{
+    } else {
       print('null$croppedImage');
       return;
     }
-
   }
 
   @override
@@ -59,15 +59,21 @@ class MakeBusinessPage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
 
-    fullNameController.text = '${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res!.lastName}';
+    fullNameController.text =
+        '${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res!.lastName}';
     nikNameController.text = getController.meUsers.value.res?.userName ?? '';
-    phoneNumberController.text = getController.meUsers.value.res?.phoneNumber ?? '';
+    phoneNumberController.text =
+        getController.meUsers.value.res?.phoneNumber ?? '';
 
-    ApiController().getRegion().then((value) {getController.changeRegion(value);});
+    ApiController().getRegion().then((value) {
+      getController.changeRegion(value);
+    });
     ApiController().getCategory().then((value) {
       getController.changeCategory(value);
       getController.categoryIndex.value = value.res![0].id!;
-      ApiController().getSubCategory(getController.categoryIndex.value).then((value) {
+      ApiController()
+          .getSubCategory(getController.categoryIndex.value)
+          .then((value) {
         getController.changeSubCategory(value);
         getController.subCategoryIndex.value = value.res![0].id!;
       });
@@ -518,18 +524,35 @@ class MakeBusinessPage extends StatelessWidget {
                       return;
                     }
                     if (getController.getRegion.value.res == null) {
-                      getController.changeFullName(getController.getRegion.value.res![getController.regionIndex.value]);
-                      Toast.showToast(context, 'Region is empty', Colors.red, Colors.white,);
+                      getController.changeFullName(getController.getRegion.value
+                          .res![getController.regionIndex.value]);
+                      Toast.showToast(
+                        context,
+                        'Region is empty',
+                        Colors.red,
+                        Colors.white,
+                      );
                       return;
                     }
                     if (experienceController.text.isEmpty) {
-                      Toast.showToast(context, 'Experience is empty', Colors.red, Colors.white,);
+                      Toast.showToast(
+                        context,
+                        'Experience is empty',
+                        Colors.red,
+                        Colors.white,
+                      );
                       return;
                     }
-                    experienceController.text = experienceController.text.replaceAll(',', '.');
+                    experienceController.text =
+                        experienceController.text.replaceAll(',', '.');
 
                     if (experienceController.text.split('.').length > 2) {
-                      Toast.showToast(context, 'Please enter a valid number', Colors.red, Colors.white,);
+                      Toast.showToast(
+                        context,
+                        'Please enter a valid number',
+                        Colors.red,
+                        Colors.white,
+                      );
                       return;
                     }
                     num experience;
@@ -538,55 +561,99 @@ class MakeBusinessPage extends StatelessWidget {
                     } else {
                       experience = int.parse(experienceController.text);
                     }
-                    if (croppedImage!=null) {
-                      ApiController().editUserPhoto(croppedImage.path).then((value) =>
-                          ApiController().editUser(
+                    if (croppedImage != null) {
+                      ApiController().editUserPhoto(croppedImage.path).then(
+                          (value) => ApiController()
+                                  .editUser(
+                                      getController
+                                              .meUsers.value.res?.fistName ??
+                                          '',
+                                      getController
+                                              .meUsers.value.res?.lastName ??
+                                          '',
+                                      getController.getRegion.value.res![
+                                          getController.regionIndex.value],
+                                      nikNameController.text)
+                                  .then((value) {
+                                if (value.status!) {
+                                  ApiController().getUserData().then((value) {
+                                    ApiController()
+                                        .createBusiness(
+                                            getController
+                                                .subCategory
+                                                .value
+                                                .res![getController
+                                                    .subCategoryIndex.value]
+                                                .id!,
+                                            getController.getRegion.value.res![
+                                                getController
+                                                    .regionIndex.value],
+                                            nameInstitutionController.text,
+                                            experience,
+                                            bioController.text,
+                                            dayOffController.text)
+                                        .then((value) {
+                                      if (value) {
+                                        ApiController()
+                                            .getUserData()
+                                            .then((value) {
+                                          getController.changeMeUser(value);
+                                        });
+                                        finish();
+                                      } else {
+                                        Toast.showToast(
+                                          context,
+                                          'Error',
+                                          Colors.red,
+                                          Colors.white,
+                                        );
+                                      }
+                                    });
+                                    getController.changeMeUser(value);
+                                  });
+                                } else {
+                                  Toast.showToast(context, 'Error', Colors.red,
+                                      Colors.white);
+                                }
+                              }));
+                    } else {
+                      ApiController()
+                          .editUser(
                               getController.meUsers.value.res?.fistName ?? '',
                               getController.meUsers.value.res?.lastName ?? '',
-                              getController.getRegion.value.res![getController.regionIndex.value],
-                              nikNameController.text).then((value) {
-                            if (value.status!) {
-                              ApiController().getUserData().then((value) {
-                                ApiController().createBusiness(
-                                    getController.subCategory.value.res![getController.subCategoryIndex.value].id!,
-                                    getController.getRegion.value.res![getController.regionIndex.value],
-                                    nameInstitutionController.text,
-                                    experience, bioController.text,
-                                    dayOffController.text).then((value) {
-                                  if (value) {
-                                    ApiController().getUserData().then((value) {getController.changeMeUser(value);});
-                                    finish();
-                                  } else {
-                                    Toast.showToast(context, 'Error', Colors.red, Colors.white,);
-                                  }
-                                });
-                                getController.changeMeUser(value);
-                              });
-                            } else {
-                              Toast.showToast(context, 'Error', Colors.red, Colors.white);
-                            }
-                          })
-                      );
-                    } else {
-                      ApiController().editUser(
-                          getController.meUsers.value.res?.fistName ?? '',
-                          getController.meUsers.value.res?.lastName ?? '',
-                          getController.getRegion.value.res![getController.regionIndex.value],
-                          nikNameController.text).then((value) {
+                              getController.getRegion.value
+                                  .res![getController.regionIndex.value],
+                              nikNameController.text)
+                          .then((value) {
                         if (value.status!) {
                           ApiController().getUserData().then((value) {
-                            ApiController().createBusiness(
-                                getController.subCategory.value.res![getController.subCategoryIndex.value].id!,
-                                getController.getRegion.value.res![getController.regionIndex.value],
-                                nameInstitutionController.text,
-                                experience,
-                                bioController.text,
-                                dayOffController.text).then((value) {
+                            ApiController()
+                                .createBusiness(
+                                    getController
+                                        .subCategory
+                                        .value
+                                        .res![getController
+                                            .subCategoryIndex.value]
+                                        .id!,
+                                    getController.getRegion.value
+                                        .res![getController.regionIndex.value],
+                                    nameInstitutionController.text,
+                                    experience,
+                                    bioController.text,
+                                    dayOffController.text)
+                                .then((value) {
                               if (value) {
-                                ApiController().getUserData().then((value) {getController.changeMeUser(value);});
+                                ApiController().getUserData().then((value) {
+                                  getController.changeMeUser(value);
+                                });
                                 finish();
                               } else {
-                                Toast.showToast(context, 'Error', Colors.red, Colors.white,);
+                                Toast.showToast(
+                                  context,
+                                  'Error',
+                                  Colors.red,
+                                  Colors.white,
+                                );
                               }
                             });
                             getController.changeMeUser(value);
@@ -601,7 +668,6 @@ class MakeBusinessPage extends StatelessWidget {
                         }
                       });
                     }
-
                   },
                 )
               : EditButton(

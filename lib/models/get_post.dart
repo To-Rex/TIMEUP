@@ -35,12 +35,12 @@ class GetMePostRes {
 
   GetMePostRes(
       {this.id,
-        this.mediaType,
-        this.photo,
-        this.title,
-        this.description,
-        this.businessId,
-        this.createdAt});
+      this.mediaType,
+      this.photo,
+      this.title,
+      this.description,
+      this.businessId,
+      this.createdAt});
 
   GetMePostRes.fromJson(Map<String, dynamic> json) {
     id = json['id'];

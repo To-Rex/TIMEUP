@@ -38,15 +38,15 @@ class BookingBusinessGetListRes {
 
   BookingBusinessGetListRes(
       {this.id,
-        this.businessId,
-        this.clientId,
-        this.date,
-        this.time,
-        this.fistName,
-        this.lastName,
-        this.userName,
-        this.phoneNumber,
-        this.photoUrl});
+      this.businessId,
+      this.clientId,
+      this.date,
+      this.time,
+      this.fistName,
+      this.lastName,
+      this.userName,
+      this.phoneNumber,
+      this.photoUrl});
 
   BookingBusinessGetListRes.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -1,7 +1,8 @@
-
 import 'package:flutter/material.dart';
+
 class Toast {
-  static void showToast(BuildContext context, String message, Color color, Color white) {
+  static void showToast(
+      BuildContext context, String message, Color color, Color white) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),

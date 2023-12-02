@@ -58,15 +58,25 @@ class _MyHomePageState extends State<MyHomePage> {
     getToken();
     Timer(const Duration(seconds: 3), () async {
       if (token != null) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => SamplePage()),
+        );
       } else {
         if (GetStorage().read('token') != null) {
           ApiController().getUserData().then((value) => {
-            _getController.changeMeUser(value),
-            _getController.changeWidgetOptions(),
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),)});
+                _getController.changeMeUser(value),
+                _getController.changeWidgetOptions(),
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => SamplePage()),
+                )
+              });
         } else {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()),);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+          );
         }
       }
     });
