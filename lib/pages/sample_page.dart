@@ -66,8 +66,7 @@ class SamplePage extends StatelessWidget {
           ? Column(
               children: [
                 SizedBox(
-                  child: _getController.widgetOptions
-                      .elementAt(_getController.index.value),
+                  child: _getController.widgetOptions.elementAt(_getController.index.value),
                 ),
               ],
             )
@@ -86,16 +85,13 @@ class SamplePage extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       image: DecorationImage(
-                                        image: Image.file(
-                                          File(_getController.postFile.value),
-                                        ).image,
+                                        image: Image.file(File(_getController.postFile.value),).image,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                   )
                                 : Container(),
                             SizedBox(width: w * 0.02),
-                            //text
                             Text(
                               'Uploading...',
                               style: TextStyle(
@@ -112,9 +108,11 @@ class SamplePage extends StatelessWidget {
                           ],
                         ))
                     : const SizedBox()),
-                SingleChildScrollView(
-                  child: _getController.widgetOptions
-                      .elementAt(_getController.index.value),
+                SizedBox(
+                  height: _getController.uplAodVideo.value == true ? h * 0.75 : h * 0.8,
+                  child: SingleChildScrollView(
+                    child: _getController.widgetOptions.elementAt(_getController.index.value),
+                  ),
                 ),
               ],
             )),

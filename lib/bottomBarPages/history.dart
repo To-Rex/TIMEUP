@@ -21,8 +21,7 @@ class HistoryPage extends StatelessWidget {
       ApiController().bookingClientGetList('');
     } else {
       ApiController().bookingClientGetList('');
-      ApiController().bookingBusinessGetList(
-          _getController.meUsers.value.res?.business?.id, '');
+      ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, '');
     }
     return SizedBox(
       width: w,
@@ -240,10 +239,9 @@ class HistoryPage extends StatelessWidget {
           ),
           SizedBox(height: h * 0.02),
           if (_getController.meUsers.value.res?.business != null)
-            Obx(
-              () => _getController.bookingBusinessGetList.value.res != null
+            Obx(() => _getController.bookingBusinessGetList.value.res != null
                   ? SizedBox(
-                      height: h * 0.67,
+                      height: h * 0.64,
                       child: PageView(
                         onPageChanged: (index) {
                           _getController.nextPagesUserDetails.value = index;
@@ -266,8 +264,7 @@ class HistoryPage extends StatelessWidget {
                         controller: pageController,
                         children: [
                           SizedBox(
-                            child: Obx(() => _getController
-                                    .bookingBusinessGetList.value.res!.isEmpty
+                            child: Obx(() => _getController.bookingBusinessGetList.value.res!.isEmpty
                                 ? const Center(
                                     child: Text('Ma`lumot mavjud emas'),
                                   )
@@ -382,30 +379,19 @@ class HistoryPage extends StatelessWidget {
                                   )),
                           ),
                           SizedBox(
-                            child: Obx(() => _getController
-                                    .bookingBusinessGetList1.value.res!.isEmpty
+                            child: Obx(() => _getController.bookingBusinessGetList1.value.res!.isEmpty
                                 ? const Center(
                                     child: Text('Ma`lumot mavjud emas'),
                                   )
                                 : SizedBox(
                                     height: h * 0.68,
                                     child: ListView.builder(
-                                      itemCount: _getController
-                                          .bookingBusinessGetList1
-                                          .value
-                                          .res!
-                                          .length,
+                                      itemCount: _getController.bookingBusinessGetList1.value.res!.length,
                                       itemBuilder: (context, index) {
                                         return Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                                           children: [
-                                            _getController
-                                                        .bookingBusinessGetList1
-                                                        .value
-                                                        .res![index]
-                                                        .photoUrl ==
-                                                    null
+                                            _getController.bookingBusinessGetList1.value.res![index].photoUrl == null
                                                 ? CircleAvatar(
                                                     radius: w * 0.08,
                                                     backgroundImage:
@@ -520,34 +506,21 @@ class HistoryPage extends StatelessWidget {
                             : SizedBox(
                                 height: h * 0.68,
                                 child: ListView.builder(
-                                  itemCount: _getController
-                                      .bookingBusinessGetList.value.res!.length,
+                                  itemCount: _getController.bookingBusinessGetList.value.res!.length,
                                   itemBuilder: (context, index) {
                                     return Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
                                       children: [
-                                        _getController
-                                                    .bookingBusinessGetList
-                                                    .value
-                                                    .res![index]
-                                                    .photoUrl ==
-                                                null
+                                        _getController.bookingBusinessGetList.value.res![index].photoUrl == null
                                             ? CircleAvatar(
                                                 radius: w * 0.08,
-                                                backgroundImage:
-                                                    const AssetImage(
-                                                  'assets/images/doctor.png',
-                                                ),
+                                                backgroundImage: const AssetImage('assets/images/doctor.png',),
                                               )
                                             : CircleAvatar(
                                                 radius: w * 0.08,
                                                 backgroundImage: NetworkImage(
-                                                  _getController
-                                                      .bookingBusinessGetList
-                                                      .value
-                                                      .res![index]
-                                                      .photoUrl!,
+                                                  _getController.bookingBusinessGetList.value.res![index].photoUrl!,
                                                 ),
                                               ),
                                         SizedBox(
@@ -557,11 +530,7 @@ class HistoryPage extends StatelessWidget {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                _getController
-                                                    .bookingBusinessGetList
-                                                    .value
-                                                    .res![index]
-                                                    .userName!,
+                                                _getController.bookingBusinessGetList.value.res![index].userName!,
                                                 style: TextStyle(
                                                   fontSize: w * 0.04,
                                                   fontWeight: FontWeight.w500,
@@ -584,11 +553,7 @@ class HistoryPage extends StatelessWidget {
                                                   ),
                                                   SizedBox(width: w * 0.01),
                                                   Text(
-                                                    _getController
-                                                        .bookingBusinessGetList
-                                                        .value
-                                                        .res![index]
-                                                        .phoneNumber!,
+                                                    _getController.bookingBusinessGetList.value.res![index].phoneNumber!,
                                                     style: TextStyle(
                                                       fontSize: w * 0.04,
                                                       fontWeight:

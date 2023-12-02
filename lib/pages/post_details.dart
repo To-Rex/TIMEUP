@@ -22,9 +22,9 @@ class PostDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     getController.clearGetByIdPost();
+
     ApiController().getByIdPost(postId).then((value) => {
-          if (getController.getPostById.value.res!.mediaType == 'video')
-            {
+          if (getController.getPostById.value.res!.mediaType == 'video'){
               showDialog(
                 context: context,
                 barrierDismissible: false,
@@ -48,8 +48,7 @@ class PostDetailsPage extends StatelessWidget {
                   );
                 },
               ),
-              _controller = VideoPlayerController.networkUrl(
-                  Uri.parse(getController.getPostById.value.res!.video!)),
+              _controller = VideoPlayerController.networkUrl(Uri.parse(getController.getPostById.value.res!.video!)),
               _initializeVideoPlayerFuture =
                   _controller.initialize().then((value) => {
                         Navigator.pop(context),
@@ -147,8 +146,7 @@ class PostDetailsPage extends StatelessWidget {
               ),
             ],
           ),
-          body: Obx(() => getController.getPostById.value.res == null ||
-                  getController.getPostById.value.res!.id == null
+          body: Obx(() => getController.getPostById.value.res == null || getController.getPostById.value.res!.id == null
               ? const Center(child: Text('No data'))
               : Column(
                   children: [
@@ -158,21 +156,7 @@ class PostDetailsPage extends StatelessWidget {
                           ? SizedBox(
                               height: h * 0.4,
                               width: w,
-                              child: WillPopScope(
-                                onWillPop: () {
-                                  Navigator.pop(context);
-                                  _controller.dispose();
-                                  _customVideoPlayerController.dispose();
-                                  if (getController.startVideo == true) {
-                                    _controller.pause();
-                                    getController.changeStartVideo();
-                                  }
-                                  return Future.value(true);
-                                },
-                                child: CustomVideoPlayer(
-                                    customVideoPlayerController:
-                                        _customVideoPlayerController),
-                              ))
+                              child: CustomVideoPlayer(customVideoPlayerController: _customVideoPlayerController),)
                           : Stack(
                               children: [
                                 SizedBox(
