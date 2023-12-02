@@ -1,14 +1,11 @@
 import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/pages/professions_list_details.dart';
-import 'package:video_player/video_player.dart';
 //import 'package:chewie/chewie.dart';
 import '../res/getController.dart';
-import 'package:video_player/video_player.dart';
 
 class PostDetailsPage extends StatelessWidget {
   var postId;
