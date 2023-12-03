@@ -104,7 +104,8 @@ class PostDetailsPage extends StatelessWidget {
                 : Text(getController.getPostById.value.res!.title!,
                 style: const TextStyle(color: Colors.black, fontSize: 18))),
             actions: [
-              PopupMenuButton<String>(
+              Obx(() => getController.meUsers.value.res?.business?.id == getController.getPostById.value.res?.businessId
+                ?PopupMenuButton<String>(
                 itemBuilder: (BuildContext context) {
                   return {'Delete', 'Edit'}.map((String choice) {
                     return PopupMenuItem<String>(
@@ -134,6 +135,8 @@ class PostDetailsPage extends StatelessWidget {
                     );
                   }).toList();
                 },
+              )
+                  : const SizedBox()
               ),
             ],
           ),
