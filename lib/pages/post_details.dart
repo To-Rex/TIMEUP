@@ -105,7 +105,7 @@ class PostDetailsPage extends StatelessWidget {
                 style: const TextStyle(color: Colors.black, fontSize: 18))),
             actions: [
               Obx(() => getController.meUsers.value.res?.business?.id == getController.getPostById.value.res?.businessId
-                ? PopupMenuButton<String>(
+                  ? PopupMenuButton<String>(
                 itemBuilder: (BuildContext context) {
                   return {'Delete', 'Edit'}.map((String choice) {
                     return PopupMenuItem<String>(
@@ -160,26 +160,20 @@ class PostDetailsPage extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    getController
-                        .getPostById.value.res!.mediaType ==
-                        'video'
+                    getController.getPostById.value.res!.mediaType == 'video'
                         ? Positioned(
                         height: h * 0.4,
                         width: w,
                         child: Center(
                           child: Container(
                             decoration: BoxDecoration(
-                              color:
-                              Colors.black.withOpacity(0.5),
-                              borderRadius:
-                              BorderRadius.circular(
-                                  w * 0.1),
+                              color: Colors.black.withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(w * 0.1),
                             ),
                             child: IconButton(
                               onPressed: () {
                                 _controller.play();
-                                getController
-                                    .changeStartVideo();
+                                getController.changeStartVideo();
                               },
                               icon: Icon(Icons.play_arrow,
                                   color: Colors.white,
@@ -197,38 +191,23 @@ class PostDetailsPage extends StatelessWidget {
                   SizedBox(width: w * 0.03),
                   GestureDetector(
                     onTap: () {
-                      ApiController()
-                          .profileById(getController
-                          .getPostById.value.res!.businessId!)
-                          .then((value) => {
+                      ApiController().profileById(getController.getPostById.value.res!.businessId!).then((value) => {
                         getController.changeProfileById(value),
                       });
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ProfessionsListDetails()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
                     },
                     child: CircleAvatar(
                         backgroundColor: Colors.grey,
                         radius: w * 0.06,
-                        backgroundImage: NetworkImage(getController
-                            .getPostById.value.res!.posterPhotoUrl!)),
+                        backgroundImage: NetworkImage(getController.getPostById.value.res!.posterPhotoUrl!)),
                   ),
                   SizedBox(width: w * 0.03),
                   GestureDetector(
                     onTap: () {
-                      ApiController()
-                          .profileById(getController
-                          .getPostById.value.res!.businessId!)
-                          .then((value) => {
+                      ApiController().profileById(getController.getPostById.value.res!.businessId!).then((value) => {
                         getController.changeProfileById(value),
                       });
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ProfessionsListDetails()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
                     },
                     child: Text(
                       getController.getPostById.value.res!.posterName!,
