@@ -99,8 +99,7 @@ class PostDetailsPage extends StatelessWidget {
                 getController.getPostById.value.res!.id == null
                 ? Center(
                 child: Text('No data',
-                    style:
-                    TextStyle(color: Colors.black, fontSize: w * 0.04)))
+                    style: TextStyle(color: Colors.black, fontSize: w * 0.04)))
                 : Text(getController.getPostById.value.res!.title!,
                 style: const TextStyle(color: Colors.black, fontSize: 18))),
             actions: [
@@ -220,8 +219,7 @@ class PostDetailsPage extends StatelessWidget {
                   const Expanded(child: SizedBox()),
                   IconButton(
                     onPressed: () {},
-                    icon: const Icon(Icons.bookmark_border,
-                        color: Colors.black),
+                    icon: const Icon(Icons.bookmark_border, color: Colors.black),
                   ),
                   SizedBox(width: w * 0.03),
                 ],
