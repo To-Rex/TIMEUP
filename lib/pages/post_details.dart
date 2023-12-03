@@ -105,7 +105,7 @@ class PostDetailsPage extends StatelessWidget {
                 style: const TextStyle(color: Colors.black, fontSize: 18))),
             actions: [
               Obx(() => getController.meUsers.value.res?.business?.id == getController.getPostById.value.res?.businessId
-                ?PopupMenuButton<String>(
+                ? PopupMenuButton<String>(
                 itemBuilder: (BuildContext context) {
                   return {'Delete', 'Edit'}.map((String choice) {
                     return PopupMenuItem<String>(
