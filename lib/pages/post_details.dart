@@ -1,5 +1,6 @@
 import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
@@ -32,9 +33,7 @@ class PostDetailsPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const CircularProgressIndicator(
-                      color: Colors.blue,
-                    ),
+                    const CircularProgressIndicator(color: Colors.blue),
                     SizedBox(width: MediaQuery.of(context).size.width * 0.05),
                     const Text('Loading...'),
                   ],
@@ -44,8 +43,7 @@ class PostDetailsPage extends StatelessWidget {
           },
         ),
         _controller = VideoPlayerController.networkUrl(Uri.parse(getController.getPostById.value.res!.video!)),
-        _initializeVideoPlayerFuture =
-            _controller.initialize().then((value) => {
+        _initializeVideoPlayerFuture = _controller.initialize().then((value) => {
               Navigator.pop(context),
               _controller.setLooping(true),
               _controller.pause(),
@@ -54,6 +52,10 @@ class PostDetailsPage extends StatelessWidget {
             customVideoPlayerSettings: CustomVideoPlayerSettings(
               customAspectRatio: _controller.value.aspectRatio,
               exitFullscreenOnEnd: false,
+              deviceOrientationsAfterFullscreen: [
+                DeviceOrientation.portraitUp,
+                DeviceOrientation.portraitDown,
+              ],
             ),
             videoPlayerController: _controller,
             context: context),
@@ -108,26 +110,20 @@ class PostDetailsPage extends StatelessWidget {
                     return PopupMenuItem<String>(
                       onTap: () {
                         if (choice == 'Delete') {
-                          ApiController().deletePost(
-                              getController.getPostById.value.res?.id);
+                          ApiController().deletePost(getController.getPostById.value.res?.id);
                           Navigator.pop(context);
-                          ApiController().getMePostList(
-                              getController.meUsers.value.res!.business?.id);
+                          ApiController().getMePostList(getController.meUsers.value.res!.business?.id);
                         }
                       },
                       value: choice,
                       child: Row(
                         children: [
                           HeroIcon(
-                            choice == 'Delete'
-                                ? HeroIcons.trash
-                                : HeroIcons.pencilSquare,
-                            color:
-                            choice == 'Delete' ? Colors.red : Colors.blue,
+                            choice == 'Delete' ? HeroIcons.trash : HeroIcons.pencilSquare,
+                            color: choice == 'Delete' ? Colors.red : Colors.blue,
                           ),
                           SizedBox(width: w * 0.02),
-                          Text(
-                            choice,
+                          Text(choice,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: w * 0.04,
@@ -146,8 +142,7 @@ class PostDetailsPage extends StatelessWidget {
               : Column(
             children: [
               SizedBox(height: h * 0.02),
-              Obx(
-                    () => getController.startVideo == true
+              Obx(() => getController.startVideo == true
                     ? SizedBox(
                   height: h * 0.4,
                   width: w,
