@@ -234,8 +234,10 @@ class ApiController extends GetxController {
     var response = await http.get(Uri.parse(url + categoryUrl));
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      _getController.changeCategory(GetCategory.fromJson(jsonDecode(response.body)));
       return GetCategory.fromJson(jsonDecode(response.body));
     } else {
+      _getController.changeCategory(GetCategory(res: [], status: false));
       return GetCategory(res: [], status: false);
     }
   }

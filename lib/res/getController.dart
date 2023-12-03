@@ -32,6 +32,11 @@ class GetController extends GetxController {
   var widgetOptions = <Widget>[];
   var postFile = ''.obs;
   var postVideoFile = ''.obs;
+  var occupation = ''.obs;
+
+  void changeOccupation(String newOccupation) {
+    occupation.value = newOccupation;
+  }
 
   void changeSheetPages(int newSheetPages) {
     sheetPages.value = newSheetPages;

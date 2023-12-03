@@ -32,9 +32,7 @@ class ProfessionsList extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    ApiController()
-        .getCategory()
-        .then((value) => _getController.changeCategory(value));
+    ApiController().getCategory();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,8 +58,7 @@ class ProfessionsList extends StatelessWidget {
                         builder: (BuildContext context, RefreshStatus? mode) {
                           Widget body;
                           if (mode == RefreshStatus.idle) {
-                            body = const Text(
-                                "Ma`lumotlarni yangilash uchun tashlang");
+                            body = const Text("Ma`lumotlarni yangilash uchun tashlang");
                           } else if (mode == RefreshStatus.refreshing) {
                             body = const CircularProgressIndicator(
                               color: Colors.blue,
@@ -71,8 +68,7 @@ class ProfessionsList extends StatelessWidget {
                           } else if (mode == RefreshStatus.failed) {
                             body = const Text("Load Failed!Click retry!");
                           } else if (mode == RefreshStatus.canRefresh) {
-                            body = const Text(
-                                "Ma`lumotlarni yangilash uchun tashlang");
+                            body = const Text("Ma`lumotlarni yangilash uchun tashlang");
                           } else {
                             body = const Text("Ma`lumotlar yangilandi");
                           }
@@ -110,16 +106,13 @@ class ProfessionsList extends StatelessWidget {
                       onRefresh: _onRefresh,
                       onLoading: _onLoading,
                       child: ListView.builder(
-                        itemCount:
-                            _getController.category.value.res?.length ?? 0,
-                        padding:
-                            EdgeInsets.only(left: w * 0.05, right: w * 0.05),
+                        itemCount: _getController.category.value.res?.length ?? 0,
+                        padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
-                              onTap(_getController
-                                      .category.value.res?[index].id ??
-                                  0);
+                              _getController.changeOccupation(_getController.category.value.res?[index].name ?? '');
+                              onTap(_getController.category.value.res?[index].id ?? 0);
                             },
                             child: Container(
                               height: h * 0.06,
@@ -130,9 +123,7 @@ class ProfessionsList extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  _getController
-                                          .category.value.res?[index].name ??
-                                      '',
+                                  _getController.category.value.res?[index].name ?? '',
                                   style: TextStyle(
                                     fontSize: w * 0.04,
                                     fontWeight: FontWeight.w500,

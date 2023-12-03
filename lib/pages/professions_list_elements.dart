@@ -52,10 +52,14 @@ class ProfessionsListElements extends StatelessWidget {
               },
               child: Icon(Icons.arrow_back_ios, color: Colors.black, size: w * 0.05),
             ),
-            title: const Text(
-              'Tibbiyot Kasblar royhati',
-              style: TextStyle(color: Colors.black),
-            ),
+            title: Obx(() => Text(
+              '${_getController.occupation.value} Kasblar ro`yhati',
+              style: TextStyle(
+                fontSize: w * 0.05,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+            )),
             centerTitle: true,
           ),
         ),
