@@ -494,14 +494,9 @@ class ProfessionsListDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    //ProfileById
-    //ApiController().profileById(_getController.profileByID.value);
     _getController.show.value = false;
     ApiController().getMePostList(_getController.getProfileById.value.res?.id);
-    ApiController()
-        .bookingBusinessGetList(
-            _getController.bookingBusinessGetListByID.value, '')
-        .then((value) => _getController.changeBookingBusinessGetList(value));
+    ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value));
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -516,8 +511,7 @@ class ProfessionsListDetails extends StatelessWidget {
         ),
         body: Obx(
           () => _getController.getProfileById.value.res == null
-              ? const Expanded(
-                  child: Center(child: CircularProgressIndicator()))
+              ? const Expanded(child: Center(child: CircularProgressIndicator()))
               : Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -542,10 +536,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                   ),
                                 )
-                              : Text(
-                                  _getController
-                                          .getProfileById.value.res!.userName ??
-                                      '',
+                              : Text(_getController.getProfileById.value.res!.userName ?? '',
                                   style: TextStyle(
                                     fontSize: w * 0.05,
                                     fontWeight: FontWeight.w500,
@@ -553,13 +544,10 @@ class ProfessionsListDetails extends StatelessWidget {
                                 )),
                       centerTitle: true,
                     ),
-                    Obx(
-                      () => _getController.getProfileById.value.res == null
+                    Obx(() => _getController.getProfileById.value.res == null
                           ? const Center(child: CircularProgressIndicator())
                           : SizedBox(
-                              child: _getController
-                                          .getProfileById.value.res!.photoUrl ==
-                                      null
+                              child: _getController.getProfileById.value.res!.photoUrl == null
                                   ? SizedBox(
                                       width: w,
                                       child: InkWell(
@@ -568,8 +556,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                         focusColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () {
-                                          Navigator.push(
-                                            context,
+                                          Navigator.push(context,
                                             MaterialPageRoute(
                                               builder: (context) => Scaffold(
                                                 appBar: AppBar(
@@ -586,33 +573,17 @@ class ProfessionsListDetails extends StatelessWidget {
                                                 ),
                                                 backgroundColor: Colors.black,
                                                 body: PhotoView(
-                                                  imageProvider: const AssetImage(
-                                                      'assets/images/doctor.png'),
-                                                  minScale:
-                                                      PhotoViewComputedScale
-                                                              .contained *
-                                                          0.8,
-                                                  maxScale:
-                                                      PhotoViewComputedScale
-                                                              .covered *
-                                                          2,
-                                                  initialScale:
-                                                      PhotoViewComputedScale
-                                                          .contained,
+                                                  imageProvider: const AssetImage('assets/images/doctor.png'),
+                                                  minScale: PhotoViewComputedScale.contained * 0.8,
+                                                  maxScale: PhotoViewComputedScale.covered * 2,
+                                                  initialScale: PhotoViewComputedScale.contained,
                                                   enableRotation: true,
-                                                  loadingBuilder:
-                                                      (context, event) =>
-                                                          Center(
+                                                  loadingBuilder: (context, event) => Center(
                                                     child: SizedBox(
                                                       width: 20.0,
                                                       height: 20.0,
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                        value: event == null
-                                                            ? 0
-                                                            : event.cumulativeBytesLoaded /
-                                                                event
-                                                                    .expectedTotalBytes!,
+                                                      child: CircularProgressIndicator(
+                                                        value: event == null ? 0 : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
                                                       ),
                                                     ),
                                                   ),
@@ -623,8 +594,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                         },
                                         child: CircleAvatar(
                                           radius: w * 0.15,
-                                          backgroundImage: const AssetImage(
-                                              'assets/images/doctor.png'),
+                                          backgroundImage: const AssetImage('assets/images/doctor.png'),
                                         ),
                                       ),
                                     )
@@ -642,9 +612,8 @@ class ProfessionsListDetails extends StatelessWidget {
                                               builder: (context) => Scaffold(
                                                   appBar: AppBar(
                                                     elevation: 0,
-                                                    backgroundColor:
-                                                        Colors.black,
-                                                    leading: SizedBox(),
+                                                    backgroundColor: Colors.black,
+                                                    leading: const SizedBox(),
                                                   ),
                                                   backgroundColor: Colors.black,
                                                   body: Column(
@@ -653,9 +622,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                                         height: h * 0.05,
                                                         child: Row(
                                                           children: [
-                                                            SizedBox(
-                                                                width:
-                                                                    w * 0.01),
+                                                            SizedBox(width: w * 0.01),
                                                             Container(
                                                               alignment:
                                                                   Alignment
@@ -925,16 +892,9 @@ class ProfessionsListDetails extends StatelessWidget {
                                           SizedBox(
                                             width: w * 0.02,
                                           ),
-                                          Obx(() => _getController
-                                                      .getProfileById
-                                                      .value
-                                                      .res ==
-                                                  null
+                                          Obx(() => _getController.getProfileById.value.res == null
                                               ? const SizedBox()
-                                              : Text(
-                                                  _getController.getProfileById
-                                                          .value.res!.address ??
-                                                      '',
+                                              : Text(_getController.getProfileById.value.res!.address ?? '',
                                                   style: TextStyle(
                                                     fontSize: w * 0.04,
                                                     fontWeight: FontWeight.w500,
@@ -1130,18 +1090,14 @@ class ProfessionsListDetails extends StatelessWidget {
                                 left: w * 0.03, right: w * 0.03, top: h * 0.01),
                             child: PageView(
                               onPageChanged: (index) {
-                                _getController.nextPagesUserDetails.value =
-                                    index;
+                                _getController.nextPagesUserDetails.value = index;
                               },
                               controller: pageController,
                               children: [
                                 SizedBox(
                                   width: w,
                                   height: h * 0.2,
-                                  child: Obx(
-                                    () =>
-                                        _getController.getPostList.value.res ==
-                                                null
+                                  child: Obx(() => _getController.getPostList.value.res == null
                                             ? Center(
                                                 child: Text(
                                                 'No data',
@@ -1164,67 +1120,36 @@ class ProfessionsListDetails extends StatelessWidget {
                                                           context,
                                                           MaterialPageRoute(
                                                               builder: (context) =>
-                                                                  PostDetailsPage(
-                                                                    postId: _getController
-                                                                        .getPostList
-                                                                        .value
-                                                                        .res![
-                                                                            index]
-                                                                        .id,
-                                                                  )));
+                                                                  PostDetailsPage(postId: _getController.getPostList.value.res![index].id,)));
                                                     },
                                                     child: Container(
                                                       padding: EdgeInsets.only(
                                                           bottom: h * 0.01),
                                                       child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
+                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
-                                                          Obx(() => _getController
-                                                                      .getPostList
-                                                                      .value
-                                                                      .res![
-                                                                          index]
-                                                                      .mediaType ==
-                                                                  'video'
+                                                          Obx(() => _getController.getPostList.value.res![index].mediaType == 'video'
                                                               ? Stack(
                                                                   children: [
                                                                     Container(
-                                                                      width: w *
-                                                                          0.28,
-                                                                      height: h *
-                                                                          0.13,
-                                                                      margin: EdgeInsets.only(
-                                                                          right:
-                                                                              w * 0.02),
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(3),
-                                                                        image:
-                                                                            DecorationImage(
-                                                                          image:
-                                                                              NetworkImage('${_getController.getPostList.value.res![index].photo}'),
-                                                                          fit: BoxFit
-                                                                              .cover,
+                                                                      width: w * 0.28,
+                                                                      height: h * 0.13,
+                                                                      margin: EdgeInsets.only(right: w * 0.02),
+                                                                      decoration: BoxDecoration(
+                                                                        borderRadius: BorderRadius.circular(3),
+                                                                        image: DecorationImage(
+                                                                          image: NetworkImage('${_getController.getPostList.value.res![index].photo}'),
+                                                                          fit: BoxFit.cover,
                                                                         ),
                                                                       ),
                                                                     ),
                                                                     Positioned(
-                                                                        width: w *
-                                                                            0.28,
-                                                                        height: h *
-                                                                            0.13,
-                                                                        child:
-                                                                            Center(
+                                                                        width: w * 0.28,
+                                                                        height: h * 0.13,
+                                                                        child: Center(
                                                                           child:
-                                                                              InkWell(
-                                                                            onTap:
-                                                                                () {
+                                                                              InkWell(onTap: () {
                                                                               Navigator.push(
                                                                                   context,
                                                                                   MaterialPageRoute(
@@ -1274,42 +1199,25 @@ class ProfessionsListDetails extends StatelessWidget {
                                                                     ),
                                                                   ),
                                                                 )),
-                                                          Expanded(
-                                                              child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
+                                                          Expanded(child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            mainAxisAlignment: MainAxisAlignment.center,
                                                             children: [
                                                               SizedBox(
-                                                                height:
-                                                                    h * 0.03,
-                                                                child: Text(
-                                                                  '${_getController.getPostList.value.res![index].title}',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        w * 0.04,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
+                                                                height: h * 0.03,
+                                                                child: Text('${_getController.getPostList.value.res![index].title}',
+                                                                  style: TextStyle(
+                                                                    fontSize: w * 0.04,
+                                                                    fontWeight: FontWeight.w500,
                                                                   ),
                                                                 ),
                                                               ),
                                                               SizedBox(
-                                                                height:
-                                                                    h * 0.04,
-                                                                child: Text(
-                                                                  '${_getController.getPostList.value.res![index].description}',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        w * 0.04,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
+                                                                height: h * 0.03,
+                                                                child: Text('${_getController.getPostList.value.res![index].description}',
+                                                                  style: TextStyle(
+                                                                    fontSize: w * 0.04,
+                                                                    fontWeight: FontWeight.w500,
                                                                   ),
                                                                 ),
                                                               ),

@@ -568,11 +568,7 @@ class ProfilePage extends StatelessWidget {
                   showLoadingDialog(context, w);
                   ApiController().getByIdPost(id).then((value) => {
                         Navigator.pop(context),
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    EditPostDetails(postId: id))),
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => EditPostDetails(postId: id))),
                       });
                 },
                 child: SizedBox(
@@ -1204,28 +1200,17 @@ class ProfilePage extends StatelessWidget {
                                       : h * 0.38,
                                   child: PageView(
                                     onPageChanged: (index) {
-                                      getController
-                                          .nextPagesUserDetails.value = index;
-                                      ApiController().getMePostList(
-                                          getController.meUsers.value.res!
-                                              .business?.id);
+                                      getController.nextPagesUserDetails.value = index;
+                                      ApiController().getMePostList(getController.meUsers.value.res!.business?.id);
                                     },
                                     controller: pageController,
                                     children: [
-                                      Obx(
-                                            () =>
-                                        getController.getPostList.value
-                                            .res ==
-                                            null
+                                      Obx(() => getController.getPostList.value.res == null
                                             ? SizedBox(
                                           width: w,
                                           height: h * 0.22,
-                                          child: const Center(
-                                            child: Text(
-                                                'Ma\'lumotlar topilmadi'),
-                                          ),
-                                        )
-                                            : SizedBox(
+                                          child: const Center(child: Text('Ma\'lumotlar topilmadi'),),
+                                        ) : SizedBox(
                                           height: h * 0.22,
                                           child: SizedBox(
                                             width: w,
@@ -1234,94 +1219,53 @@ class ProfilePage extends StatelessWidget {
                                               enablePullUp: true,
                                               header: CustomHeader(
                                                 builder: (BuildContext
-                                                context,
-                                                    RefreshStatus?
-                                                    mode) {
+                                                context, RefreshStatus?mode) {
                                                   Widget body;
-                                                  if (mode ==
-                                                      RefreshStatus
-                                                          .idle) {
-                                                    body = const Text(
-                                                        "Ma`lumotlarni yangilash uchun tashlang");
-                                                  } else if (mode ==
-                                                      RefreshStatus
-                                                          .refreshing) {
-                                                    body =
-                                                    const CircularProgressIndicator(
-                                                      color: Colors
-                                                          .blue,
+                                                  if (mode == RefreshStatus.idle) {
+                                                    body = const Text("Ma`lumotlarni yangilash uchun tashlang");
+                                                  } else if (mode == RefreshStatus.refreshing) {
+                                                    body = const CircularProgressIndicator(
+                                                      color: Colors.blue,
                                                       backgroundColor:
-                                                      Colors
-                                                          .white,
-                                                      strokeWidth:
-                                                      2,
+                                                      Colors.white,
+                                                      strokeWidth: 2,
                                                     );
-                                                  } else if (mode ==
-                                                      RefreshStatus
-                                                          .failed) {
-                                                    body = const Text(
-                                                        "Load Failed!Click retry!");
-                                                  } else if (mode ==
-                                                      RefreshStatus
-                                                          .canRefresh) {
-                                                    body = const Text(
-                                                        "Ma`lumotlarni yangilash uchun tashlang");
+                                                  } else if (mode == RefreshStatus.failed) {
+                                                    body = const Text("Load Failed!Click retry!");
+                                                  } else if (mode == RefreshStatus.canRefresh) {
+                                                    body = const Text("Ma`lumotlarni yangilash uchun tashlang");
                                                   } else {
-                                                    body = const Text(
-                                                        "Ma`lumotlar yangilandi");
+                                                    body = const Text("Ma`lumotlar yangilandi");
                                                   }
                                                   return SizedBox(
                                                     height: h * 0.1,
-                                                    child: Center(
-                                                        child:
-                                                        body),
+                                                    child: Center(child: body),
                                                   );
                                                 },
                                               ),
                                               footer: CustomFooter(
-                                                builder:
-                                                    (BuildContext
-                                                context,
-                                                    LoadStatus?
-                                                    mode) {
+                                                builder: (BuildContext
+                                                context, LoadStatus?mode) {
                                                   Widget body;
-                                                  if (mode ==
-                                                      LoadStatus
-                                                          .idle) {
-                                                    body =
-                                                    const SizedBox();
-                                                  } else if (mode ==
-                                                      LoadStatus
-                                                          .loading) {
-                                                    body =
-                                                    const CircularProgressIndicator(
-                                                      color: Colors
-                                                          .blue,
+                                                  if (mode == LoadStatus.idle) {
+                                                    body = const SizedBox();
+                                                  } else if (mode == LoadStatus.loading) {
+                                                    body = const CircularProgressIndicator(
+                                                      color: Colors.blue,
                                                       backgroundColor:
-                                                      Colors
-                                                          .white,
-                                                      strokeWidth:
-                                                      2,
+                                                      Colors.white,
+                                                      strokeWidth: 2,
                                                     );
-                                                  } else if (mode ==
-                                                      LoadStatus
-                                                          .failed) {
-                                                    body = const Text(
-                                                        "Load Failed!Click retry!");
-                                                  } else if (mode ==
-                                                      LoadStatus
-                                                          .canLoading) {
-                                                    body =
-                                                    const SizedBox();
+                                                  } else if (mode == LoadStatus.failed) {
+                                                    body = const Text("Load Failed!Click retry!");
+                                                  } else if (mode == LoadStatus.canLoading) {
+                                                    body = const SizedBox();
                                                   } else {
-                                                    body = const Text(
-                                                        "Ma`lumotlar yangilandi");
+                                                    body = const Text("Ma`lumotlar yangilandi");
                                                   }
                                                   return SizedBox(
                                                     height: h * 0.1,
-                                                    child: Center(
-                                                        child:
-                                                        body),
+                                                    child: Center(child: body),
                                                   );
                                                 },
                                               ),
@@ -1332,30 +1276,16 @@ class ProfilePage extends StatelessWidget {
                                               child:
                                               ListView.builder(
                                                   itemCount:
-                                                  getController
-                                                      .getPostList
-                                                      .value
-                                                      .res!
-                                                      .length,
-                                                  itemBuilder:
-                                                      (context,
-                                                      index) {
+                                                  getController.getPostList.value.res!.length,
+                                                  itemBuilder: (context, index) {
                                                     return InkWell(
-                                                      onTap:
-                                                          () {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (context) => PostDetailsPage(
-                                                                  postId: getController.getPostList.value.res![index].id,
-                                                                )));
+                                                      onTap: () {
+                                                        Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: getController.getPostList.value.res![index].id,)));
                                                       },
                                                       child:
                                                       Column(
                                                         children: [
-                                                          //image
-                                                          Obx(
-                                                                () => getController.getPostList.value.res![index].mediaType == 'video'
+                                                          Obx(() => getController.getPostList.value.res![index].mediaType == 'video'
                                                                 ? Stack(
                                                               children: [
                                                                 Container(
@@ -1387,8 +1317,7 @@ class ProfilePage extends StatelessWidget {
                                                                       ),
                                                                     )),
                                                               ],
-                                                            )
-                                                                : Container(
+                                                            ) : Container(
                                                               width: w,
                                                               height: h * 0.3,
                                                               padding: EdgeInsets.all(w * 0.01),
@@ -1401,25 +1330,18 @@ class ProfilePage extends StatelessWidget {
                                                             ),
                                                           ),
                                                           Container(
-                                                            width:
-                                                            w,
-                                                            padding: EdgeInsets.only(
-                                                                left: w * 0.04,
-                                                                top: h * 0.01,
-                                                                bottom: h * 0.01),
-                                                            child:
-                                                            Row(
+                                                            width: w,
+                                                            padding: EdgeInsets.only(left: w * 0.04, top: h * 0.01, bottom: h * 0.01),
+                                                            child: Row(
                                                               children: [
                                                                 Expanded(
                                                                     child: Column(
                                                                       children: [
-                                                                        //title and description
                                                                         Obx(() => getController.getPostList.value.res![index].title == '' && getController.getPostList.value.res![index].description == ''
                                                                             ? const SizedBox()
                                                                             : SizedBox(
                                                                           width: w * 0.9,
-                                                                          child: Text(
-                                                                            '${getController.getPostList.value.res![index].title}',
+                                                                          child: Text('${getController.getPostList.value.res![index].title}',
                                                                             style: TextStyle(
                                                                               fontSize: w * 0.04,
                                                                               fontWeight: FontWeight.w500,
@@ -1430,8 +1352,7 @@ class ProfilePage extends StatelessWidget {
                                                                             ? const SizedBox()
                                                                             : SizedBox(
                                                                           width: w * 0.9,
-                                                                          child: ReadMoreText(
-                                                                            '${getController.getPostList.value.res![index].description}',
+                                                                          child: ReadMoreText('${getController.getPostList.value.res![index].description}',
                                                                             trimLines: 2,
                                                                             colorClickableText: Colors.blue,
                                                                             trimMode: TrimMode.Line,
@@ -1475,64 +1396,43 @@ class ProfilePage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      Obx(
-                                            () => getController
-                                            .bookingBusinessGetList
-                                            .value
-                                            .res ==
-                                            null
+                                      Obx(() => getController.bookingBusinessGetList.value.res == null
                                             ? SizedBox(
                                           width: w,
                                           height: h * 0.22,
                                           child: const Center(
-                                            child: Text(
-                                                'Ma\'lumotlar topilmadi'),
+                                            child: Text('Ma\'lumotlar topilmadi'),
                                           ),
-                                        )
-                                            : SizedBox(
+                                        ) : SizedBox(
                                           width: w * 0.9,
                                           height: h * 0.22,
                                           child: Container(
                                               height: h * 0.22,
                                               width: w * 0.9,
-                                              margin: EdgeInsets.only(
-                                                  top: h * 0.02,
-                                                  bottom: h * 0.02,
-                                                  left: w * 0.02,
-                                                  right: w * 0.02),
-                                              padding: EdgeInsets.all(
-                                                  w * 0.02),
+                                              margin: EdgeInsets.only(top: h * 0.02, bottom: h * 0.02, left: w * 0.02, right: w * 0.02),
+                                              padding: EdgeInsets.all(w * 0.02),
                                               decoration: BoxDecoration(
                                                 border: Border.all(
                                                   color: Colors.grey,
                                                 ),
                                                 borderRadius:
-                                                BorderRadius
-                                                    .circular(3),
+                                                BorderRadius.circular(3),
                                               ),
                                               child: Column(
                                                 children: [
                                                   Expanded(
-                                                      child: ListView
-                                                          .builder(
+                                                      child: ListView.builder(
                                                           shrinkWrap:
                                                           true,
-                                                          itemCount: getController
-                                                              .bookingBusinessGetList1
-                                                              .value
-                                                              .res!
-                                                              .length,
-                                                          itemBuilder:
-                                                              (context,
-                                                              index) {
+                                                          itemCount: getController.bookingBusinessGetList1.value.res!.length,
+                                                          itemBuilder: (context, index) {
                                                             return Column(
                                                               children: [
                                                                 Row(
                                                                   children: [
                                                                     SizedBox(
                                                                       width: w * 0.08,
-                                                                      child: Text(
-                                                                        '${index + 1}',
+                                                                      child: Text('${index + 1}',
                                                                         style: TextStyle(
                                                                           fontSize: w * 0.04,
                                                                           fontWeight: FontWeight.w500,
@@ -1541,8 +1441,7 @@ class ProfilePage extends StatelessWidget {
                                                                     ),
                                                                     SizedBox(
                                                                       width: w * 0.7,
-                                                                      child: Text(
-                                                                        'Ushbu mijoz' ' ${getController.bookingBusinessGetList1.value.res![index].date!.replaceAll('/', '-')} ' '${getController.bookingBusinessGetList1.value.res![index].time!} keladi',
+                                                                      child: Text('Ushbu mijoz' ' ${getController.bookingBusinessGetList1.value.res![index].date!.replaceAll('/', '-')} ' '${getController.bookingBusinessGetList1.value.res![index].time!} keladi',
                                                                         style: TextStyle(
                                                                           fontSize: w * 0.04,
                                                                           fontWeight: FontWeight.w500,
@@ -1557,30 +1456,19 @@ class ProfilePage extends StatelessWidget {
                                                           })),
                                                   Row(
                                                     children: [
-                                                      const Expanded(
-                                                          child:
-                                                          SizedBox()),
+                                                      const Expanded(child: SizedBox()),
                                                       SizedBox(
                                                         height:
                                                         h * 0.05,
-                                                        child:
-                                                        TextButton(
-                                                          onPressed:
-                                                              () {
-                                                            showBottomSheetList(
-                                                                context);
+                                                        child: TextButton(
+                                                          onPressed: () {
+                                                            showBottomSheetList(context);
                                                           },
-                                                          child: Text(
-                                                            'Barchasini ko\'rish',
-                                                            style:
-                                                            TextStyle(
-                                                              fontSize:
-                                                              w * 0.04,
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w500,
-                                                              color: Colors
-                                                                  .blue,
+                                                          child: Text('Barchasini ko\'rish',
+                                                            style: TextStyle(
+                                                              fontSize: w * 0.04,
+                                                              fontWeight: FontWeight.w500,
+                                                              color: Colors.blue,
                                                             ),
                                                           ),
                                                         ),
@@ -1591,11 +1479,7 @@ class ProfilePage extends StatelessWidget {
                                               )),
                                         ),
                                       ),
-                                      BioBusiness(
-                                        text: getController.meUsers.value.res
-                                            ?.business?.bio ??
-                                            '',
-                                      ),
+                                      BioBusiness(text: getController.meUsers.value.res?.business?.bio ?? '',),
                                     ],
                                   ),
                                 )),
@@ -1612,8 +1496,7 @@ class ProfilePage extends StatelessWidget {
                             ? MakeBusinessPage()
                             : const SizedBox(),
               ),
-            )
-          : Center(
+            ) : Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -1623,8 +1506,7 @@ class ProfilePage extends StatelessWidget {
                     elevation: 0,
                     surfaceTintColor: Colors.transparent,
                     centerTitle: true,
-                    title: Text(
-                      getController.meUsers.value.res?.userName ?? '',
+                    title: Text(getController.meUsers.value.res?.userName ?? '',
                       style: TextStyle(
                         fontSize: w * 0.04,
                         color: Colors.black,

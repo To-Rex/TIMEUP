@@ -192,8 +192,7 @@ class HomePage extends StatelessWidget {
       width: w,
       height: h * 0.9,
       child: const Center(child: CircularProgressIndicator()),
-    )
-        : Obx(
+    ) : Obx(
           () => _getController.getFollowPost.value.res!.isNotEmpty
           ? Obx(() => _getController.uplAodVideo.value == true
           ? SizedBox(
@@ -201,78 +200,19 @@ class HomePage extends StatelessWidget {
         height: h * 0.75,
         child: ListView.builder(
             controller: _scrollController,
-            itemCount: _getController
-                .getFollowPost.value.res?.length ??
-                0,
+            itemCount: _getController.getFollowPost.value.res?.length ?? 0,
             itemBuilder: (context, index) {
               return Column(
                 children: [
                   SizedBox(height: h * 0.02),
-                  if (_getController.getFollowPost.value
-                      .res?[index].posterPhotoUrl !=
-                      null)
+                  if (_getController.getFollowPost.value.res?[index].posterPhotoUrl != null)
                     InkWell(
                       onTap: () {
                         showLoadingDialog(context, w);
-                        /*showDialog(
-                                          context: context,
-                                          barrierColor: Colors.black.withOpacity(0.5),
-                                          builder: (context) => AlertDialog(
-                                            content: SizedBox(
-                                              width: w * 0.1,
-                                              height: w * 0.2,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                                children: [
-                                                  const Expanded(
-                                                      child: SizedBox()),
-                                                  SizedBox(
-                                                    width: w * 0.1,
-                                                    height: w * 0.1,
-                                                    child:
-                                                    const CircularProgressIndicator(
-                                                      color: Colors.blue,
-                                                      backgroundColor:
-                                                      Colors.white,
-                                                      strokeWidth: 2,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: w * 0.07,
-                                                  ),
-                                                  Text(
-                                                    'Loading...',
-                                                    style: TextStyle(
-                                                      fontSize: w * 0.04,
-                                                      fontWeight:
-                                                      FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                  const Expanded(
-                                                      child: SizedBox()),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        );*/
-                        ApiController()
-                            .profileById(int.parse(
-                            _getController
-                                .getFollowPost
-                                .value
-                                .res![index]
-                                .businessId
-                                .toString()))
-                            .then((value) => {
-                          _getController
-                              .changeProfileById(value),
+                        ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {
+                          _getController.changeProfileById(value),
                           Navigator.pop(context),
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      ProfessionsListDetails()))
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()))
                         });
                       },
                       child: Row(
@@ -286,15 +226,13 @@ class HomePage extends StatelessWidget {
                                   width: w * 0.11,
                                   height: w * 0.11,
                                   child: CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                        '${_getController.getFollowPost.value.res?[index].posterPhotoUrl}'),
+                                    backgroundImage: NetworkImage('${_getController.getFollowPost.value.res?[index].posterPhotoUrl}'),
                                   ),
                                 ),
                                 SizedBox(width: w * 0.02),
                                 SizedBox(
                                   width: w * 0.6,
-                                  child: Text(
-                                    '${_getController.getFollowPost.value.res?[index].posterName}',
+                                  child: Text('${_getController.getFollowPost.value.res?[index].posterName}',
                                     style: TextStyle(
                                       fontSize: w * 0.05,
                                       fontWeight:
@@ -309,25 +247,17 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   SizedBox(height: h * 0.02),
-                  if (_getController.getFollowPost.value
-                      .res?[index].photo !=
-                      null)
+                  if (_getController.getFollowPost.value.res?[index].photo != null)
                     SizedBox(
                       width: w,
                       height: h * 0.33,
-                      child: Obx(() => _getController
-                          .getFollowPost
-                          .value
-                          .res?[index]
-                          .mediaType ==
-                          'video'
+                      child: Obx(() => _getController.getFollowPost.value.res?[index].mediaType == 'video'
                           ? Stack(
                         children: [
                           SizedBox(
                             width: w,
                             height: h * 0.33,
-                            child: Image.network(
-                              '${_getController.getFollowPost.value.res?[index].photo}',
+                            child: Image.network('${_getController.getFollowPost.value.res?[index].photo}',
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -338,12 +268,8 @@ class HomePage extends StatelessWidget {
                                 child: Container(
                                   decoration:
                                   BoxDecoration(
-                                    color: Colors.black
-                                        .withOpacity(0.5),
-                                    borderRadius:
-                                    BorderRadius
-                                        .circular(
-                                        100),
+                                    color: Colors.black.withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(100),
                                   ),
                                   child: IconButton(
                                       onPressed: () {

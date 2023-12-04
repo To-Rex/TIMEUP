@@ -1,11 +1,11 @@
 import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/pages/professions_list_details.dart';
 import '../res/getController.dart';
+import 'edit_post_details.dart';
 
 class PostDetailsPage extends StatelessWidget {
   var postId;
@@ -15,6 +15,45 @@ class PostDetailsPage extends StatelessWidget {
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
   late CustomVideoPlayerController _customVideoPlayerController;
+
+  showLoadingDialog(BuildContext context, w) {
+    showDialog(
+      context: context,
+      barrierColor: Colors.black.withOpacity(0.5),
+      builder: (context) => AlertDialog(
+        content: SizedBox(
+          width: w * 0.1,
+          height: w * 0.2,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Expanded(child: SizedBox()),
+              SizedBox(
+                width: w * 0.1,
+                height: w * 0.1,
+                child: const CircularProgressIndicator(
+                  color: Colors.blue,
+                  backgroundColor: Colors.white,
+                  strokeWidth: 2,
+                ),
+              ),
+              SizedBox(
+                width: w * 0.07,
+              ),
+              Text(
+                'Loading...',
+                style: TextStyle(
+                  fontSize: w * 0.04,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const Expanded(child: SizedBox()),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +91,7 @@ class PostDetailsPage extends StatelessWidget {
             customVideoPlayerSettings: CustomVideoPlayerSettings(
               customAspectRatio: _controller.value.aspectRatio,
               exitFullscreenOnEnd: false,
-              deviceOrientationsAfterFullscreen: [
-                DeviceOrientation.portraitUp,
-                DeviceOrientation.portraitDown,
-              ],
+              enterFullscreenButton: const SizedBox(),
             ),
             videoPlayerController: _controller,
             context: context),
@@ -98,10 +134,8 @@ class PostDetailsPage extends StatelessWidget {
             title: Obx(() => getController.getPostById.value.res == null ||
                 getController.getPostById.value.res!.id == null
                 ? Center(
-                child: Text('No data',
-                    style: TextStyle(color: Colors.black, fontSize: w * 0.04)))
-                : Text(getController.getPostById.value.res!.title!,
-                style: const TextStyle(color: Colors.black, fontSize: 18))),
+                child: Text('No data', style: TextStyle(color: Colors.black, fontSize: w * 0.04)))
+                : Text(getController.getPostById.value.res!.title!, style: const TextStyle(color: Colors.black, fontSize: 18))),
             actions: [
               Obx(() => getController.meUsers.value.res?.business?.id == getController.getPostById.value.res?.businessId
                   ? PopupMenuButton<String>(
@@ -113,6 +147,12 @@ class PostDetailsPage extends StatelessWidget {
                           ApiController().deletePost(getController.getPostById.value.res?.id);
                           Navigator.pop(context);
                           ApiController().getMePostList(getController.meUsers.value.res!.business?.id);
+                        }else if (choice == 'Edit') {
+                          showLoadingDialog(context, w);
+                          ApiController().getByIdPost(postId).then((value) => {
+                            Navigator.pop(context),
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => EditPostDetails(postId: postId))),
+                          });
                         }
                       },
                       value: choice,
