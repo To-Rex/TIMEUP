@@ -15,8 +15,7 @@ class HomePage extends StatelessWidget {
 
   final GetController _getController = Get.put(GetController());
   var _scrollController = ScrollController();
-  final RefreshController _refreshController =
-  RefreshController(initialRefresh: false);
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   showDialogs(BuildContext context, text, disc, ok, int index) {
     showDialog(

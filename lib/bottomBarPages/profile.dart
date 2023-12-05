@@ -28,12 +28,9 @@ class ProfilePage extends StatelessWidget {
   final GetController getController = Get.put(GetController());
   final PageController pageController = PageController();
   final TextEditingController _dateController = TextEditingController();
-  final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-  getUsers() async {
-    ApiController().getUserData();
-  }
+  getUsers() async {ApiController().getUserData();}
 
   showLoadingDialog(BuildContext context, w) {
     showDialog(
@@ -545,7 +542,7 @@ class ProfilePage extends StatelessWidget {
       isScrollControlled: true,
       builder: (context) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.9,
+          height: MediaQuery.of(context).size.height * 0.5,
           decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -657,30 +654,22 @@ class ProfilePage extends StatelessWidget {
     );
     getController.changeImage(croppedImage.path);
     ApiController().editUserPhoto(croppedImage.path).then((value) => {
-          if (value == true)
-            {
+          if (value == true){
               getUsers(),
-              Toast.showToast(context, 'Rasm muvaffaqiyatli o\'zgartirildi',
-                  Colors.green, Colors.white)
+              Toast.showToast(context, 'Rasm muvaffaqiyatli o\'zgartirildi', Colors.green, Colors.white)
             }
-          else
-            {
-              Toast.showToast(
-                  context, 'Xatolik yuz berdi', Colors.red, Colors.white)
+          else {
+              Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.white)
             }
         });
   }
 
   void _onRefresh() async {
     if (getController.meUsers.value.res?.business == null) {
-      ApiController()
-          .getUserData()
-          .then((value) => _refreshController.refreshCompleted());
+      ApiController().getUserData().then((value) => _refreshController.refreshCompleted());
     } else {
       if (pageController.page == 0) {
-        ApiController()
-            .getMePostList(getController.meUsers.value.res!.business?.id)
-            .then((value) => _refreshController.refreshCompleted());
+        ApiController().getMePostList(getController.meUsers.value.res!.business?.id).then((value) => _refreshController.refreshCompleted());
       } else {
         _refreshController.refreshCompleted();
       }
