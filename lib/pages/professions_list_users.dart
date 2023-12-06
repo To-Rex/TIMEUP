@@ -111,8 +111,7 @@ class ProfessionsListUsers extends StatelessWidget {
           height: h * 0.74,
           width: w * 0.9,
           child: Obx(
-            () => _getController.getByCategory.value.res == null ||
-                    _getController.getByCategory.value.res!.isEmpty
+            () => _getController.getByCategory.value.res == null || _getController.getByCategory.value.res!.isEmpty
                 ? const Center(child: Text('No data'))
                 : SmartRefresher(
                     enablePullDown: true,
@@ -131,8 +130,7 @@ class ProfessionsListUsers extends StatelessWidget {
                         } else if (mode == RefreshStatus.failed) {
                           body = const Text("Load Failed!Click retry!");
                         } else if (mode == RefreshStatus.canRefresh) {
-                          body = const Text(
-                              "Ma`lumotlarni yangilash uchun tashlang");
+                          body = const Text("Ma`lumotlarni yangilash uchun tashlang");
                         } else {
                           body = const Text("Ma`lumotlar yangilandi");
                         }
@@ -173,8 +171,6 @@ class ProfessionsListUsers extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            //_getController.profileByID.value = _getController.getByCategory.value.res![index].businessId!;
-                            //_getController.clearProfileById();
                             showLoadingDialog(context);
                             ApiController().profileById(_getController.getByCategory.value.res![index].businessId!).then((value) => {
                                       Navigator.pop(context),

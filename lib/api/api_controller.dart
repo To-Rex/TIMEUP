@@ -364,8 +364,7 @@ class ApiController extends GetxController {
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       //changeProfileById
-      _getController
-          .changeProfileById(ProfileById.fromJson(jsonDecode(response.body)));
+      _getController.changeProfileById(ProfileById.fromJson(jsonDecode(response.body)));
       return ProfileById.fromJson(jsonDecode(response.body));
     } else {
       _getController
@@ -384,10 +383,10 @@ class ApiController extends GetxController {
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       //_getController.bookingBusinessGetList.value = BookingBusinessGetList.fromJson(jsonDecode(response.body));
-      _getController.changeBookingBusinessGetList1(
-          BookingBusinessGetList.fromJson(jsonDecode(response.body)));
+      _getController.changeBookingBusinessGetList(BookingBusinessGetList.fromJson(jsonDecode(response.body)));
       return BookingBusinessGetList.fromJson(jsonDecode(response.body));
     } else {
+      _getController.changeBookingBusinessGetList(BookingBusinessGetList(res: [], status: false));
       return BookingBusinessGetList(res: [], status: false);
     }
   }

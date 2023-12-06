@@ -93,6 +93,11 @@ class GetController extends GetxController {
   var loading = false.obs;
   var show = false.obs;
 
+  //change bookingBusinessGetListByID
+  void changeBookingBusinessGetListByID(int newBookingBusinessGetListByID) {
+    bookingBusinessGetListByID.value = newBookingBusinessGetListByID;
+  }
+
   void changeLoading() {
     loading.value = !loading.value;
   }

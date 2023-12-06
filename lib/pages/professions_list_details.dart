@@ -135,12 +135,8 @@ class ProfessionsListDetails extends StatelessWidget {
                     onPageChanged: (index) {
                       _getController.changeSheetPages(index);
                       if (index == 0) {
-                        ApiController()
-                            .bookingBusinessGetList(
-                                _getController.bookingBusinessGetListByID.value,
-                                '')
-                            .then((value) => _getController
-                                .changeBookingBusinessGetList(value));
+                        ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '')
+                            .then((value) => _getController.changeBookingBusinessGetList(value));
                       }
                     },
                     children: [
@@ -519,7 +515,7 @@ class ProfessionsListDetails extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     _getController.show.value = false;
     ApiController().getMePostList(_getController.getProfileById.value.res?.id);
-    ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value));
+    ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '');
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -532,8 +528,7 @@ class ProfessionsListDetails extends StatelessWidget {
             height: h * 0.05,
           ),
         ),
-        body: Obx(
-          () => _getController.getProfileById.value.res == null
+        body: Obx(() => _getController.getProfileById.value.res == null
               ? const Expanded(child: Center(child: CircularProgressIndicator()))
               : Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -550,8 +545,7 @@ class ProfessionsListDetails extends StatelessWidget {
                         },
                         child: Icon(Icons.arrow_back_ios, size: w * 0.05),
                       ),
-                      title: Obx(
-                          () => _getController.getProfileById.value.res == null
+                      title: Obx(() => _getController.getProfileById.value.res == null
                               ? Text(
                                   'No data',
                                   style: TextStyle(
@@ -646,37 +640,22 @@ class ProfessionsListDetails extends StatelessWidget {
                                                         child: Row(
                                                           children: [
                                                             SizedBox(width: w * 0.01),
-                                                            Container(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
+                                                            Container(alignment: Alignment.center,
                                                               width: w * 0.1,
                                                               height: h * 0.05,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: Colors
-                                                                    .white,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(w *
-                                                                            0.1),
+                                                              decoration: BoxDecoration(
+                                                                color: Colors.white,
+                                                                borderRadius: BorderRadius.circular(w * 0.1),
                                                               ),
                                                               child: IconButton(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  onPressed:
-                                                                      () {
-                                                                    Navigator.pop(
-                                                                        context);
+                                                                  color: Colors.white,
+                                                                  onPressed: () {
+                                                                    Navigator.pop(context);
                                                                   },
-                                                                  icon:
-                                                                      HeroIcon(
-                                                                    HeroIcons
-                                                                        .chevronLeft,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    size:
-                                                                        w * 0.1,
+                                                                  icon: HeroIcon(
+                                                                    HeroIcons.chevronLeft,
+                                                                    color: Colors.black,
+                                                                    size: w * 0.1,
                                                                   )),
                                                             ),
                                                           ],
@@ -684,36 +663,19 @@ class ProfessionsListDetails extends StatelessWidget {
                                                       ),
                                                       Expanded(
                                                         child: PhotoView(
-                                                          imageProvider:
-                                                              NetworkImage(
-                                                                  "${_getController.getProfileById.value.res!.photoUrl}"),
-                                                          minScale:
-                                                              PhotoViewComputedScale
-                                                                      .contained *
-                                                                  0.8,
-                                                          maxScale:
-                                                              PhotoViewComputedScale
-                                                                      .covered *
-                                                                  2,
-                                                          initialScale:
-                                                              PhotoViewComputedScale
-                                                                  .contained,
+                                                          imageProvider: NetworkImage("${_getController.getProfileById.value.res!.photoUrl}"),
+                                                          minScale: PhotoViewComputedScale.contained * 0.8,
+                                                          maxScale: PhotoViewComputedScale.covered * 2,
+                                                          initialScale: PhotoViewComputedScale.contained,
                                                           enableRotation: true,
-                                                          loadingBuilder:
-                                                              (context,
-                                                                      event) =>
-                                                                  Center(
+                                                          loadingBuilder: (context, event) => Center(
                                                             child: SizedBox(
                                                               width: 20.0,
                                                               height: 20.0,
-                                                              child:
-                                                                  CircularProgressIndicator(
-                                                                value: event ==
-                                                                        null
+                                                              child: CircularProgressIndicator(
+                                                                value: event == null
                                                                     ? 0
-                                                                    : event.cumulativeBytesLoaded /
-                                                                        event
-                                                                            .expectedTotalBytes!,
+                                                                    : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
                                                               ),
                                                             ),
                                                           ),
@@ -740,12 +702,9 @@ class ProfessionsListDetails extends StatelessWidget {
                                     )),
                     ),
                     SizedBox(height: h * 0.02),
-                    Center(
-                      child: Obx(
-                          () => _getController.getProfileById.value.res == null
+                    Center(child: Obx(() => _getController.getProfileById.value.res == null
                               ? const SizedBox()
-                              : Text(
-                                  "${_getController.getProfileById.value.res!.fistName} ${_getController.getProfileById.value.res!.lastName}",
+                              : Text("${_getController.getProfileById.value.res!.fistName} ${_getController.getProfileById.value.res!.lastName}",
                                   style: TextStyle(
                                     fontSize: w * 0.05,
                                     fontWeight: FontWeight.w500,
@@ -756,29 +715,23 @@ class ProfessionsListDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Obx(() =>
-                            _getController.getProfileById.value.res == null
+                        Obx(() => _getController.getProfileById.value.res == null
                                 ? const SizedBox()
                                 : UserDetIalWidget(
                                     labelText: 'Post',
-                                    labelTextCount:
-                                        '${_getController.getProfileById.value.res!.postsCount}',
+                                    labelTextCount: '${_getController.getProfileById.value.res!.postsCount}',
                                   )),
-                        Obx(() =>
-                            _getController.getProfileById.value.res == null
+                        Obx(() => _getController.getProfileById.value.res == null
                                 ? const SizedBox()
                                 : UserDetIalWidget(
                                     labelText: 'Followers',
-                                    labelTextCount:
-                                        '${_getController.getProfileById.value.res!.followersCount}',
+                                    labelTextCount: '${_getController.getProfileById.value.res!.followersCount}',
                                   )),
-                        Obx(() =>
-                            _getController.getProfileById.value.res == null
+                        Obx(() => _getController.getProfileById.value.res == null
                                 ? const SizedBox()
                                 : UserDetIalWidget(
                                     labelText: 'Following',
-                                    labelTextCount:
-                                        '${_getController.getProfileById.value.res!.followingCount}',
+                                    labelTextCount: '${_getController.getProfileById.value.res!.followingCount}',
                                   )),
                       ],
                     ),
@@ -945,8 +898,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                       _getController.nextPagesUserDetails.value = 0;
                                       pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                     },
-                                    overlayColor:
-                                        MaterialStateProperty.all(Colors.red),
+                                    overlayColor: MaterialStateProperty.all(Colors.red),
                                     child: Container(
                                       color: _getController.nextPagesUserDetails.value == 0
                                           ? Colors.blue

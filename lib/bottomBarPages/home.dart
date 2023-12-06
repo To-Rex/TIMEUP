@@ -183,7 +183,6 @@ class HomePage extends StatelessWidget {
         print('start');
       }
     }
-
     _scrollController.addListener(onScroll);
 
     return Obx(() => _getController.getFollowPost.value.res == null
@@ -191,8 +190,7 @@ class HomePage extends StatelessWidget {
       width: w,
       height: h * 0.9,
       child: const Center(child: CircularProgressIndicator()),
-    ) : Obx(
-          () => _getController.getFollowPost.value.res!.isNotEmpty
+    ) : Obx(() => _getController.getFollowPost.value.res!.isNotEmpty || _getController.getFollowPost.value.res != null
           ? Obx(() => _getController.uplAodVideo.value == true
           ? SizedBox(
         width: w,
@@ -208,9 +206,9 @@ class HomePage extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         showLoadingDialog(context, w);
-                        ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {
-                          _getController.changeProfileById(value),
+                        ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {_getController.changeProfileById(value),
                           Navigator.pop(context),
+                          _getController.changeBookingBusinessGetListByID(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())),
                           Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()))
                         });
                       },
@@ -437,8 +435,7 @@ class HomePage extends StatelessWidget {
                 (BuildContext context, RefreshStatus? mode) {
               Widget body;
               if (mode == RefreshStatus.idle) {
-                body = const Text(
-                    "Ma`lumotlarni yangilash uchun tashlang");
+                body = const Text("Ma`lumotlarni yangilash uchun tashlang");
               } else if (mode == RefreshStatus.refreshing) {
                 body = const CircularProgressIndicator(
                   color: Colors.blue,
@@ -488,79 +485,19 @@ class HomePage extends StatelessWidget {
           onLoading: _onLoading,
           child: ListView.builder(
               controller: _scrollController,
-              itemCount: _getController
-                  .getFollowPost.value.res?.length ??
-                  0,
+              itemCount: _getController.getFollowPost.value.res?.length ?? 0,
               itemBuilder: (context, index) {
                 return Column(
                   children: [
                     SizedBox(height: h * 0.02),
-                    if (_getController.getFollowPost.value
-                        .res?[index].posterPhotoUrl !=
-                        null)
+                    if (_getController.getFollowPost.value.res?[index].posterPhotoUrl != null)
                       InkWell(
                         onTap: () {
-                          showDialog(
-                            context: context,
-                            barrierColor:
-                            Colors.black.withOpacity(0.5),
-                            builder: (context) => AlertDialog(
-                              content: SizedBox(
-                                width: w * 0.1,
-                                height: w * 0.2,
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.center,
-                                  children: [
-                                    const Expanded(
-                                        child: SizedBox()),
-                                    SizedBox(
-                                      width: w * 0.1,
-                                      height: w * 0.1,
-                                      child:
-                                      const CircularProgressIndicator(
-                                        color: Colors.blue,
-                                        backgroundColor:
-                                        Colors.white,
-                                        strokeWidth: 2,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: w * 0.07,
-                                    ),
-                                    Text(
-                                      'Loading...',
-                                      style: TextStyle(
-                                        fontSize: w * 0.04,
-                                        fontWeight:
-                                        FontWeight.w500,
-                                      ),
-                                    ),
-                                    const Expanded(
-                                        child: SizedBox()),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                          ApiController()
-                              .profileById(int.parse(
-                              _getController
-                                  .getFollowPost
-                                  .value
-                                  .res![index]
-                                  .businessId
-                                  .toString()))
-                              .then((value) => {
-                            _getController
-                                .changeProfileById(
-                                value),
+                          showLoadingDialog(context, w);
+                          ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {_getController.changeProfileById(value),
                             Navigator.pop(context),
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        ProfessionsListDetails()))
+                            _getController.changeBookingBusinessGetListByID(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())),
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()))
                           });
                         },
                         child: Row(
