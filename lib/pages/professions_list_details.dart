@@ -19,7 +19,7 @@ class ProfessionsListDetails extends StatelessWidget {
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
 
-  var _scrollController = ScrollController();
+  final _scrollController = ScrollController();
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   showLoadingDialog(BuildContext context) {
