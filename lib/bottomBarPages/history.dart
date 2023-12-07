@@ -60,7 +60,7 @@ class HistoryPage extends StatelessWidget {
       ApiController().bookingClientGetList('');
     } else {
       ApiController().bookingClientGetList('');
-      ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, '');
+      //ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, '');
     }
     return SizedBox(
       width: w,

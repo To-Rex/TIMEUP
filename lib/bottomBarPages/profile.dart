@@ -1368,8 +1368,7 @@ class ProfilePage extends StatelessWidget {
                                                   }),
                                             ),
                                           ),
-                                        ),
-                                      ),
+                                        )),
                                       Obx(() => getController.bookingBusinessGetList.value.res == null
                                             ? SizedBox(
                                           width: w,
@@ -1451,8 +1450,7 @@ class ProfilePage extends StatelessWidget {
                                                   )
                                                 ],
                                               )),
-                                        ),
-                                      ),
+                                        )),
                                       BioBusiness(text: getController.meUsers.value.res?.business?.bio ?? '',),
                                     ],
                                   ),
