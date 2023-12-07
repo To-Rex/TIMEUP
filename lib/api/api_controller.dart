@@ -21,10 +21,6 @@ import '../models/sub_category.dart';
 import '../models/verify_sms.dart';
 import '../models/me_user.dart';
 import '../res/getController.dart';
-import 'package:dio/dio.dart';
-import 'package:dio/src/form_data.dart' as dioFormData;
-import 'package:get/get_connect/http/src/multipart/form_data.dart'
-    as getFormData;
 
 class ApiController extends GetxController {
   final GetController _getController = Get.put(GetController());
@@ -44,34 +40,20 @@ class ApiController extends GetxController {
   var businessUpdateMeUrl = 'business/update-me';
   var editPhotoUrl = 'user/edit-photo';
   var deleteMeUrl = 'user/delete-me';
-  //{{host}}/api/v1/business/get-by-category/11
   var getByCategoryUrl = 'business/get-by-category/';
-  //{{host}}/api/v1/business/profile/26
   var profileByIdUrl = 'business/profile/';
-  //{{host}}/api/v1/booking/business/get-list/{{business_id}}
   var bookingBusinessGetListUrl = 'booking/business/get-list/';
-  //{{host}}/api/v1/booking/client/get-list
   var bookingClientGetListUrl = 'booking/client/get-list?date=';
-  //{{host}}/api/v1/business/1/follow
   var businessFollowUrl = 'business/';
-  //{{host}}/api/v1/business/followed/list?limit=300&offset=0
   var businessFollowedListUrl = 'business/followed/list?limit=300&offset=0';
-  //{{host}}/api/v1/booking/client/create
   var bookingClientCreateUrl = 'booking/client/create';
-  //{{host}}/api/v1/business/{{business_id}}/unfollow
   var businessUnFollowUrl = 'business/';
   var businessUnFollowUrl2 = '/unfollow';
-  //{{host}}/api/v1/post/list/5
   var postListUrl = 'post/list/';
-  //{{host}}/api/v1/post/create
   var postCreateUrl = 'post/create';
-  //{{host}}/api/v1/post/get/2
   var postGetUrl = 'post/get/';
-  //{{host}}/api/v1/post/delete/3
   var postDeleteUrl = 'post/delete/';
-  //{{host}}/api/v1/post/list/followed-profiles
   var postListFollowedProfilesUrl = 'post/list/followed-profiles';
-  //{{host}}/api/v1/post/update/2
   var postUpdateUrl = 'post/update/';
 
   Future<String> sendSms(String phoneNumber) async {
