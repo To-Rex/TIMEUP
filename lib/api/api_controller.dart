@@ -119,8 +119,7 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<Register> registerUser(String fistName, String lastName, userName,
-      phoneNumber, address, profilePhoto, birthDate) async {
+  Future<Register> registerUser(String fistName, String lastName, userName, phoneNumber, address, profilePhoto, birthDate) async {
     print(lastName);
     print(userName);
     print(phoneNumber);
@@ -269,8 +268,7 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> createBusiness(int categoryId, officeAddress, officeName,
-      experience, bio, dayOffs) async {
+  Future<bool> createBusiness(int categoryId, officeAddress, officeName, experience, bio, dayOffs) async {
     var response = await http.post(Uri.parse(url + businessCreateUrl),
         body: jsonEncode({
           "category_id": categoryId,
@@ -292,8 +290,7 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> updateBusiness(int id, int categoryId, officeAddress, officeName,
-      experience, bio, dayOffs) async {
+  Future<bool> updateBusiness(int id, int categoryId, officeAddress, officeName, experience, bio, dayOffs) async {
     var response = await http.put(Uri.parse(url + businessUpdateMeUrl),
         body: jsonEncode({
           "id": id,
@@ -574,8 +571,7 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> updatePost(
-      id, businessId, String title, String description) async {
+  Future<bool> updatePost(id, businessId, String title, String description) async {
     _getController.uplAodVideo.value = true;
     var headers = {
       'Authorization': 'Bearer ${GetStorage().read('token')}',
