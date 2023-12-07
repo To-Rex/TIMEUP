@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:time_up/elements/functions.dart';
 import 'package:time_up/models/last_send_sms.dart';
 import 'package:time_up/models/register_model.dart';
 import '../models/booking_business_get.dart';
@@ -543,7 +545,8 @@ class ApiController extends GetxController {
     }
   }
 
-  /*Future<bool> createPost(String title, String description, businessId, photo,video) async {
+  Future<bool> createPost(String title, String description, businessId, photo, video,context) async {
+    _getController.uplAodVideo.value = true;
     var headers = {
       'Authorization': 'Bearer ${GetStorage().read('token')}',
     };
@@ -559,35 +562,11 @@ class ApiController extends GetxController {
     }
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
-
-
     if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
-  }*/
-  Future<bool> createPost(
-      String title, String description, businessId, photo, video) async {
-    _getController.uplAodVideo.value = true;
-    var headers = {
-      'Authorization': 'Bearer ${GetStorage().read('token')}',
-    };
-    var request = http.MultipartRequest('POST', Uri.parse(url + postCreateUrl));
-    request.fields.addAll({
-      'title': title,
-      'description': description,
-      'business_id': businessId.toString(),
-    });
-    request.files.add(await http.MultipartFile.fromPath(
-        'photo', _getController.postFile.value));
-    if (video != '') {
-      request.files.add(await http.MultipartFile.fromPath('video', video));
-    }
-    request.headers.addAll(headers);
-    http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
+      var responseBody = await response.stream.bytesToString();
+      var jsonResponse = json.decode(responseBody);
       _getController.uplAodVideo.value = false;
+      Toast.showToast(context, '${jsonResponse['res']['spending_minute'].toString()} daqiqa ichida postizni tasdiqlash kerak', Colors.blue, Colors.white);
       return true;
     } else {
       _getController.uplAodVideo.value = false;

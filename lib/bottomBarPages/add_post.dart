@@ -772,17 +772,14 @@ class _AddPostPage extends State<AddPostPage> {
                                   .createPost(
                                       titleController.text,
                                       descriptionController.text,
-                                      _getController
-                                          .meUsers.value.res!.business!.id!,
+                                      _getController.meUsers.value.res!.business!.id!,
                                       _getController.postFile.value.toString(),
-                                      _getController.postVideoFile.value
-                                          .toString())
+                                      _getController.postVideoFile.value.toString(),context)
                                   .then((value) => {
                                         if (value)
                                           {
                                             _getController.changePostFile(''),
-                                            _getController
-                                                .changePostVideoFile(''),
+                                            _getController.changePostVideoFile(''),
                                             titleController.clear(),
                                             descriptionController.clear(),
                                             _getController.changeIndex(0),
