@@ -491,9 +491,9 @@ class HistoryPage extends StatelessWidget {
                                                   ),
                                                   onTap: () {
                                                     showLoadingDialog(context, w);
-                                                    ApiController().deleteBusinessBooking(_getController.bookingBusinessGetList.value.res![index].id!,context).then((value) => {
+                                                    ApiController().deleteClientBooking(_getController.bookingBusinessGetList.value.res![index].id!,context).then((value) => {
                                                       if (value){
-                                                        ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, ''),
+                                                        ApiController().bookingClientGetList(''),
                                                       },
                                                       Navigator.pop(context)
                                                     });
