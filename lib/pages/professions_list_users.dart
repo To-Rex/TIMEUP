@@ -15,8 +15,7 @@ class ProfessionsListUsers extends StatelessWidget {
   }) : super(key: key);
 
   final GetController _getController = Get.put(GetController());
-  final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
     ApiController().getByCategory(_getController.categoryByID.value).then((value) => {
@@ -76,9 +75,7 @@ class ProfessionsListUsers extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     _getController.clearByCategory();
-    ApiController()
-        .getByCategory(_getController.categoryByID.value)
-        .then((value) => _getController.changeByCategory(value));
+    ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value));
     return Column(
       children: [
         SizedBox(
@@ -170,6 +167,10 @@ class ProfessionsListUsers extends StatelessWidget {
                     child: ListView.builder(
                       itemBuilder: (context, index) {
                         return InkWell(
+                          splashColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
                           onTap: () {
                             showLoadingDialog(context);
                             ApiController().profileById(_getController.getByCategory.value.res![index].businessId!).then((value) => {

@@ -894,6 +894,10 @@ class ProfessionsListDetails extends StatelessWidget {
                                 Expanded(
                                   flex: 1,
                                   child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
                                     onTap: () {
                                       _getController.nextPagesUserDetails.value = 0;
                                       pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
@@ -925,6 +929,10 @@ class ProfessionsListDetails extends StatelessWidget {
                                 Expanded(
                                   flex: 1,
                                   child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
                                     onTap: () {
                                       _getController.changeSheetPages(0);
                                       showBottomSheetList(context);
@@ -956,6 +964,10 @@ class ProfessionsListDetails extends StatelessWidget {
                                 Expanded(
                                   flex: 1,
                                   child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
                                     onTap: () {
                                       _getController.nextPagesUserDetails.value = 21;
                                       pageController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Curves.ease);
@@ -1069,6 +1081,10 @@ class ProfessionsListDetails extends StatelessWidget {
                                         itemCount: _getController.getPostList.value.res!.length,
                                         itemBuilder: (context, index) {
                                           return InkWell(
+                                            splashColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
                                             onTap: () {
                                               Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getPostList.value.res![index].id,)));
                                             },
@@ -1097,7 +1113,12 @@ class ProfessionsListDetails extends StatelessWidget {
                                                           width: w * 0.28,
                                                           height: h * 0.13,
                                                           child: Center(
-                                                            child: InkWell(onTap: () {
+                                                            child: InkWell(
+                                                              splashColor: Colors.transparent,
+                                                              hoverColor: Colors.transparent,
+                                                              focusColor: Colors.transparent,
+                                                              highlightColor: Colors.transparent,
+                                                              onTap: () {
                                                               Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getPostList.value.res![index].id,)));
                                                             },
                                                               child: Container(
@@ -1175,8 +1196,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                     border: Border.all(color: Colors.grey),
                                   ),
                                   //text bio
-                                  child: Obx(() =>
-                                      _getController.getProfileById.value.res == null
+                                  child: Obx(() => _getController.getProfileById.value.res == null
                                           ? const SizedBox()
                                           : ReadMoreText(
                                               _getController.getProfileById.value.res!.bio ?? '',
