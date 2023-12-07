@@ -15,8 +15,7 @@ class ProfessionsListElements extends StatelessWidget {
     required this.onTap,
   }) : super(key: key);
   final GetController _getController = Get.put(GetController());
-  final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
     ApiController().getSubCategory(index!.toInt()).then((value) => {
@@ -40,8 +39,7 @@ class ProfessionsListElements extends StatelessWidget {
         });
     return Column(
       children: [
-        SizedBox(
-            height: h * 0.06,
+        SizedBox(height: h * 0.06,
           child: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -77,8 +75,7 @@ class ProfessionsListElements extends StatelessWidget {
                         builder: (BuildContext context, RefreshStatus? mode) {
                           Widget body;
                           if (mode == RefreshStatus.idle) {
-                            body = const Text(
-                                "Ma`lumotlarni yangilash uchun tashlang");
+                            body = const Text("Ma`lumotlarni yangilash uchun tashlang");
                           } else if (mode == RefreshStatus.refreshing) {
                             body = const CircularProgressIndicator(
                               color: Colors.blue,
@@ -88,8 +85,7 @@ class ProfessionsListElements extends StatelessWidget {
                           } else if (mode == RefreshStatus.failed) {
                             body = const Text("Load Failed!Click retry!");
                           } else if (mode == RefreshStatus.canRefresh) {
-                            body = const Text(
-                                "Ma`lumotlarni yangilash uchun tashlang");
+                            body = const Text("Ma`lumotlarni yangilash uchun tashlang");
                           } else {
                             body = const Text("Ma`lumotlar yangilandi");
                           }
@@ -129,13 +125,14 @@ class ProfessionsListElements extends StatelessWidget {
                       child: ListView.builder(
                         itemBuilder: (context, index) {
                           return InkWell(
+                            splashColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () {
-                              _getController.categoryByID.value = _getController
-                                  .subCategory.value.res![index].id!;
+                              _getController.categoryByID.value = _getController.subCategory.value.res![index].id!;
                               _getController.enters.value = 2;
-                              _getController.changeTitleListElements(
-                                  _getController
-                                      .subCategory.value.res![index].name!);
+                              _getController.changeTitleListElements(_getController.subCategory.value.res![index].name!);
                             },
                             child: Container(
                               height: h * 0.04,

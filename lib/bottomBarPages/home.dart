@@ -492,6 +492,10 @@ class HomePage extends StatelessWidget {
                     SizedBox(height: h * 0.02),
                     if (_getController.getFollowPost.value.res?[index].posterPhotoUrl != null)
                       InkWell(
+                        splashColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
                         onTap: () {
                           showLoadingDialog(context, w);
                           ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {_getController.changeProfileById(value),
