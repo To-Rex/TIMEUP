@@ -25,12 +25,12 @@ class BusinessEditButton extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
+          foregroundColor: Colors.blue.shade900,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radius),
           ),
         ),
-        child: Text(
-          text,
+        child: Text(text,
           style: TextStyle(
             fontSize: w * 0.04,
             fontWeight: FontWeight.w500,

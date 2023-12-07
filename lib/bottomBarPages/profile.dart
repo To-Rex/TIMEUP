@@ -1053,8 +1053,7 @@ class ProfilePage extends StatelessWidget {
                                   },
                                 )
                                     : const SizedBox()),
-                                Obx(() => getController.meUsers.value.res?.business ==
-                                    null
+                                Obx(() => getController.meUsers.value.res?.business == null
                                     ? EditButton(
                                   text: 'Edit profile',
                                   onPressed: () {
