@@ -55,8 +55,13 @@ class ApiController extends GetxController {
   var postDeleteUrl = 'post/delete/';
   var postListFollowedProfilesUrl = 'post/list/followed-profiles';
   var postUpdateUrl = 'post/update/';
+  //{{host}}/api/v1/booking/business/delete/2
+  var deleteBookingBusinessUrl = 'booking/business/delete/';
+  //{{host}}/api/v1/booking/client/delete/4
+  var deleteBookingClientUrl = 'booking/client/delete/';
 
   Future<String> sendSms(String phoneNumber) async {
+    print(phoneNumber);
     var response = await http.post(
       Uri.parse(url + smsUrl),
       body: jsonEncode({
@@ -72,15 +77,19 @@ class ApiController extends GetxController {
   }
 
   Future<LastSendSms> getLastSms(String phoneNumber) async {
-    var response = await http.post(
-      Uri.parse(url + lastSmsUrl),
-      body: jsonEncode({
-        "phone_number": phoneNumber.toString(),
-      }),
-      headers: {"Content-Type": "application/json"},
+    print(phoneNumber);
+    var response = await http.post(Uri.parse(url + lastSmsUrl),
+        body: jsonEncode({
+          "phone_number": phoneNumber.toString(),
+        }),
+        headers: {"Content-Type": "application/json"}
     );
     print(response.body);
-    return LastSendSms.fromJson(jsonDecode(response.body));
+    if (response.statusCode == 200) {
+      return LastSendSms.fromJson(jsonDecode(response.body));
+    } else {
+      return LastSendSms(res: LastSendSmsRes(), status: false);
+    }
   }
 
   Future<VerifySms> verifySms(phoneNumber, code) async {
@@ -576,4 +585,37 @@ class ApiController extends GetxController {
       return false;
     }
   }
+
+  Future<bool> deleteBusinessBooking(id,context) async{
+    var response = await http.delete(
+      Uri.parse('$url$deleteBookingBusinessUrl$id'),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      Toast.showToast(context, 'Sizning buyurtmangiz o\'chirildi', Colors.blue, Colors.white);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> deleteClientBooking(id,context) async{
+    var response = await http.delete(
+      Uri.parse('$url$deleteBookingClientUrl$id'),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      Toast.showToast(context, 'Sizning buyurtmangiz o\'chirildi', Colors.blue, Colors.white);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

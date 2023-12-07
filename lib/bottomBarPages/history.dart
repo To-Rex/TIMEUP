@@ -270,49 +270,39 @@ class HistoryPage extends StatelessWidget {
                         children: [
                           SizedBox(
                             child: Obx(() => _getController.bookingBusinessGetList.value.res!.isEmpty
-                                ? const Center(
-                                    child: Text('Ma`lumot mavjud emas'),
-                                  )
+                                ? const Center(child: Text('Ma`lumot mavjud emas'))
                                 : SizedBox(
                                     height: h * 0.68,
                                     child: ListView.builder(
                                       itemCount: _getController.bookingBusinessGetList.value.res!.length,
                                       itemBuilder: (context, index) {
                                         return Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                                           children: [
+                                            SizedBox(width: w * 0.03),
                                             _getController.bookingBusinessGetList.value.res![index].photoUrl == null
                                                 ? CircleAvatar(
                                                     radius: w * 0.08,
-                                                    backgroundImage:
-                                                        const AssetImage(
-                                                      'assets/images/doctor.png',
-                                                    ),
+                                                    backgroundImage: const AssetImage('assets/images/doctor.png',),
                                                   )
                                                 : CircleAvatar(
                                                     radius: w * 0.08,
-                                                    backgroundImage:
-                                                        NetworkImage(
-                                                      _getController.bookingBusinessGetList.value.res![index].photoUrl!,
-                                                    ),
+                                                    backgroundImage: NetworkImage(_getController.bookingBusinessGetList.value.res![index].photoUrl!,),
                                                   ),
+                                            SizedBox(width: w * 0.03),
                                             SizedBox(
                                               width: w * 0.6,
                                               child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     _getController.bookingBusinessGetList.value.res![index].userName!,
                                                     style: TextStyle(
                                                       fontSize: w * 0.04,
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                                      fontWeight: FontWeight.w500,
                                                       color: Colors.black,
                                                     ),
                                                   ),
-                                                  //User profession
                                                   Text(
                                                     '${_getController.bookingBusinessGetList.value.res![index].fistName!} ${_getController.bookingBusinessGetList.value.res![index].lastName!}',
                                                     style: TextStyle(
@@ -328,29 +318,68 @@ class HistoryPage extends StatelessWidget {
                                                         color: Colors.blue,
                                                       ),
                                                       SizedBox(width: w * 0.01),
-                                                      Text(
-                                                        _getController.bookingBusinessGetList.value.res![index].phoneNumber!,
+                                                      Text(_getController.bookingBusinessGetList.value.res![index].phoneNumber!,
                                                         style: TextStyle(
                                                           fontSize: w * 0.04,
-                                                          fontWeight:
-                                                              FontWeight.w400,
+                                                          fontWeight: FontWeight.w400,
                                                         ),
                                                       ),
                                                     ],
                                                   ),
-                                                  Text(
-                                                    'Sizning navbatingiz: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}',
+                                                  Text('Sizning navbatingiz: ${_getController.bookingBusinessGetList.value.res![index].date!} ${_getController.bookingBusinessGetList.value.res![index].time!}',
                                                     style: TextStyle(
                                                       fontSize: w * 0.03,
                                                       fontWeight: FontWeight.w400,
                                                     ),
                                                   ),
-                                                  const Divider(
-                                                    color: Colors.grey,
-                                                  ),
+                                                  const Divider(color: Colors.grey),
                                                   SizedBox(height: w * 0.01)
                                                 ],
                                               ),
+                                            ),
+                                            const Expanded(child: SizedBox()),
+                                            PopupMenuButton(
+                                              icon: const Icon(Icons.more_vert),
+                                              itemBuilder: (context) => [
+                                                PopupMenuItem(
+                                                  child: Row(
+                                                    children: [
+                                                      HeroIcon(
+                                                        HeroIcons.pencil,
+                                                        size: w * 0.05,
+                                                        color: Colors.blue,
+                                                      ),
+                                                      SizedBox(width: w * 0.02),
+                                                      Text('Edit', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
+                                                    ],
+                                                  ),
+                                                  onTap: () {
+                                                  },
+                                                ),
+                                                PopupMenuItem(
+                                                  child: Row(
+                                                    children: [
+                                                      HeroIcon(
+                                                        HeroIcons.trash,
+                                                        size: w * 0.05,
+                                                        color: Colors.red,
+                                                      ),
+                                                      SizedBox(width: w * 0.02),
+                                                      Text('Delete', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
+                                                    ],
+                                                  ),
+                                                  onTap: () {
+                                                    showLoadingDialog(context, w);
+                                                    ApiController().deleteClientBooking(_getController.bookingBusinessGetList.value.res![index].id!,context).then((value) => {
+                                                      if (value){
+                                                        ApiController().bookingClientGetList(''),
+                                                      },
+                                                      Navigator.pop(context)
+                                                    });
+
+                                                  },
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         );
@@ -371,26 +400,21 @@ class HistoryPage extends StatelessWidget {
                                         return Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                                           children: [
+                                            SizedBox(width: w * 0.03),
                                             _getController.bookingBusinessGetList.value.res![index].photoUrl == null
                                                 ? CircleAvatar(
                                                     radius: w * 0.08,
-                                                    backgroundImage:
-                                                        const AssetImage('assets/images/doctor.png',
-                                                    ),
+                                                    backgroundImage: const AssetImage('assets/images/doctor.png',),
                                                   )
                                                 : CircleAvatar(
                                                     radius: w * 0.08,
-                                                    backgroundImage:
-                                                        NetworkImage(
-                                                      //"${ApiController().url.substring(0, ApiController().url.length - 1)}${_getController.bookingBusinessGetList1.value.res![index].photoUrl!}",
-                                                      _getController.bookingBusinessGetList.value.res![index].photoUrl!,
-                                                    ),
+                                                    backgroundImage: NetworkImage(_getController.bookingBusinessGetList.value.res![index].photoUrl!,),
                                                   ),
+                                            SizedBox(width: w * 0.03),
                                             SizedBox(
                                               width: w * 0.6,
                                               child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     _getController.bookingBusinessGetList.value.res![index].userName!,
@@ -434,6 +458,49 @@ class HistoryPage extends StatelessWidget {
                                                 ],
                                               ),
                                             ),
+                                            const Expanded(child: SizedBox()),
+                                            PopupMenuButton(
+                                              icon: const Icon(Icons.more_vert),
+                                              itemBuilder: (context) => [
+                                                PopupMenuItem(
+                                                  child: Row(
+                                                    children: [
+                                                      HeroIcon(
+                                                        HeroIcons.pencil,
+                                                        size: w * 0.05,
+                                                        color: Colors.blue,
+                                                      ),
+                                                      SizedBox(width: w * 0.02),
+                                                      Text('Edit', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
+                                                    ],
+                                                  ),
+                                                  onTap: () {
+                                                  },
+                                                ),
+                                                PopupMenuItem(
+                                                  child: Row(
+                                                    children: [
+                                                      HeroIcon(
+                                                        HeroIcons.trash,
+                                                        size: w * 0.05,
+                                                        color: Colors.red,
+                                                      ),
+                                                      SizedBox(width: w * 0.02),
+                                                      Text('Delete', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
+                                                    ],
+                                                  ),
+                                                  onTap: () {
+                                                    showLoadingDialog(context, w);
+                                                    ApiController().deleteBusinessBooking(_getController.bookingBusinessGetList.value.res![index].id!,context).then((value) => {
+                                                      if (value){
+                                                        ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, ''),
+                                                      },
+                                                      Navigator.pop(context)
+                                                    });
+                                                  },
+                                                ),
+                                              ],
+                                            ),
                                           ],
                                         );
                                       },
@@ -451,9 +518,7 @@ class HistoryPage extends StatelessWidget {
                   ? SizedBox(
                       child: Obx(
                         () => _getController.bookingBusinessGetList.value.res!.isEmpty
-                            ? const Center(
-                                child: Text('Ma`lumot mavjud emas'),
-                              )
+                            ? const Center(child: Text('Ma`lumot mavjud emas'),)
                             : SizedBox(
                                 height: h * 0.68,
                                 child: ListView.builder(
@@ -462,6 +527,7 @@ class HistoryPage extends StatelessWidget {
                                     return Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                                       children: [
+                                        SizedBox(width: w * 0.03),
                                         _getController.bookingBusinessGetList.value.res![index].photoUrl == null
                                             ? CircleAvatar(
                                                 radius: w * 0.08,
@@ -473,21 +539,20 @@ class HistoryPage extends StatelessWidget {
                                                   _getController.bookingBusinessGetList.value.res![index].photoUrl!,
                                                 ),
                                               ),
+                                        SizedBox(width: w * 0.03),
                                         SizedBox(
                                           width: w * 0.6,
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                _getController.bookingBusinessGetList.value.res![index].userName!,
+                                              Text(_getController.bookingBusinessGetList.value.res![index].userName!,
                                                 style: TextStyle(
                                                   fontSize: w * 0.04,
                                                   fontWeight: FontWeight.w500,
                                                   color: Colors.black,
                                                 ),
                                               ),
-                                              Text(
-                                                '${_getController.bookingBusinessGetList.value.res![index].fistName!} ${_getController.bookingBusinessGetList.value.res![index].lastName!}',
+                                              Text('${_getController.bookingBusinessGetList.value.res![index].fistName!} ${_getController.bookingBusinessGetList.value.res![index].lastName!}',
                                                 style: TextStyle(
                                                   fontSize: w * 0.04,
                                                   fontWeight: FontWeight.w400,
@@ -501,8 +566,7 @@ class HistoryPage extends StatelessWidget {
                                                     color: Colors.blue,
                                                   ),
                                                   SizedBox(width: w * 0.01),
-                                                  Text(
-                                                    _getController.bookingBusinessGetList.value.res![index].phoneNumber!,
+                                                  Text(_getController.bookingBusinessGetList.value.res![index].phoneNumber!,
                                                     style: TextStyle(
                                                       fontSize: w * 0.04,
                                                       fontWeight: FontWeight.w400,
@@ -520,6 +584,43 @@ class HistoryPage extends StatelessWidget {
                                               SizedBox(height: w * 0.01)
                                             ],
                                           ),
+                                        ),
+                                        const Expanded(child: SizedBox()),
+                                        PopupMenuButton(
+                                          icon: const Icon(Icons.more_vert),
+                                          itemBuilder: (context) => [
+                                            PopupMenuItem(
+                                              child: Row(
+                                                children: [
+                                                  HeroIcon(
+                                                    HeroIcons.pencil,
+                                                    size: w * 0.05,
+                                                    color: Colors.blue,
+                                                  ),
+                                                  SizedBox(width: w * 0.02),
+                                                  Text('Edit', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
+                                                ],
+                                              ),
+                                              onTap: () {
+                                              },
+                                            ),
+                                            PopupMenuItem(
+                                              child: Row(
+                                                children: [
+                                                  HeroIcon(
+                                                    HeroIcons.trash,
+                                                    size: w * 0.05,
+                                                    color: Colors.red,
+                                                  ),
+                                                  SizedBox(width: w * 0.02),
+                                                  Text('Delete', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
+                                                ],
+                                              ),
+                                              onTap: () {
+                                                ApiController().deleteClientBooking(_getController.bookingBusinessGetList.value.res![index].id!,context);
+                                              },
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     );

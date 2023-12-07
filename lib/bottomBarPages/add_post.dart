@@ -187,8 +187,7 @@ class _AddPostPage extends State<AddPostPage> {
           return false;
         }
       },
-      child: Obx(() => _getController.postFile.value == '' &&
-              _getController.postVideoFile.value == ''
+      child: Obx(() => _getController.postFile.value == '' && _getController.postVideoFile.value == ''
           ? SizedBox(
               height: MediaQuery.of(context).size.height * 0.81,
               width: MediaQuery.of(context).size.width,
@@ -236,8 +235,7 @@ class _AddPostPage extends State<AddPostPage> {
                             radius: 30,
                             child: IconButton(
                               onPressed: () async {
-                                if (await Permission.camera
-                                    .request()
+                                if (await Permission.camera.request()
                                     .isGranted) {
                                   await controller.takePicture().then((value) {
                                     _getController.changePostFile(value.path);
@@ -254,8 +252,7 @@ class _AddPostPage extends State<AddPostPage> {
                           IconButton(
                             onPressed: () {
                               if (controller.description == _cameras.first) {
-                                controller = CameraController(
-                                    _cameras.last, ResolutionPreset.max);
+                                controller = CameraController(_cameras.last, ResolutionPreset.max);
                                 controller.initialize().then((_) {
                                   if (!mounted) {
                                     return;
@@ -273,8 +270,7 @@ class _AddPostPage extends State<AddPostPage> {
                                 });
                                 setState(() {});
                               } else {
-                                controller = CameraController(
-                                    _cameras.first, ResolutionPreset.max);
+                                controller = CameraController(_cameras.first, ResolutionPreset.max);
                                 controller.initialize().then((_) {
                                   if (!mounted) {
                                     return;
@@ -339,22 +335,18 @@ class _AddPostPage extends State<AddPostPage> {
                                 child: Container(
                                   width: w,
                                   height: h * 0.1,
-                                  padding: EdgeInsets.only(
-                                      left: w * 0.03, right: w * 0.03),
+                                  padding: EdgeInsets.only(left: w * 0.03, right: w * 0.03),
                                   margin: EdgeInsets.all(w * 0.02),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    border:
-                                        Border.all(color: Colors.grey[300]!),
+                                    border: Border.all(color: Colors.grey[300]!),
                                   ),
                                   child: SizedBox(
                                       width: w * 0.005,
                                       height: h * 0.01,
                                       child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text('Iltimos, rasm yuklang',
                                               style: TextStyle(
@@ -370,10 +362,7 @@ class _AddPostPage extends State<AddPostPage> {
                                       )),
                                 ),
                               )
-                            : _getController.postVideoFile.value != '' &&
-                                        _getController.postFile.value != '' ||
-                                    _getController.postVideoFile.value != '' &&
-                                        _getController.postFile.value == ''
+                            : _getController.postVideoFile.value != '' && _getController.postFile.value != '' || _getController.postVideoFile.value != '' && _getController.postFile.value == ''
                                 ? Column(
                                     children: [
                                       Text('Rasm yoki video yuklang',
@@ -384,37 +373,22 @@ class _AddPostPage extends State<AddPostPage> {
                                       Stack(
                                         children: [
                                           Container(
-                                            margin: EdgeInsets.only(
-                                                bottom: h * 0.02),
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.32,
+                                            margin: EdgeInsets.only(bottom: h * 0.02),
+                                            width: MediaQuery.of(context).size.width,
+                                            height: MediaQuery.of(context).size.height * 0.32,
                                             child: Image.file(
-                                                File(_getController
-                                                    .postFile.value),
-                                                fit: BoxFit.cover),
+                                                File(_getController.postFile.value), fit: BoxFit.cover),
                                           ),
                                           //edit icon button bottom, end
                                           Positioned(
                                             bottom: h * 0.022,
                                             right: w * 0.01,
                                             child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.1,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.05,
+                                              width: MediaQuery.of(context).size.width * 0.1,
+                                              height: MediaQuery.of(context).size.height * 0.05,
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
+                                                borderRadius: BorderRadius.circular(10),
                                               ),
                                               child: IconButton(
                                                 onPressed: () {
@@ -437,11 +411,7 @@ class _AddPostPage extends State<AddPostPage> {
                                     ],
                                   )
                                 : const SizedBox()),
-                        Obx(
-                          () => _getController.postVideoFile.value != '' &&
-                                      _getController.postFile.value != '' ||
-                                  _getController.postVideoFile.value != '' &&
-                                      _getController.postFile.value == ''
+                        Obx(() => _getController.postVideoFile.value != '' && _getController.postFile.value != '' || _getController.postVideoFile.value != '' && _getController.postFile.value == ''
                               ? Column(
                                   children: [
                                     Text('Video yuklang',
@@ -453,8 +423,7 @@ class _AddPostPage extends State<AddPostPage> {
                                       child: FutureBuilder(
                                         future: _initializeVideoPlayerFuture,
                                         builder: (context, snapshot) {
-                                          if (snapshot.connectionState ==
-                                              ConnectionState.done) {
+                                          if (snapshot.connectionState == ConnectionState.done) {
                                             return Stack(
                                               children: [
                                                 Container(
@@ -462,136 +431,80 @@ class _AddPostPage extends State<AddPostPage> {
                                                   height: h * 0.32,
                                                   decoration: BoxDecoration(
                                                     color: Colors.black,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            1),
+                                                    borderRadius: BorderRadius.circular(1),
                                                   ),
                                                   child: FittedBox(
                                                     fit: BoxFit.contain,
                                                     child: SizedBox(
-                                                      width: _controller
-                                                          .value.size.width,
-                                                      height: _controller
-                                                          .value.size.height,
-                                                      child: VideoPlayer(
-                                                          _controller),
+                                                      width: _controller.value.size.width,
+                                                      height: _controller.value.size.height,
+                                                      child: VideoPlayer(_controller),
                                                     ),
                                                   ),
                                                 ),
                                                 Positioned(
                                                   bottom: 0,
                                                   child: Container(
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height *
-                                                              0.065,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                              .size
-                                                              .width,
-                                                      color: Colors.black
-                                                          .withOpacity(0.5),
+                                                      height: MediaQuery.of(context).size.height * 0.065,
+                                                      width: MediaQuery.of(context).size.width,
+                                                      color: Colors.black.withOpacity(0.5),
                                                       child: Column(
                                                         children: [
                                                           SizedBox(
-                                                            height: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .height *
-                                                                0.05,
+                                                            height: MediaQuery.of(context).size.height * 0.05,
                                                             child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceEvenly,
+                                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                               children: [
                                                                 IconButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    _controller.seekTo(Duration(
-                                                                        seconds:
-                                                                            _controller.value.position.inSeconds -
-                                                                                10));
+                                                                  onPressed: () {
+                                                                    _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds - 10));
                                                                   },
-                                                                  icon:
-                                                                      const HeroIcon(
-                                                                    HeroIcons
-                                                                        .arrowLeft,
-                                                                    color: Colors
-                                                                        .white,
+                                                                  icon: const HeroIcon(
+                                                                    HeroIcons.arrowLeft,
+                                                                    color: Colors.white,
                                                                   ),
-                                                                  color: Colors
-                                                                      .white,
+                                                                  color: Colors.white,
                                                                 ),
                                                                 IconButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    if (_controller
-                                                                        .value
-                                                                        .isPlaying) {
-                                                                      _controller
-                                                                          .pause();
+                                                                  onPressed: () {
+                                                                    if (_controller.value.isPlaying) {
+                                                                      _controller.pause();
                                                                     } else {
-                                                                      _controller
-                                                                          .play();
+                                                                      _controller.play();
                                                                     }
-                                                                    setState(
-                                                                        () {});
+                                                                    setState(() {});
                                                                   },
-                                                                  icon: _controller
-                                                                          .value
-                                                                          .isPlaying
+                                                                  icon: _controller.value.isPlaying
                                                                       ? const HeroIcon(
-                                                                          HeroIcons
-                                                                              .pause,
-                                                                          color:
-                                                                              Colors.white,
+                                                                          HeroIcons.pause,
+                                                                          color: Colors.white,
                                                                         )
                                                                       : const HeroIcon(
-                                                                          HeroIcons
-                                                                              .play,
-                                                                          color:
-                                                                              Colors.white,
+                                                                          HeroIcons.play,
+                                                                          color: Colors.white,
                                                                         ),
-                                                                  color: Colors
-                                                                      .white,
+                                                                  color: Colors.white,
                                                                 ),
                                                                 IconButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    _controller.seekTo(Duration(
-                                                                        seconds:
-                                                                            _controller.value.position.inSeconds +
-                                                                                10));
+                                                                  onPressed: () {
+                                                                    _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds + 10));
                                                                   },
-                                                                  icon:
-                                                                      const HeroIcon(
-                                                                    HeroIcons
-                                                                        .arrowRight,
-                                                                    color: Colors
-                                                                        .white,
+                                                                  icon: const HeroIcon(
+                                                                    HeroIcons.arrowRight,
+                                                                    color: Colors.white,
                                                                   ),
-                                                                  color: Colors
-                                                                      .white,
+                                                                  color: Colors.white,
                                                                 ),
                                                               ],
                                                             ),
                                                           ),
                                                           SizedBox(
-                                                            child:
-                                                                VideoProgressIndicator(
-                                                              _controller,
-                                                              allowScrubbing:
-                                                                  true,
-                                                              colors:
-                                                                  const VideoProgressColors(
-                                                                playedColor:
-                                                                    Colors.blue,
-                                                                bufferedColor:
-                                                                    Colors.grey,
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .white,
+                                                            child: VideoProgressIndicator(_controller,
+                                                              allowScrubbing: true,
+                                                              colors: const VideoProgressColors(
+                                                                playedColor: Colors.blue,
+                                                                bufferedColor: Colors.grey,
+                                                                backgroundColor: Colors.white,
                                                               ),
                                                             ),
                                                           ),
@@ -603,16 +516,8 @@ class _AddPostPage extends State<AddPostPage> {
                                                   bottom: h * 0.015,
                                                   right: w * 0.01,
                                                   child: Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.1,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.05,
+                                                    width: MediaQuery.of(context).size.width * 0.1,
+                                                    height: MediaQuery.of(context).size.height * 0.05,
                                                     decoration: BoxDecoration(
                                                       color: Colors.white,
                                                       borderRadius:
@@ -634,8 +539,7 @@ class _AddPostPage extends State<AddPostPage> {
                                             );
                                           } else {
                                             return const Center(
-                                              child:
-                                                  CircularProgressIndicator(),
+                                              child: CircularProgressIndicator(),
                                             );
                                           }
                                         },
@@ -648,27 +552,18 @@ class _AddPostPage extends State<AddPostPage> {
                                     Container(
                                       margin: EdgeInsets.only(bottom: h * 0.02),
                                       width: MediaQuery.of(context).size.width,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.32,
-                                      child: Image.file(
-                                          File(_getController.postFile.value),
-                                          fit: BoxFit.cover),
+                                      height: MediaQuery.of(context).size.height * 0.32,
+                                      child: Image.file(File(_getController.postFile.value), fit: BoxFit.cover),
                                     ),
                                     Positioned(
                                       bottom: h * 0.022,
                                       right: w * 0.01,
                                       child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.1,
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.05,
+                                        width: MediaQuery.of(context).size.width * 0.1,
+                                        height: MediaQuery.of(context).size.height * 0.05,
                                         decoration: BoxDecoration(
                                           color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(10),
                                         ),
                                         child: IconButton(
                                           onPressed: () {
@@ -752,14 +647,11 @@ class _AddPostPage extends State<AddPostPage> {
                           height: MediaQuery.of(context).size.height * 0.05,
                           child: ElevatedButton(
                             onPressed: () {
-                              if (_getController.postFile.value == '') {
+                              /*if (_getController.postFile.value == '') {
                                 Toast.showToast(
-                                    context,
-                                    'Iltimos, rasm yuklang',
-                                    Colors.red,
-                                    Colors.white);
+                                    context, 'Iltimos, rasm yuklang', Colors.red, Colors.white);
                                 return;
-                              }
+                              }*/
                               if (titleController.text == '') {
                                 Toast.showToast(
                                     context,
@@ -768,33 +660,17 @@ class _AddPostPage extends State<AddPostPage> {
                                     Colors.white);
                                 return;
                               }
-                              ApiController()
-                                  .createPost(
-                                      titleController.text,
-                                      descriptionController.text,
-                                      _getController.meUsers.value.res!.business!.id!,
-                                      _getController.postFile.value.toString(),
-                                      _getController.postVideoFile.value.toString(),context)
-                                  .then((value) => {
-                                        if (value)
-                                          {
+                              ApiController().createPost(titleController.text, descriptionController.text, _getController.meUsers.value.res!.business!.id!, _getController.postFile.value.toString(), _getController.postVideoFile.value.toString(),context).then((value) => {
+                                        if (value){
                                             _getController.changePostFile(''),
                                             _getController.changePostVideoFile(''),
                                             titleController.clear(),
                                             descriptionController.clear(),
                                             _getController.changeIndex(0),
                                             ApiController().getUserData(),
-                                            Toast.showToast(
-                                                context,
-                                                'Post created',
-                                                Colors.green,
-                                                Colors.white),
-                                          }
-                                        else
-                                          {
-                                            Toast.showToast(context, 'Error',
-                                                Colors.red, Colors.white),
-                                          }
+                                        } else {
+                                            Toast.showToast(context, 'Nimadur Xato ketdi', Colors.red, Colors.white),
+                                        }
                                       });
                             },
                             style: ElevatedButton.styleFrom(
