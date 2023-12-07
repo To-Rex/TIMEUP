@@ -545,8 +545,7 @@ class ProfilePage extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.5,
           decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -588,27 +587,16 @@ class ProfilePage extends StatelessWidget {
               const Divider(),
               InkWell(
                 onTap: () {
-                  ApiController()
-                      .deletePost(getController.getPostList.value.res![0].id)
-                      .then((value) => {
-                            if (value == true)
-                              {
+                  ApiController().deletePost(getController.getPostList.value.res![0].id).then((value) => {
+                            if (value == true){
                                 getUsers(),
-                                Toast.showToast(
-                                    context,
-                                    'Post muvaffaqiyatli o\'chirildi',
-                                    Colors.green,
-                                    Colors.white)
-                              }
-                            else
-                              {
-                                Toast.showToast(context, 'Xatolik yuz berdi',
-                                    Colors.red, Colors.white)
+                                Toast.showToast(context, 'Post muvaffaqiyatli o\'chirildi', Colors.green, Colors.white)
+                              } else {
+                                Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.white)
                               }
                           });
                   Navigator.pop(context);
-                  ApiController().getMePostList(
-                      getController.meUsers.value.res!.business?.id);
+                  ApiController().getMePostList(getController.meUsers.value.res!.business?.id);
                 },
                 child: SizedBox(
                   width: w,
@@ -657,8 +645,7 @@ class ProfilePage extends StatelessWidget {
           if (value == true){
               getUsers(),
               Toast.showToast(context, 'Rasm muvaffaqiyatli o\'zgartirildi', Colors.green, Colors.white)
-            }
-          else {
+          } else {
               Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.white)
             }
         });
@@ -1184,9 +1171,7 @@ class ProfilePage extends StatelessWidget {
                                 Obx(() => getController.meUsers.value.res?.business == null
                                     ? const SizedBox()
                                     : SizedBox(
-                                  height: getController.show.value
-                                      ? h * 0.27
-                                      : h * 0.38,
+                                  height: getController.show.value ? h * 0.27 : h * 0.38,
                                   child: PageView(
                                     onPageChanged: (index) {
                                       getController.nextPagesUserDetails.value = index;
@@ -1413,7 +1398,7 @@ class ProfilePage extends StatelessWidget {
                                                       child: ListView.builder(
                                                           shrinkWrap:
                                                           true,
-                                                          itemCount: getController.bookingBusinessGetList1.value.res!.length,
+                                                          itemCount: getController.bookingBusinessGetList.value.res!.length,
                                                           itemBuilder: (context, index) {
                                                             return Column(
                                                               children: [
@@ -1430,7 +1415,7 @@ class ProfilePage extends StatelessWidget {
                                                                     ),
                                                                     SizedBox(
                                                                       width: w * 0.7,
-                                                                      child: Text('Ushbu mijoz' ' ${getController.bookingBusinessGetList1.value.res![index].date!.replaceAll('/', '-')} ' '${getController.bookingBusinessGetList1.value.res![index].time!} keladi',
+                                                                      child: Text('Ushbu mijoz' ' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} ' '${getController.bookingBusinessGetList.value.res![index].time!} keladi',
                                                                         style: TextStyle(
                                                                           fontSize: w * 0.04,
                                                                           fontWeight: FontWeight.w500,
