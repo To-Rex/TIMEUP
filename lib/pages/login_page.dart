@@ -129,12 +129,18 @@ class LoginPage extends StatelessWidget {
                           if (value.status == true){
                               _codeController.clear(),
                               if (value.res!.token != ''){
-                                  Toast.showToast(context, '${value.res?.token}', Colors.green, Colors.white),
                                   GetStorage().write('token', value.res?.token),
                                   nameController.code.value = '',
                                   _codeController.clear(),
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),),
-                                } else {
+                                ApiController().getUserData().then((value) => {
+                                  //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),),
+                                  if (value.status == true){
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),),
+                                  } else {
+                                    Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.red),
+                                  }
+                                }),
+                              } else {
                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUserData(phoneNumber: code + _controller.text)),),
                                 }
                             } else {
@@ -190,11 +196,10 @@ class LoginPage extends StatelessWidget {
                           onFinished: () {
                             nameController.changeOnFinished();
                           },
-                        )
-                            : Row(
+                        ) : Row(
                           children: [
-                            const Text('Kodni qayta yuborish ',
-                                style: TextStyle(fontSize: 16)),
+                            //Text('Kodni qayta yuborish ', style: TextStyle(fontSize: 16)),
+                            Text('Kodni qayta yuborish ', style: TextStyle(fontSize: w * 0.04 > 20 ? 20 : w * 0.04)),
                             TextButton(
                               style: TextButton.styleFrom(
                                 shape: RoundedRectangleBorder(
@@ -256,9 +261,14 @@ class LoginPage extends StatelessWidget {
                                     GetStorage().write('token', value.res?.token),
                                     nameController.code.value = '',
                                     _codeController.clear(),
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),),
-                                  }
-                                else {
+                                  ApiController().getUserData().then((value) => {
+                                    if (value.status == true){
+                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),),
+                                    } else {
+                                      Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.red),
+                                    }
+                                  }),
+                                  } else {
                                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUserData(phoneNumber: code + _controller.text,)),),
                                   }
                               } else {

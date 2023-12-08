@@ -544,7 +544,10 @@ class ApiController extends GetxController {
       'description': description,
       'business_id': businessId.toString(),
     });
-    request.files.add(await http.MultipartFile.fromPath('photo', _getController.postFile.value));
+    if (photo != '') {
+      request.files.add(await http.MultipartFile.fromPath('photo', photo));
+    }
+    //request.files.add(await http.MultipartFile.fromPath('photo', _getController.postFile.value));
     if (video != '') {
       request.files.add(await http.MultipartFile.fromPath('video', video));
     }
