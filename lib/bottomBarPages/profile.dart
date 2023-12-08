@@ -1066,19 +1066,14 @@ class ProfilePage extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         //My Post
-                                        Obx(() => getController
-                                            .nextPagesUserDetails.value ==
-                                            0
+                                        Obx(() => getController.nextPagesUserDetails.value == 0
                                             ? SizedBox(
                                           width: w * 0.333,
                                           height: h * 0.062,
                                           child: BusinessEditButton(
                                             text: 'My Post',
                                             onPressed: () {
-                                              pageController.animateToPage(0,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
+                                              pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             color: Colors.blue,
                                             radius: 0,
@@ -1090,28 +1085,20 @@ class ProfilePage extends StatelessWidget {
                                           child: BusinessEditButton(
                                             text: 'My Post',
                                             onPressed: () {
-                                              pageController.animateToPage(0,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
+                                              pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             color: Colors.grey,
                                             radius: 0,
                                           ),
                                         )),
-                                        Obx(() => getController
-                                            .nextPagesUserDetails.value ==
-                                            1
+                                        Obx(() => getController.nextPagesUserDetails.value == 1
                                             ? SizedBox(
                                           width: w * 0.333,
                                           height: h * 0.062,
                                           child: BusinessEditButton(
                                             text: 'Booking',
                                             onPressed: () {
-                                              pageController.animateToPage(1,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
+                                              pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             color: Colors.blue,
                                             radius: 0,
@@ -1123,28 +1110,20 @@ class ProfilePage extends StatelessWidget {
                                           child: BusinessEditButton(
                                             text: 'Booking',
                                             onPressed: () {
-                                              pageController.animateToPage(1,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
+                                              pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             color: Colors.grey,
                                             radius: 0,
                                           ),
                                         )),
-                                        Obx(() => getController
-                                            .nextPagesUserDetails.value ==
-                                            2
+                                        Obx(() => getController.nextPagesUserDetails.value == 2
                                             ? SizedBox(
                                           width: w * 0.333,
                                           height: h * 0.062,
                                           child: BusinessEditButton(
                                             text: 'Bio',
                                             onPressed: () {
-                                              pageController.animateToPage(2,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
+                                              pageController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             color: Colors.blue,
                                             radius: 0,
@@ -1156,10 +1135,7 @@ class ProfilePage extends StatelessWidget {
                                           child: BusinessEditButton(
                                             text: 'Bio',
                                             onPressed: () {
-                                              pageController.animateToPage(2,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
+                                              pageController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                                             },
                                             color: Colors.grey,
                                             radius: 0,
@@ -1248,8 +1224,7 @@ class ProfilePage extends StatelessWidget {
                                               onLoading: _onLoading,
                                               child:
                                               ListView.builder(
-                                                  itemCount:
-                                                  getController.getPostList.value.res!.length,
+                                                  itemCount: getController.getPostList.value.res!.length,
                                                   itemBuilder: (context, index) {
                                                     return InkWell(
                                                       onTap: () {
@@ -1261,7 +1236,8 @@ class ProfilePage extends StatelessWidget {
                                                           Obx(() => getController.getPostList.value.res![index].mediaType == 'video'
                                                                 ? Stack(
                                                               children: [
-                                                                Container(
+                                                                if (getController.getPostList.value.res![index].photo != '')
+                                                                  Container(
                                                                   width: w,
                                                                   height: h * 0.3,
                                                                   padding: EdgeInsets.all(w * 0.01),
@@ -1272,6 +1248,15 @@ class ProfilePage extends StatelessWidget {
                                                                     ),
                                                                   ),
                                                                 ),
+                                                                if (getController.getPostList.value.res![index].photo == '')
+                                                                  Container(
+                                                                    width: w,
+                                                                    height: h * 0.3,
+                                                                    padding: EdgeInsets.all(w * 0.01),
+                                                                    decoration: const BoxDecoration(
+                                                                      color: Colors.black,
+                                                                    ),
+                                                                  ),
                                                                 Positioned(
                                                                     width: w,
                                                                     height: h * 0.3,

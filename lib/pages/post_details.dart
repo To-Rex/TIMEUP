@@ -191,6 +191,7 @@ class PostDetailsPage extends StatelessWidget {
                   child: CustomVideoPlayer(customVideoPlayerController: _customVideoPlayerController),)
                     : Stack(
                   children: [
+                    if (getController.getPostById.value.res!.photo != null)
                     SizedBox(
                       height: h * 0.4,
                       width: w,
@@ -198,6 +199,12 @@ class PostDetailsPage extends StatelessWidget {
                         getController.getPostById.value.res!.photo!,
                         fit: BoxFit.cover,
                       ),
+                    ),
+                    if (getController.getPostById.value.res!.photo == null)
+                    Container(
+                      height: h * 0.4,
+                      width: w,
+                      color: Colors.black,
                     ),
                     getController.getPostById.value.res!.mediaType == 'video'
                         ? Positioned(
@@ -222,8 +229,7 @@ class PostDetailsPage extends StatelessWidget {
                         ))
                         : const SizedBox(),
                   ],
-                ),
-              ),
+                ),),
               SizedBox(height: h * 0.02),
               Row(
                 children: [
