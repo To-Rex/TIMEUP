@@ -13,8 +13,13 @@ class HistoryPage extends StatelessWidget {
   showLoadingDialog(BuildContext context, w) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       barrierColor: Colors.black.withOpacity(0.5),
       builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        surfaceTintColor: Colors.white,
         content: SizedBox(
           width: w * 0.1,
           height: w * 0.2,
