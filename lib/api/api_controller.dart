@@ -59,6 +59,8 @@ class ApiController extends GetxController {
   var deleteBookingBusinessUrl = 'booking/business/delete/';
   //{{host}}/api/v1/booking/client/delete/4
   var deleteBookingClientUrl = 'booking/client/delete/';
+  //{{host}}/api/v1/booking/update/3
+  var bookingUpdateUrl = 'booking/update/';
 
   Future<String> sendSms(String phoneNumber) async {
     print(phoneNumber);
@@ -617,6 +619,28 @@ class ApiController extends GetxController {
       Toast.showToast(context, 'Sizning buyurtmangiz o\'chirildi', Colors.blue, Colors.white);
       return true;
     } else {
+      return false;
+    }
+  }
+
+  Future<bool> updateBooking(id, date, time,context) async{
+    var response = await http.put(
+      Uri.parse('$url$bookingUpdateUrl$id'),
+      body: jsonEncode({
+        "date": date,
+        "time": time,
+      }),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+        'Content-Type': 'application/json'
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      Toast.showToast(context, 'Sizning buyurtmangiz o\'zgartirildi', Colors.blue, Colors.white);
+      return true;
+    } else {
+      Toast.showToast(context, 'Sizning buyurtmangiz o\'zgartirilmadi', Colors.red, Colors.white);
       return false;
     }
   }
