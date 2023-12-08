@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
-import '../elements/functions.dart';
 import '../res/getController.dart';
 
 class HistoryPage extends StatelessWidget {
