@@ -257,6 +257,77 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
+  showDialogValidation(BuildContext context,title,description) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.05,
+          child: Center(
+            child: Text(description),
+          ),
+        ),
+        actions: [
+          Center(
+            child: Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.32,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 1,
+                        backgroundColor: Colors.grey[300],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Cancel',
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.035,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ))),
+                ),
+                const Expanded(child: SizedBox()),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.32,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Row(
+                        children: [
+                          const Expanded(child: SizedBox()),
+                          Text('Ok',
+                              style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.035,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              )),
+                          const HeroIcon(HeroIcons.check, color: Colors.white)
+                        ],
+                      )),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   showBottomSheetList(context) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
@@ -422,6 +493,7 @@ class ProfilePage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     ApiController().bookingCategoryList(businessId);
+    getController.nextPagesUserDetails.value = 0;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -496,7 +568,23 @@ class ProfilePage extends StatelessWidget {
                                     children: [
                                       Expanded(child: Text('${getController.getBookingCategory.value.res![index].name}', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),),),
                                       IconButton(
-                                        onPressed: (){},
+                                        onPressed: (){
+                                          showLoadingDialog(context, w);
+                                          ApiController().bookingCategoryListDelete(
+                                              businessId,
+                                              getController.getBookingCategory.value.res![index].id,
+                                              context
+                                          ).then((value) => {
+                                            if (value == true){
+                                              Navigator.pop(context),
+                                              Toast.showToast(context, 'Xizmat muvaffaqiyatli o\'chirildi', Colors.green, Colors.white)
+                                            } else {
+                                              Navigator.pop(context),
+                                              Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.white)
+                                            }
+                                          }
+                                          );
+                                        },
                                         icon: HeroIcon(HeroIcons.trash, color: Colors.red, size: w * 0.06,),
                                       ),
                                     ],
@@ -560,8 +648,7 @@ class ProfilePage extends StatelessWidget {
                             );
                           },
                         ),
-                      )
-                      ),
+                      )),
                       Column(
                         children: [
                           TextFildWidget(
@@ -606,6 +693,40 @@ class ProfilePage extends StatelessWidget {
                                     color: Colors.blue,
                                     radius: 6,
                                     onPressed: (){
+                                      if (_nameController.text == ''){
+                                        showDialogValidation(context, 'Xatolik', 'Iltimos xizmat nomini kiriting');
+                                        return;
+                                      }
+                                      if (_discriptionController.text == ''){
+                                        showDialogValidation(context, 'Xatolik', 'Iltimos xizmat haqida qisqacha ma\'lumot kiriting');
+                                        return;
+                                      }
+                                      if (_durationController.text == ''){
+                                        showDialogValidation(context, 'Xatolik', 'Iltimos xizmat davomiyligini kiriting');
+                                        return;
+                                      }
+                                      if (_priceController.text == ''){
+                                        showDialogValidation(context, 'Xatolik', 'Iltimos xizmat narxini kiriting');
+                                        return;
+                                      }
+                                      showLoadingDialog(context, w);
+                                      ApiController().bookingCategoryListCreate(
+                                          businessId,
+                                          _nameController.text,
+                                          _discriptionController.text,
+                                          int.parse(_durationController.text),
+                                          int.parse(_priceController.text),
+                                          context
+                                      ).then((value) => {
+                                        if (value == true){
+                                          Navigator.pop(context),
+                                          pageControllerServices.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeIn),
+                                        } else {
+                                          Navigator.pop(context),
+                                          showDialogValidation(context, 'Xatolik', 'Xatolik yuz berdi'),
+                                        }
+                                      }
+                                      );
                                     },
                                   ),
                                 ],

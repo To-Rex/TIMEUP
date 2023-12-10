@@ -64,6 +64,10 @@ class ApiController extends GetxController {
   var bookingUpdateUrl = 'booking/update/';
   //{{host}}/api/v1/booking-category/list/5
   var bookingCategoryListUrl = 'booking-category/list/';
+  //{{host}}/api/v1/booking-category/delete/2
+  var bookingCategoryDeleteUrl = 'booking-category/delete/';
+  //{{host}}/api/v1/booking-category/create
+  var bookingCategoryListCreateUrl = 'booking-category/create';
 
   Future<String> sendSms(String phoneNumber) async {
     print(phoneNumber);
@@ -665,4 +669,45 @@ class ApiController extends GetxController {
     }
   }
 
+  Future<bool> bookingCategoryListDelete(businessId,id,context) async{
+    var response = await http.delete(
+      Uri.parse('$url$bookingCategoryDeleteUrl$id'),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      Toast.showToast(context, 'Sizning buyurtmangiz o\'chirildi', Colors.blue, Colors.white);
+      bookingCategoryList(businessId);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> bookingCategoryListCreate(businessId,name,description,duration,price,context) async{
+    var response = await http.post(
+      Uri.parse('$url$bookingCategoryListCreateUrl'),
+      body: jsonEncode({
+        "business_id": businessId,
+        "name": name,
+        "description": description,
+        "duration": duration,
+        "price": price
+      }),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+        'Content-Type': 'application/json'
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      Toast.showToast(context, 'Sizning buyurtmangiz qo\'shildi', Colors.blue, Colors.white);
+      bookingCategoryList(businessId);
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
