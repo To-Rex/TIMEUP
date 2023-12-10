@@ -587,7 +587,7 @@ class ProfilePage extends StatelessWidget {
               const Divider(),
               InkWell(
                 onTap: () {
-                  ApiController().deletePost(getController.getPostList.value.res![0].id).then((value) => {
+                  ApiController().deletePost(id).then((value) => {
                             if (value == true){
                                 getUsers(),
                                 Toast.showToast(context, 'Post muvaffaqiyatli o\'chirildi', Colors.green, Colors.white)
@@ -868,9 +868,7 @@ class ProfilePage extends StatelessWidget {
                                       left: w * 0.03,
                                       right: w * 0.03,
                                       bottom: h * 0.01),
-                                  child: Obx(() => getController
-                                      .meUsers.value.res?.business ==
-                                      null
+                                  child: Obx(() => getController.meUsers.value.res?.business == null
                                       ? Row(
                                     children: [
                                       CircleAvatar(
@@ -886,13 +884,10 @@ class ProfilePage extends StatelessWidget {
                                         width: w * 0.02,
                                       ),
                                       Obx(() =>
-                                      getController.meUsers.value.res ==
-                                          null
+                                      getController.meUsers.value.res == null
                                           ? const SizedBox()
                                           : Text(
-                                        getController.meUsers.value
-                                            .res!.phoneNumber ??
-                                            '',
+                                        getController.meUsers.value.res!.phoneNumber ?? '',
                                         style: TextStyle(
                                           fontSize: w * 0.04,
                                           fontWeight: FontWeight.w500,
@@ -912,17 +907,11 @@ class ProfilePage extends StatelessWidget {
                                           fit: BoxFit.fill,
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: w * 0.02,
-                                      ),
-                                      Obx(() => getController
-                                          .meUsers.value.res ==
-                                          null
+                                      SizedBox(width: w * 0.02,),
+                                      Obx(() => getController.meUsers.value.res == null
                                           ? const SizedBox()
                                           : Text(
-                                        getController.meUsers.value
-                                            .res!.phoneNumber ??
-                                            '',
+                                        getController.meUsers.value.res!.phoneNumber ?? '',
                                         style: TextStyle(
                                           fontSize: w * 0.04,
                                           fontWeight: FontWeight.w500,
@@ -946,26 +935,18 @@ class ProfilePage extends StatelessWidget {
                                   )
                                       : Column(
                                     children: [
-                                      Obx(() => getController.meUsers.value
-                                          .res?.business !=
-                                          null
+                                      Obx(() => getController.meUsers.value.res?.business != null
                                           ? TextEditButton(
-                                        text:
-                                        '${getController.meUsers.value.res?.business?.categoryName}',
+                                        text: '${getController.meUsers.value.res?.phoneNumber}',
                                         color: Colors.blue,
-                                        icon:
-                                        'assets/images/user_call.png',
-                                      )
-                                          : const SizedBox()),
-                                      Obx(() => getController.meUsers.value
-                                          .res?.business !=
-                                          null
+                                        icon: 'assets/images/user_call.png',
+                                      ) : const SizedBox()),
+                                      Obx(() => getController.meUsers.value.res?.business != null
                                           ? TextEditButton(
                                         text:
                                         '${getController.meUsers.value.res?.business?.officeAddress}',
                                         color: Colors.blue,
-                                        icon:
-                                        'assets/images/user_location.png',
+                                        icon: 'assets/images/user_location.png',
                                       )
                                           : const SizedBox()),
                                       Obx(() => getController.meUsers.value
@@ -1154,7 +1135,7 @@ class ProfilePage extends StatelessWidget {
                                     },
                                     controller: pageController,
                                     children: [
-                                      Obx(() => getController.getPostList.value.res == null
+                                      Obx(() => getController.getPostList.value.res == null || getController.getPostList.value.res!.isEmpty
                                             ? SizedBox(
                                           width: w,
                                           height: h * 0.22,
