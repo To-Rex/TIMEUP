@@ -11,6 +11,7 @@ import 'package:time_up/pages/post_details.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../elements/bio_business.dart';
 import '../elements/btn_business.dart';
+import '../elements/btn_get_booking.dart';
 import '../elements/btn_users.dart';
 import '../elements/text_filds.dart';
 import '../elements/txt_business.dart';
@@ -29,6 +30,7 @@ class ProfilePage extends StatelessWidget {
 
   final GetController getController = Get.put(GetController());
   final PageController pageController = PageController();
+  final PageController pageControllerServices = PageController();
   final TextEditingController _dateController = TextEditingController();
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
@@ -416,9 +418,10 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  showBottomSheetServices(context){
+  showBottomSheetServices(context,businessId){
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
+    ApiController().bookingCategoryList(businessId);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -435,51 +438,183 @@ class ProfilePage extends StatelessWidget {
       clipBehavior: Clip.antiAliasWithSaveLayer,
       builder: (context){
         return SizedBox(
-          height: MediaQuery.of(context).size.height * 0.8,
+          height: MediaQuery.of(context).size.height * 0.85,
           width: w,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                child: Text('Xizmatlar', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),),
-              ),
+              Obx(() => getController.nextPagesUserDetails.value == 0
+                  ? Text('Xizmatlar', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),
+              ): Text('Xizmat qo\'shish', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),)),
               SizedBox(height: h * 0.02),
-              //name
-              TextFildWidget(
-                controller: _nameController,
-                labelText: 'Name',
-                keyboardType: TextInputType.name,
-              ),
+              Obx(() => getController.nextPagesUserDetails.value == 0
+                ?SizedBox(
+                width: w * 0.95,
+                child: Row(
+                  children: [
+                    SizedBox(width: w * 0.05),
+                    Text('Xizmat qo\'shish', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),),
+                    const Expanded(child: SizedBox()),
+                    IconButton(
+                      onPressed: (){
+                        pageControllerServices.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+                      },
+                      icon: HeroIcon(HeroIcons.plusCircle, color: Colors.blue, size: w * 0.06,),
+                    ),
+                  ],
+                ),
+              ):  const SizedBox()),
               SizedBox(height: h * 0.02),
-              //discription
-              TextFildWidget(
-                controller: _discriptionController,
-                labelText: 'Discription',
-                keyboardType: TextInputType.name,
-              ),
-              SizedBox(height: h * 0.02),
-              //duration 30 min
-              TextFildWidget(
-                controller: _durationController,
-                labelText: 'Duration',
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: h * 0.02),
-              //price
-              TextFildWidget(
-                controller: _priceController,
-                labelText: 'Price',
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: h * 0.02),
-              //add
-              BusinessEditButton(
-                text: 'Add service',
-                color: Colors.blue,
-                radius: 10,
-                onPressed: (){},
-              ),
+              Expanded(
+                  child: PageView(
+                    onPageChanged: (index){
+                      getController.nextPagesUserDetails.value = index;
+                    },
+                    controller: pageControllerServices,
+                    children: [
+                      Obx(() => getController.getBookingCategory.value.res == null || getController.getBookingCategory.value.res!.isEmpty
+                          ? const Center(child: Text('Ma\'lumotlar topilmadi'))
+                          : SizedBox(
+                        width: w * 0.95,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: getController.getBookingCategory.value.res!.length,
+                          itemBuilder: (context, index){
+                            return Container(
+                              width: w * 0.95,
+                              margin: EdgeInsets.only(bottom: h * 0.01,right: w * 0.02,left: w * 0.02),
+                              padding: EdgeInsets.only(top: h * 0.01,bottom: h * 0.01,left: w * 0.05),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.grey[200],
+                              ),
+                              child:  Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(child: Text('${getController.getBookingCategory.value.res![index].name}', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),),),
+                                      IconButton(
+                                        onPressed: (){},
+                                        icon: HeroIcon(HeroIcons.trash, color: Colors.red, size: w * 0.06,),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: h * 0.01),
+                                  Row(
+                                    children: [
+                                      Container(
+                                          height: h * 0.03,
+                                          padding: EdgeInsets.only(left: w * 0.01,right: w * 0.01),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(5),
+                                            color: Colors.white,
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              HeroIcon(HeroIcons.clock, color: Colors.blue, size: w * 0.04,),
+                                              SizedBox(width: w * 0.01),
+                                              Text(
+                                                maxLines: 1,
+                                                '${getController.getBookingCategory.value.res![index].duration.toString().length > 6 ? '${getController.getBookingCategory.value.res![index].duration.toString().substring(0, 3)}k' : '${getController.getBookingCategory.value.res![index].duration}'} min',
+                                                style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),),
+                                            ],
+                                          )
+                                      ),
+                                      SizedBox(width: w * 0.02),
+                                      Container(
+                                          height: h * 0.03,
+                                          padding: EdgeInsets.only(left: w * 0.01,right: w * 0.01),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(3),
+                                            color: Colors.white,
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              HeroIcon(HeroIcons.currencyDollar, color: Colors.blue, size: w * 0.04,),
+                                              SizedBox(width: w * 0.01),
+                                              Text(
+                                                maxLines: 1,
+                                                '${getController.getBookingCategory.value.res![index].price.toString().length > 6 ? '${getController.getBookingCategory.value.res![index].price.toString().substring(0, 3)}k' : '${getController.getBookingCategory.value.res![index].price}'} so`m',
+                                                style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),),
+                                            ],
+                                          )
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: h * 0.01),
+                                  ReadMoreText(
+                                    '${getController.getBookingCategory.value.res![index].description}',
+                                    trimLines: 2,
+                                    colorClickableText: Colors.blue,
+                                    trimMode: TrimMode.Line,
+                                    trimCollapsedText: 'more',
+                                    trimExpandedText: ' less',
+                                    style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),
+                                    moreStyle: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.blue,),
+                                  ),
+                                ],
+                              ),
+
+                            );
+                          },
+                        ),
+                      )
+                      ),
+                      Column(
+                        children: [
+                          TextFildWidget(
+                            controller: _nameController,
+                            labelText: 'Name',
+                            keyboardType: TextInputType.name,
+                          ),
+                          SizedBox(height: h * 0.02),
+                          TextFildWidget(
+                            controller: _discriptionController,
+                            labelText: 'Discription',
+                            keyboardType: TextInputType.name,
+                          ),
+                          SizedBox(height: h * 0.02),
+                          TextFildWidget(
+                            controller: _durationController,
+                            labelText: 'Duration',
+                            keyboardType: TextInputType.number,
+                          ),
+                          SizedBox(height: h * 0.02),
+                          TextFildWidget(
+                            controller: _priceController,
+                            labelText: 'Price',
+                            keyboardType: TextInputType.number,
+                          ),
+                          SizedBox(height: h * 0.02),
+                          SizedBox(
+                            width: w * 0.9,
+                            child: Row(
+                                children: [
+                                  BookingGetSer(
+                                    text: 'Cancel',
+                                    color: Colors.grey,
+                                    radius: 6,
+                                    onPressed: (){
+                                      pageControllerServices.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+                                    },
+                                  ),
+                                  const Expanded(child: SizedBox()),
+                                  BookingGetSer(
+                                    text: 'Save',
+                                    color: Colors.blue,
+                                    radius: 6,
+                                    onPressed: (){
+                                    },
+                                  ),
+                                ],
+                            ),
+                          ),
+                        ],
+                  ),
+                    ],
+              )),
             ],
           ),
         );
@@ -487,7 +622,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  showBottomSheet(context) {
+  showBottomSheet(context,businessId) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     showModalBottomSheet(
@@ -525,7 +660,7 @@ class ProfilePage extends StatelessWidget {
               InkWell(
                 onTap: () {
                   Navigator.pop(context);
-                  showBottomSheetServices(context);
+                  showBottomSheetServices(context,businessId);
                 },
                 child: SizedBox(
                   width: w,
@@ -844,7 +979,7 @@ class ProfilePage extends StatelessWidget {
                             actions: [
                               IconButton(
                                 onPressed: () {
-                                  showBottomSheet(context);
+                                  showBottomSheet(context,getController.meUsers.value.res!.business?.id);
                                 },
                                 icon: const Icon(
                                   Icons.menu,

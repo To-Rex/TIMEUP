@@ -8,6 +8,7 @@ import 'package:time_up/elements/functions.dart';
 import 'package:time_up/models/last_send_sms.dart';
 import 'package:time_up/models/register_model.dart';
 import '../models/booking_business_get.dart';
+import '../models/booking_category_get.dart';
 import '../models/category.dart';
 import '../models/follov_model.dart';
 import '../models/get_by_category.dart';
@@ -61,6 +62,8 @@ class ApiController extends GetxController {
   var deleteBookingClientUrl = 'booking/client/delete/';
   //{{host}}/api/v1/booking/update/3
   var bookingUpdateUrl = 'booking/update/';
+  //{{host}}/api/v1/booking-category/list/5
+  var bookingCategoryListUrl = 'booking-category/list/';
 
   Future<String> sendSms(String phoneNumber) async {
     print(phoneNumber);
@@ -642,6 +645,23 @@ class ApiController extends GetxController {
     } else {
       Toast.showToast(context, 'Sizning buyurtmangiz o\'zgartirilmadi', Colors.red, Colors.white);
       return false;
+    }
+  }
+
+  Future<GetBookingCategory> bookingCategoryList(id) async{
+    var response = await http.get(
+      Uri.parse('$url$bookingCategoryListUrl$id'),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      _getController.changeGetBookingCategory(GetBookingCategory.fromJson(jsonDecode(response.body)));
+      return GetBookingCategory.fromJson(jsonDecode(response.body));
+    } else {
+      _getController.changeGetBookingCategory(GetBookingCategory(res: [], status: false));
+      return GetBookingCategory(res: [], status: false);
     }
   }
 

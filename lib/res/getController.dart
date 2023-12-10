@@ -9,6 +9,7 @@ import '../bottomBarPages/history.dart';
 import '../bottomBarPages/profile.dart';
 import '../bottomBarPages/search.dart';
 import '../models/booking_business_get.dart';
+import '../models/booking_category_get.dart';
 import '../models/get_by_category.dart';
 import '../models/get_follow_post.dart';
 import '../models/get_id_post.dart';
@@ -80,6 +81,8 @@ class GetController extends GetxController {
   var getPostList = GetMePost().obs;
   var getPostById = GetByIdPostModel().obs;
   var getFollowPost = GetFollowPost().obs;
+  //BookingCategoryListUrl
+  var getBookingCategory = GetBookingCategory().obs;
   var categoryIndex = 0.obs;
   var subCategoryIndex = 0.obs;
   var regionIndex = 0.obs;
@@ -92,6 +95,11 @@ class GetController extends GetxController {
   var uplAodVideo = false.obs;
   var loading = false.obs;
   var show = false.obs;
+
+  //change GetBookingCategory
+  void changeGetBookingCategory(GetBookingCategory newGetBookingCategory) {
+    getBookingCategory.value = newGetBookingCategory;
+  }
 
   //change bookingBusinessGetListByID
   void changeBookingBusinessGetListByID(int newBookingBusinessGetListByID) {
