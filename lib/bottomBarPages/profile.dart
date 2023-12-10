@@ -8,9 +8,11 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/elements/functions.dart';
 import 'package:time_up/pages/post_details.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../elements/bio_business.dart';
 import '../elements/btn_business.dart';
 import '../elements/btn_users.dart';
+import '../elements/text_filds.dart';
 import '../elements/txt_business.dart';
 import '../elements/user_detials.dart';
 import '../pages/edit_post_details.dart';
@@ -29,6 +31,22 @@ class ProfilePage extends StatelessWidget {
   final PageController pageController = PageController();
   final TextEditingController _dateController = TextEditingController();
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _discriptionController = TextEditingController();
+  final TextEditingController _durationController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+
+  final Uri _url = Uri.parse('https://t.me/IOayvrE04AwyYTJi');
+
+  Future<void> _launchTelegram() async {
+    if (!await launchUrl(_url)) {
+      print('Could not launch $_url');
+      throw Exception('Could not launch $_url');
+    }else{
+      print('launched');
+    }
+  }
 
   getUsers() async {ApiController().getUserData();}
 
@@ -398,6 +416,77 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
+  showBottomSheetServices(context){
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      backgroundColor: Colors.white,
+      transitionAnimationController: AnimationController(
+        vsync: Navigator.of(context),
+        duration: const Duration(milliseconds: 300),
+      ),
+      shape: const RoundedRectangleBorder(
+        side: BorderSide.none,
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+      ),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      builder: (context){
+        return SizedBox(
+          height: MediaQuery.of(context).size.height * 0.8,
+          width: w,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                child: Text('Xizmatlar', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),),
+              ),
+              SizedBox(height: h * 0.02),
+              //name
+              TextFildWidget(
+                controller: _nameController,
+                labelText: 'Name',
+                keyboardType: TextInputType.name,
+              ),
+              SizedBox(height: h * 0.02),
+              //discription
+              TextFildWidget(
+                controller: _discriptionController,
+                labelText: 'Discription',
+                keyboardType: TextInputType.name,
+              ),
+              SizedBox(height: h * 0.02),
+              //duration 30 min
+              TextFildWidget(
+                controller: _durationController,
+                labelText: 'Duration',
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: h * 0.02),
+              //price
+              TextFildWidget(
+                controller: _priceController,
+                labelText: 'Price',
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: h * 0.02),
+              //add
+              BusinessEditButton(
+                text: 'Add service',
+                color: Colors.blue,
+                radius: 10,
+                onPressed: (){},
+              ),
+            ],
+          ),
+        );
+      }
+    );
+  }
+
   showBottomSheet(context) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
@@ -406,7 +495,7 @@ class ProfilePage extends StatelessWidget {
       isScrollControlled: true,
       builder: (context) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.5,
+          height: MediaQuery.of(context).size.height * 0.6,
           decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -433,6 +522,29 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: h * 0.05),
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                  showBottomSheetServices(context);
+                },
+                child: SizedBox(
+                  width: w,
+                  height: h * 0.05,
+                  child: Row(
+                    children: [
+                      SizedBox(width: w * 0.05),
+                      HeroIcon(
+                        HeroIcons.bolt,
+                        color: Colors.black,
+                        size: w * 0.05,
+                      ),
+                      SizedBox(width: w * 0.03),
+                      const Text('Xizmatlar'),
+                    ],
+                  ),
+                ),
+              ),
+              const Divider(),
               InkWell(
                 onTap: () {
                   getController.entersUser.value = 1;
@@ -482,6 +594,29 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                     )),
+              const Divider(),
+              InkWell(
+                onTap: () {
+                  _launchTelegram();
+                },
+                child: SizedBox(
+                  width: w,
+                  height: h * 0.05,
+                  child: Row(
+                    children: [
+                      SizedBox(width: w * 0.05),
+                      HeroIcon(
+                        //chat-bubble-left-right
+                        HeroIcons.chatBubbleLeftRight,
+                        color: Colors.blue,
+                        size: w * 0.05,
+                      ),
+                      SizedBox(width: w * 0.03),
+                      const Text('support'),
+                    ],
+                  ),
+                ),
+              ),
               const Divider(),
               InkWell(
                 onTap: () {
