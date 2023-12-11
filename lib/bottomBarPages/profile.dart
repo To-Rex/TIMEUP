@@ -339,8 +339,7 @@ class ProfilePage extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.9,
           decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -755,8 +754,7 @@ class ProfilePage extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.6,
           decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -779,7 +777,8 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: h * 0.05),
-              InkWell(
+              if (getController.meUsers.value.res?.business != null)
+                InkWell(
                 onTap: () {
                   Navigator.pop(context);
                   showBottomSheetServices(context,businessId);
@@ -801,7 +800,8 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
               ),
-              const Divider(),
+              if (getController.meUsers.value.res?.business != null)
+                Divider(indent: w * 0.12),
               InkWell(
                 onTap: () {
                   getController.entersUser.value = 1;
@@ -826,7 +826,7 @@ class ProfilePage extends StatelessWidget {
               ),
               Obx(() => getController.meUsers.value.res?.business != null
                   ? const SizedBox()
-                  : const Divider()),
+                  : Divider(indent: w * 0.12)),
               Obx(() => getController.meUsers.value.res?.business != null
                   ? const SizedBox()
                   : InkWell(
@@ -851,7 +851,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                     )),
-              const Divider(),
+              Divider(indent: w * 0.12),
               InkWell(
                 onTap: () {
                   _launchTelegram();
@@ -874,7 +874,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
               ),
-              const Divider(),
+              Divider(indent: w * 0.12),
               InkWell(
                 onTap: () {
                   showClosDialogs(context);
@@ -896,7 +896,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
               ),
-              const Divider(),
+              Divider(indent: w * 0.12),
               InkWell(
                 onTap: () {
                   showDialogs(context);
@@ -918,7 +918,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
               ),
-              const Divider(),
+              Divider(indent: w * 0.12),
             ],
           ),
         );
