@@ -134,9 +134,10 @@ class ProfessionsListDetails extends StatelessWidget {
                     controller: pageSheetController,
                     onPageChanged: (index) {
                       _getController.changeSheetPages(index);
+                      _dateController.clear();
                       if (index == 0) {
-                        ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '')
-                            .then((value) => _getController.changeBookingBusinessGetList(value));
+                        //ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value));
+                        ApiController().bookingListBookingAndBookingCategory(_getController.bookingBusinessGetListByID.value, '');
                       }
                     },
                     children: [
@@ -165,22 +166,11 @@ class ProfessionsListDetails extends StatelessWidget {
                                           firstDate: DateTime(1900),
                                           lastDate: DateTime(2025),
                                         ).then((value) => {
-                                              _getController
-                                                  .bookingBusinessGetList
-                                                  .value
-                                                  .res!
-                                                  .clear(),
-                                              _dateController.text =
-                                                  '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
-                                              ApiController()
-                                                  .bookingBusinessGetList(
-                                                      _getController
-                                                          .bookingBusinessGetListByID
-                                                          .value,
-                                                      '${value.day}/${value.month}/${value.year}')
-                                                  .then((value) => _getController
-                                                      .changeBookingBusinessGetList(
-                                                          value)),
+                                              //_getController.bookingBusinessGetList.value.res!.clear(),
+                                              _getController.getBookingBusinessGetListCategory.value.res?.bookings!.clear(),
+                                              _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
+                                              //ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '${value.day}/${value.month}/${value.year}').then((value) => _getController.changeBookingBusinessGetList(value)),
+                                              ApiController().bookingListBookingAndBookingCategory(_getController.bookingBusinessGetListByID.value, '${value.day}/${value.month}/${value.year}'),
                                             });
                                       },
                                       child: HeroIcon(
@@ -216,22 +206,13 @@ class ProfessionsListDetails extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: h * 0.02),
-                            Expanded(
-                                child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: w * 0.05, right: w * 0.05),
-                              child: Obx(() => _getController
-                                          .bookingBusinessGetList.value.res ==
-                                      null
+                            Expanded(child: Padding(padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
+                              child: Obx(() => _getController.getBookingBusinessGetListCategory.value.res == null
                                   ? const Center(
                                       child: CircularProgressIndicator())
                                   : ListView.builder(
                                       shrinkWrap: true,
-                                      itemCount: _getController
-                                          .bookingBusinessGetList
-                                          .value
-                                          .res!
-                                          .length,
+                                      itemCount: _getController.getBookingBusinessGetListCategory.value.res?.bookings!.length,
                                       itemBuilder: (context, index) {
                                         return Column(
                                           children: [
@@ -251,9 +232,12 @@ class ProfessionsListDetails extends StatelessWidget {
                                                 SizedBox(
                                                   width: w * 0.7,
                                                   child: Text(
-                                                    'Ushbu mijoz'
+                                                    /*'Ushbu mijoz'
                                                     ' ${_getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
-                                                    '${_getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                                    '${_getController.bookingBusinessGetList.value.res![index].time!} keladi',*/
+                                                    'Ushbu mijoz '
+                                                        '${_getController.getBookingBusinessGetListCategory.value.res?.bookings![index].date!.replaceAll('/', '-')} '
+                                                        '${_getController.getBookingBusinessGetListCategory.value.res?.bookings![index].time!} keladi',
                                                     style: TextStyle(
                                                       fontSize: w * 0.04,
                                                       fontWeight:
@@ -275,6 +259,8 @@ class ProfessionsListDetails extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            //_getController.getBookingBusinessGetListCategory.value.res!.bookingCategories
+
                             SizedBox(height: h * 0.02),
                             Center(
                               child: Text(
@@ -416,48 +402,15 @@ class ProfessionsListDetails extends StatelessWidget {
                               child: ElevatedButton(
                                 onPressed: () {
                                   showLoadingDialog(context);
-                                  ApiController()
-                                      .createBookingClientCreate(
-                                        _getController
-                                                .getProfileById.value.res!.id ??
-                                            0,
-                                        _dateController.text,
-                                        _timeController.text,
-                                      )
-                                      .then((value) => {
-                                            if (value == true)
-                                              {
-                                                ApiController()
-                                                    .bookingBusinessGetList(
-                                                        _getController
-                                                            .bookingBusinessGetListByID
-                                                            .value,
-                                                        '')
-                                                    .then((value) => _getController
-                                                        .changeBookingBusinessGetList(
-                                                            value)),
+                                  ApiController().createBookingClientCreate(_getController.getProfileById.value.res!.id ?? 0, _dateController.text, _timeController.text,).then((value) => {
+                                            if (value == true){
+                                                ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value)),
                                                 Navigator.pop(context),
-                                                Toast.showToast(
-                                                    context,
-                                                    'Booking yaratildi',
-                                                    Colors.green,
-                                                    Colors.white),
-                                                pageSheetController
-                                                    .animateToPage(0,
-                                                        duration:
-                                                            const Duration(
-                                                                milliseconds:
-                                                                    500),
-                                                        curve: Curves.ease)
-                                              }
-                                            else
-                                              {
+                                                Toast.showToast(context, 'Booking yaratildi', Colors.green, Colors.white),
+                                                pageSheetController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease)
+                                              } else {
                                                 Navigator.pop(context),
-                                                Toast.showToast(
-                                                    context,
-                                                    'Error',
-                                                    Colors.red,
-                                                    Colors.white),
+                                                Toast.showToast(context, 'Error', Colors.red, Colors.white),
                                               }
                                           });
                                 },
@@ -515,7 +468,8 @@ class ProfessionsListDetails extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     _getController.show.value = false;
     ApiController().getMePostList(_getController.getProfileById.value.res?.id);
-    ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '');
+    //ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '');
+    ApiController().bookingListBookingAndBookingCategory(_getController.bookingBusinessGetListByID.value, '');
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(

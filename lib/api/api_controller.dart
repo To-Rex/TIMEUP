@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:time_up/elements/functions.dart';
 import 'package:time_up/models/last_send_sms.dart';
 import 'package:time_up/models/register_model.dart';
+import '../models/booking_business_category_get.dart';
 import '../models/booking_business_get.dart';
 import '../models/booking_category_get.dart';
 import '../models/category.dart';
@@ -44,6 +45,8 @@ class ApiController extends GetxController {
   var getByCategoryUrl = 'business/get-by-category/';
   var profileByIdUrl = 'business/profile/';
   var bookingBusinessGetListUrl = 'booking/business/get-list/';
+  //{{host}}/api/v1/booking/list-booking-and-booking-category/5
+  var bookingListBookingAndBookingCategoryUrl = 'booking/list-booking-and-booking-category/';
   var bookingClientGetListUrl = 'booking/client/get-list?date=';
   var businessFollowUrl = 'business/';
   var businessFollowedListUrl = 'business/followed/list?limit=300&offset=0';
@@ -389,6 +392,24 @@ class ApiController extends GetxController {
       return BookingBusinessGetList(res: [], status: false);
     }
   }
+
+  Future<BookingBusinessGetListCategory> bookingListBookingAndBookingCategory(id,date) async {
+    var response = await http.get(
+      Uri.parse('$url$bookingListBookingAndBookingCategoryUrl$id?date=$date'),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      _getController.changeGetBookingBusinessGetListCategory(BookingBusinessGetListCategory.fromJson(jsonDecode(response.body)));
+      return BookingBusinessGetListCategory.fromJson(jsonDecode(response.body));
+    } else {
+      _getController.changeGetBookingBusinessGetListCategory(BookingBusinessGetListCategory(res: Res(), status: false));
+      return BookingBusinessGetListCategory(res: Res(), status: false);
+    }
+  }
+
 
   Future<BookingBusinessGetList> bookingClientGetList(date) async {
     var response = await http.get(
