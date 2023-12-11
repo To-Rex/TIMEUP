@@ -1064,7 +1064,16 @@ class ProfilePage extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     getController.show.value = false;
+    var postH = h * 0.38;
     ApiController().getMePostList(getController.meUsers.value.res!.business?.id);
+    postH = getController.show.value ? h * 0.27 : h * 0.38;
+    if (getController.meUsers.value.res?.business != null) {
+      ApiController().bookingCategoryList(getController.meUsers.value.res!.business?.id).then((value) => {
+        if (getController.getBookingCategory.value.res == null || getController.getBookingCategory.value.res!.isEmpty){
+
+        }
+      });
+    }
     return WillPopScope(
       onWillPop: () async {
         if (getController.entersUser.value == 0) {
@@ -1110,6 +1119,45 @@ class ProfilePage extends StatelessWidget {
                               ),
                             ],
                           ),
+                          Obx(() => getController.meUsers.value.res?.business == null
+                              ? const SizedBox()
+                              : Obx(() => getController.getBookingCategory.value.res!.isNotEmpty
+                              ? const SizedBox()
+                              :Container(
+                            width: w,
+                            height: h * 0.05,
+                            color: Colors.red,
+                            child: Row(
+                              children: [
+                                SizedBox(width: w * 0.05),
+                                HeroIcon(
+                                  HeroIcons.bolt,
+                                  color: Colors.white,
+                                  size: w * 0.05,
+                                ),
+                                SizedBox(width: w * 0.03),
+                                Text(
+                                  'Iltimos xizmat turlarini yaratib qo\'ying',
+                                  style: TextStyle(
+                                      fontSize: w * 0.04,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white
+                                  ),
+                                ),
+                                const Expanded(child: SizedBox()),
+                                IconButton(
+                                  onPressed: () {
+                                    showBottomSheetServices(context,getController.meUsers.value.res!.business?.id);
+                                  },
+                                  icon: HeroIcon(
+                                    HeroIcons.plusCircle,
+                                    color: Colors.white,
+                                    size: w * 0.06,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ))),
                           SingleChildScrollView(
                             child: Column(
                               children: [
@@ -1519,7 +1567,7 @@ class ProfilePage extends StatelessWidget {
                                 Obx(() => getController.meUsers.value.res?.business == null
                                     ? const SizedBox()
                                     : SizedBox(
-                                  height: getController.show.value ? h * 0.27 : h * 0.38,
+                                  height: getController.show.value ? h * 0.22 : getController.getBookingCategory.value.res == null || getController.getBookingCategory.value.res!.isEmpty ? h * 0.33 : h * 0.38,
                                   child: PageView(
                                     onPageChanged: (index) {
                                       getController.nextPagesUserDetails.value = index;
