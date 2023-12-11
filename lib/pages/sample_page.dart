@@ -3,24 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:time_up/bottomBarPages/home.dart';
-import '../bottomBarPages/history.dart';
-import '../bottomBarPages/profile.dart';
-import '../bottomBarPages/search.dart';
 import '../res/getController.dart';
 
 class SamplePage extends StatelessWidget {
   SamplePage({super.key});
 
   final GetController _getController = Get.put(GetController());
-
-  static final List<Widget> _widgetOptions = <Widget>[
-    HomePage(),
-    SearchPage(),
-    //AddPostPage(),
-    HistoryPage(),
-    ProfilePage(),
-  ];
 
   void _onItemTapped(int index) {
     _getController.changeWidgetOptions();
@@ -63,14 +51,9 @@ class SamplePage extends StatelessWidget {
               child: _getController.widgetOptions.elementAt(_getController.index.value),
             )),*/
       body: Obx(() => _getController.index.value == 3 || _getController.index.value == 4
-          ? Column(
-              children: [
-                SizedBox(
-                  child: _getController.widgetOptions.elementAt(_getController.index.value),
-                ),
-              ],
-            )
-          : Column(
+          ? SizedBox(
+            child: _getController.widgetOptions.elementAt(_getController.index.value),
+          ) : Column(
               children: [
                 Obx(() => _getController.uplAodVideo.value == true
                     ? SizedBox(
@@ -92,8 +75,7 @@ class SamplePage extends StatelessWidget {
                                   )
                                 : Container(),
                             SizedBox(width: w * 0.02),
-                            Text(
-                              'Uploading...',
+                            Text('Uploading...',
                               style: TextStyle(
                                 fontSize: w * 0.04,
                                 fontWeight: FontWeight.w500,

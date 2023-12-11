@@ -30,10 +30,8 @@ class ProfessionsListDetails extends StatelessWidget {
           const CircularProgressIndicator(),
           SizedBox(width: MediaQuery.of(context).size.width * 0.05),
           Container(
-              margin: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width * 0.05),
-              child: Text(
-                "Loading...",
+              margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05),
+              child: Text("Loading...",
                 style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.04,
                     fontWeight: FontWeight.w500),
@@ -154,18 +152,13 @@ class ProfessionsListDetails extends StatelessWidget {
                           ),
                           onPressed: () {
                             _getController.changeSheetPages(0);
-                            pageSheetController.animateToPage(0,
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.ease);
+                            pageSheetController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                           },
                           child: Obx(() => _getController.sheetPages.value == 0
                               ? Text('Ish jadvali',
-                                  style: TextStyle(
-                                      color: Colors.blue, fontSize: w * 0.04))
+                                  style: TextStyle(color: Colors.blue, fontSize: w * 0.04))
                               : Text('Ish jadvali',
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: w * 0.04)))),
+                                  style: TextStyle(color: Colors.grey, fontSize: w * 0.04)))),
                     ),
                     Container(
                       width: w * 0.005,
@@ -181,21 +174,14 @@ class ProfessionsListDetails extends StatelessWidget {
                       child: TextButton(
                           onPressed: () {
                             _getController.changeSheetPages(1);
-                            pageSheetController.animateToPage(1,
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.ease);
+                            pageSheetController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                           },
                           style: TextButton.styleFrom(
                             foregroundColor: Colors.transparent,
                           ),
                           child: Obx(() => _getController.sheetPages.value == 1
-                              ? Text('Booking',
-                                  style: TextStyle(
-                                      color: Colors.blue, fontSize: w * 0.04))
-                              : Text('Booking',
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: w * 0.04)))),
+                              ? Text('Booking', style: TextStyle(color: Colors.blue, fontSize: w * 0.04))
+                              : Text('Booking', style: TextStyle(color: Colors.grey, fontSize: w * 0.04)))),
                     )
                   ],
                 ),
@@ -342,12 +328,18 @@ class ProfessionsListDetails extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: h * 0.02),
+                            if (_getController.getBookingBusinessGetListCategory.value.res?.bookingCategories!.isEmpty ?? true)
+                              const SizedBox()
+                            else
                             Row(
                               children: [
                                 SizedBox(width: w * 0.05),
                                 const Text('xizmat turini tanlang'),
                               ],
                             ),
+                            if (_getController.getBookingBusinessGetListCategory.value.res?.bookingCategories!.isEmpty ?? true)
+                              const SizedBox()
+                            else
                             Container(
                               height: h * 0.06,
                               width: w * 0.9,
@@ -359,9 +351,8 @@ class ProfessionsListDetails extends StatelessWidget {
                                   color: Colors.grey,
                                 ),
                               ),
-                              child: Obx(() => _getController.getBookingBusinessGetListCategory.value.res == null
-                                  ? const Center(
-                                      child: CircularProgressIndicator())
+                              child: Obx(() => _getController.getBookingBusinessGetListCategory.value.res!.bookingCategories!.isEmpty
+                                  ? const SizedBox()
                                   : DropdownButtonHideUnderline(
                                       child: DropdownButton(
                                         isExpanded: true,

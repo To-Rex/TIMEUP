@@ -114,11 +114,11 @@ class LoginPage extends StatelessWidget {
                     color: Colors.grey[200],
                   ),
                   child: TextField(
-                    /*controller: nameController.code.value.isEmpty
+                    controller: nameController.code.value.isEmpty
                         ? _codeController
                         : _codeController
-                      ..text = nameController.code.value,*/
-                    controller: _codeController,
+                      ..text = nameController.code.value,
+                    //controller: _codeController,
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.done,
                     onChanged: (value) {
