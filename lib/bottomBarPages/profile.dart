@@ -649,6 +649,7 @@ class ProfilePage extends StatelessWidget {
                           },
                         ),
                       )),
+
                       Column(
                         children: [
                           TextFildWidget(
