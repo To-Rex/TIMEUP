@@ -89,6 +89,7 @@ class GetController extends GetxController {
   var categoryIndex = 0.obs;
   var subCategoryIndex = 0.obs;
   var regionIndex = 0.obs;
+  var bookingBusinessIndex = 0.obs;
   var categoryByID = 0.obs;
   var profileByID = 0.obs;
   var bookingBusinessGetListByID = 0.obs;
@@ -265,5 +266,9 @@ class GetController extends GetxController {
 
   void changeRegionIndex(int newRegionIndex) {
     regionIndex.value = newRegionIndex;
+  }
+
+  void changeBookingBusinessIndex(int newBookingBusinessIndex) {
+    bookingBusinessIndex.value = newBookingBusinessIndex;
   }
 }

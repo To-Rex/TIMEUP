@@ -157,19 +157,15 @@ class LoginUserData extends StatelessWidget {
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Obx(
-                    () => getController.getRegion.value.res == null
+                  child: Obx(() => getController.getRegion.value.res == null
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
                         : DropdownButtonHideUnderline(
                             child: DropdownButton(
-                              value: getController.getRegion.value
-                                  .res![getController.regionIndex.value],
+                              value: getController.getRegion.value.res![getController.regionIndex.value],
                               onChanged: (String? newValue) {
-                                getController.changeRegionIndex(getController
-                                    .getRegion.value.res!
-                                    .indexOf(newValue!));
+                                getController.changeRegionIndex(getController.getRegion.value.res!.indexOf(newValue!));
                               },
                               items: getController.getRegion.value.res!
                                   .map<DropdownMenuItem<String>>(

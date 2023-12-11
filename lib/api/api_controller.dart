@@ -458,10 +458,11 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> createBookingClientCreate(businessId, date, time) async {
+  Future<bool> createBookingClientCreate(businessId, date, time, categoryId) async {
     var response = await http.post(Uri.parse(url + bookingClientCreateUrl),
         body: jsonEncode({
           "business_id": businessId,
+          "booking_category_id": categoryId,
           "date": date,
           "time": time,
         }),

@@ -7,6 +7,7 @@ import 'package:time_up/pages/post_details.dart';
 import '../api/api_controller.dart';
 import '../elements/functions.dart';
 import '../elements/user_detials.dart';
+import '../models/booking_business_category_get.dart';
 import '../res/getController.dart';
 import 'package:readmore/readmore.dart';
 
@@ -46,6 +47,77 @@ class ProfessionsListDetails extends StatelessWidget {
       builder: (BuildContext context) {
         return alert;
       },
+    );
+  }
+
+  showDialogValidation(BuildContext context,title,description) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.05,
+          child: Center(
+            child: Text(description),
+          ),
+        ),
+        actions: [
+          Center(
+            child: Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.32,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 1,
+                        backgroundColor: Colors.grey[300],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Cancel',
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.035,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ))),
+                ),
+                const Expanded(child: SizedBox()),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.32,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Row(
+                        children: [
+                          const Expanded(child: SizedBox()),
+                          Text('Ok',
+                              style: TextStyle(
+                                fontSize:
+                                MediaQuery.of(context).size.width * 0.035,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              )),
+                          const HeroIcon(HeroIcons.check, color: Colors.white)
+                        ],
+                      )),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -259,9 +331,7 @@ class ProfessionsListDetails extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            //_getController.getBookingBusinessGetListCategory.value.res!.bookingCategories
-
-                            SizedBox(height: h * 0.02),
+                            SizedBox(height: h * 0.03),
                             Center(
                               child: Text(
                                 'Kunni va vaqtni belgilang',
@@ -271,7 +341,51 @@ class ProfessionsListDetails extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(height: h * 0.05),
+                            SizedBox(height: h * 0.02),
+                            Row(
+                              children: [
+                                SizedBox(width: w * 0.05),
+                                const Text('xizmat turini tanlang'),
+                              ],
+                            ),
+                            Container(
+                              height: h * 0.06,
+                              width: w * 0.9,
+                              padding: EdgeInsets.only(left: w * 0.02),
+                              decoration: BoxDecoration(
+                                //color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              child: Obx(() => _getController.getBookingBusinessGetListCategory.value.res == null
+                                  ? const Center(
+                                      child: CircularProgressIndicator())
+                                  : DropdownButtonHideUnderline(
+                                      child: DropdownButton(
+                                        isExpanded: true,
+                                        value: _getController.getBookingBusinessGetListCategory.value.res!.bookingCategories![_getController.bookingBusinessIndex.value],
+                                        onChanged: (newValue) {
+                                          _getController.bookingBusinessIndex.value = _getController.getBookingBusinessGetListCategory.value.res!.bookingCategories!.indexOf(newValue as BookingCategories);
+                                        },
+                                        items: _getController.getBookingBusinessGetListCategory.value.res!.bookingCategories!.map((value) {
+                                          return DropdownMenuItem(
+                                            value: value,
+                                            child: Text(
+                                              value.name!,
+                                              style: TextStyle(
+                                                fontSize: w * 0.04,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    )),
+
+                            ),
+                            SizedBox(height: h * 0.02),
                             Row(
                               children: [
                                 SizedBox(width: w * 0.05),
@@ -402,15 +516,16 @@ class ProfessionsListDetails extends StatelessWidget {
                               child: ElevatedButton(
                                 onPressed: () {
                                   showLoadingDialog(context);
-                                  ApiController().createBookingClientCreate(_getController.getProfileById.value.res!.id ?? 0, _dateController.text, _timeController.text,).then((value) => {
+                                  ApiController().createBookingClientCreate(_getController.getProfileById.value.res!.id ?? 0, _dateController.text, _timeController.text, _getController.getBookingBusinessGetListCategory.value.res!.bookingCategories![_getController.bookingBusinessIndex.value].id ?? 0).then((value) => {
                                             if (value == true){
-                                                ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value)),
+                                                //ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value)),
+                                                ApiController().bookingListBookingAndBookingCategory(_getController.bookingBusinessGetListByID.value, ''),
                                                 Navigator.pop(context),
-                                                Toast.showToast(context, 'Booking yaratildi', Colors.green, Colors.white),
+                                                showDialogValidation(context, 'Booking yaratildi', 'Booking yaratildi'),
                                                 pageSheetController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease)
                                               } else {
                                                 Navigator.pop(context),
-                                                Toast.showToast(context, 'Error', Colors.red, Colors.white),
+                                                showDialogValidation(context, 'Booking yaratilmadi', 'iltimos boshqa kun yoki vaqtni tanlang!')
                                               }
                                           });
                                 },
