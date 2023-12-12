@@ -195,10 +195,7 @@ class PostDetailsPage extends StatelessWidget {
                     SizedBox(
                       height: h * 0.4,
                       width: w,
-                      child: Image.network(
-                        getController.getPostById.value.res!.photo!,
-                        fit: BoxFit.cover,
-                      ),
+                      child: Image.network(getController.getPostById.value.res!.photo!, fit: BoxFit.cover,),
                     ),
                     if (getController.getPostById.value.res!.photo == null)
                     Container(
@@ -221,15 +218,13 @@ class PostDetailsPage extends StatelessWidget {
                                 _controller.play();
                                 getController.changeStartVideo();
                               },
-                              icon: Icon(Icons.play_arrow,
-                                  color: Colors.white,
-                                  size: w * 0.08),
+                              icon: Icon(Icons.play_arrow, color: Colors.white, size: w * 0.08),
                             ),
                           ),
-                        ))
-                        : const SizedBox(),
+                        )
+                    ) : const SizedBox(),
                   ],
-                ),),
+              ),),
               SizedBox(height: h * 0.02),
               Row(
                 children: [
@@ -256,18 +251,15 @@ class PostDetailsPage extends StatelessWidget {
                     },
                     child: Text(
                       getController.getPostById.value.res!.posterName!,
-                      style: TextStyle(
-                        fontSize: w * 0.04,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500,),
                     ),
                   ),
-                  const Expanded(child: SizedBox()),
+                  /*const Expanded(child: SizedBox()),
                   IconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.bookmark_border, color: Colors.black),
                   ),
-                  SizedBox(width: w * 0.03),
+                  SizedBox(width: w * 0.03),*/
                 ],
               ),
               SizedBox(height: h * 0.02),

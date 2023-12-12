@@ -136,7 +136,7 @@ class ProfessionsListDetails extends StatelessWidget {
       ),
       builder: (context) {
         return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.75,
+            height: MediaQuery.of(context).size.height * 0.8,
             child: Column(
               children: [
                 Row(
@@ -265,10 +265,15 @@ class ProfessionsListDetails extends StatelessWidget {
                             ),
                             SizedBox(height: h * 0.02),
                             Expanded(child: Padding(padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
-                              child: Obx(() => _getController.getBookingBusinessGetListCategory.value.res == null
-                                  ? const Center(
-                                      child: CircularProgressIndicator())
-                                  : ListView.builder(
+                              child: Obx(() => _getController.getBookingBusinessGetListCategory.value.res == null || _getController.getBookingBusinessGetListCategory.value.res!.bookings!.isEmpty
+                                  ? Center(
+                                child: Text(
+                                  'Ma\'lumotlar mavjud emas',
+                                  style: TextStyle(
+                                    fontSize: w * 0.03,
+                                  ),
+                                ),
+                              ) : ListView.builder(
                                       shrinkWrap: true,
                                       itemCount: _getController.getBookingBusinessGetListCategory.value.res?.bookings!.length,
                                       itemBuilder: (context, index) {
@@ -317,7 +322,7 @@ class ProfessionsListDetails extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(height: h * 0.03),
+                            SizedBox(height: h * 0.02),
                             Center(
                               child: Text(
                                 'Kunni va vaqtni belgilang',
@@ -328,8 +333,7 @@ class ProfessionsListDetails extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: h * 0.02),
-                            if (_getController.getBookingBusinessGetListCategory.value.res?.bookingCategories!.isEmpty ?? true)
-                              const SizedBox()
+                            if (_getController.getBookingBusinessGetListCategory.value.res?.bookingCategories!.isEmpty ?? true)const SizedBox()
                             else
                             Row(
                               children: [
@@ -337,8 +341,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                 const Text('xizmat turini tanlang'),
                               ],
                             ),
-                            if (_getController.getBookingBusinessGetListCategory.value.res?.bookingCategories!.isEmpty ?? true)
-                              const SizedBox()
+                            if (_getController.getBookingBusinessGetListCategory.value.res?.bookingCategories!.isEmpty ?? true)const SizedBox()
                             else
                             Container(
                               height: h * 0.06,
@@ -377,6 +380,80 @@ class ProfessionsListDetails extends StatelessWidget {
 
                             ),
                             SizedBox(height: h * 0.02),
+                            if (_getController.getBookingBusinessGetListCategory.value.res?.bookingCategories!.isEmpty ?? true)const SizedBox()
+                            else
+                              Row(
+                                children: [
+                                  SizedBox(width: w * 0.05),
+                                  const Text('xizmat turi haqida'),
+                                ],
+                              ),
+                              //getBookingBusinessGetListCategory selected index get data
+                            Obx(() => _getController.getBookingBusinessGetListCategory.value.res!.bookingCategories!.isEmpty
+                                ? const SizedBox()
+                                : Container(
+                              width: w * 0.9,
+                              //height: h * 0.06,
+                              margin: EdgeInsets.only(left: w * 0.05, right: w * 0.05, bottom: h * 0.02),
+                              padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02, top: h * 0.01, bottom: h * 0.01),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: w * 0.58,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        //name of selected index
+                                        Text(_getController.getBookingBusinessGetListCategory.value.res!.bookingCategories![_getController.bookingBusinessIndex.value].name!,
+                                          style: TextStyle(
+                                            fontSize: w * 0.04,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          maxLines: 1,
+                                        ),
+                                        //price of selected index
+                                        Text('${_getController.getBookingBusinessGetListCategory.value.res!.bookingCategories![_getController.bookingBusinessIndex.value].price} so\'m',
+                                          style: TextStyle(
+                                            fontSize: w * 0.04,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          maxLines: 1,
+                                        ),
+                                        //duration of selected index
+                                        Text('${_getController.getBookingBusinessGetListCategory.value.res!.bookingCategories![_getController.bookingBusinessIndex.value].duration} minut',
+                                          style: TextStyle(
+                                            fontSize: w * 0.04,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          maxLines: 1,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  //price of selected index
+                                  SizedBox(
+                                    width: w * 0.25,
+                                    child: Text('${_getController.getBookingBusinessGetListCategory.value.res!.bookingCategories![_getController.bookingBusinessIndex.value].price} so\'m',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      textAlign: TextAlign.right,
+                                      maxLines: 1,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                            ),
                             Row(
                               children: [
                                 SizedBox(width: w * 0.05),
@@ -500,7 +577,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(height: h * 0.05),
+                            SizedBox(height: h * 0.03),
                             SizedBox(
                               width: w * 0.9,
                               height: h * 0.07,
@@ -606,8 +683,7 @@ class ProfessionsListDetails extends StatelessWidget {
                         child: Icon(Icons.arrow_back_ios, size: w * 0.05),
                       ),
                       title: Obx(() => _getController.getProfileById.value.res == null
-                              ? Text(
-                                  'No data',
+                              ? Text('No data',
                                   style: TextStyle(
                                     fontSize: w * 0.04,
                                     fontWeight: FontWeight.w500,

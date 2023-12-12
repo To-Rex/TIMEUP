@@ -348,8 +348,10 @@ class ApiController extends GetxController {
         headers: {'Authorization': 'Bearer ${GetStorage().read('token')}'});
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      _getController.changeByCategory(GetByCategory.fromJson(jsonDecode(response.body)));
       return GetByCategory.fromJson(jsonDecode(response.body));
     } else {
+      _getController.changeByCategory(GetByCategory(res: [], status: false));
       return GetByCategory(res: [], status: false);
     }
   }

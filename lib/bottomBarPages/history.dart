@@ -679,8 +679,9 @@ class HistoryPage extends StatelessWidget {
                                         radius: w * 0.08,
                                         backgroundImage: NetworkImage(_getController.bookingBusinessGetList.value.res![index].photoUrl!,),
                                       ),
+                                      SizedBox(width: w * 0.03),
                                       SizedBox(
-                                        width: w * 0.6,
+                                        width: w * 0.7,
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
@@ -726,8 +727,8 @@ class HistoryPage extends StatelessWidget {
                                           ],
                                         ),
                                       ),
-                                      /*const Expanded(child: SizedBox()),
-                                      PopupMenuButton(
+                                      //const Expanded(child: SizedBox()),
+                                      /*PopupMenuButton(
                                         icon: const Icon(Icons.more_vert),
                                         itemBuilder: (context) => [
                                           PopupMenuItem(
