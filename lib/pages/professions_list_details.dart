@@ -5,7 +5,6 @@ import 'package:photo_view/photo_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:time_up/pages/post_details.dart';
 import '../api/api_controller.dart';
-import '../elements/functions.dart';
 import '../elements/user_detials.dart';
 import '../models/booking_business_category_get.dart';
 import '../res/getController.dart';
