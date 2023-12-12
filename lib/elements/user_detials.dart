@@ -19,15 +19,13 @@ class UserDetIalWidget extends StatelessWidget {
       width: w * 0.3,
       child: Column(
         children: [
-          Text(
-            labelText,
+          Text(labelText,
             style: TextStyle(
               color: Colors.black,
               fontSize: w * 0.04 > 20 ? 20 : w * 0.04,
             ),
           ),
-          Text(
-            labelTextCount,
+          Text(labelTextCount,
             style: TextStyle(
               color: Colors.black,
               fontSize: w * 0.04 > 20 ? 20 : w * 0.04,

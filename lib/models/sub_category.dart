@@ -26,21 +26,21 @@ class GetSubCategory {
 
 class ResSubCategory {
   int? id;
-  int? parent_id;
+  int? parentId;
   String? name;
 
-  ResSubCategory({this.id, this.name, this.parent_id});
+  ResSubCategory({this.id, this.parentId, this.name});
 
   ResSubCategory.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    parent_id = json['parent_id'];
+    parentId = json['parent_id'];
     name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['parent_id'] = parent_id;
+    data['parent_id'] = parentId;
     data['name'] = name;
     return data;
   }

@@ -39,7 +39,7 @@ class ProfilePage extends StatelessWidget {
   final TextEditingController _durationController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
 
-  final Uri _url = Uri.parse('https://t.me/IOayvrE04AwyYTJi');
+  final Uri _url = Uri.parse('https://t.me/TimeUP_test');
 
   Future<void> _launchTelegram() async {
     if (!await launchUrl(_url)) {
@@ -1064,15 +1064,9 @@ class ProfilePage extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     getController.show.value = false;
-    var postH = h * 0.38;
     ApiController().getMePostList(getController.meUsers.value.res!.business?.id);
-    postH = getController.show.value ? h * 0.27 : h * 0.38;
     if (getController.meUsers.value.res?.business != null) {
-      ApiController().bookingCategoryList(getController.meUsers.value.res!.business?.id).then((value) => {
-        if (getController.getBookingCategory.value.res == null || getController.getBookingCategory.value.res!.isEmpty){
-
-        }
-      });
+      ApiController().bookingCategoryList(getController.meUsers.value.res!.business?.id);
     }
     return WillPopScope(
       onWillPop: () async {
@@ -1090,8 +1084,7 @@ class ProfilePage extends StatelessWidget {
       },
       child: Obx(() => getController.meUsers.value.res != null
           ? SizedBox(
-              child: Obx(
-                () => getController.entersUser.value == 0
+              child: Obx(() => getController.entersUser.value == 0
                     ? Column(
                         children: [
                           SizedBox(height: h * 0.01),
@@ -1873,7 +1866,8 @@ class ProfilePage extends StatelessWidget {
                             ? MakeBusinessPage()
                             : const SizedBox(),
               ),
-            ) : Center(
+            )
+          : Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,

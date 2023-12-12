@@ -42,6 +42,45 @@ class LoginUserData extends StatelessWidget {
     getController.changeImage(croppedImage.path);
   }
 
+  showLoadingDialog(BuildContext context, w) {
+    showDialog(
+      context: context,
+      barrierColor: Colors.black.withOpacity(0.5),
+      builder: (context) => AlertDialog(
+        content: SizedBox(
+          width: w * 0.1,
+          height: w * 0.2,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Expanded(child: SizedBox()),
+              SizedBox(
+                width: w * 0.1,
+                height: w * 0.1,
+                child: const CircularProgressIndicator(
+                  color: Colors.blue,
+                  backgroundColor: Colors.white,
+                  strokeWidth: 2,
+                ),
+              ),
+              SizedBox(
+                width: w * 0.07,
+              ),
+              Text(
+                'Loading...',
+                style: TextStyle(
+                  fontSize: w * 0.04,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const Expanded(child: SizedBox()),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
@@ -184,33 +223,27 @@ class LoginUserData extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     if (getController.image.value == '') {
-                      Toast.showToast(context, 'Iltimos Rasm tanlang!',
-                          Colors.red, Colors.white);
+                      Toast.showToast(context, 'Iltimos Rasm tanlang!', Colors.red, Colors.white);
                       return;
                     }
                     if (nameController.text.isEmpty) {
-                      Toast.showToast(context, 'Ismingizni kiriting!',
-                          Colors.red, Colors.white);
+                      Toast.showToast(context, 'Ismingizni kiriting!', Colors.red, Colors.white);
                       return;
                     }
                     if (surnameController.text.isEmpty) {
-                      Toast.showToast(context, 'Familiyaningizni kiriting!',
-                          Colors.red, Colors.white);
+                      Toast.showToast(context, 'Familiyaningizni kiriting!', Colors.red, Colors.white);
                       return;
                     }
                     if (nikNameController.text.isEmpty) {
-                      Toast.showToast(context, 'Nikname ni toldiring',
-                          Colors.red, Colors.white);
+                      Toast.showToast(context, 'Nikname ni toldiring', Colors.red, Colors.white);
                       return;
                     }
                     if (phoneNumberController.text.isEmpty) {
-                      Toast.showToast(context, 'Telefon raqamingizni kiriting!',
-                          Colors.red, Colors.white);
+                      Toast.showToast(context, 'Telefon raqamingizni kiriting!', Colors.red, Colors.white);
                       return;
                     }
                     if (_dateController.text.isEmpty) {
-                      Toast.showToast(context, 'Tugilgan kuningizni kiriting!',
-                          Colors.red, Colors.white);
+                      Toast.showToast(context, 'Tugilgan kuningizni kiriting!', Colors.red, Colors.white);
                       return;
                     }
                     //_dateController if exampel 12/2/2021 to 12/02/2021
@@ -218,30 +251,27 @@ class LoginUserData extends StatelessWidget {
                       _dateController.text = '0${_dateController.text}';
                     }
                     if (_dateController.text.split('/')[1].length == 1) {
-                      _dateController.text =
-                          '${_dateController.text.split('/')[0]}/0${_dateController.text.split('/')[1]}/${_dateController.text.split('/')[2]}';
+                      _dateController.text = '${_dateController.text.split('/')[0]}/0${_dateController.text.split('/')[1]}/${_dateController.text.split('/')[2]}';
                     }
-                    ApiController()
-                        .registerUser(
+                    showLoadingDialog(context, w);
+                    ApiController().registerUser(
                       nameController.text.toString(),
                       surnameController.text.toString(),
                       nikNameController.text.toString(),
                       phoneNumberController.text.toString(),
-                      getController.getRegion.value
-                          .res![getController.regionIndex.value],
+                      getController.getRegion.value.res![getController.regionIndex.value],
                       getController.image.value,
                       _dateController.text.toString(),
-                    )
-                        .then((value) {
+                    ).then((value) {
                       if (value.status == true) {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SamplePage()));
-                        GetStorage().write('token', value.res?.token);
+                        GetStorage().write('token', value.res?.token).then((value) => {
+                          ApiController().getUserData().then((value) => {
+                            Navigator.pop(context),
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage())),
+                          })
+                        });
                       } else {
-                        Toast.showToast(context, 'Exx Nimadur xato ketdi',
-                            Colors.red, Colors.white);
+                        Toast.showToast(context, 'Exx Nimadur xato ketdi', Colors.red, Colors.white);
                       }
                     });
                   },
@@ -253,8 +283,7 @@ class LoginUserData extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: Text(
-                    'Saqlash',
+                  child: Text('Saqlash',
                     style: TextStyle(
                       fontSize: w * 0.04 > 20 ? 20 : w * 0.04,
                       color: Colors.white,

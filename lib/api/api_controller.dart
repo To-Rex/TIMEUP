@@ -190,16 +190,7 @@ class ApiController extends GetxController {
       _getController.changeWidgetOptions();
       return MeUser.fromJson(jsonDecode(response.body));
     } else {
-      return MeUser(
-          res: MeRes(
-            fistName: '',
-            lastName: '',
-            userName: '',
-            phoneNumber: '',
-            address: '',
-            photoUrl: '',
-          ),
-          status: false);
+      return MeUser(res: MeRes(fistName: '', lastName: '', userName: '', phoneNumber: '', address: '', photoUrl: '',), status: false);
     }
   }
 
@@ -239,6 +230,7 @@ class ApiController extends GetxController {
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       _getController.changeCategory(GetCategory.fromJson(jsonDecode(response.body)));
+      _getController.changeCategoryID(_getController.category.value.res![0].id!);
       return GetCategory.fromJson(jsonDecode(response.body));
     } else {
       _getController.changeCategory(GetCategory(res: [], status: false));
@@ -255,8 +247,12 @@ class ApiController extends GetxController {
     );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      _getController.changeSubCategory(GetSubCategory.fromJson(jsonDecode(response.body)));
+      //getController.subCategoryIndex.value = value.res![0].id!;
+      _getController.changeSubCategoryID(_getController.subCategory.value.res![0].id!);
       return GetSubCategory.fromJson(jsonDecode(response.body));
     } else {
+      _getController.changeSubCategory(GetSubCategory(res: [], status: false));
       return GetSubCategory(res: [], status: false);
     }
   }
@@ -265,8 +261,10 @@ class ApiController extends GetxController {
     var response = await http.get(Uri.parse(url + regionUrl));
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      _getController.changeRegion(GetRegion.fromJson(jsonDecode(response.body)));
       return GetRegion.fromJson(jsonDecode(response.body));
     } else {
+      _getController.changeRegion(GetRegion(res: [], status: false));
       return GetRegion(res: [], status: false);
     }
   }

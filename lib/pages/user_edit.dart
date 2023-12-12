@@ -25,7 +25,7 @@ class EditUserPage extends StatelessWidget {
   var croppedImage;
 
   getUsers() async {
-    getController.changeMeUser(await ApiController().getUserData());
+    ApiController().getUserData();
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -55,140 +55,118 @@ class EditUserPage extends StatelessWidget {
     surnameController.text = getController.meUsers.value.res?.fistName ?? '';
     nikNameController.text = getController.meUsers.value.res?.userName ?? '';
     addressController.text = getController.meUsers.value.res?.address ?? '';
-
-    return SizedBox(
-      width: w,
-      child: Column(
-        children: [
-          AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: IconButton(
-              onPressed: () {
-                getController.entersUser.value = 0;
-              },
-              icon: const Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
+    return SingleChildScrollView(
+      child: SizedBox(
+        width: w,
+        child: Column(
+          children: [
+            AppBar(
+              surfaceTintColor: Colors.white,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              leading: IconButton(
+                onPressed: () {
+                  getController.entersUser.value = 0;
+                },
+                icon: const Icon(Icons.arrow_back_ios, color: Colors.black,),
               ),
-            ),
-            title: Text(
-              'Edit profile',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: w * 0.05,
+              title: Text('Edit profile',
+                style: TextStyle(color: Colors.black, fontSize: w * 0.05,),
               ),
+              centerTitle: true,
             ),
-            centerTitle: true,
-          ),
-          Center(
-            child: Obx(
-              () => getController.image.value == ''
+            Center(
+              child: Obx(() => getController.image.value == ''
                   ? CircleAvatar(
-                      radius: w * 0.12,
-                      foregroundColor: Colors.blue,
-                      backgroundImage: NetworkImage(
-                          '${getController.meUsers.value.res?.photoUrl}'),
-                    )
+                radius: w * 0.12,
+                foregroundColor: Colors.blue,
+                backgroundImage: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),
+              )
                   : CircleAvatar(
-                      radius: w * 0.12,
-                      foregroundColor: Colors.blue,
-                      backgroundImage:
-                          FileImage(File(getController.image.value)),
-                    ),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              _pickImage(ImageSource.gallery);
-            },
-            child: Text(
-              'Edit profile photo',
-              style: TextStyle(
-                fontSize: w * 0.04,
-                color: Colors.blue,
+                radius: w * 0.12,
+                foregroundColor: Colors.blue,
+                backgroundImage: FileImage(File(getController.image.value)),
+              ),
               ),
             ),
-          ),
-          SizedBox(height: h * 0.03),
-          TextFildWidget(
-            controller: nameController,
-            labelText: 'Name',
-          ),
-          SizedBox(height: h * 0.015),
-          TextFildWidget(
-            controller: surnameController,
-            labelText: 'Surname',
-          ),
-          SizedBox(height: h * 0.015),
-          TextFildWidget(
-            controller: nikNameController,
-            labelText: 'Nikname',
-          ),
-          SizedBox(height: h * 0.015),
-          TextFildWidget(
-            controller: addressController,
-            labelText: 'Adress',
-          ),
-          SizedBox(height: h * 0.15),
-          EditButton(
-            text: 'Save data',
-            onPressed: () {
-              if (nameController.text == '' ||
-                  surnameController.text == '' ||
-                  nikNameController.text == '' ||
-                  addressController.text == '') {
-                Toast.showToast(context, 'Please fill in all the fields',
-                    Colors.red, Colors.white);
-                return;
-              }
-              if (getController.image.value == '') {
-                ApiController()
-                    .editUser(
-                  nameController.text,
-                  surnameController.text,
-                  nikNameController.text,
-                  addressController.text,
-                )
-                    .then((value) {
-                  if (value.status == true) {
-                    getController.entersUser.value = 0;
-                    getUsers();
-                  } else {
-                    Toast.showToast(context, 'Error', Colors.red, Colors.white);
-                  }
-                });
-              } else {
-                ApiController()
-                    .editUserPhoto(getController.image.value)
-                    .then((value) {
-                  if (value == true) {
-                    ApiController()
-                        .editUser(
-                      nameController.text,
-                      surnameController.text,
-                      nikNameController.text,
-                      addressController.text,
-                    )
-                        .then((value) {
-                      if (value.status == true) {
-                        getController.entersUser.value = 0;
-                        getUsers();
-                      } else {
-                        Toast.showToast(
-                            context, 'Error', Colors.red, Colors.white);
-                      }
-                    });
-                  } else {
-                    Toast.showToast(context, 'Error', Colors.red, Colors.white);
-                  }
-                });
-              }
-            },
-          ),
-          SizedBox(height: h * 0.01),
-        ],
-      ),
+            TextButton(
+              onPressed: () {
+                _pickImage(ImageSource.gallery);
+              },
+              child: Text(
+                'Edit profile photo',
+                style: TextStyle(fontSize: w * 0.04, color: Colors.blue,),
+              ),
+            ),
+            SizedBox(height: h * 0.03),
+            TextFildWidget(
+              controller: nameController,
+              labelText: 'Name',
+            ),
+            SizedBox(height: h * 0.015),
+            TextFildWidget(
+              controller: surnameController,
+              labelText: 'Surname',
+            ),
+            SizedBox(height: h * 0.015),
+            TextFildWidget(
+              controller: nikNameController,
+              labelText: 'Nikname',
+            ),
+            SizedBox(height: h * 0.015),
+            TextFildWidget(
+              controller: addressController,
+              labelText: 'Adress',
+            ),
+            SizedBox(height: h * 0.15),
+            EditButton(
+              text: 'Save data',
+              onPressed: () {
+                if (nameController.text == '' || surnameController.text == '' || nikNameController.text == '' || addressController.text == '') {
+                  Toast.showToast(context, 'Please fill in all the fields', Colors.red, Colors.white);
+                  return;
+                }
+                if (getController.image.value == '') {
+                  ApiController().editUser(
+                    nameController.text,
+                    surnameController.text,
+                    nikNameController.text,
+                    addressController.text,
+                  ).then((value) {
+                    if (value.status == true) {
+                      getController.entersUser.value = 0;
+                      getUsers();
+                    } else {
+                      Toast.showToast(context, 'Error', Colors.red, Colors.white);
+                    }
+                  });
+                } else {
+                  ApiController().editUserPhoto(getController.image.value).then((value) {
+                    if (value == true) {
+                      ApiController().editUser(
+                        nameController.text,
+                        surnameController.text,
+                        nikNameController.text,
+                        addressController.text,
+                      ).then((value) {
+                        if (value.status == true) {
+                          getController.entersUser.value = 0;
+                          getUsers();
+                        } else {
+                          Toast.showToast(context, 'Error', Colors.red, Colors.white);
+                        }
+                      });
+                    } else {
+                      Toast.showToast(context, 'Error', Colors.red, Colors.white);
+                    }
+                  });
+                }
+              },
+            ),
+            SizedBox(height: h * 0.01),
+          ],
+        ),
+      )
     );
   }
 }
