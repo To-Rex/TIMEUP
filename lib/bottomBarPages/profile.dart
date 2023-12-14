@@ -43,7 +43,6 @@ class ProfilePage extends StatelessWidget {
 
   Future<void> _launchTelegram(context) async {
     if (!await launchUrl(_url)) {
-      print('Could not launch $_url');
       throw Exception('Could not launch $_url');
     }else{
       Toast.showToast(context, 'Telegram ochildi', Colors.green, Colors.white);
@@ -73,9 +72,7 @@ class ProfilePage extends StatelessWidget {
                   strokeWidth: 2,
                 ),
               ),
-              SizedBox(
-                width: w * 0.07,
-              ),
+              SizedBox(width: w * 0.07),
               Text(
                 'Kuting...',
                 style: TextStyle(
@@ -664,7 +661,7 @@ class ProfilePage extends StatelessWidget {
                                   ),
                                   const Expanded(child: SizedBox()),
                                   BookingGetSer(
-                                    text: 'Saqlosh',
+                                    text: 'Saqlash',
                                     color: Colors.blue,
                                     radius: 6,
                                     onPressed: (){
