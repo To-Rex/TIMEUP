@@ -185,12 +185,13 @@ class HomePage extends StatelessWidget {
     }
     _scrollController.addListener(onScroll);
 
-    return Obx(() => _getController.getFollowPost.value.res == null
+    return Obx(() => _getController.getFollowPost.value.res == null || _getController.getFollowPost.value.res!.isEmpty
         ? SizedBox(
       width: w,
       height: h * 0.9,
-      child: const Center(child: CircularProgressIndicator()),
-    ) : Obx(() => _getController.getFollowPost.value.res!.isNotEmpty || _getController.getFollowPost.value.res != null
+      child: Center(child: Text('No data', style: TextStyle(fontSize: w * 0.04, color: Colors.black))),
+    )
+        : Obx(() => _getController.getFollowPost.value.res!.isNotEmpty || _getController.getFollowPost.value.res != null
           ? Obx(() => _getController.uplAodVideo.value == true
           ? SizedBox(
         width: w,
@@ -659,10 +660,10 @@ class HomePage extends StatelessWidget {
           : SizedBox(
         width: w,
         height: h * 0.9,
-        child: const Center(
-          child: Text('No data'),
+        child: Center(
+          child: Text('No data', style: TextStyle(fontSize: w * 0.05, color: Colors.black)),
         ),
-      ),
+      )
     ));
   }
 }

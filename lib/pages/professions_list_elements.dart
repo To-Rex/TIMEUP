@@ -34,8 +34,7 @@ class ProfessionsListElements extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     ApiController().getSubCategory(index!.toInt()).then((value) => {
           _getController.changeSubCategory(value),
-          _getController.changeTitleListElements(
-              _getController.category.value.res![index!].name!)
+          _getController.changeTitleListElements(_getController.category.value.res![index!].name!)
         });
     return Column(
       children: [
