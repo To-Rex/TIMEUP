@@ -579,7 +579,13 @@ class ProfessionsListDetails extends StatelessWidget {
                               child: ElevatedButton(
                                 onPressed: () {
                                   showLoadingDialog(context);
-                                  ApiController().createBookingClientCreate(_getController.getProfileById.value.res!.id ?? 0, _dateController.text, _timeController.text, _getController.getBookingBusinessGetListCategory.value.res!.bookingCategories![_getController.bookingBusinessIndex.value].id ?? 0).then((value) => {
+                                  int id = 0;
+                                  if (_getController.getBookingBusinessGetListCategory.value.res!.bookingCategories!.isEmpty) {
+                                    id = 0;
+                                  }else{
+                                    id = int.parse(_getController.getBookingBusinessGetListCategory.value.res!.bookingCategories![_getController.bookingBusinessIndex.value].id.toString());
+                                  }
+                                  ApiController().createBookingClientCreate(_getController.getProfileById.value.res!.id ?? 0, _dateController.text, _timeController.text, id).then((value) => {
                                             if (value == true){
                                                 //ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value)),
                                                 ApiController().bookingListBookingAndBookingCategory(_getController.bookingBusinessGetListByID.value, ''),
@@ -591,6 +597,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                                 showDialogValidation(context, 'Booking yaratilmadi', 'iltimos boshqa kun yoki vaqtni tanlang!')
                                               }
                                           });
+
                                 },
                                 style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(

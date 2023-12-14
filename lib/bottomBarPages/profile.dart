@@ -1089,7 +1089,7 @@ class ProfilePage extends StatelessWidget {
                           ),
                           Obx(() => getController.meUsers.value.res?.business == null
                               ? const SizedBox()
-                              : Obx(() => getController.getBookingCategory.value.res!.isNotEmpty || getController.getBookingCategory.value.res! != null
+                              : Obx(() => getController.getBookingCategory.value.res!.isNotEmpty
                               ? const SizedBox()
                               :Container(
                             width: w,
@@ -1775,9 +1775,8 @@ class ProfilePage extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ],
-                      )
-                    : getController.entersUser.value == 1
+                        ]
+              ) : getController.entersUser.value == 1
                         ? getController.meUsers.value.res?.business == null
                             ? EditUserPage()
                             : EditBusinessUserPage()
