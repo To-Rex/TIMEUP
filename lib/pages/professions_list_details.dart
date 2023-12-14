@@ -30,11 +30,7 @@ class ProfessionsListDetails extends StatelessWidget {
           SizedBox(width: MediaQuery.of(context).size.width * 0.05),
           Container(
               margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05),
-              child: Text("Loading...",
-                style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.04,
-                    fontWeight: FontWeight.w500),
-              )),
+              child: Text("Kuting...", style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04, fontWeight: FontWeight.w500),)),
         ],
       ),
     );
@@ -76,7 +72,7 @@ class ProfessionsListDetails extends StatelessWidget {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Cancel',
+                      child: Text('Bekor qilish',
                           style: TextStyle(
                             fontSize: MediaQuery.of(context).size.width * 0.035,
                             fontWeight: FontWeight.w500,
@@ -286,8 +282,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                                     '${index + 1}',
                                                     style: TextStyle(
                                                       fontSize: w * 0.04,
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                                      fontWeight: FontWeight.w500,
                                                     ),
                                                   ),
                                                 ),
@@ -302,8 +297,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                                         '${_getController.getBookingBusinessGetListCategory.value.res?.bookings![index].time!} keladi',
                                                     style: TextStyle(
                                                       fontSize: w * 0.04,
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                                      fontWeight: FontWeight.w500,
                                                     ),
                                                   ),
                                                 ),
@@ -337,7 +331,12 @@ class ProfessionsListDetails extends StatelessWidget {
                             Row(
                               children: [
                                 SizedBox(width: w * 0.05),
-                                const Text('xizmat turini tanlang'),
+                                Text('xizmat turini tanlang',
+                                  style: TextStyle(
+                                    fontSize: w * 0.04,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ],
                             ),
                             if (_getController.getBookingBusinessGetListCategory.value.res?.bookingCategories!.isEmpty ?? true)const SizedBox()
@@ -456,7 +455,12 @@ class ProfessionsListDetails extends StatelessWidget {
                             Row(
                               children: [
                                 SizedBox(width: w * 0.05),
-                                const Text('kunni tanlang'),
+                                Text('kunni tanlang',
+                                  style: TextStyle(
+                                    fontSize: w * 0.04,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ],
                             ),
                             SizedBox(
@@ -472,10 +476,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                           initialDate: DateTime.now(),
                                           firstDate: DateTime(2000),
                                           lastDate: DateTime(2025),
-                                        ).then((value) => {
-                                              _dateController.text =
-                                                  '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
-                                            });
+                                        ).then((value) => {_dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',});
                                       },
                                       child: HeroIcon(
                                         HeroIcons.calendar,
@@ -529,20 +530,15 @@ class ProfessionsListDetails extends StatelessWidget {
                                           initialTime: TimeOfDay.now(),
                                           builder: (context, child) {
                                             return MediaQuery(
-                                              data: MediaQuery.of(context)
-                                                  .copyWith(
-                                                      alwaysUse24HourFormat:
-                                                          true),
+                                              data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
                                               child: child!,
                                             );
                                           },
-                                          initialEntryMode:
-                                              TimePickerEntryMode.input,
+                                          initialEntryMode: TimePickerEntryMode.input,
                                           hourLabelText: 'Soat',
                                           minuteLabelText: 'Daqiqa',
                                           helpText: 'Vaqtni tanlang',
-                                        ).then((value) => _timeController.text =
-                                            '${value!.hour < 10 ? '0${value.hour}' : value.hour}:${value.minute < 10 ? '0${value.minute}' : value.minute}');
+                                        ).then((value) => _timeController.text = '${value!.hour < 10 ? '0${value.hour}' : value.hour}:${value.minute < 10 ? '0${value.minute}' : value.minute}');
                                       },
                                       child: HeroIcon(
                                         HeroIcons.clock,

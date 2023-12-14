@@ -63,7 +63,7 @@ class ProfessionsListElements extends StatelessWidget {
 
         Obx(
           () => _getController.subCategory.value.res == null
-              ? const Center(child: Text('No data'))
+              ? Center(child: Text('Ma`lumotlar yo`q', style: TextStyle(fontSize: w * 0.04)))
               : SizedBox(
                   height: h * 0.74,
                   width: w * 0.95,
@@ -82,7 +82,7 @@ class ProfessionsListElements extends StatelessWidget {
                               strokeWidth: 2,
                             );
                           } else if (mode == RefreshStatus.failed) {
-                            body = const Text("Load Failed!Click retry!");
+                            body = const Text("Ex Nimadir Xato ketdi");
                           } else if (mode == RefreshStatus.canRefresh) {
                             body = const Text("Ma`lumotlarni yangilash uchun tashlang");
                           } else {
@@ -106,7 +106,7 @@ class ProfessionsListElements extends StatelessWidget {
                               strokeWidth: 2,
                             );
                           } else if (mode == LoadStatus.failed) {
-                            body = const Text("Load Failed!Click retry!");
+                            body = const Text("Ex Nimadir Xato ketdi");
                           } else if (mode == LoadStatus.canLoading) {
                             body = const SizedBox();
                           } else {

@@ -302,387 +302,376 @@ class _AddPostPage extends State<AddPostPage> {
                 ],
               ),
             )
-          : SizedBox(
-              height: MediaQuery.of(context).size.height * 0.8,
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                children: [
-                  AppBar(
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    leading: IconButton(
-                      onPressed: () {
-                        _getController.changePostFile('');
-                        _getController.changePostVideoFile('');
-                        _controller.dispose();
-                      },
-                      icon: const HeroIcon(
-                        HeroIcons.chevronLeft,
-                        color: Colors.black,
-                      ),
+          : SingleChildScrollView(
+        child: SizedBox(
+            height: h,
+            width: w,
+            child: Column(
+              children: [
+                AppBar(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  leading: IconButton(
+                    onPressed: () {
+                      _getController.changePostFile('');
+                      _getController.changePostVideoFile('');
+                      _controller.dispose();
+                    },
+                    icon: const HeroIcon(
+                      HeroIcons.chevronLeft,
+                      color: Colors.black,
                     ),
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.7,
-                    child: SingleChildScrollView(
-                        child: Column(
+                ),
+                Obx(() => _getController.postFile.value == ''
+                    ? GestureDetector(
+                  onTap: () {
+                    _pickMedia();
+                  },
+                  child: Container(
+                    width: w,
+                    height: h * 0.1,
+                    padding: EdgeInsets.only(left: w * 0.03, right: w * 0.03),
+                    margin: EdgeInsets.all(w * 0.02),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Colors.grey[300]!),
+                    ),
+                    child: SizedBox(
+                        width: w * 0.005,
+                        height: h * 0.01,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Iltimos, rasm yuklang',
+                                style: TextStyle(
+                                    fontSize: w * 0.04,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey[600])),
+                            HeroIcon(
+                              HeroIcons.photo,
+                              color: Colors.red,
+                              size: w * 0.08,
+                            ),
+                          ],
+                        )),
+                  ),
+                )
+                    : _getController.postVideoFile.value != '' && _getController.postFile.value != '' || _getController.postVideoFile.value != '' && _getController.postFile.value == ''
+                    ? Column(
+                  children: [
+                    Text('Rasm yoki video yuklang',
+                        style: TextStyle(
+                            fontSize: w * 0.04,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey[600])),
+                    Stack(
                       children: [
-                        Obx(() => _getController.postFile.value == ''
-                            ? GestureDetector(
-                                onTap: () {
-                                  _pickMedia();
-                                },
-                                child: Container(
+                        Container(
+                          margin: EdgeInsets.only(bottom: h * 0.02),
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.32,
+                          child: Image.file(
+                              File(_getController.postFile.value), fit: BoxFit.cover),
+                        ),
+                        //edit icon button bottom, end
+                        Positioned(
+                          bottom: h * 0.022,
+                          right: w * 0.01,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.1,
+                            height: MediaQuery.of(context).size.height * 0.05,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: IconButton(
+                              onPressed: () {
+                                _pickMedia();
+                              },
+                              icon: const HeroIcon(
+                                HeroIcons.pencil,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Divider(
+                      height: 1,
+                      thickness: 1,
+                    ),
+                    SizedBox(height: h * 0.01),
+                  ],
+                )
+                    : const SizedBox()),
+                Obx(() => _getController.postVideoFile.value != '' && _getController.postFile.value != '' || _getController.postVideoFile.value != '' && _getController.postFile.value == ''
+                    ? Column(
+                  children: [
+                    Text('Video yuklang', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.grey[600])),
+                    SizedBox(
+                      child: FutureBuilder(
+                        future: _initializeVideoPlayerFuture,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            return Stack(
+                              children: [
+                                Container(
                                   width: w,
-                                  height: h * 0.1,
-                                  padding: EdgeInsets.only(left: w * 0.03, right: w * 0.03),
-                                  margin: EdgeInsets.all(w * 0.02),
+                                  height: h * 0.32,
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: Colors.grey[300]!),
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(1),
                                   ),
-                                  child: SizedBox(
-                                      width: w * 0.005,
-                                      height: h * 0.01,
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text('Iltimos, rasm yuklang',
-                                              style: TextStyle(
-                                                  fontSize: w * 0.04,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.grey[600])),
-                                          HeroIcon(
-                                            HeroIcons.photo,
-                                            color: Colors.red,
-                                            size: w * 0.08,
-                                          ),
-                                        ],
-                                      )),
+                                  child: FittedBox(
+                                    fit: BoxFit.contain,
+                                    child: SizedBox(
+                                      width: _controller.value.size.width,
+                                      height: _controller.value.size.height,
+                                      child: VideoPlayer(_controller),
+                                    ),
+                                  ),
                                 ),
-                              )
-                            : _getController.postVideoFile.value != '' && _getController.postFile.value != '' || _getController.postVideoFile.value != '' && _getController.postFile.value == ''
-                                ? Column(
-                                    children: [
-                                      Text('Rasm yoki video yuklang',
-                                          style: TextStyle(
-                                              fontSize: w * 0.04,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.grey[600])),
-                                      Stack(
+                                Positioned(
+                                  bottom: 0,
+                                  child: Container(
+                                      height: MediaQuery.of(context).size.height * 0.065,
+                                      width: MediaQuery.of(context).size.width,
+                                      color: Colors.black.withOpacity(0.5),
+                                      child: Column(
                                         children: [
-                                          Container(
-                                            margin: EdgeInsets.only(bottom: h * 0.02),
-                                            width: MediaQuery.of(context).size.width,
-                                            height: MediaQuery.of(context).size.height * 0.32,
-                                            child: Image.file(
-                                                File(_getController.postFile.value), fit: BoxFit.cover),
-                                          ),
-                                          //edit icon button bottom, end
-                                          Positioned(
-                                            bottom: h * 0.022,
-                                            right: w * 0.01,
-                                            child: Container(
-                                              width: MediaQuery.of(context).size.width * 0.1,
-                                              height: MediaQuery.of(context).size.height * 0.05,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.circular(10),
-                                              ),
-                                              child: IconButton(
-                                                onPressed: () {
-                                                  _pickMedia();
-                                                },
-                                                icon: const HeroIcon(
-                                                  HeroIcons.pencil,
-                                                  color: Colors.black,
+                                          SizedBox(
+                                            height: MediaQuery.of(context).size.height * 0.05,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                IconButton(
+                                                  onPressed: () {
+                                                    _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds - 10));
+                                                  },
+                                                  icon: const HeroIcon(
+                                                    HeroIcons.arrowLeft,
+                                                    color: Colors.white,
+                                                  ),
+                                                  color: Colors.white,
                                                 ),
+                                                IconButton(
+                                                  onPressed: () {
+                                                    if (_controller.value.isPlaying) {
+                                                      _controller.pause();
+                                                    } else {
+                                                      _controller.play();
+                                                    }
+                                                    setState(() {});
+                                                  },
+                                                  icon: _controller.value.isPlaying
+                                                      ? const HeroIcon(
+                                                    HeroIcons.pause,
+                                                    color: Colors.white,)
+                                                      : const HeroIcon(
+                                                    HeroIcons.play,
+                                                    color: Colors.white,),
+                                                  color: Colors.white,
+                                                ),
+                                                IconButton(
+                                                  onPressed: () {
+                                                    _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds + 10));
+                                                  },
+                                                  icon: const HeroIcon(
+                                                    HeroIcons.arrowRight,
+                                                    color: Colors.white,
+                                                  ),
+                                                  color: Colors.white,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            child: VideoProgressIndicator(_controller,
+                                              allowScrubbing: true,
+                                              colors: const VideoProgressColors(
+                                                playedColor: Colors.blue,
+                                                bufferedColor: Colors.grey,
+                                                backgroundColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ],
-                                      ),
-                                      const Divider(
-                                        height: 1,
-                                        thickness: 1,
-                                      ),
-                                      SizedBox(height: h * 0.01),
-                                    ],
-                                  )
-                                : const SizedBox()),
-                        Obx(() => _getController.postVideoFile.value != '' && _getController.postFile.value != '' || _getController.postVideoFile.value != '' && _getController.postFile.value == ''
-                              ? Column(
-                                  children: [
-                                    Text('Video yuklang', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.grey[600])),
-                                    SizedBox(
-                                      child: FutureBuilder(
-                                        future: _initializeVideoPlayerFuture,
-                                        builder: (context, snapshot) {
-                                          if (snapshot.connectionState == ConnectionState.done) {
-                                            return Stack(
-                                              children: [
-                                                Container(
-                                                  width: w,
-                                                  height: h * 0.32,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.black,
-                                                    borderRadius: BorderRadius.circular(1),
-                                                  ),
-                                                  child: FittedBox(
-                                                    fit: BoxFit.contain,
-                                                    child: SizedBox(
-                                                      width: _controller.value.size.width,
-                                                      height: _controller.value.size.height,
-                                                      child: VideoPlayer(_controller),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  bottom: 0,
-                                                  child: Container(
-                                                      height: MediaQuery.of(context).size.height * 0.065,
-                                                      width: MediaQuery.of(context).size.width,
-                                                      color: Colors.black.withOpacity(0.5),
-                                                      child: Column(
-                                                        children: [
-                                                          SizedBox(
-                                                            height: MediaQuery.of(context).size.height * 0.05,
-                                                            child: Row(
-                                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                              children: [
-                                                                IconButton(
-                                                                  onPressed: () {
-                                                                    _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds - 10));
-                                                                  },
-                                                                  icon: const HeroIcon(
-                                                                    HeroIcons.arrowLeft,
-                                                                    color: Colors.white,
-                                                                  ),
-                                                                  color: Colors.white,
-                                                                ),
-                                                                IconButton(
-                                                                  onPressed: () {
-                                                                    if (_controller.value.isPlaying) {
-                                                                      _controller.pause();
-                                                                    } else {
-                                                                      _controller.play();
-                                                                    }
-                                                                    setState(() {});
-                                                                  },
-                                                                  icon: _controller.value.isPlaying
-                                                                      ? const HeroIcon(
-                                                                          HeroIcons.pause,
-                                                                          color: Colors.white,)
-                                                                      : const HeroIcon(
-                                                                          HeroIcons.play,
-                                                                          color: Colors.white,),
-                                                                  color: Colors.white,
-                                                                ),
-                                                                IconButton(
-                                                                  onPressed: () {
-                                                                    _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds + 10));
-                                                                  },
-                                                                  icon: const HeroIcon(
-                                                                    HeroIcons.arrowRight,
-                                                                    color: Colors.white,
-                                                                  ),
-                                                                  color: Colors.white,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            child: VideoProgressIndicator(_controller,
-                                                              allowScrubbing: true,
-                                                              colors: const VideoProgressColors(
-                                                                playedColor: Colors.blue,
-                                                                bufferedColor: Colors.grey,
-                                                                backgroundColor: Colors.white,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      )),
-                                                ),
-                                                //edit icon button bottom, end
-                                                Positioned(
-                                                  bottom: h * 0.015,
-                                                  right: w * 0.01,
-                                                  child: Container(
-                                                    width: MediaQuery.of(context).size.width * 0.1,
-                                                    height: MediaQuery.of(context).size.height * 0.05,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius: BorderRadius.circular(10),
-                                                    ),
-                                                    child: IconButton(
-                                                      onPressed: () {
-                                                        _pickVideo();
-                                                      },
-                                                      icon: const HeroIcon(
-                                                        HeroIcons.pencil,
-                                                        color: Colors.black,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            );
-                                          } else {
-                                            return const Center(
-                                              child: CircularProgressIndicator(),
-                                            );
-                                          }
-                                        },
-                                      ),
-                                    )
-                                  ],
-                                )
-                              : Stack(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(bottom: h * 0.02),
-                                      width: MediaQuery.of(context).size.width,
-                                      height: MediaQuery.of(context).size.height * 0.32,
-                                      child: Image.file(File(_getController.postFile.value), fit: BoxFit.cover),
+                                      )),
+                                ),
+                                //edit icon button bottom, end
+                                Positioned(
+                                  bottom: h * 0.015,
+                                  right: w * 0.01,
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width * 0.1,
+                                    height: MediaQuery.of(context).size.height * 0.05,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    Positioned(
-                                      bottom: h * 0.022,
-                                      right: w * 0.01,
-                                      child: Container(
-                                        width: MediaQuery.of(context).size.width * 0.1,
-                                        height: MediaQuery.of(context).size.height * 0.05,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        child: IconButton(
-                                          onPressed: () {
-                                            _pickMedia();
-                                          },
-                                          icon: const HeroIcon(
-                                            HeroIcons.pencil,
-                                            color: Colors.black,
-                                          ),
-                                        ),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        _pickVideo();
+                                      },
+                                      icon: const HeroIcon(
+                                        HeroIcons.pencil,
+                                        color: Colors.black,
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
+                              ],
+                            );
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
+                      ),
+                    )
+                  ],
+                )
+                    : Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: h * 0.02),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.32,
+                      child: Image.file(File(_getController.postFile.value), fit: BoxFit.cover),
+                    ),
+                    Positioned(
+                      bottom: h * 0.022,
+                      right: w * 0.01,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.1,
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        SizedBox(height: h * 0.02),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.95,
-                          height: MediaQuery.of(context).size.height * 0.06,
-                          child: TextField(
-                            controller: titleController,
-                            decoration: InputDecoration(
-                              labelText: 'Sarlavha',
-                              hintStyle: TextStyle(
-                                fontSize: w * 0.034,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey[600],
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                  color: Colors.grey[300]!,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                  color: Colors.grey[300]!,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                  color: Colors.grey[300]!,
-                                ),
-                              ),
-                            ),
+                        child: IconButton(
+                          onPressed: () {
+                            _pickMedia();
+                          },
+                          icon: const HeroIcon(
+                            HeroIcons.pencil,
+                            color: Colors.black,
                           ),
                         ),
-                        SizedBox(height: h * 0.02),
-                        Container(
-                          width: w * 0.95,
-                          height: h * 0.2,
-                          padding: EdgeInsets.only(
-                              right: w * 0.02,
-                              left: w * 0.02,
-                              bottom: h * 0.01),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.grey[300]!),
-                          ),
-                          child: TextField(
-                            controller: descriptionController,
-                            maxLines: 30,
-                            maxLength: 600,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Tavsif',
-                              hintStyle: TextStyle(
-                                fontSize: w * 0.04,
-                              ),
-                            ),
-                            style: TextStyle(
-                              fontSize: w * 0.04,
-                            ),
-                          ),
+                      ),
+                    ),
+                  ],
+                )),
+                SizedBox(height: h * 0.02),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  child: TextField(
+                    controller: titleController,
+                    decoration: InputDecoration(
+                      labelText: 'Sarlavha',
+                      hintStyle: TextStyle(
+                        fontSize: w * 0.034,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[600],
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Colors.grey[300]!,
                         ),
-                        SizedBox(height: h * 0.02),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.95,
-                          height: MediaQuery.of(context).size.height * 0.05,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              /*if (_getController.postFile.value == '') {
-                                Toast.showToast(
-                                    context, 'Iltimos, rasm yuklang', Colors.red, Colors.white);
-                                return;
-                              }*/
-                              if (titleController.text == '') {
-                                Toast.showToast(
-                                    context,
-                                    'Iltimos, title kiriting',
-                                    Colors.red,
-                                    Colors.white);
-                                return;
-                              }
-                              ApiController().createPost(titleController.text, descriptionController.text, _getController.meUsers.value.res!.business!.id!, _getController.postFile.value.toString(), _getController.postVideoFile.value.toString(),context).then((value) => {
-                                        if (value){
-                                            _getController.changePostFile(''),
-                                            _getController.changePostVideoFile(''),
-                                            titleController.clear(),
-                                            descriptionController.clear(),
-                                            _getController.changeIndex(0),
-                                            ApiController().getUserData(),
-                                        } else {
-                                            Toast.showToast(context, 'Nimadur Xato ketdi', Colors.red, Colors.white),
-                                        }
-                                      });
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            child: Text('Post yaratish',
-                                style: TextStyle(
-                                    fontSize: w * 0.04,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white)),
-                          ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Colors.grey[300]!,
                         ),
-                      ],
-                    )),
-                  )
-                ],
-              ))),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Colors.grey[300]!,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: h * 0.02),
+                Container(
+                  width: w * 0.95,
+                  height: h * 0.2,
+                  padding: EdgeInsets.only(
+                      right: w * 0.02,
+                      left: w * 0.02,
+                      bottom: h * 0.01),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey[300]!),
+                  ),
+                  child: TextField(
+                    controller: descriptionController,
+                    maxLines: 30,
+                    maxLength: 600,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Tavsif',
+                      hintStyle: TextStyle(
+                        fontSize: w * 0.04,
+                      ),
+                    ),
+                    style: TextStyle(
+                      fontSize: w * 0.04,
+                    ),
+                  ),
+                ),
+                SizedBox(height: h * 0.02),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (titleController.text == '') {
+                        Toast.showToast(
+                            context,
+                            'Iltimos, title kiriting',
+                            Colors.red,
+                            Colors.white);
+                        return;
+                      }
+                      ApiController().createPost(titleController.text, descriptionController.text, _getController.meUsers.value.res!.business!.id!, _getController.postFile.value.toString(), _getController.postVideoFile.value.toString(),context).then((value) => {
+                        if (value){
+                          _getController.changePostFile(''),
+                          _getController.changePostVideoFile(''),
+                          titleController.clear(),
+                          descriptionController.clear(),
+                          _getController.changeIndex(0),
+                          ApiController().getUserData(),
+                        } else {
+                          Toast.showToast(context, 'Nimadur Xato ketdi', Colors.red, Colors.white),
+                        }
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Text('Post yaratish',
+                        style: TextStyle(
+                            fontSize: w * 0.04,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white)),
+                  ),
+                ),
+              ],
+            )),
+      )
+      ),
     );
   }
 }

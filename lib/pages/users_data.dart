@@ -99,8 +99,11 @@ class LoginUserData extends StatelessWidget {
                 SizedBox(height: h * 0.08),
                 const Image(image: AssetImage('assets/images/text.png')),
                 SizedBox(height: h * 0.01),
-                const Text(
-                  'Ilovadan foydalanish uchun ma’lumotlarni toldiring',
+                Text('Ilovadan foydalanish uchun ma’lumotlarni toldiring',
+                  style: TextStyle(
+                    fontSize: w * 0.04,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 SizedBox(height: h * 0.01),
                 IconButton(

@@ -75,7 +75,7 @@ class SamplePage extends StatelessWidget {
                                   )
                                 : Container(),
                             SizedBox(width: w * 0.02),
-                            Text('Uploading...',
+                            Text('Yuklanmoqda...',
                               style: TextStyle(
                                 fontSize: w * 0.04,
                                 fontWeight: FontWeight.w500,

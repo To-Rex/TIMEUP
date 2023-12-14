@@ -134,20 +134,22 @@ class PostDetailsPage extends StatelessWidget {
             title: Obx(() => getController.getPostById.value.res == null ||
                 getController.getPostById.value.res!.id == null
                 ? Center(
-                child: Text('No data', style: TextStyle(color: Colors.black, fontSize: w * 0.04)))
+                child: Text('Ma\'lumotlar yo\'q', style: TextStyle(color: Colors.black, fontSize: w * 0.04)))
                 : Text(getController.getPostById.value.res!.title!, style: const TextStyle(color: Colors.black, fontSize: 18))),
             actions: [
               Obx(() => getController.meUsers.value.res?.business?.id == getController.getPostById.value.res?.businessId
                   ? PopupMenuButton<String>(
                 itemBuilder: (BuildContext context) {
-                  return {'Delete', 'Edit'}.map((String choice) {
+                  return
+                    //{'Delete', 'Edit'}
+                    {'O\'chirish', 'Tahrirlash'}.map((String choice) {
                     return PopupMenuItem<String>(
                       onTap: () {
-                        if (choice == 'Delete') {
+                        if (choice == 'O\'chirish') {
                           ApiController().deletePost(getController.getPostById.value.res?.id);
                           Navigator.pop(context);
                           ApiController().getMePostList(getController.meUsers.value.res!.business?.id);
-                        }else if (choice == 'Edit') {
+                        }else if (choice == 'Tahrirlash'){
                           showLoadingDialog(context, w);
                           ApiController().getByIdPost(postId).then((value) => {
                             Navigator.pop(context),
@@ -159,8 +161,8 @@ class PostDetailsPage extends StatelessWidget {
                       child: Row(
                         children: [
                           HeroIcon(
-                            choice == 'Delete' ? HeroIcons.trash : HeroIcons.pencilSquare,
-                            color: choice == 'Delete' ? Colors.red : Colors.blue,
+                            choice == 'O\'chirish' ? HeroIcons.trash : HeroIcons.pencilSquare,
+                            color: choice == 'O\'chirish' ? Colors.red : Colors.blue,
                           ),
                           SizedBox(width: w * 0.02),
                           Text(choice,
@@ -174,13 +176,12 @@ class PostDetailsPage extends StatelessWidget {
                     );
                   }).toList();
                 },
-              )
-                  : const SizedBox()
+              ) : const SizedBox()
               ),
             ],
           ),
           body: Obx(() => getController.getPostById.value.res == null || getController.getPostById.value.res!.id == null
-              ? const Center(child: Text('No data'))
+              ? Center(child: Text('Ma\'lumotlar yo\'q', style: TextStyle(color: Colors.black, fontSize: w * 0.04)))
               : Column(
             children: [
               SizedBox(height: h * 0.02),
