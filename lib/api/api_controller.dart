@@ -59,17 +59,11 @@ class ApiController extends GetxController {
   var postDeleteUrl = 'post/delete/';
   var postListFollowedProfilesUrl = 'post/list/followed-profiles';
   var postUpdateUrl = 'post/update/';
-  //{{host}}/api/v1/booking/business/delete/2
   var deleteBookingBusinessUrl = 'booking/business/delete/';
-  //{{host}}/api/v1/booking/client/delete/4
   var deleteBookingClientUrl = 'booking/client/delete/';
-  //{{host}}/api/v1/booking/update/3
   var bookingUpdateUrl = 'booking/update/';
-  //{{host}}/api/v1/booking-category/list/5
   var bookingCategoryListUrl = 'booking-category/list/';
-  //{{host}}/api/v1/booking-category/delete/2
   var bookingCategoryDeleteUrl = 'booking-category/delete/';
-  //{{host}}/api/v1/booking-category/create
   var bookingCategoryListCreateUrl = 'booking-category/create';
 
   Future<String> sendSms(String phoneNumber) async {
@@ -81,8 +75,10 @@ class ApiController extends GetxController {
       }),
       headers: {"Content-Type": "application/json"},
     );
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return getLastSms(phoneNumber).then((value) => value.res?.code ?? '');
+    } else if (response.statusCode == 400 || response.statusCode == 401) {
+      return '400';
     } else {
       return '';
     }

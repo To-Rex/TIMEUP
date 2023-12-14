@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:time_up/elements/functions.dart';
 import 'package:time_up/pages/sample_page.dart';
@@ -33,6 +34,77 @@ class LoginPage extends StatelessWidget {
     return '${(duration.inSeconds ~/ 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
   }
 
+  showDialogValidation(BuildContext context,title,description) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title,style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.red)),
+        content: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.05,
+          child: Center(
+            child: Text(description),
+          ),
+        ),
+        actions: [
+          Center(
+            child: Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.32,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 1,
+                        backgroundColor: Colors.grey[300],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Bekor qilish',
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.035,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ))),
+                ),
+                const Expanded(child: SizedBox()),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.32,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Row(
+                        children: [
+                          const Expanded(child: SizedBox()),
+                          Text('Ok',
+                              style: TextStyle(
+                                fontSize:
+                                MediaQuery.of(context).size.width * 0.035,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              )),
+                          const HeroIcon(HeroIcons.check, color: Colors.white)
+                        ],
+                      )),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
@@ -48,9 +120,7 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(height: h * 0.01),
-                Image(
-                    image: const AssetImage('assets/images/text.png'),
-                    height: h * 0.05),
+                Image(image: const AssetImage('assets/images/text.png'), height: h * 0.05),
                 SizedBox(height: h * 0.06),
                 Container(
                   width: w * 0.9,
@@ -102,13 +172,9 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 Obx(() => nameController.sendCode.value
-                    ? SizedBox(
-                  height: h * 0.02,
-                )
-                    : const SizedBox()),
-                Obx(() => nameController.sendCode.value
                     ? Container(
                   width: w * 0.9,
+                  margin: EdgeInsets.only(top: h * 0.02),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7),
                     color: Colors.grey[200],
@@ -223,8 +289,7 @@ class LoginPage extends StatelessWidget {
                     ],
                   ) : Text('Royhatdan o`tish uchun raqamingizni yozing!',
                       style: TextStyle(fontSize: w * 0.04 > 20 ? 20 : w * 0.04),
-                      textAlign: TextAlign.center),
-                ),
+                      textAlign: TextAlign.center)),
                 SizedBox(height: h * 0.02),
                 SizedBox(
                   height: h * 0.06,
@@ -250,7 +315,14 @@ class LoginPage extends StatelessWidget {
                             startCountdown();
                           });
                         }
-                        ApiController().sendSms(code + _controller.text).then((value) => nameController.changeCode(value));
+                        ApiController().sendSms(code + _controller.text).then((value) => {
+                          if (value == '400'){
+                            showDialogValidation(context, '!Diqqat', 'Siz ko\'p urunishlar almalga oshirdingiz. Iltimos keynroq urinib ko`ring'),
+                            nameController.changeCode('')
+                          }else{
+                            nameController.changeCode(value)
+                          }
+                        });
                       } else {
                         if (_codeController.text == nameController.code.value) {
                           var phone = code + _controller.text;
