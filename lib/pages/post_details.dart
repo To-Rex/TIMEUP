@@ -231,11 +231,11 @@ class PostDetailsPage extends StatelessWidget {
                   SizedBox(width: w * 0.03),
                   GestureDetector(
                     onTap: () {
-                      ApiController().profileById(getController.getPostById.value.res!.businessId!).then((value) => {
-                        getController.changeProfileById(value),
-                      });
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
-                    },
+                      if (getController.meUsers.value.res!.business!.id != getController.getPostById.value.res!.businessId){
+                        ApiController().profileById(getController.getPostById.value.res!.businessId!).then((value) => {getController.changeProfileById(value)});
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
+                      }
+                      },
                     child: CircleAvatar(
                         backgroundColor: Colors.grey,
                         radius: w * 0.06,
@@ -244,10 +244,11 @@ class PostDetailsPage extends StatelessWidget {
                   SizedBox(width: w * 0.03),
                   GestureDetector(
                     onTap: () {
+                      if (getController.meUsers.value.res!.business!.id != getController.getPostById.value.res!.businessId){
                       ApiController().profileById(getController.getPostById.value.res!.businessId!).then((value) => {
                         getController.changeProfileById(value),
                       });
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));}
                     },
                     child: Text(
                       getController.getPostById.value.res!.posterName!,

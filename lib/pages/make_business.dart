@@ -100,14 +100,12 @@ class MakeBusinessPage extends StatelessWidget {
                                   ? CircleAvatar(
                                 radius: w * 0.12,
                                 foregroundColor: Colors.blue,
-                                backgroundImage: NetworkImage(
-                                    '${getController.meUsers.value.res?.photoUrl}'),
+                                backgroundImage: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),
                               )
                                   : CircleAvatar(
                                 radius: w * 0.12,
                                 foregroundColor: Colors.blue,
-                                backgroundImage: FileImage(
-                                    File(getController.image.value)),
+                                backgroundImage: FileImage(File(getController.image.value)),
                               )),
                               const Spacer(),
                               SizedBox(width: w * 0.1)
@@ -121,7 +119,7 @@ class MakeBusinessPage extends StatelessWidget {
                               _pickImage(ImageSource.gallery);
                             },
                             child: Text(
-                              'Edit profile photo',
+                              'Profil rasmini tahrirlash',
                               style: TextStyle(
                                 fontSize: w * 0.04,
                                 color: Colors.blue,
@@ -132,7 +130,7 @@ class MakeBusinessPage extends StatelessWidget {
                         SizedBox(height: h * 0.05),
                         TextFildWidget(
                           controller: nikNameController,
-                          labelText: 'Nikname',
+                          labelText: 'Foydalanuvchi nomi',
                         ),
                         SizedBox(height: h * 0.02),
                         //dropdown menu for region
@@ -198,7 +196,7 @@ class MakeBusinessPage extends StatelessWidget {
                               value: getController.categoryIndex.value,
                               hint: Padding(
                                 padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
-                                child: Text('Type of activity', style: TextStyle(fontSize: w * 0.04),),
+                                child: Text('Faoliyat turi', style: TextStyle(fontSize: w * 0.04),),
                               ),
                               items: getController.category.value.res!.map((e) => DropdownMenuItem(
                                 value: e.id,
@@ -242,7 +240,7 @@ class MakeBusinessPage extends StatelessWidget {
                               value: getController.subCategoryIndex.value,
                               hint: Padding(
                                 padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
-                                child: Text('Subcategory', style: TextStyle(fontSize: w * 0.04,),
+                                child: Text('Yo\'nalishlar', style: TextStyle(fontSize: w * 0.04,),
                                 ),
                               ),
                               items: getController.subCategory.value.res!.map((e) => DropdownMenuItem(
@@ -271,7 +269,7 @@ class MakeBusinessPage extends StatelessWidget {
                         //dropdown menu for experience
                         TextFildWidget(
                           controller: nameInstitutionController,
-                          labelText: 'Name of the institution',
+                          labelText: 'Shirkat (tashkilot) nomi',
                         ),
                       ],
                     ),
@@ -300,7 +298,7 @@ class MakeBusinessPage extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.only(left: w * 0.05),
                           child: Text(
-                            'About yourself',
+                            'O\'zingiz haqingizda qisqacha',
                             style: TextStyle(fontSize: w * 0.03),
                           ),
                         ),
@@ -320,7 +318,7 @@ class MakeBusinessPage extends StatelessWidget {
                             controller: bioController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: 'About yourself',
+                              hintText: 'O\'zingiz haqingizda',
                               hintStyle: TextStyle(
                                 fontSize: w * 0.04,
                               ),
@@ -333,7 +331,7 @@ class MakeBusinessPage extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.only(left: w * 0.05, top: h * 0.01),
                           child: Text(
-                            'Write down your days off',
+                            'Ish kunlaringizni kiriting',
                             style: TextStyle(fontSize: w * 0.03),
                           ),
                         ),
@@ -341,8 +339,7 @@ class MakeBusinessPage extends StatelessWidget {
                           width: w,
                           height: h * 0.25,
                           margin: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
-                          padding: EdgeInsets.only(
-                              right: w * 0.02, left: w * 0.02, bottom: h * 0.01),
+                          padding: EdgeInsets.only(right: w * 0.02, left: w * 0.02, bottom: h * 0.01),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(color: Colors.grey[300]!),
@@ -352,7 +349,7 @@ class MakeBusinessPage extends StatelessWidget {
                             controller: dayOffController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: 'Write down your days off',
+                              hintText: 'Ish kunlaringizni',
                               hintStyle: TextStyle(
                                 fontSize: w * 0.04,
                               ),
@@ -364,7 +361,7 @@ class MakeBusinessPage extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.only(left: w * 0.05),
                           child: Text(
-                            'Ish tajribangiz',
+                            'Ish tajribangiz (yil)',
                             style: TextStyle(fontSize: w * 0.03),
                           ),
                         ),
@@ -374,7 +371,7 @@ class MakeBusinessPage extends StatelessWidget {
                             //keyboardType: number keyboard not ',' and '.'
                             keyboardType: TextInputType.number,
                             controller: experienceController,
-                            labelText: '__',
+                            labelText: 'Faqat raqamlar bilan',
                           ),
                         ),
                       ],
@@ -401,30 +398,30 @@ class MakeBusinessPage extends StatelessWidget {
               onPressed: () {
                 if (nikNameController.text.isEmpty) {
                   getController.changeFullName(nikNameController.text);
-                  Toast.showToast(context, 'Nikname is empty', Colors.red, Colors.white,);
+                  Toast.showToast(context, 'Foydalanuvchi nomi bo\'sh', Colors.red, Colors.white,);
                   return;
                 }
                 if (nameInstitutionController.text.isEmpty) {
                   getController.changeFullName(fullNameController.text);
-                  Toast.showToast(context, 'Name of the institution is empty', Colors.red, Colors.white,);
+                  Toast.showToast(context, 'Shirkat (tashkilot) nomi bo\'sh', Colors.red, Colors.white,);
                   return;
                 }
                 if (getController.subCategory.value.res == null) {
-                  Toast.showToast(context, 'Subcategory is empty', Colors.red, Colors.white,);
+                  Toast.showToast(context, 'Yo\'nalishlar bo\'sh', Colors.red, Colors.white,);
                   return;
                 }
                 if (getController.getRegion.value.res == null) {
-                  Toast.showToast(context, 'Region is empty', Colors.red, Colors.white,);
+                  Toast.showToast(context, 'Viloyatlar bo\'sh', Colors.red, Colors.white,);
                   return;
                 }
                 if (experienceController.text.isEmpty) {
-                  Toast.showToast(context, 'Experience is empty', Colors.red, Colors.white,);
+                  Toast.showToast(context, 'Ish tajribangizni kiriting', Colors.red, Colors.white,);
                   return;
                 }
                 experienceController.text = experienceController.text.replaceAll(',', '.');
 
                 if (experienceController.text.split('.').length > 2) {
-                  Toast.showToast(context, 'Please enter a valid number', Colors.red, Colors.white,);
+                  Toast.showToast(context, 'Iltimos, to\'g\'ri raqam kiriting', Colors.red, Colors.white,);
                   return;
                 }
                 num experience;
@@ -456,12 +453,13 @@ class MakeBusinessPage extends StatelessWidget {
                                 getController.index.value = 0;
                                 ApiController().getUserData().then((value) =>finish());
                               } else {
-                                Toast.showToast(context, 'Error', Colors.red, Colors.white);
+                                //Toast.showToast(context, 'Error', Colors.red, Colors.white);
+                                Toast.showToast(context, 'Nimadir xato ketdi', Colors.red, Colors.white,);
                               }
                             });
                           });
                         } else {
-                          Toast.showToast(context, 'Error', Colors.red, Colors.white);
+                          Toast.showToast(context, 'Nimadir xato ketdi', Colors.red, Colors.white,);
                         }
                       }));
                 } else {
@@ -483,18 +481,18 @@ class MakeBusinessPage extends StatelessWidget {
                             getController.index.value = 0;
                             ApiController().getUserData().then((value) => finish());
                           } else {
-                            Toast.showToast(context, 'Error', Colors.red, Colors.white);
+                            Toast.showToast(context, 'Nimadir xato ketdi', Colors.red, Colors.white,);
                           }
                         });
                       });
                     } else {
-                      Toast.showToast(context, 'Error', Colors.red, Colors.white,);
+                      Toast.showToast(context, 'Ex Nimadir xato ketdi', Colors.red, Colors.white,);
                     }
                   });
                 }
               },
             ) : EditButton(
-              text: 'Next',
+              text: 'Keyingi',
               onPressed: () {
                 pageController.nextPage(
                   duration: const Duration(milliseconds: 300),

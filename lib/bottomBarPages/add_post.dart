@@ -414,11 +414,7 @@ class _AddPostPage extends State<AddPostPage> {
                         Obx(() => _getController.postVideoFile.value != '' && _getController.postFile.value != '' || _getController.postVideoFile.value != '' && _getController.postFile.value == ''
                               ? Column(
                                   children: [
-                                    Text('Video yuklang',
-                                        style: TextStyle(
-                                            fontSize: w * 0.04,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.grey[600])),
+                                    Text('Video yuklang', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.grey[600])),
                                     SizedBox(
                                       child: FutureBuilder(
                                         future: _initializeVideoPlayerFuture,
@@ -477,12 +473,10 @@ class _AddPostPage extends State<AddPostPage> {
                                                                   icon: _controller.value.isPlaying
                                                                       ? const HeroIcon(
                                                                           HeroIcons.pause,
-                                                                          color: Colors.white,
-                                                                        )
+                                                                          color: Colors.white,)
                                                                       : const HeroIcon(
                                                                           HeroIcons.play,
-                                                                          color: Colors.white,
-                                                                        ),
+                                                                          color: Colors.white,),
                                                                   color: Colors.white,
                                                                 ),
                                                                 IconButton(
@@ -520,9 +514,7 @@ class _AddPostPage extends State<AddPostPage> {
                                                     height: MediaQuery.of(context).size.height * 0.05,
                                                     decoration: BoxDecoration(
                                                       color: Colors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
+                                                      borderRadius: BorderRadius.circular(10),
                                                     ),
                                                     child: IconButton(
                                                       onPressed: () {
@@ -586,7 +578,7 @@ class _AddPostPage extends State<AddPostPage> {
                           child: TextField(
                             controller: titleController,
                             decoration: InputDecoration(
-                              hintText: 'Title',
+                              labelText: 'Sarlavha',
                               hintStyle: TextStyle(
                                 fontSize: w * 0.034,
                                 fontWeight: FontWeight.w500,
@@ -631,7 +623,7 @@ class _AddPostPage extends State<AddPostPage> {
                             maxLength: 600,
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: 'Description',
+                              hintText: 'Tavsif',
                               hintStyle: TextStyle(
                                 fontSize: w * 0.04,
                               ),

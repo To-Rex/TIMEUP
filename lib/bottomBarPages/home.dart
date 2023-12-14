@@ -189,7 +189,7 @@ class HomePage extends StatelessWidget {
         ? SizedBox(
       width: w,
       height: h * 0.9,
-      child: Center(child: Text('No data', style: TextStyle(fontSize: w * 0.04, color: Colors.black))),
+      child: Center(child: Text('Ma`lumotlar yo\'q',style: TextStyle(fontSize: w * 0.04, color: Colors.black))),
     )
         : Obx(() => _getController.getFollowPost.value.res!.isNotEmpty || _getController.getFollowPost.value.res != null
           ? Obx(() => _getController.uplAodVideo.value == true
@@ -271,46 +271,24 @@ class HomePage extends StatelessWidget {
                                   ),
                                   child: IconButton(
                                       onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => PostDetailsPage(
-                                                    postId: _getController
-                                                        .getFollowPost
-                                                        .value
-                                                        .res?[index]
-                                                        .id)));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getFollowPost.value.res?[index].id)));
                                       },
                                       icon: Icon(
                                         Icons.play_arrow,
-                                        color:
-                                        Colors.white,
+                                        color: Colors.white,
                                         size: w * 0.1,
                                       )),
                                 ),
                               )),
                         ],
-                      )
-                          : InkWell(
+                      ) : InkWell(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      PostDetailsPage(
-                                          postId: _getController
-                                              .getFollowPost
-                                              .value
-                                              .res?[index]
-                                              .id)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getFollowPost.value.res?[index].id)));
                         },
                         child: SizedBox(
                           width: w,
                           height: h * 0.33,
-                          child: Image.network(
-                            '${_getController.getFollowPost.value.res?[index].photo}',
-                            fit: BoxFit.cover,
-                          ),
+                          child: Image.network('${_getController.getFollowPost.value.res?[index].photo}', fit: BoxFit.cover,),
                         ),
                       )),
                     ),
@@ -327,24 +305,10 @@ class HomePage extends StatelessWidget {
                               iconSize: w * 0.07,
                               padding: EdgeInsets.zero,
                               onPressed: () {
-                                ApiController()
-                                    .profileById(int.parse(
-                                    _getController
-                                        .getFollowPost
-                                        .value
-                                        .res![index]
-                                        .businessId
-                                        .toString()))
-                                    .then((value) => {
-                                  _getController
-                                      .changeProfileById(
-                                      value),
+                                ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {
+                                      _getController.changeProfileById(value),
                                 });
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ProfessionsListDetails()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()));
                               },
                               icon: HeroIcon(
                                 HeroIcons.heart,
@@ -352,9 +316,7 @@ class HomePage extends StatelessWidget {
                                 size: w * 0.07,
                               )),
                         ),
-                        SizedBox(
-                          width: w * 0.01,
-                        ),
+                        SizedBox(width: w * 0.01),
                         SizedBox(
                           height: w * 0.07,
                           width: w * 0.07,
@@ -369,9 +331,7 @@ class HomePage extends StatelessWidget {
                                 size: w * 0.07,
                               )),
                         ),
-                        SizedBox(
-                          width: w * 0.01,
-                        ),
+                        SizedBox(width: w * 0.01),
                         const Expanded(child: SizedBox()),
                         SizedBox(
                           height: w * 0.07,
@@ -409,8 +369,18 @@ class HomePage extends StatelessWidget {
                       trimLines: 2,
                       colorClickableText: Colors.blue,
                       trimMode: TrimMode.Line,
-                      trimCollapsedText: 'more',
-                      trimExpandedText: ' less',
+                      trimCollapsedText: ' Koproq',
+                      trimExpandedText: ' Yashirish',
+                      moreStyle: TextStyle(
+                        fontSize: w * 0.03,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.blue,
+                      ),
+                      lessStyle: TextStyle(
+                        fontSize: w * 0.03,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.blue,
+                      ),
                       style: TextStyle(
                         fontSize: w * 0.035,
                         fontWeight: FontWeight.w400,
@@ -444,7 +414,7 @@ class HomePage extends StatelessWidget {
                   strokeWidth: 2,
                 );
               } else if (mode == RefreshStatus.failed) {
-                body = const Text("Load Failed!Click retry!");
+                body = const Text("Ex nimadir xato ketdi", style: TextStyle(fontSize: 14, color: Colors.red));
               } else if (mode == RefreshStatus.canRefresh) {
                 body = const Text(
                     "Ma`lumotlarni yangilash uchun tashlang");
@@ -469,7 +439,7 @@ class HomePage extends StatelessWidget {
                   strokeWidth: 2,
                 );
               } else if (mode == LoadStatus.failed) {
-                body = const Text("Load Failed!Click retry!");
+                body = const Text("Ex nimadir xato ketdi", style: TextStyle(fontSize: 14, color: Colors.red));
               } else if (mode == LoadStatus.canLoading) {
                 body = const SizedBox();
               } else {
@@ -516,8 +486,7 @@ class HomePage extends StatelessWidget {
                                     width: w * 0.11,
                                     height: w * 0.11,
                                     child: CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                          '${_getController.getFollowPost.value.res?[index].posterPhotoUrl}'),
+                                      backgroundImage: NetworkImage('${_getController.getFollowPost.value.res?[index].posterPhotoUrl}'),
                                     ),
                                   ),
                                   SizedBox(width: w * 0.02),
@@ -539,27 +508,19 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     SizedBox(height: h * 0.02),
-                    if (_getController.getFollowPost.value
-                        .res?[index].photo !=
-                        null)
+                    if (_getController.getFollowPost.value.res?[index].photo != null)
                       SizedBox(
                         width: w,
                         height: h * 0.33,
                         child:
                         Obx(() =>
-                        _getController
-                            .getFollowPost
-                            .value
-                            .res?[index]
-                            .mediaType ==
-                            'video'
+                        _getController.getFollowPost.value.res?[index].mediaType == 'video'
                             ? Stack(
                           children: [
                             SizedBox(
                               width: w,
                               height: h * 0.33,
-                              child:
-                              Image.network(
+                              child: Image.network(
                                 '${_getController.getFollowPost.value.res?[index].photo}',
                                 fit: BoxFit.cover,
                               ),
@@ -568,48 +529,29 @@ class HomePage extends StatelessWidget {
                                 height: h * 0.33,
                                 width: w,
                                 child: Center(
-                                  child:
-                                  Container(
+                                  child: Container(
                                     decoration:
                                     BoxDecoration(
-                                      color: Colors
-                                          .black
-                                          .withOpacity(
-                                          0.5),
-                                      borderRadius:
-                                      BorderRadius.circular(
-                                          100),
+                                      color: Colors.black.withOpacity(0.5),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     child: IconButton(
                                         onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getFollowPost.value.res?[index].id)));
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getFollowPost.value.res?[index].id)));
                                         },
                                         icon: Icon(
-                                          Icons
-                                              .play_arrow,
-                                          color: Colors
-                                              .white,
-                                          size: w *
-                                              0.1,
+                                          Icons.play_arrow,
+                                          color: Colors.white,
+                                          size: w * 0.1,
                                         )),
                                   ),
                                 )),
                           ],
-                        )
-                            : InkWell(
+                        ) : InkWell(
                           onTap: () {
                             Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) => PostDetailsPage(
-                                        postId: _getController
-                                            .getFollowPost
-                                            .value
-                                            .res?[
-                                        index]
-                                            .id)));
+                                MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getFollowPost.value.res?[index].id)));
                           },
                           child: SizedBox(
                             width: w,
@@ -640,8 +582,18 @@ class HomePage extends StatelessWidget {
                         trimLines: 2,
                         colorClickableText: Colors.grey,
                         trimMode: TrimMode.Line,
-                        trimCollapsedText: 'more',
-                        trimExpandedText: ' less',
+                        trimCollapsedText: ' Ko\'proq',
+                        trimExpandedText: ' Yashirish',
+                        moreStyle: TextStyle(
+                          fontSize: w * 0.03,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.blue,
+                        ),
+                        lessStyle: TextStyle(
+                          fontSize: w * 0.03,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.blue,
+                        ),
                         style: TextStyle(
                           fontSize: w * 0.035,
                           fontWeight: FontWeight.w400,
@@ -649,19 +601,18 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: h * 0.01,
-                    ),
+                    SizedBox(height: h * 0.01,),
                   ],
                 );
               }),
         ),
-      ))
-          : SizedBox(
+      )
+    ) : SizedBox(
         width: w,
         height: h * 0.9,
         child: Center(
-          child: Text('No data', style: TextStyle(fontSize: w * 0.05, color: Colors.black)),
+          child: Text('Ma`lumotlar yo\'q',
+              style: TextStyle(fontSize: w * 0.05, color: Colors.black)),
         ),
       )
     ));

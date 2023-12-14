@@ -55,7 +55,6 @@ class EditBusinessUserPage extends StatelessWidget {
     if (croppedImage != null) {
       getController.changeImage(croppedImage.path);
     } else {
-      print('null$croppedImage');
       return;
     }
   }
@@ -85,7 +84,7 @@ class EditBusinessUserPage extends StatelessWidget {
                 width: w * 0.07,
               ),
               Text(
-                'Loading...',
+                'Kuting...',
                 style: TextStyle(
                   fontSize: w * 0.04,
                   fontWeight: FontWeight.w500,
@@ -173,24 +172,25 @@ class EditBusinessUserPage extends StatelessWidget {
                           onPressed: () {
                             _pickImage(ImageSource.gallery);
                           },
-                          child: Text('Edit profile photo', style: TextStyle(fontSize: w * 0.04, color: Colors.blue,),
+                          child: Text('Profil rasmini tahrirlash',
+                            style: TextStyle(fontSize: w * 0.04, color: Colors.blue,),
                           ),
                         ),
                       ),
                       SizedBox(height: h * 0.015),
                       TextFildWidget(
                         controller: nikNameController,
-                        labelText: 'Nikname',
+                        labelText: 'Foydalanuvchi nomi',
                       ),
                       SizedBox(height: h * 0.015),
                       TextFildWidget(
                         controller: nameController,
-                        labelText: 'Name',
+                        labelText: 'Ism',
                       ),
                       SizedBox(height: h * 0.015),
                       TextFildWidget(
                         controller: surnameController,
-                        labelText: 'Surname',
+                        labelText: 'Familiya',
                       ),
                       //dropdown menu for region
                       Container(
@@ -321,7 +321,8 @@ class EditBusinessUserPage extends StatelessWidget {
                       ),
                       TextFildWidget(
                         controller: nameInstitutionController,
-                        labelText: 'Name of the institution',
+                        //labelText: 'Name of the institution',
+                        labelText: 'Shirkat (Tashkilot) nomi',
                       ),
                     ],
                   ),
@@ -346,7 +347,8 @@ class EditBusinessUserPage extends StatelessWidget {
                       SizedBox(height: h * 0.01),
                       Padding(
                         padding: EdgeInsets.only(left: w * 0.05),
-                        child: Text('About yourself', style: TextStyle(fontSize: w * 0.03),),
+                        child: Text('O\'zingiz haqingizda ma\'lumot',
+                          style: TextStyle(fontSize: w * 0.03),),
                       ),
                       Container(
                         width: w,
@@ -363,7 +365,7 @@ class EditBusinessUserPage extends StatelessWidget {
                           controller: bioController,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'About yourself',
+                            hintText: 'O\'zingiz haqingizda',
                             hintStyle: TextStyle(fontSize: w * 0.04),
                           ),
                           style: TextStyle(fontSize: w * 0.04,),
@@ -371,7 +373,7 @@ class EditBusinessUserPage extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: w * 0.05, top: h * 0.01),
-                        child: Text('Write down your days off',
+                        child: Text('Ish kunlaringizni kiriting',
                           style: TextStyle(fontSize: w * 0.03),
                         ),
                       ),
@@ -389,7 +391,7 @@ class EditBusinessUserPage extends StatelessWidget {
                           controller: dayOffController,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'Write down your days off',
+                            hintText: 'Ish kunlari',
                             hintStyle: TextStyle(fontSize: w * 0.04,),
                           ),
                         ),
@@ -398,17 +400,16 @@ class EditBusinessUserPage extends StatelessWidget {
                       SizedBox(height: h * 0.01),
                       Padding(
                         padding: EdgeInsets.only(left: w * 0.05),
-                        child: Text('Ish tajribangiz', style: TextStyle(fontSize: w * 0.03),),
+                        child: Text('Ish tajribangiz (yil)',
+                          style: TextStyle(fontSize: w * 0.03),),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
-                        child: TextFildWidget(
-                          //keyboardType: number keyboard not ',' and '.'
-                          keyboardType: TextInputType.number,
-                          controller: experienceController,
-                          labelText: '__',
-                        ),
-                      ),
+                      Center(child:
+                      TextFildWidget(
+                        //keyboardType: number keyboard not ',' and '.'
+                        keyboardType: TextInputType.number,
+                        controller: experienceController,
+                        labelText: 'Faqat raqamlar bilan',
+                      )),
                     ],
                   ),
                 ),
@@ -433,32 +434,32 @@ class EditBusinessUserPage extends StatelessWidget {
               onPressed: () {
                 if (nikNameController.text.isEmpty) {
                   getController.changeFullName(nikNameController.text);
-                  Toast.showToast(context, 'Nikname is empty', Colors.red, Colors.white,);
+                  Toast.showToast(context, 'Foydalanuvchi nomi bo\'sh', Colors.red, Colors.white,);
                   return;
                 }
                 if (nameInstitutionController.text.isEmpty) {
                   getController.changeFullName(fullNameController.text);
-                  Toast.showToast(context, 'Name of the institution is empty', Colors.red, Colors.white,);
+                  Toast.showToast(context, 'Shirkat (Tashkilot) nomi bo\'sh', Colors.red, Colors.white,);
                   return;
                 }
                 if (getController.subCategory.value.res == null) {
                   getController.changeFullName(getController.subCategory.value.res![getController.subCategoryIndex.value].name!);
-                  Toast.showToast(context, 'Subcategory is empty', Colors.red, Colors.white,);
+                  Toast.showToast(context, 'Yo\'nalishni tanlang', Colors.red, Colors.white,);
                   return;
                 }
                 if (getController.getRegion.value.res == null) {
                   getController.changeFullName(getController.getRegion.value.res![getController.regionIndex.value]);
-                  Toast.showToast(context, 'Region is empty', Colors.red, Colors.white,);
+                  Toast.showToast(context, 'Viloyatingizni tanlang', Colors.red, Colors.white,);
                   return;
                 }
                 if (experienceController.text.isEmpty) {
-                  Toast.showToast(context, 'Experience is empty', Colors.red, Colors.white,);
+                  Toast.showToast(context, 'Ish tajribasi bo\'sh', Colors.red, Colors.white,);
                   return;
                 }
                 experienceController.text = experienceController.text.replaceAll(',', '.');
                 //if experienceController . 2 ta bolsa
                 if (experienceController.text.split('.').length > 2) {
-                  Toast.showToast(context, 'Please enter a valid number', Colors.red, Colors.white,);
+                  Toast.showToast(context, 'Iltimos, to\'g\'ri raqam kiriting', Colors.red, Colors.white,);
                   return;
                 }
                 var experience;
@@ -469,7 +470,7 @@ class EditBusinessUserPage extends StatelessWidget {
                   experience = int.parse(experienceController.text);
                 }
                 if (experience < 0) {
-                  Toast.showToast(context, 'Please enter a valid number', Colors.red, Colors.white,);
+                  Toast.showToast(context, 'Iltimos, ish tajribasini to\'g\'ri kiriting', Colors.red, Colors.white,);
                   return;
                 }
                 if (getController.image.value != '') {
@@ -485,7 +486,6 @@ class EditBusinessUserPage extends StatelessWidget {
                             ApiController().updateBusiness(
                                 value.res?.business?.id ?? 0,
                                 getController.subCategoryIndex.value,
-                                //adress
                                 getController.getRegion.value.res![
                                 getController.regionIndex.value],
                                 nameInstitutionController.text,
@@ -497,13 +497,13 @@ class EditBusinessUserPage extends StatelessWidget {
                                 ApiController().getUserData().then((value) => finish());
                               } else {
                                 Navigator.pop(context);
-                                Toast.showToast(context, 'Error', Colors.red, Colors.white,);
+                                Toast.showToast(context, 'Nimadir xato ketdi', Colors.red, Colors.white,);
                               }
                             });
                           });
                         } else {
                           Navigator.pop(context);
-                          Toast.showToast(context, 'Error', Colors.red, Colors.white,);
+                          Toast.showToast(context, 'Nimadir xato ketdi', Colors.red, Colors.white,);
                         }
                       }));
                 } else {
@@ -524,19 +524,19 @@ class EditBusinessUserPage extends StatelessWidget {
                             ApiController().getUserData().then((value) => finish());
                           } else {
                             Navigator.pop(context);
-                            Toast.showToast(context, 'Error', Colors.red, Colors.white,);
+                            Toast.showToast(context, 'Nimadir xato ketdi', Colors.red, Colors.white);
                           }
                         });
                       });
                     } else {
                       Navigator.pop(context);
-                      Toast.showToast(context, 'Error', Colors.red, Colors.white);
+                      Toast.showToast(context, 'Ex Nimadir xato ketdi', Colors.red, Colors.white);
                     }
                   });
                 }
               },
             ) : EditButton(
-              text: 'Next',
+              text: 'Keyingi',
               onPressed: () {
                 pageController.nextPage(
                   duration: const Duration(milliseconds: 300),

@@ -42,7 +42,7 @@ class HistoryPage extends StatelessWidget {
                 width: w * 0.07,
               ),
               Text(
-                'Loading...',
+                'Iltimos kuting...',
                 style: TextStyle(
                   fontSize: w * 0.04,
                   fontWeight: FontWeight.w500,
@@ -539,7 +539,7 @@ class HistoryPage extends StatelessWidget {
                         children: [
                           SizedBox(
                             child: Obx(() => _getController.bookingBusinessGetList.value.res!.isEmpty
-                                ? const Center(child: Text('Ma`lumot mavjud emas'))
+                                ? Center(child: Text('Ma`lumot mavjud emas', style: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.black),))
                                 : SizedBox(
                                     height: h * 0.68,
                                     child: ListView.builder(
@@ -619,7 +619,8 @@ class HistoryPage extends StatelessWidget {
                                                         color: Colors.blue,
                                                       ),
                                                       SizedBox(width: w * 0.02),
-                                                      Text('Edit', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
+                                                      Text('Tahrirlash',
+                                                          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
                                                     ],
                                                   ),
                                                   onTap: () {
@@ -637,7 +638,8 @@ class HistoryPage extends StatelessWidget {
                                                         color: Colors.red,
                                                       ),
                                                       SizedBox(width: w * 0.02),
-                                                      Text('Delete', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
+                                                      Text('O`chirish',
+                                                          style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
                                                     ],
                                                   ),
                                                   onTap: () {
@@ -685,8 +687,7 @@ class HistoryPage extends StatelessWidget {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              _getController.bookingBusinessGetList.value.res![index].userName!,
+                                            Text(_getController.bookingBusinessGetList.value.res![index].userName!,
                                               style: TextStyle(
                                                 fontSize: w * 0.04,
                                                 fontWeight: FontWeight.w500,
@@ -789,7 +790,7 @@ class HistoryPage extends StatelessWidget {
                   ? SizedBox(
                       child: Obx(
                         () => _getController.bookingBusinessGetList.value.res!.isEmpty
-                            ? const Center(child: Text('Ma`lumot mavjud emas'),)
+                            ? Center(child: Text('Ma\'lumot mavjud emas', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black),))
                             : SizedBox(
                                 height: h * 0.68,
                                 child: ListView.builder(
@@ -806,9 +807,7 @@ class HistoryPage extends StatelessWidget {
                                               )
                                             : CircleAvatar(
                                                 radius: w * 0.08,
-                                                backgroundImage: NetworkImage(
-                                                  _getController.bookingBusinessGetList.value.res![index].photoUrl!,
-                                                ),
+                                                backgroundImage: NetworkImage(_getController.bookingBusinessGetList.value.res![index].photoUrl!,),
                                               ),
                                         SizedBox(width: w * 0.03),
                                         SizedBox(
@@ -869,7 +868,7 @@ class HistoryPage extends StatelessWidget {
                                                     color: Colors.blue,
                                                   ),
                                                   SizedBox(width: w * 0.02),
-                                                  Text('Edit', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
+                                                  Text('Tahrirlash', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
                                                 ],
                                               ),
                                               onTap: () {
@@ -887,7 +886,7 @@ class HistoryPage extends StatelessWidget {
                                                     color: Colors.red,
                                                   ),
                                                   SizedBox(width: w * 0.02),
-                                                  Text('Delete', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
+                                                  Text('O`chirish', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
                                                 ],
                                               ),
                                               onTap: () {

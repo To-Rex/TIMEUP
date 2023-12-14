@@ -70,7 +70,7 @@ class EditUserPage extends StatelessWidget {
                 },
                 icon: const Icon(Icons.arrow_back_ios, color: Colors.black,),
               ),
-              title: Text('Edit profile',
+              title: Text('Profilni tahrirlash',
                 style: TextStyle(color: Colors.black, fontSize: w * 0.05,),
               ),
               centerTitle: true,
@@ -94,36 +94,37 @@ class EditUserPage extends StatelessWidget {
                 _pickImage(ImageSource.gallery);
               },
               child: Text(
-                'Edit profile photo',
+                //'Edit profile photo',
+                'Profil rasmini tahrirlash',
                 style: TextStyle(fontSize: w * 0.04, color: Colors.blue,),
               ),
             ),
             SizedBox(height: h * 0.03),
             TextFildWidget(
               controller: nameController,
-              labelText: 'Name',
+              labelText: 'Ism',
             ),
             SizedBox(height: h * 0.015),
             TextFildWidget(
               controller: surnameController,
-              labelText: 'Surname',
+              labelText: 'Familiya',
             ),
             SizedBox(height: h * 0.015),
             TextFildWidget(
               controller: nikNameController,
-              labelText: 'Nikname',
+              labelText: 'Foydalanuvchi nomi',
             ),
             SizedBox(height: h * 0.015),
             TextFildWidget(
               controller: addressController,
-              labelText: 'Adress',
+              labelText: 'Manzil',
             ),
             SizedBox(height: h * 0.15),
             EditButton(
-              text: 'Save data',
+              text: 'Ma`lumotlarni saqlash',
               onPressed: () {
                 if (nameController.text == '' || surnameController.text == '' || nikNameController.text == '' || addressController.text == '') {
-                  Toast.showToast(context, 'Please fill in all the fields', Colors.red, Colors.white);
+                  Toast.showToast(context, 'Iltimos, barcha maydonlarni to`ldiring', Colors.red, Colors.white);
                   return;
                 }
                 if (getController.image.value == '') {
@@ -137,7 +138,7 @@ class EditUserPage extends StatelessWidget {
                       getController.entersUser.value = 0;
                       getUsers();
                     } else {
-                      Toast.showToast(context, 'Error', Colors.red, Colors.white);
+                      Toast.showToast(context, 'Nimadir xato ketdi', Colors.red, Colors.white);
                     }
                   });
                 } else {
@@ -153,11 +154,11 @@ class EditUserPage extends StatelessWidget {
                           getController.entersUser.value = 0;
                           getUsers();
                         } else {
-                          Toast.showToast(context, 'Error', Colors.red, Colors.white);
+                          Toast.showToast(context, 'Nimadir xato ketdi', Colors.red, Colors.white);
                         }
                       });
                     } else {
-                      Toast.showToast(context, 'Error', Colors.red, Colors.white);
+                      Toast.showToast(context, 'Ex Nimadir xato ketdi', Colors.red, Colors.white);
                     }
                   });
                 }
