@@ -514,7 +514,7 @@ class ProfessionsListDetails extends StatelessWidget {
                             Row(
                               children: [
                                 SizedBox(width: w * 0.05),
-                                const Text('vaqtni tanlang'),
+                                const Text('Vaqtni tanlang'),
                               ],
                             ),
                             SizedBox(
@@ -685,7 +685,7 @@ class ProfessionsListDetails extends StatelessWidget {
                         child: Icon(Icons.arrow_back_ios, size: w * 0.05),
                       ),
                       title: Obx(() => _getController.getProfileById.value.res == null
-                              ? Text('No data',
+                              ? Text('Ma\'lumotlar yo\'q',
                                   style: TextStyle(
                                     fontSize: w * 0.04,
                                     fontWeight: FontWeight.w500,
@@ -862,13 +862,13 @@ class ProfessionsListDetails extends StatelessWidget {
                         Obx(() => _getController.getProfileById.value.res == null
                                 ? const SizedBox()
                                 : UserDetIalWidget(
-                                    labelText: 'Followers',
+                                    labelText: 'Obunachilar',
                                     labelTextCount: '${_getController.getProfileById.value.res!.followersCount}',
                                   )),
                         Obx(() => _getController.getProfileById.value.res == null
                                 ? const SizedBox()
                                 : UserDetIalWidget(
-                                    labelText: 'Following',
+                                    labelText: 'Do\'stlar',
                                     labelTextCount: '${_getController.getProfileById.value.res!.followingCount}',
                                   )),
                       ],
@@ -906,9 +906,9 @@ class ProfessionsListDetails extends StatelessWidget {
                                           _getController.show.value = true;
                                         },
                                         child: Text(
-                                          'More',
+                                          'Ko\'proq',
                                           style: TextStyle(
-                                            fontSize: w * 0.04,
+                                            fontSize: w * 0.03,
                                             fontWeight: FontWeight.w500,
                                             color: Colors.blue,
                                           ),
@@ -1008,9 +1008,9 @@ class ProfessionsListDetails extends StatelessWidget {
                                               _getController.show.value = false;
                                             },
                                             child: Text(
-                                              'Less',
+                                              'Kamroq',
                                               style: TextStyle(
-                                                fontSize: w * 0.04,
+                                                fontSize: w * 0.03,
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.blue,
                                               ),
@@ -1153,7 +1153,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                   child: Obx(() => _getController.getPostList.value.res == null
                                             ? Center(
                                                 child: Text(
-                                                'No data',
+                                                'Ma\'lumotlar yo\'q',
                                                 style: TextStyle(
                                                   fontSize: w * 0.04,
                                                   fontWeight: FontWeight.w500,
@@ -1175,7 +1175,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                             strokeWidth: 2,
                                           );
                                         } else if (mode == RefreshStatus.failed) {
-                                          body = const Text("Load Failed!Click retry!");
+                                          body = const Text("Ex Nimadir Xato Ketdi", style: TextStyle( color: Colors.red));
                                         } else if (mode == RefreshStatus.canRefresh) {
                                           body = const Text(
                                               "Ma`lumotlarni yangilash uchun tashlang");
@@ -1200,7 +1200,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                             strokeWidth: 2,
                                           );
                                         } else if (mode == LoadStatus.failed) {
-                                          body = const Text("Load Failed!Click retry!");
+                                          body = const Text("Ex Nimadir Xato Ketdi", style: TextStyle( color: Colors.red));
                                         } else if (mode == LoadStatus.canLoading) {
                                           body = const SizedBox();
                                         } else {
@@ -1341,8 +1341,14 @@ class ProfessionsListDetails extends StatelessWidget {
                                               trimLines: 10,
                                               colorClickableText: Colors.blue,
                                               trimMode: TrimMode.Line,
-                                              trimCollapsedText: ' more',
-                                              trimExpandedText: ' less',
+                                              trimCollapsedText: ' Ko\'proq',
+                                              trimExpandedText: ' Yashirish',
+                                              moreStyle: TextStyle(
+                                                fontSize: w * 0.03,
+                                              ),
+                                              lessStyle: TextStyle(
+                                                fontSize: w * 0.03,
+                                              ),
                                               style: TextStyle(
                                                 fontSize: w * 0.04,
                                                 fontWeight: FontWeight.w500,
