@@ -1058,7 +1058,7 @@ class ProfilePage extends StatelessWidget {
       child: Obx(() => getController.meUsers.value.res != null
           ? SizedBox(
               child: Obx(() => getController.entersUser.value == 0
-                    ? Column(
+                  ? Column(
                         children: [
                           SizedBox(height: h * 0.01),
                           AppBar(
@@ -1482,6 +1482,7 @@ class ProfilePage extends StatelessWidget {
                                     onPageChanged: (index) {
                                       getController.nextPagesUserDetails.value = index;
                                       ApiController().getMePostList(getController.meUsers.value.res!.business?.id);
+                                      ApiController().bookingBusinessGetList(getController.meUsers.value.res!.business?.id, '');
                                     },
                                     controller: pageController,
                                     children: [
@@ -1506,8 +1507,7 @@ class ProfilePage extends StatelessWidget {
                                                   } else if (mode == RefreshStatus.refreshing) {
                                                     body = const CircularProgressIndicator(
                                                       color: Colors.blue,
-                                                      backgroundColor:
-                                                      Colors.white,
+                                                      backgroundColor: Colors.white,
                                                       strokeWidth: 2,
                                                     );
                                                   } else if (mode == RefreshStatus.failed) {
@@ -1684,7 +1684,7 @@ class ProfilePage extends StatelessWidget {
                                             ),
                                           ),
                                         )),
-                                      Obx(() => getController.bookingBusinessGetList.value.res == null
+                                      Obx(() => getController.getBookingCategory.value.res == null
                                             ? SizedBox(
                                           width: w,
                                           height: h * 0.22,
@@ -1773,7 +1773,8 @@ class ProfilePage extends StatelessWidget {
                             ),
                           ),
                         ]
-              ) : getController.entersUser.value == 1
+              )
+                  : getController.entersUser.value == 1
                         ? getController.meUsers.value.res?.business == null
                             ? EditUserPage()
                             : EditBusinessUserPage()

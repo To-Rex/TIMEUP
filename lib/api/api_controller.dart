@@ -190,7 +190,7 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<MeUser> editUser(name, surName, address, nikName) async {
+  Future<MeUser> editUser(name, surName, nikName, address) async {
     var response = await http.put(
       Uri.parse(url + editMeUrl),
       body: jsonEncode({
@@ -498,8 +498,7 @@ class ApiController extends GetxController {
     );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
-      _getController
-          .changeGetPostList(GetMePost.fromJson(jsonDecode(response.body)));
+      _getController.changeGetPostList(GetMePost.fromJson(jsonDecode(response.body)));
       return GetMePost.fromJson(jsonDecode(response.body));
     } else {
       _getController.changeGetPostList(GetMePost(res: [], status: false));

@@ -188,121 +188,122 @@ class _AddPostPage extends State<AddPostPage> {
         }
       },
       child: Obx(() => _getController.postFile.value == '' && _getController.postVideoFile.value == ''
-          ? SizedBox(
-              height: MediaQuery.of(context).size.height * 0.81,
-              width: MediaQuery.of(context).size.width,
-              child: Stack(
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: CameraPreview(controller),
+          ? SingleChildScrollView(
+        child:  SizedBox(
+          height: MediaQuery.of(context).size.height * 0.81,
+          width: MediaQuery.of(context).size.width,
+          child: Stack(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: CameraPreview(controller),
+              ),
+              Positioned(
+                child: IconButton(
+                  onPressed: () {
+                    toggleFlash();
+                  },
+                  icon: const HeroIcon(
+                    HeroIcons.bolt,
+                    color: Colors.white,
                   ),
-                  Positioned(
-                    child: IconButton(
-                      onPressed: () {
-                        toggleFlash();
-                      },
-                      icon: const HeroIcon(
-                        HeroIcons.bolt,
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.15,
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.black.withOpacity(0.5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          _getController.changePostFile('');
+                          _getController.changePostVideoFile('');
+                          showGallery();
+                        },
+                        icon: const HeroIcon(
+                          HeroIcons.photo,
+                          color: Colors.white,
+                        ),
                         color: Colors.white,
                       ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.15,
-                      width: MediaQuery.of(context).size.width,
-                      color: Colors.black.withOpacity(0.5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              _getController.changePostFile('');
-                              _getController.changePostVideoFile('');
-                              showGallery();
-                            },
-                            icon: const HeroIcon(
-                              HeroIcons.photo,
-                              color: Colors.white,
-                            ),
-                            color: Colors.white,
+                      CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 30,
+                        child: IconButton(
+                          onPressed: () async {
+                            if (await Permission.camera.request()
+                                .isGranted) {
+                              await controller.takePicture().then((value) {
+                                _getController.changePostFile(value.path);
+                              });
+                            }
+                          },
+                          icon: const HeroIcon(
+                            HeroIcons.camera,
+                            color: Colors.black,
                           ),
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 30,
-                            child: IconButton(
-                              onPressed: () async {
-                                if (await Permission.camera.request()
-                                    .isGranted) {
-                                  await controller.takePicture().then((value) {
-                                    _getController.changePostFile(value.path);
-                                  });
-                                }
-                              },
-                              icon: const HeroIcon(
-                                HeroIcons.camera,
-                                color: Colors.black,
-                              ),
-                              color: Colors.white,
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              if (controller.description == _cameras.first) {
-                                controller = CameraController(_cameras.last, ResolutionPreset.max);
-                                controller.initialize().then((_) {
-                                  if (!mounted) {
-                                    return;
-                                  }
-                                  setState(() {});
-                                }).catchError((Object e) {
-                                  if (e is CameraException) {
-                                    switch (e.code) {
-                                      case 'CameraAccessDenied':
-                                        break;
-                                      default:
-                                        break;
-                                    }
-                                  }
-                                });
-                                setState(() {});
-                              } else {
-                                controller = CameraController(_cameras.first, ResolutionPreset.max);
-                                controller.initialize().then((_) {
-                                  if (!mounted) {
-                                    return;
-                                  }
-                                  setState(() {});
-                                }).catchError((Object e) {
-                                  if (e is CameraException) {
-                                    switch (e.code) {
-                                      case 'CameraAccessDenied':
-                                        break;
-                                      default:
-                                        break;
-                                    }
-                                  }
-                                });
-                                setState(() {});
-                              }
-                            },
-                            icon: const HeroIcon(
-                              HeroIcons.arrowPath,
-                              color: Colors.white,
-                            ),
-                            color: Colors.white,
-                          ),
-                        ],
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
+                      IconButton(
+                        onPressed: () {
+                          if (controller.description == _cameras.first) {
+                            controller = CameraController(_cameras.last, ResolutionPreset.max);
+                            controller.initialize().then((_) {
+                              if (!mounted) {
+                                return;
+                              }
+                              setState(() {});
+                            }).catchError((Object e) {
+                              if (e is CameraException) {
+                                switch (e.code) {
+                                  case 'CameraAccessDenied':
+                                    break;
+                                  default:
+                                    break;
+                                }
+                              }
+                            });
+                            setState(() {});
+                          } else {
+                            controller = CameraController(_cameras.first, ResolutionPreset.max);
+                            controller.initialize().then((_) {
+                              if (!mounted) {
+                                return;
+                              }
+                              setState(() {});
+                            }).catchError((Object e) {
+                              if (e is CameraException) {
+                                switch (e.code) {
+                                  case 'CameraAccessDenied':
+                                    break;
+                                  default:
+                                    break;
+                                }
+                              }
+                            });
+                            setState(() {});
+                          }
+                        },
+                        icon: const HeroIcon(
+                          HeroIcons.arrowPath,
+                          color: Colors.white,
+                        ),
+                        color: Colors.white,
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            )
-          : SingleChildScrollView(
+            ],
+          ),
+        ),
+      ) : SingleChildScrollView(
         child: SizedBox(
             height: h,
             width: w,

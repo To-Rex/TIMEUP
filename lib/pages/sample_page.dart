@@ -50,7 +50,7 @@ class SamplePage extends StatelessWidget {
           : SingleChildScrollView(
               child: _getController.widgetOptions.elementAt(_getController.index.value),
             )),*/
-      body: Obx(() => _getController.index.value == 3 || _getController.index.value == 4
+      body: Obx(() => _getController.index.value == 3 || _getController.index.value == 4 ||_getController.index.value == 2
           ? SizedBox(
             child: _getController.widgetOptions.elementAt(_getController.index.value),
           ) : Column(

@@ -55,6 +55,9 @@ class EditUserPage extends StatelessWidget {
     surnameController.text = getController.meUsers.value.res?.fistName ?? '';
     nikNameController.text = getController.meUsers.value.res?.userName ?? '';
     addressController.text = getController.meUsers.value.res?.address ?? '';
+    ApiController().getRegion().then((value) => {
+      getController.changeRegionIndex(getController.getRegion.value.res!.indexOf(getController.meUsers.value.res?.address ?? '') ?? 0)
+    });
     return SingleChildScrollView(
       child: SizedBox(
         width: w,
@@ -115,9 +118,42 @@ class EditUserPage extends StatelessWidget {
               labelText: 'Foydalanuvchi nomi',
             ),
             SizedBox(height: h * 0.015),
-            TextFildWidget(
+            /*TextFildWidget(
               controller: addressController,
               labelText: 'Manzil',
+            ),*/
+            Container(
+              height: h * 0.06,
+              width: w * 0.9,
+              padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Obx(() => getController.getRegion.value.res == null
+                  ? const Center(
+                child: CircularProgressIndicator(),
+              )
+                  : DropdownButtonHideUnderline(
+                child: DropdownButton(
+                  value: getController.getRegion.value.res![getController.regionIndex.value],
+                  onChanged: (String? newValue) {
+                    getController.changeRegionIndex(getController.getRegion.value.res!.indexOf(newValue!));
+                    addressController.text = newValue;
+                    print(addressController.text);
+                  },
+                  items: getController.getRegion.value.res!
+                      .map<DropdownMenuItem<String>>(
+                        (String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    },
+                  ).toList(),
+                ),
+              ),
+              ),
             ),
             SizedBox(height: h * 0.15),
             EditButton(
