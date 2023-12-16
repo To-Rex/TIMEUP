@@ -257,6 +257,12 @@ class LoginUserData extends StatelessWidget {
                       Toast.showToast(context, 'Tugilgan kuningizni kiriting!', Colors.red, Colors.white);
                       return;
                     }
+                    //if(_dateController.text.contains('/')
+                    if (!_dateController.text.contains('/')) {
+                      Toast.showToast(context, 'Tugilgan kuningizni kiriting!', Colors.red, Colors.white);
+                      return;
+                    }
+
                     //if _dateController.text == 12.2.2021 to 12/02/2021
                     _dateController.text = _dateController.text.replaceAll('.', '/');
                     //if _dateController.text == 12-2-2021 to 12/02/2021
@@ -265,9 +271,7 @@ class LoginUserData extends StatelessWidget {
                     if (_dateController.text.split('/')[0].length == 1) {
                       _dateController.text = '0${_dateController.text}';
                     }
-                    if (_dateController.text.split('/')[1].length == 1) {
-                      _dateController.text = '${_dateController.text.split('/')[0]}/0${_dateController.text.split('/')[1]}/${_dateController.text.split('/')[2]}';
-                    }
+
                     showLoadingDialog(context, w);
                     ApiController().registerUser(
                       nameController.text.toString(),
@@ -287,6 +291,7 @@ class LoginUserData extends StatelessWidget {
                         });
                       } else {
                         Toast.showToast(context, 'Exx Nimadur xato ketdi', Colors.red, Colors.white);
+                        Navigator.pop(context);
                       }
                     });
                   },
