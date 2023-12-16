@@ -61,6 +61,7 @@ dependencies:
   pull_to_refresh: ^2.0.0
   firebase_core: ^2.24.0
   url_launcher: ^6.2.2
+  intl: ^0.19.0
 
 
 dev_dependencies:

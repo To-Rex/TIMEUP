@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/elements/functions.dart';
 import 'package:time_up/pages/sample_page.dart';
@@ -146,16 +147,24 @@ class LoginUserData extends StatelessWidget {
                   controller: nikNameController,
                   labelText: 'Nikname',
                 ),
-                SizedBox(height: h * 0.02),
                 Container(
                   height: h * 0.06,
                   width: w * 0.9,
+                  margin: EdgeInsets.only(top: h * 0.02),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7),
                     color: Colors.grey[200],
                   ),
                   child: TextField(
                     controller: _dateController,
+                    maxLines: 1,
+                    keyboardType: TextInputType.datetime,
+                    onTap: () => showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime(2025),
+                    ).then((value) => _dateController.text = '${value!.day}/${value.month}/${value.year}'),
                     decoration: InputDecoration(
                       suffixIcon: InkWell(
                         onTap: () {
@@ -164,8 +173,7 @@ class LoginUserData extends StatelessWidget {
                             initialDate: DateTime.now(),
                             firstDate: DateTime(1900),
                             lastDate: DateTime(2025),
-                          ).then((value) => _dateController.text =
-                              '${value!.day}/${value.month}/${value.year}');
+                          ).then((value) => _dateController.text = '${value!.day}/${value.month}/${value.year}');
                         },
                         child: HeroIcon(
                           HeroIcons.calendar,
@@ -173,7 +181,7 @@ class LoginUserData extends StatelessWidget {
                           size: w * 0.05 > 20 ? 20 : w * 0.05,
                         ),
                       ),
-                      hintText: 'Birth date',
+                      hintText: 'Tug\'ilgan uninviting kiriting ${DateFormat('dd/MM/yyyy').format(DateTime.now())} ',
                       hintStyle: TextStyle(
                         fontSize: w * 0.04 > 20 ? 20 : w * 0.04,
                         fontWeight: FontWeight.w500,
@@ -249,6 +257,10 @@ class LoginUserData extends StatelessWidget {
                       Toast.showToast(context, 'Tugilgan kuningizni kiriting!', Colors.red, Colors.white);
                       return;
                     }
+                    //if _dateController.text == 12.2.2021 to 12/02/2021
+                    _dateController.text = _dateController.text.replaceAll('.', '/');
+                    //if _dateController.text == 12-2-2021 to 12/02/2021
+                    _dateController.text = _dateController.text.replaceAll('-', '/');
                     //_dateController if exampel 12/2/2021 to 12/02/2021
                     if (_dateController.text.split('/')[0].length == 1) {
                       _dateController.text = '0${_dateController.text}';

@@ -50,23 +50,25 @@ class SamplePage extends StatelessWidget {
           : SingleChildScrollView(
               child: _getController.widgetOptions.elementAt(_getController.index.value),
             )),*/
-      body: Obx(() => _getController.index.value == 3 || _getController.index.value == 4 ||_getController.index.value == 2
+      body: Obx(() => _getController.index.value == 3 || _getController.index.value == 4
           ? SizedBox(
             child: _getController.widgetOptions.elementAt(_getController.index.value),
           ) : Column(
               children: [
                 Obx(() => _getController.uplAodVideo.value == true
-                    ? SizedBox(
-                        width: w * 0.95,
+                    ? Container(
+                        width: w,
                         height: h * 0.05,
+                        color: Colors.grey[300],
+                        padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
                         child: Row(
                           children: [
                             _getController.postFile.value != ''
                                 ? Container(
                                     width: w * 0.1,
-                                    height: h * 0.05,
+                                    height: h * 0.04,
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(3),
                                       image: DecorationImage(
                                         image: Image.file(File(_getController.postFile.value),).image,
                                         fit: BoxFit.cover,

@@ -190,8 +190,8 @@ class _AddPostPage extends State<AddPostPage> {
       child: Obx(() => _getController.postFile.value == '' && _getController.postVideoFile.value == ''
           ? SingleChildScrollView(
         child:  SizedBox(
-          height: MediaQuery.of(context).size.height * 0.81,
-          width: MediaQuery.of(context).size.width,
+          height: h * 0.82,
+          width: w,
           child: Stack(
             children: [
               SizedBox(
@@ -305,7 +305,7 @@ class _AddPostPage extends State<AddPostPage> {
         ),
       ) : SingleChildScrollView(
         child: SizedBox(
-            height: h,
+            height: h * 1.5,
             width: w,
             child: Column(
               children: [
@@ -406,8 +406,7 @@ class _AddPostPage extends State<AddPostPage> {
                     ),
                     SizedBox(height: h * 0.01),
                   ],
-                )
-                    : const SizedBox()),
+                ) : const SizedBox()),
                 Obx(() => _getController.postVideoFile.value != '' && _getController.postFile.value != '' || _getController.postVideoFile.value != '' && _getController.postFile.value == ''
                     ? Column(
                   children: [
@@ -636,11 +635,7 @@ class _AddPostPage extends State<AddPostPage> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (titleController.text == '') {
-                        Toast.showToast(
-                            context,
-                            'Iltimos, title kiriting',
-                            Colors.red,
-                            Colors.white);
+                        Toast.showToast(context, 'Iltimos, title kiriting', Colors.red, Colors.white);
                         return;
                       }
                       ApiController().createPost(titleController.text, descriptionController.text, _getController.meUsers.value.res!.business!.id!, _getController.postFile.value.toString(), _getController.postVideoFile.value.toString(),context).then((value) => {
@@ -662,11 +657,7 @@ class _AddPostPage extends State<AddPostPage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: Text('Post yaratish',
-                        style: TextStyle(
-                            fontSize: w * 0.04,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white)),
+                    child: Text('Post yaratish', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.white)),
                   ),
                 ),
               ],
