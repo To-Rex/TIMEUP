@@ -146,16 +146,7 @@ class ApiController extends GetxController {
         return Register.fromJson(jsonDecode(responseBody));
       } else {
         return Register(
-            res: Responses(
-                user: User(
-                    id: 0,
-                    fistName: '',
-                    lastName: '',
-                    userName: '',
-                    phoneNumber: '',
-                    address: '',
-                    photoUrl: ''),
-                token: ''),
+            res: Responses(user: User(id: 0, fistName: '', lastName: '', userName: '', phoneNumber: '', address: '', photoUrl: ''), token: ''),
             status: false);
       }
     } catch (e) {
@@ -191,6 +182,10 @@ class ApiController extends GetxController {
   }
 
   Future<MeUser> editUser(name, surName, nikName, address) async {
+    print(name);
+    print(surName);
+    print(nikName);
+    print(address);
     var response = await http.put(
       Uri.parse(url + editMeUrl),
       body: jsonEncode({

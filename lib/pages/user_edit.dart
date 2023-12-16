@@ -56,6 +56,9 @@ class EditUserPage extends StatelessWidget {
     nikNameController.text = getController.meUsers.value.res?.userName ?? '';
     addressController.text = getController.meUsers.value.res?.address ?? '';
     ApiController().getRegion().then((value) => {
+      if (getController.getRegion.value.res!.contains(getController.meUsers.value.res?.address ?? '') == false) {
+        getController.changeRegionIndex(0)
+      } else
       getController.changeRegionIndex(getController.getRegion.value.res!.indexOf(getController.meUsers.value.res?.address ?? '') ?? 0)
     });
     return SingleChildScrollView(

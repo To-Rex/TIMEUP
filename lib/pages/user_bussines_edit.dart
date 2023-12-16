@@ -112,7 +112,12 @@ class EditBusinessUserPage extends StatelessWidget {
     dayOffController.text = getController.meUsers.value.res?.business?.dayOffs ?? '';
     experienceController.text = getController.meUsers.value.res?.business?.experience.toString() ?? '';
 
-    ApiController().getRegion();
+    ApiController().getRegion().then((value) => {
+      if (getController.getRegion.value.res!.contains(getController.meUsers.value.res?.address ?? '') == false) {
+        getController.changeRegionIndex(0)
+      } else
+      getController.changeRegionIndex(getController.getRegion.value.res!.indexOf(getController.meUsers.value.res?.address ?? '') ?? 0)
+    });
     ApiController().getCategory().then((value) {
       getController.categoryIndex.value = value.res![0].id!;
       ApiController().getSubCategory(getController.categoryIndex.value).then((value) {
@@ -475,25 +480,20 @@ class EditBusinessUserPage extends StatelessWidget {
                 }
                 if (getController.image.value != '') {
                   showLoadingDialog(context, w);
-                  ApiController().editUserPhoto(croppedImage.path).then((value) => ApiController().editUser(
-                          nameController.text,
-                          surnameController.text,
-                          getController.getRegion.value.res![
-                          getController.regionIndex.value],
-                          nikNameController.text).then((value) {
+                  ApiController().editUserPhoto(croppedImage.path).then((value) => ApiController().editUser(nameController.text, surnameController.text, nikNameController.text, getController.getRegion.value.res![getController.regionIndex.value]).then((value) {
                         if (value.status!) {
                           ApiController().getUserData().then((value) {
                             ApiController().updateBusiness(
                                 value.res?.business?.id ?? 0,
                                 getController.subCategoryIndex.value,
-                                getController.getRegion.value.res![
-                                getController.regionIndex.value],
+                                getController.getRegion.value.res![getController.regionIndex.value],
                                 nameInstitutionController.text,
                                 experience,
                                 bioController.text,
                                 dayOffController.text).then((value) {
                               if (value) {
                                 Navigator.pop(context);
+                                getController.image.value = '';
                                 ApiController().getUserData().then((value) => finish());
                               } else {
                                 Navigator.pop(context);
@@ -508,7 +508,7 @@ class EditBusinessUserPage extends StatelessWidget {
                       }));
                 } else {
                   showLoadingDialog(context, w);
-                  ApiController().editUser(nameController.text, surnameController.text, getController.getRegion.value.res![getController.regionIndex.value], nikNameController.text).then((value) {
+                  ApiController().editUser(nameController.text, surnameController.text,nikNameController.text, getController.getRegion.value.res![getController.regionIndex.value]).then((value) {
                     if (value.status!) {
                       ApiController().getUserData().then((value) {
                         ApiController().updateBusiness(
