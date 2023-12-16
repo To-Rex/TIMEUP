@@ -257,21 +257,15 @@ class LoginUserData extends StatelessWidget {
                       Toast.showToast(context, 'Tugilgan kuningizni kiriting!', Colors.red, Colors.white);
                       return;
                     }
-                    //if(_dateController.text.contains('/')
                     if (!_dateController.text.contains('/')) {
-                      Toast.showToast(context, 'Tugilgan kuningizni kiriting!', Colors.red, Colors.white);
+                      Toast.showToast(context, 'Tugilgan kuningizni to\'g\'ri kiriting!', Colors.red, Colors.white);
                       return;
                     }
-
-                    //if _dateController.text == 12.2.2021 to 12/02/2021
                     _dateController.text = _dateController.text.replaceAll('.', '/');
-                    //if _dateController.text == 12-2-2021 to 12/02/2021
                     _dateController.text = _dateController.text.replaceAll('-', '/');
-                    //_dateController if exampel 12/2/2021 to 12/02/2021
                     if (_dateController.text.split('/')[0].length == 1) {
                       _dateController.text = '0${_dateController.text}';
                     }
-
                     showLoadingDialog(context, w);
                     ApiController().registerUser(
                       nameController.text.toString(),
