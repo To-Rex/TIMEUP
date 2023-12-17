@@ -434,11 +434,11 @@ class MakeBusinessPage extends StatelessWidget {
                 if (croppedImage != null) {
                   ApiController().editUserPhoto(croppedImage.path).then(
                           (value) => ApiController().editUser(
-                          getController.meUsers.value.res?.fistName ?? '',
-                          getController.meUsers.value.res?.lastName ?? '',
-                          getController.getRegion.value.res![
-                          getController.regionIndex.value],
-                          nikNameController.text).then((value) {
+                            getController.meUsers.value.res?.fistName ?? '',
+                            getController.meUsers.value.res?.lastName ?? '',
+                            nikNameController.text,
+                            getController.getRegion.value.res![getController.regionIndex.value]
+                          ).then((value) {
                         if (value.status!) {
                           ApiController().getUserData().then((value) {
                             ApiController().createBusiness(
@@ -466,8 +466,9 @@ class MakeBusinessPage extends StatelessWidget {
                   ApiController().editUser(
                       getController.meUsers.value.res?.fistName ?? '',
                       getController.meUsers.value.res?.lastName ?? '',
-                      getController.getRegion.value.res![getController.regionIndex.value],
-                      nikNameController.text).then((value) {
+                      nikNameController.text,
+                      getController.getRegion.value.res![getController.regionIndex.value]
+                      ).then((value) {
                     if (value.status!) {
                       ApiController().getUserData().then((value) {
                          ApiController().createBusiness(
