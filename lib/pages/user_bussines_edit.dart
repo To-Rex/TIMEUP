@@ -503,7 +503,7 @@ class EditBusinessUserPage extends StatelessWidget {
                           });
                         } else {
                           Navigator.pop(context);
-                          Toast.showToast(context, 'Nimadir xato ketdi', Colors.red, Colors.white,);
+                          Toast.showToast(context, 'Nimadir xato ketdi', Colors.red, Colors.white);
                         }
                       }));
                 } else {
