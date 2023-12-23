@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -6,13 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:time_up/pages/login_page.dart';
 import 'package:time_up/pages/sample_page.dart';
 import 'package:time_up/pages/splash_screen.dart';
+import 'package:time_up/res/firebase_api.dart';
 import 'package:time_up/res/getController.dart';
+import 'package:time_up/res/messaging_widget.dart';
 import 'api/api_controller.dart';
+import 'firebase_options.dart';
 
 main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FireBaseApi().initNotification();
   runApp(const MyApp());
 }
 
@@ -30,6 +36,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      //home: MessagingWidget(),
     );
   }
 }

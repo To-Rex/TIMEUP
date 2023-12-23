@@ -99,7 +99,8 @@ class SamplePage extends StatelessWidget {
                   ),
                 ),
               ],
-            )),
+            )
+      ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
           backgroundColor: Colors.white,
