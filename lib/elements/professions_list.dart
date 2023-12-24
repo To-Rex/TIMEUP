@@ -141,7 +141,6 @@ class ProfessionsList extends StatelessWidget {
       ],
     );*/
     return Expanded(
-
       child: Container(
         color: Colors.white,
         child: Stack(
@@ -188,10 +187,16 @@ class ProfessionsList extends StatelessWidget {
                   child: Row(
                     children: [
                       SizedBox(width: w * 0.04),
-                      HeroIcon(
-                        HeroIcons.userCircle,
-                        color: Colors.orangeAccent,
-                        size: w * 0.1,
+                      //image call_me.png
+                      Container(
+                        height: h * 0.06,
+                        width: w * 0.1,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/call_me.png'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                       SizedBox(width: w * 0.04),
                       Column(
@@ -222,12 +227,12 @@ class ProfessionsList extends StatelessWidget {
                         width: w * 0.08,
                         margin: EdgeInsets.only(right: w * 0.04),
                         decoration: BoxDecoration(
-                          color: Colors.orangeAccent,
-                          borderRadius: BorderRadius.circular(3),
+                          color: Colors.orange,
+                          borderRadius: BorderRadius.circular(6),
                         ),
                         child: Center(
-                          child: HeroIcon(
-                            HeroIcons.phone,
+                          child: Icon(
+                            Icons.phone,
                             color: Colors.white,
                             size: w * 0.05,
                           ),
