@@ -10,6 +10,7 @@ import 'package:time_up/elements/functions.dart';
 import 'package:time_up/pages/post_details.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../elements/bio_business.dart';
+import '../elements/bottom_settings.dart';
 import '../elements/btn_business.dart';
 import '../elements/btn_get_booking.dart';
 import '../elements/btn_users.dart';
@@ -715,7 +716,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  showBottomSheet(context,businessId) {
+  /*showBottomSheet(context,businessId) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     showModalBottomSheet(
@@ -892,6 +893,104 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               Divider(indent: w * 0.12),
+            ],
+          ),
+        );
+      },
+    );
+  }*/
+
+  showBottomSheet(context,businessId) {
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.6,
+          width: w,
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10)
+              )
+          ),
+          child: Stack(
+            children: [
+              Positioned(child: Container(
+                width: w,
+                height: h * 0.18,
+                decoration: const BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10)
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: h * 0.02),
+                      width: w * 0.3,
+                      height: h * 0.005,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    SizedBox(height: h * 0.02),
+                    Text('Sozlamalar',
+                      style: TextStyle(
+                        fontSize: w * 0.05,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              ),
+              Positioned(
+                top: h * 0.13,
+                width: w,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if (getController.meUsers.value.res?.business != null)
+                      BottomEditButton(text: 'Xizmatlar va narxlar', onPressed: () {
+                        Navigator.pop(context);
+                        showBottomSheetServices(context,businessId);
+                      },icon: HeroIcons.bolt,color: Colors.black,),
+
+                    BottomEditButton(text: 'Profilni tahrirlash', onPressed: () {
+                      getController.entersUser.value = 1;
+                      Navigator.pop(context);
+                    },icon: HeroIcons.pencilSquare,color: Colors.blue,),
+
+                    Obx(() => getController.meUsers.value.res?.business != null
+                        ? const SizedBox()
+                        : BottomEditButton(text: 'Biznes profilini yaratish', onPressed: () {
+                          getController.entersUser.value = 2;
+                          Navigator.pop(context);
+                        },icon: HeroIcons.pencilSquare,color: Colors.blue,)),
+
+                    BottomEditButton(text: 'Murojaat qilish', onPressed: () {
+                      _launchTelegram(context);
+                    },icon: HeroIcons.chatBubbleLeftRight,color: Colors.blue,),
+
+                    BottomEditButton(text: 'Tizimdan Chiqish', onPressed: () {
+                      showClosDialogs(context);
+                    },icon: HeroIcons.arrowRightOnRectangle,color: Colors.red,),
+
+                    BottomEditButton(text: 'Profilni o\'chirish', onPressed: () {
+                      showDialogs(context);
+                    },icon: HeroIcons.trash,color: Colors.red,),
+                  ],
+                )
+              ),
             ],
           ),
         );

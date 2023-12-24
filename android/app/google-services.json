@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "219093566645",
+    "project_id": "timeup-f2e71",
+    "storage_bucket": "timeup-f2e71.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219093566645:android:ca67e31045e1527b996afc",
+        "android_client_info": {
+          "package_name": "time.up.time_up"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJsBJHGoXSRPsERz_9N6Rm0j-HTeg9KZ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
