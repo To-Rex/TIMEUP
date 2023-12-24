@@ -15,12 +15,10 @@ class ProfessionsList extends StatelessWidget {
   }) : super(key: key);
 
   final GetController _getController = Get.put(GetController());
-  final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
     ApiController().getCategory().then((value) => {
-          _getController.changeCategory(value),
           _refreshController.refreshCompleted(),
         });
   }
