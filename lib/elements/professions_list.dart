@@ -141,6 +141,7 @@ class ProfessionsList extends StatelessWidget {
       ],
     );*/
     return Expanded(
+
       child: Container(
         color: Colors.white,
         child: Stack(
