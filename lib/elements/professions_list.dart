@@ -141,8 +141,7 @@ class ProfessionsList extends StatelessWidget {
       ],
     );*/
     return Expanded(
-      child: Container(
-        color: Colors.white,
+      child: SizedBox(
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -166,6 +165,14 @@ class ProfessionsList extends StatelessWidget {
                       ),
                     ],
                   )),
+            ),
+            Positioned(
+              top: h * 0.2,
+              child: Container(
+                height: h * 0.12,
+                width: w,
+                color: Colors.white
+              )
             ),
             Positioned(
               top: h * 0.15,
