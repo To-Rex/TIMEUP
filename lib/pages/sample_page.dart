@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import '../res/getController.dart';
+import '../res/messaging_widget.dart';
 
 class SamplePage extends StatelessWidget {
   SamplePage({super.key});
@@ -39,6 +40,22 @@ class SamplePage extends StatelessWidget {
                         width: w * 0.2,
                         height: h * 0.05,
                       ),
+                      Expanded(child: Container()),
+                      //notification icon
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MessagingWidget()),
+                          );
+                        },
+                        child: HeroIcon(
+                          HeroIcons.bell,
+                          size: w * 0.07,
+                        ),
+                      ),
+
+                      SizedBox(width: w * 0.02),
                     ],
                   ),
                 )
