@@ -10,11 +10,8 @@ class ProfessionsListElements extends StatelessWidget {
   int? index;
   final Function(String) onTap;
 
-  ProfessionsListElements({
-    Key? key,
-    required this.index,
-    required this.onTap,
-  }) : super(key: key);
+  ProfessionsListElements({Key? key, required this.index, required this.onTap,}) : super(key: key);
+
   final GetController _getController = Get.put(GetController());
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
   var scrollController = ScrollController();
