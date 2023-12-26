@@ -168,7 +168,7 @@ class ProfessionsList extends StatelessWidget {
               child: Container(
                 height: h * 0.12,
                 width: w,
-                color: Colors.white
+                color: Colors.grey[50],
               )
             ),
             Positioned(
@@ -252,7 +252,7 @@ class ProfessionsList extends StatelessWidget {
               child: Container(
                 width: w,
                 margin: EdgeInsets.only(top: h * 0.15),
-                color: Colors.white,
+                color: Colors.grey[50],
                 child: Obx(() => _getController.category.value.res == null
                     ? const Center(child: Text('No data'))
                     : Obx(() => _getController.category.value.res!.isNotEmpty
@@ -325,10 +325,17 @@ class ProfessionsList extends StatelessWidget {
                               height: h * 0.06,
                               margin: EdgeInsets.only(bottom: h * 0.02),
                               decoration: BoxDecoration(
-                                color: Colors.grey[200],
+                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(w * 0.02),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 5,
+                                    offset: Offset(0, 1),
+                                  ),
+                                ],
                               ),
-                              child: Center(
+                              /*child: Center(
                                 child: Text(
                                   _getController.category.value.res?[index].name ?? '',
                                   style: TextStyle(
@@ -336,6 +343,52 @@ class ProfessionsList extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
+                              ),*/
+                              child: Row(
+                                children: [
+                                  SizedBox(width: w * 0.04),
+                                  Container(
+                                    height: h * 0.04,
+                                    width: w * 0.08,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: NetworkImage(_getController.category.value.res?[index].icon_url ?? ''),
+                                        fit: BoxFit.fill,
+                                        colorFilter: const ColorFilter.mode(Colors.deepOrangeAccent, BlendMode.color),
+                                        invertColors: true,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: w * 0.04),
+                                  SizedBox(
+                                    width: w * 0.6,
+                                    child: Text(
+                                      _getController.category.value.res?[index].name ?? '',
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  const Expanded(child: SizedBox()),
+                                  Container(
+                                    width: w * 0.08,
+                                    height: h * 0.04,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Colors.blue,
+                                        size: w * 0.05,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: w * 0.04),
+                                ],
                               ),
                             ),
                           );

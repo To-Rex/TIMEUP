@@ -28,13 +28,17 @@ class ResCategory {
   int? id;
   int? parent_id;
   String? name;
+  //icon_url
+  String? icon_url;
 
-  ResCategory({this.id, this.name, this.parent_id});
+
+  ResCategory({this.id, this.name, this.parent_id, this.icon_url});
 
   ResCategory.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     parent_id = json['parent_id'];
     name = json['name'];
+    icon_url = json['icon_url'];
   }
 
   Map<String, dynamic> toJson() {
@@ -42,6 +46,7 @@ class ResCategory {
     data['id'] = id;
     data['parent_id'] = parent_id;
     data['name'] = name;
+    data['icon_url'] = icon_url;
     return data;
   }
 }
