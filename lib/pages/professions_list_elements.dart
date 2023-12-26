@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:time_up/pages/post_details.dart';
 import '../api/api_controller.dart';
 import '../res/getController.dart';
 
@@ -250,19 +251,24 @@ class ProfessionsListElements extends StatelessWidget {
                               semanticChildCount: _getController.getFollowPost.value.res!.length,
                               children: [
                                 for (int i = 0; i < _getController.getFollowPost.value.res!.length; i++)
-                                  Container(
-                                    height: h * 0.03,
-                                    width: w * 0.3,
-                                    margin: EdgeInsets.only(right: w * 0.02),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(6),
-                                      image: DecorationImage(
-                                        image: NetworkImage('${_getController.getFollowPost.value.res?[i].photo}'),
-                                        fit: BoxFit.cover,
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getFollowPost.value.res?[i].id)));
+                                    },
+                                    child: Container(
+                                      height: h * 0.03,
+                                      width: w * 0.3,
+                                      margin: EdgeInsets.only(right: w * 0.02),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(6),
+                                        image: DecorationImage(
+                                          image: NetworkImage('${_getController.getFollowPost.value.res?[i].photo}'),
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                  )
                               ],),
                           ) : const SizedBox()
                           ),
