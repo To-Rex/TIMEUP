@@ -12,6 +12,8 @@ import '../models/booking_business_get.dart';
 import '../models/booking_category_get.dart';
 import '../models/category.dart';
 import '../models/follov_model.dart';
+import '../models/followers_model.dart';
+import '../models/following_model.dart';
 import '../models/get_by_category.dart';
 import '../models/get_follow_model.dart';
 import '../models/get_follow_post.dart';
@@ -45,7 +47,6 @@ class ApiController extends GetxController {
   var getByCategoryUrl = 'business/get-by-category/';
   var profileByIdUrl = 'business/profile/';
   var bookingBusinessGetListUrl = 'booking/business/get-list/';
-  //{{host}}/api/v1/booking/list-booking-and-booking-category/5
   var bookingListBookingAndBookingCategoryUrl = 'booking/list-booking-and-booking-category/';
   var bookingClientGetListUrl = 'booking/client/get-list?date=';
   var businessFollowUrl = 'business/';
@@ -65,6 +66,10 @@ class ApiController extends GetxController {
   var bookingCategoryListUrl = 'booking-category/list/';
   var bookingCategoryDeleteUrl = 'booking-category/delete/';
   var bookingCategoryListCreateUrl = 'booking-category/create';
+  //{{host}}/api/v1/following/list/following/1
+  var followingListFollowingUrl = 'following/list/following/';
+  //{{host}}/api/v1/following/list/followers/36
+  var followingListFollowersUrl = 'following/list/followers/';
 
   Future<String> sendSms(String phoneNumber) async {
     print(phoneNumber);
@@ -722,4 +727,41 @@ class ApiController extends GetxController {
       return false;
     }
   }
+
+  Future<Following> getMyFollowing(context,id) async{
+    var response = await http.get(
+      Uri.parse('$url$followingListFollowingUrl$id'),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },
+    );
+    print(response.body);
+    print(response.statusCode);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      _getController.changeFollowing(Following.fromJson(jsonDecode(response.body)));
+      return Following.fromJson(jsonDecode(response.body));
+    } else {
+      _getController.changeFollowing(Following(res: [], status: false));
+      return Following(res: [], status: false);
+    }
+  }
+
+  Future<Followers> getMyFollowers(context,businessId) async{
+    var response = await http.get(
+      Uri.parse('$url$followingListFollowersUrl$businessId'),
+      headers: {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      },
+    );
+    print(response.body);
+    print(response.statusCode);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      _getController.changeFollowers(Followers.fromJson(jsonDecode(response.body)));
+      return Followers.fromJson(jsonDecode(response.body));
+    } else {
+      _getController.changeFollowers(Followers(res: [], status: false));
+      return Followers(res: [], status: false);
+    }
+  }
+
 }

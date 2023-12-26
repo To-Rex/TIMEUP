@@ -11,6 +11,8 @@ import '../bottomBarPages/search.dart';
 import '../models/booking_business_category_get.dart';
 import '../models/booking_business_get.dart';
 import '../models/booking_category_get.dart';
+import '../models/followers_model.dart';
+import '../models/following_model.dart';
 import '../models/get_by_category.dart';
 import '../models/get_follow_post.dart';
 import '../models/get_id_post.dart';
@@ -78,14 +80,14 @@ class GetController extends GetxController {
   var getProfileById = ProfileById().obs;
   var bookingBusinessGetList = BookingBusinessGetList().obs;
   var bookingBusinessGetList1 = BookingBusinessGetList().obs;
-  //BookingBusinessGetListCategory
   var getBookingBusinessGetListCategory = BookingBusinessGetListCategory().obs;
   var followList = GetFollowModel().obs;
   var getPostList = GetMePost().obs;
   var getPostById = GetByIdPostModel().obs;
   var getFollowPost = GetFollowPost().obs;
-  //BookingCategoryListUrl
   var getBookingCategory = GetBookingCategory().obs;
+  var getFollowing = Following().obs;
+  var getFollowers = Followers().obs;
   var categoryIndex = 0.obs;
   var subCategoryIndex = 0.obs;
   var regionIndex = 0.obs;
@@ -99,6 +101,16 @@ class GetController extends GetxController {
   var uplAodVideo = false.obs;
   var loading = false.obs;
   var show = false.obs;
+
+  //change following
+  void changeFollowing(Following newFollowing) {
+    getFollowing.value = newFollowing;
+  }
+
+  //change followers
+  void changeFollowers(Followers newFollowers) {
+    getFollowers.value = newFollowers;
+  }
 
   //BookingBusinessGetListCategory
   void changeGetBookingBusinessGetListCategory(BookingBusinessGetListCategory newGetBookingBusinessGetListCategory) {
