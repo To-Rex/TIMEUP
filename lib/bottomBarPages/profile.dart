@@ -1300,35 +1300,25 @@ class ProfilePage extends StatelessWidget {
                                   ],
                                 ),
                                 SizedBox(height: h * 0.01),
-                                Center(
-                                  child: Obx(() =>
-                                  getController.meUsers.value.res?.business == null
-                                      ? Text('${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res?.lastName}',
-                                    style: TextStyle(
-                                      fontSize: w * 0.05,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ) : Text('${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res?.lastName}',
-                                    style: TextStyle(
-                                      fontSize: w * 0.05,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  )),
-                                ),
+                                Center(child: Obx(() => getController.meUsers.value.res?.business == null ? Text('${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res?.lastName}', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500,),) : Text('${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res?.lastName}', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500),)),),
                                 SizedBox(height: h * 0.01),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Obx(() =>
-                                    getController.meUsers.value.res?.business == null
+                                    Obx(() => getController.meUsers.value.res?.business == null
                                         ? const SizedBox()
-                                        : UserDetIalWidget(labelText: 'Post', labelTextCount: '${getController.meUsers.value.res?.business?.postsCount}',)),
+                                        : UserDetIalWidget(labelText: 'Post', labelTextCount: '${getController.meUsers.value.res?.business?.postsCount}',
+                                      icon: 1,
+                                    )
+                                    ),
                                     Obx(() => getController.meUsers.value.res?.business == null
                                         ? const SizedBox()
                                         : UserDetIalWidget(
                                       labelText: 'Obunachilar',
                                       labelTextCount: '${getController.meUsers.value.res?.business?.followersCount}',
-                                    )),
+                                      icon: 2,
+                                    )
+                                    ),
                                     Obx(() =>
                                     getController.meUsers.value.res?.business ==
                                         null
@@ -1337,16 +1327,15 @@ class ProfilePage extends StatelessWidget {
                                       labelText: 'Do\'stlar',
                                       labelTextCount:
                                       '${getController.meUsers.value.res?.followingCount}',
-                                    )),
+                                      icon: 3,
+                                    )
+                                    ),
                                   ],
                                 ),
-                                SizedBox(height: h * 0.02),
                                 Container(
                                   width: w,
-                                  padding: EdgeInsets.only(
-                                      left: w * 0.03,
-                                      right: w * 0.03,
-                                      bottom: h * 0.01),
+                                  margin: EdgeInsets.only(top: h * 0.01),
+                                  padding: EdgeInsets.only(left: w * 0.03, right: w * 0.03, bottom: h * 0.01),
                                   child: Obx(() => getController.meUsers.value.res?.business == null
                                       ? Row(
                                     children: [
@@ -1576,7 +1565,7 @@ class ProfilePage extends StatelessWidget {
                                 Obx(() => getController.meUsers.value.res?.business == null
                                     ? const SizedBox()
                                     : SizedBox(
-                                  height: getController.show.value ? h * 0.22 : getController.getBookingCategory.value.res == null || getController.getBookingCategory.value.res!.isEmpty ? h * 0.33 : h * 0.38,
+                                  height: getController.show.value ? h * 0.22 : getController.getBookingCategory.value.res == null || getController.getBookingCategory.value.res!.isEmpty ? h * 0.33 : h * 0.355,
                                   child: PageView(
                                     onPageChanged: (index) {
                                       getController.nextPagesUserDetails.value = index;

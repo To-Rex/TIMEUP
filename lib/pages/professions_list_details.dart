@@ -858,18 +858,21 @@ class ProfessionsListDetails extends StatelessWidget {
                                 : UserDetIalWidget(
                                     labelText: 'Post',
                                     labelTextCount: '${_getController.getProfileById.value.res!.postsCount}',
+                                    icon: 1,
                                   )),
                         Obx(() => _getController.getProfileById.value.res == null
                                 ? const SizedBox()
                                 : UserDetIalWidget(
                                     labelText: 'Obunachilar',
                                     labelTextCount: '${_getController.getProfileById.value.res!.followersCount}',
+                                    icon: 2,
                                   )),
                         Obx(() => _getController.getProfileById.value.res == null
                                 ? const SizedBox()
                                 : UserDetIalWidget(
                                     labelText: 'Do\'stlar',
                                     labelTextCount: '${_getController.getProfileById.value.res!.followingCount}',
+                                    icon: 3,
                                   )),
                       ],
                     ),
