@@ -65,7 +65,7 @@ class SamplePage extends StatelessWidget {
                     );
                   },
                   child: HeroIcon(
-                    HeroIcons.bell,
+                    HeroIcons.chatBubbleLeft,
                     size: w * 0.07,
                     color: _getController.index.value == 1
                         ? Colors.white
