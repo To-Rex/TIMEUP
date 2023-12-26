@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/elements/functions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../res/getController.dart';
 
@@ -25,6 +26,26 @@ class ProfessionsList extends StatelessWidget {
 
   void _onLoading() async {
     _refreshController.loadComplete();
+  }
+
+  final Uri _url = Uri.parse('https://t.me/TimeUP_test');
+
+  Future<void> _launchTelegram(context) async {
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
+    }else{
+      Toast.showToast(context, 'Telegram ochildi', Colors.green, Colors.white);
+    }
+  }
+
+  //launch phone +998931561464
+  Future<void> _launchPhone(context) async {
+    const url = 'tel:+998931561464';
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
+    }else{
+      Toast.showToast(context, 'Telefon ochildi', Colors.green, Colors.white);
+    }
   }
 
   @override
@@ -191,7 +212,7 @@ class ProfessionsList extends StatelessWidget {
                   ),
                   child: InkWell(
                     onTap: () {
-                      Toast.showToast(context, 'Admin bilan aloqa', Colors.blue, Colors.white);
+                      _launchTelegram(context);
                     },
                     child: Row(
                       children: [
@@ -233,7 +254,7 @@ class ProfessionsList extends StatelessWidget {
                         const Expanded(child: SizedBox()),
                         InkWell(
                           onTap: () {
-                            Toast.showToast(context, 'Admin aloqa', Colors.blue, Colors.white);
+                            _launchPhone(context);
                           },
                           child: Container(
                             height: h * 0.04,
