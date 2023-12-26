@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:time_up/api/api_controller.dart';
+import 'package:time_up/elements/functions.dart';
 
 import '../res/getController.dart';
 
@@ -188,61 +189,71 @@ class ProfessionsList extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Row(
-                    children: [
-                      SizedBox(width: w * 0.04),
-                      //image call_me.png
-                      Container(
-                        height: h * 0.06,
-                        width: w * 0.1,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/call_me.png'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: w * 0.04),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Admin bilan aloqa',
-                            style: TextStyle(
-                              fontSize: w * 0.045,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.blue,
+                  child: InkWell(
+                    onTap: () {
+                      Toast.showToast(context, 'Admin bilan aloqa', Colors.blue, Colors.white);
+                    },
+                    child: Row(
+                      children: [
+                        SizedBox(width: w * 0.04),
+                        //image call_me.png
+                        Container(
+                          height: h * 0.06,
+                          width: w * 0.1,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/images/call_me.png'),
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          Text(
-                            'Taklif va shukoyatlar uchun',
-                            style: TextStyle(
-                              fontSize: w * 0.03,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
+                        ),
+                        SizedBox(width: w * 0.04),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Admin bilan aloqa',
+                              style: TextStyle(
+                                fontSize: w * 0.045,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.blue,
+                              ),
+                            ),
+                            Text(
+                              'Taklif va shukoyatlar uchun',
+                              style: TextStyle(
+                                fontSize: w * 0.03,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Expanded(child: SizedBox()),
+                        InkWell(
+                          onTap: () {
+                            Toast.showToast(context, 'Admin aloqa', Colors.blue, Colors.white);
+                          },
+                          child: Container(
+                            height: h * 0.04,
+                            width: w * 0.08,
+                            margin: EdgeInsets.only(right: w * 0.04),
+                            decoration: BoxDecoration(
+                              color: Colors.orange,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.phone,
+                                color: Colors.white,
+                                size: w * 0.05,
+                              ),
                             ),
                           ),
-                        ],
-                      ),
-                      const Expanded(child: SizedBox()),
-                      Container(
-                        height: h * 0.04,
-                        width: w * 0.08,
-                        margin: EdgeInsets.only(right: w * 0.04),
-                        decoration: BoxDecoration(
-                          color: Colors.orange,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Center(
-                          child: Icon(
-                            Icons.phone,
-                            color: Colors.white,
-                            size: w * 0.05,
-                          ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   )
               ),
             ),
