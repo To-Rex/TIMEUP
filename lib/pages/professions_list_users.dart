@@ -75,31 +75,6 @@ class ProfessionsListUsers extends StatelessWidget {
     ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value));
     return Column(
       children: [
-        /*SizedBox(
-          child: GestureDetector(
-            onTap: () {
-              _getController.enters.value = 1;
-            },
-            child: Row(
-              children: [
-                SizedBox(width: w * 0.04),
-                const Icon(Icons.arrow_back_ios),
-                const Expanded(child: SizedBox()),
-                Obx(() => _getController.titleListElements.value == ''
-                    ? Center(child: Text('Ma\'lumotlar yo\'q', style: TextStyle(fontSize: w * 0.04)))
-                    : Text(
-                        _getController.titleListElements.value,
-                        style: TextStyle(
-                          fontSize: w * 0.05,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      )),
-                const Expanded(child: SizedBox()),
-                SizedBox(width: w * 0.04),
-              ],
-            ),
-          ),
-        ),*/
         AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
