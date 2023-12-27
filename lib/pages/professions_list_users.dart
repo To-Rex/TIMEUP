@@ -75,7 +75,7 @@ class ProfessionsListUsers extends StatelessWidget {
     ApiController().getByCategory(_getController.categoryByID.value).then((value) => _getController.changeByCategory(value));
     return Column(
       children: [
-        SizedBox(
+        /*SizedBox(
           child: GestureDetector(
             onTap: () {
               _getController.enters.value = 1;
@@ -99,11 +99,33 @@ class ProfessionsListUsers extends StatelessWidget {
               ],
             ),
           ),
+        ),*/
+        AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: GestureDetector(
+            onTap: () {
+              _getController.enters.value = 1;
+            },
+            child: const Icon(Icons.arrow_back_ios),
+          ),
+          title: Obx(() => _getController.titleListElements.value == ''
+              ? Center(child: Text('Ma\'lumotlar yo\'q', style: TextStyle(fontSize: w * 0.04)))
+              : Text(
+                  _getController.titleListElements.value,
+                  style: TextStyle(
+                    fontSize: w * 0.05,
+                    fontWeight: FontWeight.w500,
+                  ),
+                )),
+          centerTitle: true,
         ),
-        SizedBox(height: h * 0.02),
-        SizedBox(
+        //SizedBox(height: h * 0.02),
+        Container(
+          color: Colors.white,
           height: h * 0.74,
-          width: w * 0.9,
+          width: w,
+          padding: EdgeInsets.symmetric(horizontal: w * 0.04),
           child: Obx(
             () => _getController.getByCategory.value.res == null || _getController.getByCategory.value.res!.isEmpty
                 ? Center(child: Text('Ma`lumotlar yo`q', style: TextStyle(fontSize: w * 0.04)))

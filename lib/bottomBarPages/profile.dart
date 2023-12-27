@@ -39,7 +39,7 @@ class ProfilePage extends StatelessWidget {
   final TextEditingController _discriptionController = TextEditingController();
   final TextEditingController _durationController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
-
+  late TabController _followTabController;
   final Uri _url = Uri.parse('https://t.me/TimeUP_test');
 
   Future<void> _launchTelegram(context) async {
@@ -1090,6 +1090,16 @@ class ProfilePage extends StatelessWidget {
   showBottomSheetFollowers(context, businessId) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
+    _followTabController = TabController(length: 2, vsync: Navigator.of(context));
+    _followTabController.addListener(() {
+      if (_followTabController.index == 0) {
+        print('Obunachilar');
+        ApiController().getMyFollowers(context,businessId);
+      } else {
+        print('Dostlar');
+        ApiController().getMyFollowing(context,businessId);
+      }
+    });
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -1128,6 +1138,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   child: TabBar(
                     indicatorSize: TabBarIndicatorSize.tab,
+                    controller: _followTabController,
                     labelStyle: TextStyle(
                       fontSize: w * 0.04,
                       fontWeight: FontWeight.w500,
@@ -1172,6 +1183,7 @@ class ProfilePage extends StatelessWidget {
                 ),
                 Expanded(
                   child: TabBarView(
+                    controller: _followTabController,
                     children: [
                       // Content for Tab 1
                       Center(child: Text('Content for Obunachilar')),
