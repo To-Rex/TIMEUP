@@ -100,7 +100,6 @@ class ProfessionsListUsers extends StatelessWidget {
                 )),
           centerTitle: true,
         ),
-        //SizedBox(height: h * 0.02),
         Container(
           color: Colors.white,
           height: h * 0.74,

@@ -729,6 +729,7 @@ class ApiController extends GetxController {
   }
 
   Future<Following> getMyFollowing(context,id) async{
+    print(id);
     var response = await http.get(
       Uri.parse('$url$followingListFollowingUrl$id'),
       headers: {
@@ -747,6 +748,7 @@ class ApiController extends GetxController {
   }
 
   Future<Followers> getMyFollowers(context,businessId) async{
+    print(businessId);
     var response = await http.get(
       Uri.parse('$url$followingListFollowersUrl$businessId'),
       headers: {

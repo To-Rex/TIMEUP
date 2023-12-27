@@ -57,6 +57,8 @@ class ProfilePage extends StatelessWidget {
       context: context,
       barrierColor: Colors.black.withOpacity(0.5),
       builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
         content: SizedBox(
           width: w * 0.1,
           height: w * 0.2,
@@ -67,9 +69,9 @@ class ProfilePage extends StatelessWidget {
               SizedBox(
                 width: w * 0.1,
                 height: w * 0.1,
-                child: const CircularProgressIndicator(
+                child: CircularProgressIndicator(
                   color: Colors.blue,
-                  backgroundColor: Colors.white,
+                  backgroundColor: Colors.grey[300],
                   strokeWidth: 2,
                 ),
               ),
@@ -1097,7 +1099,7 @@ class ProfilePage extends StatelessWidget {
         ApiController().getMyFollowers(context,businessId);
       } else {
         print('Dostlar');
-        ApiController().getMyFollowing(context,businessId);
+        ApiController().getMyFollowing(context,getController.meUsers.value.res!.id!);
       }
     });
     showModalBottomSheet(
@@ -1123,7 +1125,7 @@ class ProfilePage extends StatelessWidget {
                 Container(
                   width: w * 0.3,
                   height: h * 0.005,
-                  margin: EdgeInsets.only(top: h * 0.02, bottom: h * 0.02),
+                  margin: EdgeInsets.only(top: h * 0.02, bottom: h * 0.04),
                   decoration: BoxDecoration(
                     color: Colors.grey,
                     borderRadius: BorderRadius.circular(10),
@@ -1131,7 +1133,7 @@ class ProfilePage extends StatelessWidget {
                 ),
                 Container(
                   constraints: BoxConstraints.expand(height: h * 0.06),
-                  margin: EdgeInsets.symmetric(horizontal: w * 0.1),
+                  margin: EdgeInsets.symmetric(horizontal: w * 0.05),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -1185,10 +1187,198 @@ class ProfilePage extends StatelessWidget {
                   child: TabBarView(
                     controller: _followTabController,
                     children: [
-                      // Content for Tab 1
-                      Center(child: Text('Content for Obunachilar')),
                       // Content for Tab 2
-                      Center(child: Text('Content for Dostlar')),
+                      Obx(() => getController.getFollowers.value.res!.isNotEmpty || getController.getFollowers.value.res != null || getController.getFollowers.value.res! != []
+                          ? Container(
+                        margin: EdgeInsets.only(top: h * 0.05),
+                        padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: getController.getFollowers.value.res!.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              height: h * 0.08,
+                              padding: EdgeInsets.only(left: w * 0.01, right: w * 0.01),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey[200]!,
+                                    spreadRadius: 1,
+                                    blurRadius: 1,
+                                    offset: const Offset(0, 1), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              margin: EdgeInsets.only(bottom: h * 0.015),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: w * 0.12,
+                                    height: w * 0.12,
+                                    margin: EdgeInsets.only(right: w * 0.04, left: w * 0.02),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(w),
+                                      image: DecorationImage(
+                                        image: NetworkImage('${getController.getFollowers.value.res![index].photoUrl}'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: w * 0.45,
+                                    child: Text(
+                                      '${getController.getFollowers.value.res![index].userName}',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(child: SizedBox()),
+                                  //button OBuna
+                                  //if (getController.getFollowers.value.res![index].isFollowing == false)
+                                  InkWell(
+                                    onTap: () {
+                                      showLoadingDialog(context, w);
+                                    },
+                                    child: Container(
+                                      width: w * 0.2,
+                                      height: h * 0.04,
+                                      margin: EdgeInsets.only(right: w * 0.02),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.blue,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'Obuna',
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            fontSize: w * 0.035,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                          : SizedBox(
+                        child: Center(
+                          child: Text(
+                            'Obunachilar topilmadi',
+                            style: TextStyle(
+                              fontSize: w * 0.04,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      )
+                      ),
+
+                      Obx(() => getController.getFollowing.value.res!.isNotEmpty || getController.getFollowing.value.res != null || getController.getFollowing.value.res! != []
+                          ? Container(
+                        margin: EdgeInsets.only(top: h * 0.05),
+                        padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: getController.getFollowing.value.res!.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              height: h * 0.08,
+                              padding: EdgeInsets.only(left: w * 0.01, right: w * 0.01),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey[200]!,
+                                    spreadRadius: 1,
+                                    blurRadius: 1,
+                                    offset: const Offset(0, 1), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              margin: EdgeInsets.only(bottom: h * 0.015),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: w * 0.12,
+                                    height: w * 0.12,
+                                    margin: EdgeInsets.only(right: w * 0.04, left: w * 0.02),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(w),
+                                      image: DecorationImage(
+                                        image: NetworkImage('${getController.getFollowing.value.res![index].photoUrl}'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: w * 0.45,
+                                    child: Text(
+                                      '${getController.getFollowing.value.res![index].userName}',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(child: SizedBox()),
+                                  //button Dostlar
+                                  InkWell(
+                                    onTap: () {
+                                      showLoadingDialog(context, w);
+                                    },
+                                    child: Container(
+                                      width: w * 0.2,
+                                      height: h * 0.04,
+                                      margin: EdgeInsets.only(right: w * 0.02),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.blue,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'Dostlar',
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            fontSize: w * 0.035,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ) : SizedBox(
+                        child: Container(
+                          child: Center(
+                            child: Text(
+                              'Dostlar topilmadi',
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                      ),
+
                     ],
                   ),
                 ),
