@@ -1087,6 +1087,108 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
+  showBottomSheetFollowers(context, businessId) {
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.8,
+          width: w,
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
+          child: DefaultTabController(
+            length: 2,
+            initialIndex: 0,
+            animationDuration: const Duration(milliseconds: 300),
+            child: Column(
+              children: [
+                Container(
+                  width: w * 0.3,
+                  height: h * 0.005,
+                  margin: EdgeInsets.only(top: h * 0.02, bottom: h * 0.02),
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                Container(
+                  constraints: BoxConstraints.expand(height: h * 0.06),
+                  margin: EdgeInsets.symmetric(horizontal: w * 0.1),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: TabBar(
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    labelStyle: TextStyle(
+                      fontSize: w * 0.04,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white, // Selected text color
+                    ),
+                    unselectedLabelColor: Colors.blue, // Unselected text color
+                    indicator: BoxDecoration(
+                      color: Colors.blue, // Background color for the selected tab
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    tabs: [
+                      Tab(
+                        child: Container(
+                          width: w * 0.6,
+                          child: Center(
+                            child: Text(
+                              'Obunachilar',
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Container(
+                          width: w * 0.6,
+                          child: Center(
+                            child: Text(
+                              'Dostlar',
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: TabBarView(
+                    children: [
+                      // Content for Tab 1
+                      Center(child: Text('Content for Obunachilar')),
+                      // Content for Tab 2
+                      Center(child: Text('Content for Dostlar')),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+
   final ImagePicker _picker = ImagePicker();
   var croppedImage;
 
@@ -1307,28 +1409,43 @@ class ProfilePage extends StatelessWidget {
                                   children: [
                                     Obx(() => getController.meUsers.value.res?.business == null
                                         ? const SizedBox()
-                                        : UserDetIalWidget(labelText: 'Post', labelTextCount: '${getController.meUsers.value.res?.business?.postsCount}',
-                                      icon: 1,
+                                        : InkWell(
+                                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                      onTap: () {
+                                        showBottomSheetFollowers(context,getController.meUsers.value.res!.business?.id);
+                                      },
+                                      child: UserDetIalWidget(labelText: 'Post', labelTextCount: '${getController.meUsers.value.res?.business?.postsCount}',
+                                        icon: 1,
+                                      ),
                                     )
                                     ),
                                     Obx(() => getController.meUsers.value.res?.business == null
                                         ? const SizedBox()
-                                        : UserDetIalWidget(
-                                      labelText: 'Obunachilar',
-                                      labelTextCount: '${getController.meUsers.value.res?.business?.followersCount}',
-                                      icon: 2,
+                                        : InkWell(
+                                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                      onTap: () {
+                                        showBottomSheetFollowers(context,getController.meUsers.value.res!.business?.id);
+                                      },
+                                      child: UserDetIalWidget(
+                                        labelText: 'Obunachilar',
+                                        labelTextCount: '${getController.meUsers.value.res?.business?.followersCount}',
+                                        icon: 2,
+                                      ),
                                     )
                                     ),
-                                    Obx(() =>
-                                    getController.meUsers.value.res?.business ==
-                                        null
+                                    Obx(() =>getController.meUsers.value.res?.business == null
                                         ? const SizedBox()
-                                        : UserDetIalWidget(
-                                      labelText: 'Do\'stlar',
-                                      labelTextCount:
-                                      '${getController.meUsers.value.res?.followingCount}',
-                                      icon: 3,
-                                    )
+                                        : InkWell(
+                                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                      onTap: () {
+                                        showBottomSheetFollowers(context,getController.meUsers.value.res!.business?.id);
+                                      },
+                                      child: UserDetIalWidget(
+                                        labelText: 'Do\'stlar',
+                                        labelTextCount:
+                                        '${getController.meUsers.value.res?.followingCount}',
+                                        icon: 3,
+                                      ),)
                                     ),
                                   ],
                                 ),
