@@ -26,19 +26,19 @@ class UserDetIalWidget extends StatelessWidget {
             HeroIcon(
               HeroIcons.film,
               size: w * 0.08 > 50 ? 50 : w * 0.08,
-              color: Colors.black,
+              color: Colors.blue,
             ),
           if (icon == 2)
             HeroIcon(
               HeroIcons.users,
               size: w * 0.08 > 50 ? 50 : w * 0.08,
-              color: Colors.black,
+              color: Colors.blue,
             ),
           if (icon == 3)
             HeroIcon(
-              HeroIcons.paperClip,
+              HeroIcons.link,
               size: w * 0.08 > 50 ? 50 : w * 0.08,
-              color: Colors.black,
+              color: Colors.blue,
             ),
           Text(labelText,
             style: TextStyle(
