@@ -76,13 +76,17 @@ class ProfessionsListUsers extends StatelessWidget {
     return Column(
       children: [
         AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.blue,
           elevation: 0,
           leading: GestureDetector(
             onTap: () {
               _getController.enters.value = 1;
             },
-            child: const Icon(Icons.arrow_back_ios),
+            child: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+                size: w * 0.06,
+            ),
           ),
           title: Obx(() => _getController.titleListElements.value == ''
               ? Center(child: Text('Ma\'lumotlar yo\'q', style: TextStyle(fontSize: w * 0.04)))
@@ -91,6 +95,7 @@ class ProfessionsListUsers extends StatelessWidget {
                   style: TextStyle(
                     fontSize: w * 0.05,
                     fontWeight: FontWeight.w500,
+                    color: Colors.white,
                   ),
                 )),
           centerTitle: true,
