@@ -30,6 +30,7 @@ class ProfilePage extends StatelessWidget {
   ProfilePage({Key? key}) : super(key: key);
 
   final GetController getController = Get.put(GetController());
+  final PageController pageController = PageController();
   final PageController pageControllerServices = PageController();
   final TextEditingController _dateController = TextEditingController();
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
@@ -717,6 +718,190 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
+  /*showBottomSheet(context,businessId) {
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.6,
+          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: h * 0.02),
+                width: w * 0.2,
+                height: h * 0.005,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              SizedBox(height: h * 0.02),
+              Text(
+                'Sozlamalar',
+                style: TextStyle(
+                  fontSize: w * 0.04,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(height: h * 0.05),
+              if (getController.meUsers.value.res?.business != null)
+                InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                  showBottomSheetServices(context,businessId);
+                },
+                child: SizedBox(
+                  width: w,
+                  height: h * 0.05,
+                  child: Row(
+                    children: [
+                      SizedBox(width: w * 0.05),
+                      HeroIcon(
+                        HeroIcons.bolt,
+                        color: Colors.black,
+                        size: w * 0.05,
+                      ),
+                      SizedBox(width: w * 0.03),
+                      Text('Xizmatlar va narxlar', style: TextStyle(fontSize: w * 0.035, color: Colors.black)),
+                    ],
+                  ),
+                ),
+              ),
+              if (getController.meUsers.value.res?.business != null)
+                Divider(indent: w * 0.12),
+              InkWell(
+                onTap: () {
+                  getController.entersUser.value = 1;
+                  Navigator.pop(context);
+                },
+                child: SizedBox(
+                  width: w,
+                  height: h * 0.05,
+                  child: Row(
+                    children: [
+                      SizedBox(width: w * 0.05),
+                      HeroIcon(
+                        HeroIcons.pencilSquare,
+                        color: Colors.blue,
+                        size: w * 0.05,
+                      ),
+                      SizedBox(width: w * 0.03),
+                      Text('Profilni tahrirlash', style: TextStyle(fontSize: w * 0.035, color: Colors.black)),
+                    ],
+                  ),
+                ),
+              ),
+              Obx(() => getController.meUsers.value.res?.business != null
+                  ? const SizedBox()
+                  : Divider(indent: w * 0.12)),
+              Obx(() => getController.meUsers.value.res?.business != null
+                  ? const SizedBox()
+                  : InkWell(
+                      onTap: () {
+                        getController.entersUser.value = 2;
+                        Navigator.pop(context);
+                      },
+                      child: SizedBox(
+                        width: w,
+                        height: h * 0.05,
+                        child: Row(
+                          children: [
+                            SizedBox(width: w * 0.05),
+                            HeroIcon(
+                              HeroIcons.pencilSquare,
+                              color: Colors.blue,
+                              size: w * 0.05,
+                            ),
+                            SizedBox(width: w * 0.03),
+                            Text('Biznes profilini yaratish', style: TextStyle(fontSize: w * 0.035, color: Colors.black)),
+                          ],
+                        ),
+                      ),
+                    )),
+              Divider(indent: w * 0.12),
+              InkWell(
+                onTap: () {
+                  _launchTelegram(context);
+                },
+                child: SizedBox(
+                  width: w,
+                  height: h * 0.05,
+                  child: Row(
+                    children: [
+                      SizedBox(width: w * 0.05),
+                      HeroIcon(
+                        //chat-bubble-left-right
+                        HeroIcons.chatBubbleLeftRight,
+                        color: Colors.blue,
+                        size: w * 0.05,
+                      ),
+                      SizedBox(width: w * 0.03),
+                      //support to uzbek
+                      Text('Murojaat qilish', style: TextStyle(fontSize: w * 0.035, color: Colors.black)),
+                    ],
+                  ),
+                ),
+              ),
+              Divider(indent: w * 0.12),
+              InkWell(
+                onTap: () {
+                  showClosDialogs(context);
+                },
+                child: SizedBox(
+                  width: w,
+                  height: h * 0.05,
+                  child: Row(
+                    children: [
+                      SizedBox(width: w * 0.05),
+                      HeroIcon(
+                        HeroIcons.arrowRightOnRectangle,
+                        color: Colors.red,
+                        size: w * 0.05,
+                      ),
+                      SizedBox(width: w * 0.03),
+                      Text('Tizimdan Chiqish', style: TextStyle(fontSize: w * 0.035, color: Colors.black)),
+                    ],
+                  ),
+                ),
+              ),
+              Divider(indent: w * 0.12),
+              InkWell(
+                onTap: () {
+                  showDialogs(context);
+                },
+                child: SizedBox(
+                  width: w,
+                  height: h * 0.05,
+                  child: Row(
+                    children: [
+                      SizedBox(width: w * 0.05),
+                      HeroIcon(
+                        HeroIcons.trash,
+                        color: Colors.red,
+                        size: w * 0.05,
+                      ),
+                      SizedBox(width: w * 0.03),
+                      //Text('Akkauntini o\'chirish', style: TextStyle(fontSize: w * 0.035, color: Colors.black)),
+                      Text('Profilni o\'chirish',
+                          style: TextStyle(fontSize: w * 0.035, color: Colors.black)),
+                    ],
+                  ),
+                ),
+              ),
+              Divider(indent: w * 0.12),
+            ],
+          ),
+        );
+      },
+    );
+  }*/
+
   showBottomSheet(context,businessId) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
@@ -1238,7 +1423,11 @@ class ProfilePage extends StatelessWidget {
     if (getController.meUsers.value.res?.business == null) {
       ApiController().getUserData().then((value) => _refreshController.refreshCompleted());
     } else {
-      ApiController().getMePostList(getController.meUsers.value.res!.business?.id).then((value) => _refreshController.refreshCompleted());
+      if (pageController.page == 0) {
+        ApiController().getMePostList(getController.meUsers.value.res!.business?.id).then((value) => _refreshController.refreshCompleted());
+      } else {
+        _refreshController.refreshCompleted();
+      }
     }
   }
 
@@ -1255,7 +1444,6 @@ class ProfilePage extends StatelessWidget {
     if (getController.meUsers.value.res?.business != null) {
       ApiController().bookingCategoryList(getController.meUsers.value.res!.business?.id);
     }
-    if (getController.meUsers.value.res != null && getController.meUsers.value.res?.business != null) ApiController().getMyFollowing(context,getController.meUsers.value.res!.id!);
     return WillPopScope(
       onWillPop: () async {
         if (getController.entersUser.value == 0) {
@@ -1273,79 +1461,77 @@ class ProfilePage extends StatelessWidget {
       child: Obx(() => getController.meUsers.value.res != null
           ? SizedBox(
               child: Obx(() => getController.entersUser.value == 0
-                  ? Obx(() => getController.meUsers.value.res?.business != null
-                  ? SizedBox(width: w, height: h, child: Column(
-                  children: [
-                    AppBar(
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      surfaceTintColor: Colors.transparent,
-                      centerTitle: true,
-                      title: Text(getController.meUsers.value.res?.userName ?? '',
-                        style: TextStyle(
-                          fontSize: w * 0.04,
-                          color: Colors.black,
-                        ),
-                      ),
-                      actions: [
-                        IconButton(
-                          onPressed: () {
-                            showBottomSheet(context,getController.meUsers.value.res!.business?.id);
-                          },
-                          icon: const Icon(
-                            Icons.menu,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Obx(() => getController.meUsers.value.res?.business == null
-                        ? const SizedBox()
-                        : Obx(() => getController.getBookingCategory.value.res!.isNotEmpty
-                        ? const SizedBox()
-                        :Container(
-                      width: w,
-                      height: h * 0.05,
-                      color: Colors.red,
-                      child: Row(
+                  ? Column(
                         children: [
-                          SizedBox(width: w * 0.05),
-                          HeroIcon(
-                            HeroIcons.bolt,
-                            color: Colors.white,
-                            size: w * 0.05,
-                          ),
-                          SizedBox(width: w * 0.03),
-                          Text(
-                            'Iltimos xizmat turlarini yaratib qo\'ying',
-                            style: TextStyle(
+                          SizedBox(height: h * 0.01),
+                          AppBar(
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            surfaceTintColor: Colors.transparent,
+                            centerTitle: true,
+                            title: Text(getController.meUsers.value.res?.userName ?? '',
+                              style: TextStyle(
                                 fontSize: w * 0.04,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white
+                                color: Colors.black,
+                              ),
                             ),
+                            actions: [
+                              IconButton(
+                                onPressed: () {
+                                  showBottomSheet(context,getController.meUsers.value.res!.business?.id);
+                                },
+                                icon: const Icon(
+                                  Icons.menu,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
-                          const Expanded(child: SizedBox()),
-                          IconButton(
-                            onPressed: () {
-                              showBottomSheetServices(context,getController.meUsers.value.res!.business?.id);
-                            },
-                            icon: HeroIcon(
-                              HeroIcons.plusCircle,
-                              color: Colors.white,
-                              size: w * 0.06,
+                          Obx(() => getController.meUsers.value.res?.business == null
+                              ? const SizedBox()
+                              : Obx(() => getController.getBookingCategory.value.res!.isNotEmpty
+                              ? const SizedBox()
+                              :Container(
+                            width: w,
+                            height: h * 0.05,
+                            color: Colors.red,
+                            child: Row(
+                              children: [
+                                SizedBox(width: w * 0.05),
+                                HeroIcon(
+                                  HeroIcons.bolt,
+                                  color: Colors.white,
+                                  size: w * 0.05,
+                                ),
+                                SizedBox(width: w * 0.03),
+                                Text(
+                                  'Iltimos xizmat turlarini yaratib qo\'ying',
+                                  style: TextStyle(
+                                      fontSize: w * 0.04,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white
+                                  ),
+                                ),
+                                const Expanded(child: SizedBox()),
+                                IconButton(
+                                  onPressed: () {
+                                    showBottomSheetServices(context,getController.meUsers.value.res!.business?.id);
+                                  },
+                                  icon: HeroIcon(
+                                    HeroIcons.plusCircle,
+                                    color: Colors.white,
+                                    size: w * 0.06,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ))),
-                    Expanded(
-                      flex: 1,
-                        child: Container(
-                          //color: Colors.red[100],
-                          padding: EdgeInsets.only(top: h * 0.01, bottom: h * 0.01),
-                          child: SingleChildScrollView(
+                          ))),
+                          SizedBox(
+                            height: h * 0.75,
+                              child:SingleChildScrollView(
                             child: Column(
                               children: [
+                                SizedBox(height: h * 0.01),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1419,12 +1605,9 @@ class ProfilePage extends StatelessWidget {
                                     const Expanded(child: SizedBox()),
                                   ],
                                 ),
-                                SizedBox(height: h * 0.02),
-                                Center(child: Obx(() => getController.meUsers.value.res?.fistName == null
-                                    ? Text('Salom, Mehmon', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500))
-                                    : Text('${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res?.lastName}',
-                                  style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500)))),
-                                SizedBox(height: h * 0.02),
+                                SizedBox(height: h * 0.01),
+                                Center(child: Obx(() => getController.meUsers.value.res?.business == null ? Text('${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res?.lastName}', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500,),) : Text('${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res?.lastName}', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500),)),),
+                                SizedBox(height: h * 0.01),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
@@ -1470,364 +1653,369 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, top: h * 0.02),
-                                  child:  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                Container(
+                                  width: w,
+                                  margin: EdgeInsets.only(top: h * 0.01),
+                                  padding: EdgeInsets.only(left: w * 0.03, right: w * 0.03, bottom: h * 0.01),
+                                  child: Obx(() => getController.meUsers.value.res?.business == null
+                                      ? Row(
                                     children: [
-                                      Text(
-                                        'Foydalanuvchi haqida',
-                                        style: TextStyle(
-                                          fontSize: w * 0.045,
-                                          fontWeight: FontWeight.w500,
+                                      CircleAvatar(
+                                        backgroundColor: Colors.blue,
+                                        radius: w * 0.03,
+                                        child: const Image(
+                                          image: AssetImage('assets/images/user_call.png'),
+                                          fit: BoxFit.fill,
                                         ),
                                       ),
-                                      const Expanded(child: SizedBox()),
-                                      InkWell(
-                                          onTap: () {
-                                            getController.entersUser.value = 1;
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                'Batafsil',
-                                                style: TextStyle(
-                                                  fontSize: w * 0.04,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.blue,
-                                                ),
-                                              ),
-                                              SizedBox(width: w * 0.01),
-                                              HeroIcon(
-                                                HeroIcons.chevronRight,
-                                                color: Colors.blue,
-                                                size: w * 0.04,
-                                              ),
-                                            ],
-                                          )
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, top: h * 0.02),
-                                  child: Text(
-                                    '${getController.meUsers.value.res?.business?.bio}',
-                                    style: TextStyle(
-                                      fontSize: w * 0.04,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, top: h * 0.02, bottom: h * 0.02),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Text(
-                                        'Foydalanuvchi ma’lumotlari',
+                                      SizedBox(width: w * 0.02),
+                                      Obx(() => getController.meUsers.value.res == null
+                                          ? const SizedBox()
+                                          : Text(getController.meUsers.value.res!.phoneNumber ?? '',
                                         style: TextStyle(
-                                          fontSize: w * 0.045,
+                                          fontSize: w * 0.04,
                                           fontWeight: FontWeight.w500,
                                         ),
-                                      ),
-                                      const Expanded(child: SizedBox()),
-                                      InkWell(
-                                          onTap: () {
-                                            getController.entersUser.value = 1;
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                'Batafsil',
-                                                style: TextStyle(
-                                                  fontSize: w * 0.04,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.blue,
-                                                ),
-                                              ),
-                                              SizedBox(width: w * 0.01),
-                                              HeroIcon(
-                                                HeroIcons.chevronRight,
-                                                color: Colors.blue,
-                                                size: w * 0.04,
-                                              ),
-                                            ],
-                                          )
-                                      )
+                                      )),
                                     ],
-                                  ),
-                                ),
-                                Obx(() => getController.meUsers.value.res?.business != null
-                                    ? Padding(
-                                    padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, bottom: h * 0.02),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(getController.meUsers.value.res?.business?.categoryName ?? '',
-                                              style: TextStyle(
-                                                fontSize: w * 0.04,
-                                                color: Colors.grey,
-                                              ),
+                                  ) : Obx(() => getController.show.value == false
+                                      ? Row(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor: Colors.blue,
+                                        radius: w * 0.03,
+                                        child: const Image(
+                                          image: AssetImage('assets/images/user_call.png'),
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                      SizedBox(width: w * 0.02,),
+                                      Obx(() => getController.meUsers.value.res == null
+                                          ? const SizedBox()
+                                          : Text(
+                                        getController.meUsers.value.res!.phoneNumber ?? '',
+                                        style: TextStyle(
+                                          fontSize: w * 0.04,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      )),
+                                      SizedBox(width: w * 0.02),
+                                      InkWell(
+                                        onTap: () {
+                                          getController.show.value = true;
+                                        },
+                                        child: Text(
+                                          'Ko\'proq',
+                                          style: TextStyle(
+                                            fontSize: w * 0.035,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ) : Column(
+                                    children: [
+                                      Obx(() => getController.meUsers.value.res?.business != null
+                                          ? TextEditButton(
+                                        text: '${getController.meUsers.value.res?.phoneNumber}',
+                                        color: Colors.blue,
+                                        icon: 'assets/images/user_call.png',
+                                      ) : const SizedBox()),
+                                      Obx(() => getController.meUsers.value.res?.business != null
+                                          ? TextEditButton(
+                                        text: '${getController.meUsers.value.res?.business?.officeAddress}',
+                                        color: Colors.blue,
+                                        icon: 'assets/images/user_location.png',
+                                      ) : const SizedBox()),
+                                      Obx(() => getController.meUsers.value.res?.business != null
+                                          ? TextEditButton(
+                                        text: '${getController.meUsers.value.res?.business?.officeName}',
+                                        color: Colors.blue,
+                                        icon: 'assets/images/user_work.png',
+                                      ) : const SizedBox()),
+                                      Row(
+                                        children: [
+                                          CircleAvatar(
+                                            backgroundColor: Colors.blue,
+                                            radius: w * 0.03,
+                                            child: const Image(
+                                              image: AssetImage('assets/images/user_time.png'),
+                                              fit: BoxFit.fill,
                                             ),
-                                            SizedBox(width: w * 0.02),
-                                            Text(
-                                              getController.meUsers.value.res?.business?.experience == null ? '' : '${getController.meUsers.value.res?.business?.experience} yillik ish tajribasi',
+                                          ),
+                                          SizedBox(width: w * 0.02),
+                                          SizedBox(
+                                            width: w * 0.7,
+                                            child: Obx(() => getController.meUsers.value.res == null
+                                                ? const SizedBox()
+                                                : ReadMoreText('${getController.meUsers.value.res!.business!.dayOffs}',
+                                              trimLines: 1,
+                                              colorClickableText:
+                                              Colors.pink,
+                                              trimMode: TrimMode.Line,
+                                              trimCollapsedText: ' Ko\'proq',
+                                              trimExpandedText: ' Yashirish',
+                                              moreStyle: TextStyle(
+                                                fontSize: w * 0.035,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.blue,
+                                              ),
                                               style: TextStyle(
-                                                fontSize: w * 0.04,
+                                                fontSize: w * 0.035,
+                                                fontWeight: FontWeight.w400,
                                                 color: Colors.black,
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(height: h * 0.01),
-                                        TextEditButton(
-                                          text: '${getController.meUsers.value.res?.phoneNumber}',
-                                          color: Colors.blue,
-                                          icon: 'assets/images/user_call.png',
-                                        ),
-                                        TextEditButton(
-                                          text: '${getController.meUsers.value.res?.business?.officeAddress}',
-                                          color: Colors.blue,
-                                          icon: 'assets/images/user_location.png',
-                                        ),
-                                        TextEditButton(
-                                          text: '${getController.meUsers.value.res?.business?.officeName}',
-                                          color: Colors.blue,
-                                          icon: 'assets/images/user_work.png',
-                                        ),
-                                      ],
-                                    )
-                                ) : const SizedBox()),
-                                Obx(() => getController.getFollowing.value.res != null && getController.getFollowing.value.res!.isNotEmpty
-                                    ? Padding(
-                                    padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, bottom: h * 0.02),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(
-                                          'Dostlar',
-                                          style: TextStyle(
-                                            fontSize: w * 0.045,
-                                            fontWeight: FontWeight.w500,
+                                            )),
                                           ),
-                                        ),
-                                        const Expanded(child: SizedBox()),
-                                        InkWell(
+                                          InkWell(
                                             onTap: () {
-                                              getController.entersUser.value = 1;
+                                              getController.show.value = false;
                                             },
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  'Batafsil',
-                                                  style: TextStyle(
-                                                    fontSize: w * 0.04,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Colors.blue,
-                                                  ),
-                                                ),
-                                                SizedBox(width: w * 0.01),
-                                                HeroIcon(
-                                                  HeroIcons.chevronRight,
-                                                  color: Colors.blue,
-                                                  size: w * 0.04,
-                                                ),
-                                              ],
-                                            )
-                                        )
-                                      ],
-                                    ),
-                                ) : const SizedBox()),
-                                Obx(() => getController.getFollowing.value.res != null && getController.getFollowing.value.res!.isNotEmpty
-                                    ? SizedBox(
-                                    height: h * 0.15,
-                                    width: w * 0.95,
-                                    child: ListView.builder(
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: getController.getFollowing.value.res!.length,
-                                      itemBuilder: (context, index) {
-                                        return Container(
-                                          margin: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                width: w * 0.15,
-                                                height: w * 0.15,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(w),
-                                                  image: DecorationImage(
-                                                    image: NetworkImage('${getController.getFollowing.value.res![index].photoUrl}'),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
+                                            child: Text(
+                                              'Yashirish',
+                                              style: TextStyle(
+                                                fontSize: w * 0.035,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.blue,
                                               ),
-                                              SizedBox(height: h * 0.01),
-                                              SizedBox(
-                                                width: w * 0.17,
-                                                child: Text(
-                                                  '${getController.getFollowing.value.res![index].fistName}',
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                    fontSize: w * 0.04,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                              )
-                                            ],
+                                            ),
                                           ),
-                                        );
-                                      },
-                                    ),
-                                ) : const SizedBox()),
-                                //ish jadvali button
-                                SizedBox(
-                                  width: w * 0.9,
-                                  child:ElevatedButton(
-                                    onPressed: () {
-
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.blue,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
+                                        ],
                                       ),
-                                    ),
-                                    child: Text(
-                                      'Ish jadvali',
-                                      style: TextStyle(
-                                        fontSize: w * 0.04,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
+                                    ],
+                                  ))),
                                 ),
-                                //postlar
-                                Obx(() => getController.meUsers.value.res?.business != null
-                                    ? Padding(
-                                    padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, bottom: h * 0.02, top: h * 0.02),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(
-                                          'Postlar',
-                                          style: TextStyle(
-                                            fontSize: w * 0.045,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        const Expanded(child: SizedBox()),
-                                        InkWell(
-                                            onTap: () {
-                                              getController.entersUser.value = 1;
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  'Batafsil',
-                                                  style: TextStyle(
-                                                    fontSize: w * 0.04,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Colors.blue,
-                                                  ),
-                                                ),
-                                                SizedBox(width: w * 0.01),
-                                                HeroIcon(
-                                                  HeroIcons.chevronRight,
-                                                  color: Colors.blue,
-                                                  size: w * 0.04,
-                                                ),
-                                              ],
-                                            )
-                                        )
-                                      ],
-                                    ),
+                                Obx(() => getController.meUsers.value.res?.business == null
+                                    ? EditButton(
+                                  text: 'Biznes profilini yaratish',
+                                  onPressed: () {
+                                    getController.nextPages.value = 0;
+                                    getController.entersUser.value = 2;
+                                  },
                                 ) : const SizedBox()),
-                                Obx(() => getController.getPostList.value.res == null || getController.getPostList.value.res!.isEmpty
-                                    ? SizedBox(
-                                  width: w,
-                                  height: h * 0.6,
-                                  child: const Center(child: Text('Ma\'lumotlar topilmadi'),),
+                                Obx(() => getController.meUsers.value.res?.business == null
+                                    ? EditButton(
+                                  text: 'Profilni tahrirlash',
+                                  onPressed: () {
+                                    getController.entersUser.value = 1;
+                                  },
                                 ) : SizedBox(
-                                  height: h * 0.6,
-                                  child: SizedBox(
-                                    width: w,
-                                    child: SmartRefresher(
-                                      enablePullDown: true,
-                                      enablePullUp: true,
-                                      header: CustomHeader(
-                                        builder: (BuildContext
-                                        context, RefreshStatus?mode) {
-                                          Widget body;
-                                          if (mode == RefreshStatus.idle) {
-                                            body = const Text("Ma`lumotlarni yangilash uchun tashlang");
-                                          } else if (mode == RefreshStatus.refreshing) {
-                                            body = const CircularProgressIndicator(
-                                              color: Colors.blue,
-                                              backgroundColor: Colors.white,
-                                              strokeWidth: 2,
-                                            );
-                                          } else if (mode == RefreshStatus.failed) {
-                                            body = const Text("Yuklashda xatolik");
-                                          } else if (mode == RefreshStatus.canRefresh) {
-                                            body = const Text("Ma`lumotlarni yangilash uchun tashlang");
-                                          } else {
-                                            body = const Text("Ma`lumotlar yangilandi");
-                                          }
-                                          return SizedBox(
-                                            height: h * 0.1,
-                                            child: Center(child: body),
-                                          );
-                                        },
-                                      ),
-                                      footer: CustomFooter(
-                                        builder: (BuildContext
-                                        context, LoadStatus?mode) {
-                                          Widget body;
-                                          if (mode == LoadStatus.idle) {
-                                            body = const SizedBox();
-                                          } else if (mode == LoadStatus.loading) {
-                                            body = const CircularProgressIndicator(
-                                              color: Colors.blue,
-                                              backgroundColor:
-                                              Colors.white,
-                                              strokeWidth: 2,
-                                            );
-                                          } else if (mode == LoadStatus.failed) {
-                                            body = const Text("Yuklashda xatolik");
-                                          } else if (mode == LoadStatus.canLoading) {
-                                            body = const SizedBox();
-                                          } else {
-                                            body = const Text("Ma`lumotlar yangilandi");
-                                          }
-                                          return SizedBox(
-                                            height: h * 0.1,
-                                            child: Center(child: body),
-                                          );
-                                        },
-                                      ),
-                                      controller:
-                                      _refreshController,
-                                      onRefresh: _onRefresh,
-                                      onLoading: _onLoading,
-                                      child:
-                                      ListView.builder(
-                                          itemCount: getController.getPostList.value.res!.length,
-                                          itemBuilder: (context, index) {
-                                            return InkWell(
-                                              onTap: () {
-                                                Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: getController.getPostList.value.res![index].id,)));
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Obx(() => getController.nextPagesUserDetails.value == 0
+                                            ? SizedBox(
+                                          width: w * 0.333,
+                                          height: h * 0.062,
+                                          child: BusinessEditButton(
+                                            //text: 'My Post',
+                                            text: 'Postlarim',
+                                            onPressed: () {
+                                              pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                                            },
+                                            color: Colors.blue,
+                                            radius: 0,
+                                          ),
+                                        )
+                                            : SizedBox(
+                                          width: w * 0.333,
+                                          height: h * 0.062,
+                                          child: BusinessEditButton(
+                                            text: 'Postlarim',
+                                            onPressed: () {
+                                              pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                                            },
+                                            color: Colors.grey,
+                                            radius: 0,
+                                          ),
+                                        )),
+                                        Obx(() => getController.nextPagesUserDetails.value == 1
+                                            ? SizedBox(
+                                          width: w * 0.333,
+                                          height: h * 0.062,
+                                          child: BusinessEditButton(
+                                            text: 'Booking',
+                                            onPressed: () {
+                                              pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                                            },
+                                            color: Colors.blue,
+                                            radius: 0,
+                                          ),
+                                        )
+                                            : SizedBox(
+                                          width: w * 0.333,
+                                          height: h * 0.062,
+                                          child: BusinessEditButton(
+                                            text: 'Booking',
+                                            onPressed: () {
+                                              pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                                            },
+                                            color: Colors.grey,
+                                            radius: 0,
+                                          ),
+                                        )),
+                                        Obx(() => getController.nextPagesUserDetails.value == 2
+                                            ? SizedBox(
+                                          width: w * 0.333,
+                                          height: h * 0.062,
+                                          child: BusinessEditButton(
+                                            text: 'Bio',
+                                            onPressed: () {
+                                              pageController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                                            },
+                                            color: Colors.blue,
+                                            radius: 0,
+                                          ),
+                                        )
+                                            : SizedBox(
+                                          width: w * 0.333,
+                                          height: h * 0.062,
+                                          child: BusinessEditButton(
+                                            text: 'Bio',
+                                            onPressed: () {
+                                              pageController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                                            },
+                                            color: Colors.grey,
+                                            radius: 0,
+                                          ),
+                                        )),
+                                      ],
+                                    ))),
+                                Obx(() => getController.meUsers.value.res?.business == null
+                                    ? const SizedBox()
+                                    : SizedBox(
+                                  height: getController.show.value ? h * 0.22 : getController.getBookingCategory.value.res == null || getController.getBookingCategory.value.res!.isEmpty ? h * 0.33 : h * 0.355,
+                                  child: PageView(
+                                    onPageChanged: (index) {
+                                      getController.nextPagesUserDetails.value = index;
+                                      ApiController().getMePostList(getController.meUsers.value.res!.business?.id);
+                                      ApiController().bookingBusinessGetList(getController.meUsers.value.res!.business?.id, '');
+                                    },
+                                    controller: pageController,
+                                    children: [
+                                      Obx(() => getController.getPostList.value.res == null || getController.getPostList.value.res!.isEmpty
+                                          ? SizedBox(
+                                        width: w,
+                                        height: h * 0.22,
+                                        child: const Center(child: Text('Ma\'lumotlar topilmadi'),),
+                                      ) : SizedBox(
+                                        height: h * 0.22,
+                                        child: SizedBox(
+                                          width: w,
+                                          child: SmartRefresher(
+                                            enablePullDown: true,
+                                            enablePullUp: true,
+                                            header: CustomHeader(
+                                              builder: (BuildContext
+                                              context, RefreshStatus?mode) {
+                                                Widget body;
+                                                if (mode == RefreshStatus.idle) {
+                                                  body = const Text("Ma`lumotlarni yangilash uchun tashlang");
+                                                } else if (mode == RefreshStatus.refreshing) {
+                                                  body = const CircularProgressIndicator(
+                                                    color: Colors.blue,
+                                                    backgroundColor: Colors.white,
+                                                    strokeWidth: 2,
+                                                  );
+                                                } else if (mode == RefreshStatus.failed) {
+                                                  body = const Text("Yuklashda xatolik");
+                                                } else if (mode == RefreshStatus.canRefresh) {
+                                                  body = const Text("Ma`lumotlarni yangilash uchun tashlang");
+                                                } else {
+                                                  body = const Text("Ma`lumotlar yangilandi");
+                                                }
+                                                return SizedBox(
+                                                  height: h * 0.1,
+                                                  child: Center(child: body),
+                                                );
                                               },
-                                              child:
-                                              Column(
-                                                children: [
-                                                  Obx(() => getController.getPostList.value.res![index].mediaType == 'video'
-                                                      ? Stack(
-                                                    children: [
-                                                      if (getController.getPostList.value.res![index].photo != '')
-                                                        Container(
+                                            ),
+                                            footer: CustomFooter(
+                                              builder: (BuildContext
+                                              context, LoadStatus?mode) {
+                                                Widget body;
+                                                if (mode == LoadStatus.idle) {
+                                                  body = const SizedBox();
+                                                } else if (mode == LoadStatus.loading) {
+                                                  body = const CircularProgressIndicator(
+                                                    color: Colors.blue,
+                                                    backgroundColor:
+                                                    Colors.white,
+                                                    strokeWidth: 2,
+                                                  );
+                                                } else if (mode == LoadStatus.failed) {
+                                                  body = const Text("Yuklashda xatolik");
+                                                } else if (mode == LoadStatus.canLoading) {
+                                                  body = const SizedBox();
+                                                } else {
+                                                  body = const Text("Ma`lumotlar yangilandi");
+                                                }
+                                                return SizedBox(
+                                                  height: h * 0.1,
+                                                  child: Center(child: body),
+                                                );
+                                              },
+                                            ),
+                                            controller:
+                                            _refreshController,
+                                            onRefresh: _onRefresh,
+                                            onLoading: _onLoading,
+                                            child:
+                                            ListView.builder(
+                                                itemCount: getController.getPostList.value.res!.length,
+                                                itemBuilder: (context, index) {
+                                                  return InkWell(
+                                                    onTap: () {
+                                                      Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: getController.getPostList.value.res![index].id,)));
+                                                    },
+                                                    child:
+                                                    Column(
+                                                      children: [
+                                                        Obx(() => getController.getPostList.value.res![index].mediaType == 'video'
+                                                            ? Stack(
+                                                          children: [
+                                                            if (getController.getPostList.value.res![index].photo != '')
+                                                              Container(
+                                                                width: w,
+                                                                height: h * 0.3,
+                                                                padding: EdgeInsets.all(w * 0.01),
+                                                                decoration: BoxDecoration(
+                                                                  image: DecorationImage(
+                                                                    image: NetworkImage('${getController.getPostList.value.res![index].photo}'),
+                                                                    fit: BoxFit.fitWidth,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            if (getController.getPostList.value.res![index].photo == '')
+                                                              Container(
+                                                                width: w,
+                                                                height: h * 0.3,
+                                                                padding: EdgeInsets.all(w * 0.01),
+                                                                decoration: const BoxDecoration(
+                                                                  color: Colors.black,
+                                                                ),
+                                                              ),
+                                                            Positioned(
+                                                                width: w,
+                                                                height: h * 0.3,
+                                                                child: Center(
+                                                                  child: Container(
+                                                                    padding: EdgeInsets.all(w * 0.025),
+                                                                    decoration: BoxDecoration(
+                                                                      color: Colors.black.withOpacity(0.5),
+                                                                      borderRadius: BorderRadius.circular(w * 0.1),
+                                                                    ),
+                                                                    child: HeroIcon(
+                                                                      HeroIcons.play,
+                                                                      color: Colors.white,
+                                                                      size: w * 0.05,
+                                                                    ),
+                                                                  ),
+                                                                )),
+                                                          ],
+                                                        ) : Container(
                                                           width: w,
                                                           height: h * 0.3,
                                                           padding: EdgeInsets.all(w * 0.01),
@@ -1838,119 +2026,164 @@ class ProfilePage extends StatelessWidget {
                                                             ),
                                                           ),
                                                         ),
-                                                      if (getController.getPostList.value.res![index].photo == '')
+                                                        ),
                                                         Container(
                                                           width: w,
-                                                          height: h * 0.3,
-                                                          padding: EdgeInsets.all(w * 0.01),
-                                                          decoration: const BoxDecoration(
-                                                            color: Colors.black,
+                                                          padding: EdgeInsets.only(left: w * 0.04, top: h * 0.01, bottom: h * 0.01),
+                                                          child: Row(
+                                                            children: [
+                                                              Expanded(
+                                                                  child: Column(
+                                                                    children: [
+                                                                      Obx(() => getController.getPostList.value.res![index].title == '' && getController.getPostList.value.res![index].description == ''
+                                                                          ? const SizedBox()
+                                                                          : SizedBox(
+                                                                        width: w * 0.9,
+                                                                        child: Text('${getController.getPostList.value.res![index].title}',
+                                                                          style: TextStyle(
+                                                                            fontSize: w * 0.04,
+                                                                            fontWeight: FontWeight.w500,
+                                                                          ),
+                                                                        ),
+                                                                      )),
+                                                                      Obx(() => getController.getPostList.value.res![index].title == '' && getController.getPostList.value.res![index].description == ''
+                                                                          ? const SizedBox()
+                                                                          : SizedBox(
+                                                                        width: w * 0.9,
+                                                                        child: ReadMoreText('${getController.getPostList.value.res![index].description}',
+                                                                          trimLines: 2,
+                                                                          colorClickableText: Colors.blue,
+                                                                          trimMode: TrimMode.Line,
+                                                                          trimCollapsedText: ' Ko\'proq',
+                                                                          trimExpandedText: ' Yashirish',
+                                                                          style: TextStyle(
+                                                                            fontSize: w * 0.04,
+                                                                            fontWeight: FontWeight.w500,
+                                                                          ),
+                                                                          moreStyle: TextStyle(
+                                                                            fontSize: w * 0.035,
+                                                                            fontWeight: FontWeight.w500,
+                                                                          ),
+                                                                          lessStyle: TextStyle(
+                                                                            fontSize: w * 0.035,
+                                                                            fontWeight: FontWeight.w500,
+                                                                          ),
+                                                                        ),
+                                                                      )),
+                                                                    ],
+                                                                  )),
+                                                              SizedBox(
+                                                                  child: IconButton(
+                                                                    onPressed: () {
+                                                                      showBottomSheetEllips(context, getController.getPostList.value.res![index].id);
+                                                                    },
+                                                                    icon: HeroIcon(
+                                                                      HeroIcons.ellipsisVertical,
+                                                                      color: Colors.black,
+                                                                      size: w * 0.05,
+                                                                    ),
+                                                                  ))
+                                                            ],
                                                           ),
                                                         ),
-                                                      Positioned(
-                                                          width: w,
-                                                          height: h * 0.3,
-                                                          child: Center(
-                                                            child: Container(
-                                                              padding: EdgeInsets.all(w * 0.025),
-                                                              decoration: BoxDecoration(
-                                                                color: Colors.black.withOpacity(0.5),
-                                                                borderRadius: BorderRadius.circular(w * 0.1),
-                                                              ),
-                                                              child: HeroIcon(
-                                                                HeroIcons.play,
-                                                                color: Colors.white,
-                                                                size: w * 0.05,
-                                                              ),
-                                                            ),
-                                                          )),
-                                                    ],
-                                                  ) : Container(
-                                                    width: w,
-                                                    height: h * 0.3,
-                                                    padding: EdgeInsets.all(w * 0.01),
-                                                    decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                        image: NetworkImage('${getController.getPostList.value.res![index].photo}'),
-                                                        fit: BoxFit.fitWidth,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  ),
-                                                  Container(
-                                                    width: w,
-                                                    padding: EdgeInsets.only(left: w * 0.04, top: h * 0.01, bottom: h * 0.01),
-                                                    child: Row(
-                                                      children: [
-                                                        Expanded(
-                                                            child: Column(
-                                                              children: [
-                                                                Obx(() => getController.getPostList.value.res![index].title == '' && getController.getPostList.value.res![index].description == ''
-                                                                    ? const SizedBox()
-                                                                    : SizedBox(
-                                                                  width: w * 0.9,
-                                                                  child: Text('${getController.getPostList.value.res![index].title}',
-                                                                    style: TextStyle(
-                                                                      fontSize: w * 0.04,
-                                                                      fontWeight: FontWeight.w500,
-                                                                    ),
-                                                                  ),
-                                                                )),
-                                                                Obx(() => getController.getPostList.value.res![index].title == '' && getController.getPostList.value.res![index].description == ''
-                                                                    ? const SizedBox()
-                                                                    : SizedBox(
-                                                                  width: w * 0.9,
-                                                                  child: ReadMoreText('${getController.getPostList.value.res![index].description}',
-                                                                    trimLines: 2,
-                                                                    colorClickableText: Colors.blue,
-                                                                    trimMode: TrimMode.Line,
-                                                                    trimCollapsedText: ' Ko\'proq',
-                                                                    trimExpandedText: ' Yashirish',
-                                                                    style: TextStyle(
-                                                                      fontSize: w * 0.04,
-                                                                      fontWeight: FontWeight.w500,
-                                                                    ),
-                                                                    moreStyle: TextStyle(
-                                                                      fontSize: w * 0.035,
-                                                                      fontWeight: FontWeight.w500,
-                                                                    ),
-                                                                    lessStyle: TextStyle(
-                                                                      fontSize: w * 0.035,
-                                                                      fontWeight: FontWeight.w500,
-                                                                    ),
-                                                                  ),
-                                                                )),
-                                                              ],
-                                                            )),
-                                                        SizedBox(
-                                                            child: IconButton(
-                                                              onPressed: () {
-                                                                showBottomSheetEllips(context, getController.getPostList.value.res![index].id);
-                                                              },
-                                                              icon: HeroIcon(
-                                                                HeroIcons.ellipsisVertical,
-                                                                color: Colors.black,
-                                                                size: w * 0.05,
-                                                              ),
-                                                            ))
                                                       ],
                                                     ),
-                                                  ),
-                                                ],
+                                                  );
+                                                }),
+                                          ),
+                                        ),
+                                      )),
+                                      Obx(() => getController.getBookingCategory.value.res == null
+                                          ? SizedBox(
+                                        width: w,
+                                        height: h * 0.22,
+                                        child: const Center(
+                                          child: Text('Ma\'lumotlar topilmadi'),
+                                        ),
+                                      ) : SizedBox(
+                                        width: w * 0.9,
+                                        height: h * 0.22,
+                                        child: Container(
+                                            height: h * 0.22,
+                                            width: w * 0.9,
+                                            margin: EdgeInsets.only(top: h * 0.02, bottom: h * 0.02, left: w * 0.02, right: w * 0.02),
+                                            padding: EdgeInsets.all(w * 0.02),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.grey,
                                               ),
-                                            );
-                                          }),
-                                    ),
+                                              borderRadius:
+                                              BorderRadius.circular(3),
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                Expanded(
+                                                    child: ListView.builder(
+                                                        shrinkWrap: true,
+                                                        itemCount: getController.bookingBusinessGetList.value.res!.length,
+                                                        itemBuilder: (context, index) {
+                                                          return Column(
+                                                            children: [
+                                                              Row(
+                                                                children: [
+                                                                  SizedBox(
+                                                                    width: w * 0.08,
+                                                                    child: Text('${index + 1}',
+                                                                      style: TextStyle(
+                                                                        fontSize: w * 0.04,
+                                                                        fontWeight: FontWeight.w500,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: w * 0.7,
+                                                                    child: Text('Ushbu mijoz' ' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} ' '${getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                                                      style: TextStyle(
+                                                                        fontSize: w * 0.04,
+                                                                        fontWeight: FontWeight.w500,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              const Divider(),
+                                                            ],
+                                                          );
+                                                        })),
+                                                Row(
+                                                  children: [
+                                                    const Expanded(child: SizedBox()),
+                                                    SizedBox(
+                                                      height:
+                                                      h * 0.05,
+                                                      child: TextButton(
+                                                        onPressed: () {
+                                                          showBottomSheetList(context);
+                                                        },
+                                                        child: Text('Barchasini ko\'rish',
+                                                          style: TextStyle(
+                                                            fontSize: w * 0.04,
+                                                            fontWeight: FontWeight.w500,
+                                                            color: Colors.blue,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                )
+                                              ],
+                                            )),
+                                      )),
+                                      BioBusiness(text: getController.meUsers.value.res?.business?.bio ?? '',),
+                                    ],
                                   ),
                                 )),
                               ],
                             ),
+                          )
                           ),
-                        )
-                    )
-                  ],
-                ))
-                  : const SizedBox())
+                        ]
+              )
                   : getController.entersUser.value == 1
                         ? getController.meUsers.value.res?.business == null
                             ? EditUserPage()

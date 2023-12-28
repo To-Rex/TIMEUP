@@ -71,4 +71,9 @@ class FollowingRes {
     data['photo_url'] = photoUrl;
     return data;
   }
+
+  @override
+  String toString() {
+    return 'FollowingRes{id: $id, categoryName: $categoryName, officeAddress: $officeAddress, officeName: $officeName, bio: $bio, dayOffs: $dayOffs, userId: $userId, fistName: $fistName, lastName: $lastName, userName: $userName, phoneNumber: $phoneNumber, photoUrl: $photoUrl}';
+  }
 }
