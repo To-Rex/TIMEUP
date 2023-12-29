@@ -304,8 +304,7 @@ class ProfilePage extends StatelessWidget {
                           const Expanded(child: SizedBox()),
                           Text('Ok',
                               style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.035,
+                                fontSize: MediaQuery.of(context).size.width * 0.035,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
                               )),
@@ -904,9 +903,10 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  showBottomSheetFollowers(context, businessId) {
+  showBottomSheetFollowers(context, businessId, tabIndex) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
+    ApiController().getMyFollowers(context,businessId);
     _followTabController = TabController(length: 2, vsync: Navigator.of(context));
     _followTabController.addListener(() {
       if (_followTabController.index == 0) {
@@ -917,6 +917,7 @@ class ProfilePage extends StatelessWidget {
         ApiController().getMyFollowing(context,getController.meUsers.value.res!.id!);
       }
     });
+    _followTabController.animateTo(tabIndex);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -1002,7 +1003,6 @@ class ProfilePage extends StatelessWidget {
                   child: TabBarView(
                     controller: _followTabController,
                     children: [
-                      // Content for Tab 2
                       Obx(() => getController.getFollowers.value.res!.isNotEmpty || getController.getFollowers.value.res != null || getController.getFollowers.value.res! != []
                           ? Container(
                         margin: EdgeInsets.only(top: h * 0.05),
@@ -1433,7 +1433,7 @@ class ProfilePage extends StatelessWidget {
                                         : InkWell(
                                       overlayColor: MaterialStateProperty.all(Colors.transparent),
                                       onTap: () {
-                                        showBottomSheetFollowers(context,getController.meUsers.value.res!.business?.id);
+                                        showBottomSheetFollowers(context,getController.meUsers.value.res!.business?.id,0);
                                       },
                                       child: UserDetIalWidget(labelText: 'Post', labelTextCount: '${getController.meUsers.value.res?.business?.postsCount}',
                                         icon: 1,
@@ -1445,7 +1445,7 @@ class ProfilePage extends StatelessWidget {
                                         : InkWell(
                                       overlayColor: MaterialStateProperty.all(Colors.transparent),
                                       onTap: () {
-                                        showBottomSheetFollowers(context,getController.meUsers.value.res!.business?.id);
+                                        showBottomSheetFollowers(context,getController.meUsers.value.res!.business?.id,0);
                                       },
                                       child: UserDetIalWidget(
                                         labelText: 'Obunachilar',
@@ -1459,7 +1459,7 @@ class ProfilePage extends StatelessWidget {
                                         : InkWell(
                                       overlayColor: MaterialStateProperty.all(Colors.transparent),
                                       onTap: () {
-                                        showBottomSheetFollowers(context,getController.meUsers.value.res!.business?.id);
+                                        showBottomSheetFollowers(context,getController.meUsers.value.res!.business?.id,1);
                                       },
                                       child: UserDetIalWidget(
                                         labelText: 'Do\'stlar',
@@ -1484,8 +1484,9 @@ class ProfilePage extends StatelessWidget {
                                       ),
                                       const Expanded(child: SizedBox()),
                                       InkWell(
+                                          overlayColor: MaterialStateProperty.all(Colors.transparent),
                                           onTap: () {
-                                            getController.entersUser.value = 1;
+                                            showDialogValidation(context, 'Foydalanuvchi haqida', '${getController.meUsers.value.res?.business?.bio}');
                                           },
                                           child: Row(
                                             children: [
@@ -1533,8 +1534,14 @@ class ProfilePage extends StatelessWidget {
                                       ),
                                       const Expanded(child: SizedBox()),
                                       InkWell(
+                                        overlayColor: MaterialStateProperty.all(Colors.transparent),
                                           onTap: () {
-                                            getController.entersUser.value = 1;
+                                            showDialogValidation(context, 'Foydalanuvchi ma’lumotlari', ''
+                                                '${getController.meUsers.value.res?.phoneNumber}\n'
+                                                '${getController.meUsers.value.res?.business?.officeAddress}\n'
+                                                '${getController.meUsers.value.res?.business?.officeName}\n'
+                                                '${getController.meUsers.value.res?.business?.experience}\n'
+                                                '${getController.meUsers.value.res?.business?.categoryName}\n');
                                           },
                                           child: Row(
                                             children: [
@@ -1615,8 +1622,9 @@ class ProfilePage extends StatelessWidget {
                                         ),
                                         const Expanded(child: SizedBox()),
                                         InkWell(
+                                            overlayColor: MaterialStateProperty.all(Colors.transparent),
                                             onTap: () {
-                                              getController.entersUser.value = 1;
+                                              showBottomSheetFollowers(context,getController.meUsers.value.res!.business?.id,1);
                                             },
                                             child: Row(
                                               children: [
