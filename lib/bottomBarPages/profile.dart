@@ -917,7 +917,7 @@ class ProfilePage extends StatelessWidget {
         ApiController().getMyFollowing(context,getController.meUsers.value.res!.id!);
       }
     });
-    _followTabController.animateTo(tabIndex);
+    _followTabController.animateTo(tabIndex, duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
