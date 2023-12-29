@@ -9,11 +9,8 @@ import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/elements/functions.dart';
 import 'package:time_up/pages/post_details.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../elements/bio_business.dart';
 import '../elements/bottom_settings.dart';
-import '../elements/btn_business.dart';
 import '../elements/btn_get_booking.dart';
-import '../elements/btn_users.dart';
 import '../elements/text_filds.dart';
 import '../elements/txt_business.dart';
 import '../elements/user_detials.dart';
@@ -724,7 +721,7 @@ class ProfilePage extends StatelessWidget {
       isScrollControlled: true,
       builder: (context) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.6,
+          height: MediaQuery.of(context).size.height * 0.65,
           width: w,
           decoration: const BoxDecoration(
               color: Colors.white,
@@ -1934,8 +1931,177 @@ class ProfilePage extends StatelessWidget {
                         )
                     )
                   ],
-                ))
-                  : const SizedBox())
+                )) : SizedBox(
+                child: Column(
+                  children: [
+                    AppBar(
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      surfaceTintColor: Colors.transparent,
+                      centerTitle: true,
+                      title: Text(getController.meUsers.value.res?.userName ?? '',
+                        style: TextStyle(
+                          fontSize: w * 0.04,
+                          color: Colors.black,
+                        ),
+                      ),
+                      actions: [
+                        IconButton(
+                          onPressed: () {
+                            showBottomSheet(context,getController.meUsers.value.res!.business?.id);
+                          },
+                          icon: const Icon(
+                            Icons.menu,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Expanded(child: SizedBox()),
+                        Stack(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Scaffold(
+                                      backgroundColor: Colors.black,
+                                      body: Stack(
+                                        children: [
+                                          PhotoView(
+                                            imageProvider: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),
+                                          ),
+                                          Positioned(
+                                            top: h * 0.05,
+                                            left: w * 0.01,
+                                            child: Container(
+                                              width: w * 0.1,
+                                              height: w * 0.1,
+                                              padding: EdgeInsets.only(left: w * 0.01),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(w * 0.1),
+                                              ),
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: CircleAvatar(
+                                radius: w * 0.12,
+                                foregroundColor: Colors.blue,
+                                backgroundImage: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: Container(
+                                width: w * 0.08,
+                                height: w * 0.08,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(w * 0.04),
+                                ),
+                                child: IconButton(
+                                  onPressed: () {
+                                    _pickImage(ImageSource.gallery, context);
+                                  },
+                                  icon: HeroIcon(HeroIcons.camera, color: Colors.white, size: w * 0.05,),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Expanded(child: SizedBox()),
+                      ],
+                    ),
+                    SizedBox(height: h * 0.02),
+                    Center(child: Obx(() => getController.meUsers.value.res?.fistName == null
+                        ? Text('Salom, Mehmon', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500))
+                        : Text('${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res?.lastName}',
+                        style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500)))),
+                    SizedBox(height: h * 0.02),
+                    //phone
+                    Padding(
+                      padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, top: h * 0.02),
+                      child: TextEditButton(
+                        text: '${getController.meUsers.value.res?.phoneNumber}',
+                        color: Colors.blue,
+                        icon: 'assets/images/user_call.png',
+                      ),
+                    ),
+                    //location
+                    Padding(
+                      padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
+                      child: TextEditButton(
+                        text: '${getController.meUsers.value.res?.address}',
+                        color: Colors.blue,
+                        icon: 'assets/images/user_location.png',
+                      ),
+                    ),
+                    SizedBox(height: h * 0.02),
+                    SizedBox(
+                      width: w * 0.9,
+                      child:ElevatedButton(
+                        onPressed: () {
+                          getController.entersUser.value = 1;
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Text(
+                          'Profilni tahrirlash',
+                          style: TextStyle(
+                            fontSize: w * 0.04,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    //business button
+                    SizedBox(
+                      width: w * 0.9,
+                      child:ElevatedButton(
+                        onPressed: () {
+                          getController.entersUser.value = 2;
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Text(
+                          'Business profilini yaratish',
+                          style: TextStyle(
+                            fontSize: w * 0.04,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  ],
+                )
+              ))
                   : getController.entersUser.value == 1
                         ? getController.meUsers.value.res?.business == null
                             ? EditUserPage()
