@@ -1727,29 +1727,6 @@ class ProfilePage extends StatelessWidget {
                                           ),
                                         ),
                                         const Expanded(child: SizedBox()),
-                                        InkWell(
-                                            onTap: () {
-                                              getController.entersUser.value = 1;
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  'Batafsil',
-                                                  style: TextStyle(
-                                                    fontSize: w * 0.04,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Colors.blue,
-                                                  ),
-                                                ),
-                                                SizedBox(width: w * 0.01),
-                                                HeroIcon(
-                                                  HeroIcons.chevronRight,
-                                                  color: Colors.blue,
-                                                  size: w * 0.04,
-                                                ),
-                                              ],
-                                            )
-                                        )
                                       ],
                                     ),
                                 ) : const SizedBox()),
