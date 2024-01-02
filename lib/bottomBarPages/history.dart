@@ -14,7 +14,6 @@ class HistoryPage extends StatelessWidget {
   final PageController pageSheetController = PageController();
   final TextEditingController _timeController = TextEditingController();
 
-  //tabController = TabController(length: 2, vsync: this);
   late TabController _tabController;
 
   showBottomSheetList(context, id) {
@@ -279,15 +278,19 @@ class HistoryPage extends StatelessWidget {
     );
   }
 
-  _onTap(int index) {
-    //Loading.showLoading(context);
+  _onTap(int index,context) {
+    Loading.showLoading(context);
     _getController.nextPagesUserDetails.value = index;
     if (index == 0) {
       _getController.clearBookingBusinessGetList();
-      ApiController().bookingClientGetList('');
+      ApiController().bookingClientGetList('').then((value) => {
+        Loading.hideLoading(context)
+      });
     } else {
       _getController.clearBookingBusinessGetList();
-      ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, '');
+      ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, '').then((value) => {
+        Loading.hideLoading(context)
+      });
     }
   }
 
@@ -302,6 +305,7 @@ class HistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _tabController = TabController(length: 2, vsync: Navigator.of(context));
     _getController.clearBookingBusinessGetList();
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
@@ -312,7 +316,6 @@ class HistoryPage extends StatelessWidget {
       ApiController().bookingClientGetList('');
       //ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, '');
     }
-    _tabController = TabController(length: 2, vsync: Navigator.of(context));
     return Stack(
       children: [
         Positioned(
@@ -852,7 +855,9 @@ class HistoryPage extends StatelessWidget {
                 ],
               ),
               child: TabBar(
-                onTap: _onTap,
+                onTap: (index) {
+                  _onTap(index,context);
+                },
                 indicatorSize: TabBarIndicatorSize.tab,
                 dividerColor: Colors.transparent,
                 controller: _tabController,
