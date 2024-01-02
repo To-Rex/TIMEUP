@@ -17,50 +17,6 @@ class HistoryPage extends StatelessWidget {
   //tabController = TabController(length: 2, vsync: this);
   late TabController _tabController;
 
-  showLoadingDialog(BuildContext context, w) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      barrierColor: Colors.black.withOpacity(0.5),
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        surfaceTintColor: Colors.white,
-        content: SizedBox(
-          width: w * 0.1,
-          height: w * 0.2,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Expanded(child: SizedBox()),
-              SizedBox(
-                width: w * 0.1,
-                height: w * 0.1,
-                child: const CircularProgressIndicator(
-                  color: Colors.blue,
-                  backgroundColor: Colors.white,
-                  strokeWidth: 2,
-                ),
-              ),
-              SizedBox(
-                width: w * 0.07,
-              ),
-              Text(
-                'Iltimos kuting...',
-                style: TextStyle(
-                  fontSize: w * 0.04,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const Expanded(child: SizedBox()),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   showBottomSheetList(context, id) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
@@ -229,23 +185,23 @@ class HistoryPage extends StatelessWidget {
                         height: h * 0.07,
                         child: ElevatedButton(
                           onPressed: () {
-                            showLoadingDialog(context, w);
+                            Loading.showLoading(context);
                             ApiController().updateBooking(id, _dateController.text, _timeController.text, context).then((value) => {
                                       if (value){
                                         if (_getController.meUsers.value.res?.business == null){
                                               ApiController().bookingClientGetList(''),
-                                              Navigator.pop(context)
+                                              Loading.hideLoading(context)
                                             } else {
                                               if (_getController.nextPagesUserDetails.value == 1){
                                                   ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, ''),
-                                                  Navigator.pop(context)
+                                                  Loading.hideLoading(context)
                                                 } else {
                                                   ApiController().bookingClientGetList(''),
-                                                  Navigator.pop(context)
+                                                  Loading.hideLoading(context)
                                                 }
                                             }
                                         } else {
-                                          Navigator.pop(context),
+                                          Loading.hideLoading(context),
                                           showDialog(
                                             context: context,
                                             barrierDismissible: false,
@@ -324,14 +280,13 @@ class HistoryPage extends StatelessWidget {
   }
 
   _onTap(int index) {
+    //Loading.showLoading(context);
     _getController.nextPagesUserDetails.value = index;
     if (index == 0) {
       _getController.clearBookingBusinessGetList();
-      _getController.clearBookingBusinessGetList1();
       ApiController().bookingClientGetList('');
     } else {
       _getController.clearBookingBusinessGetList();
-      _getController.clearBookingBusinessGetList1();
       ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, '');
     }
   }
@@ -348,7 +303,6 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _getController.clearBookingBusinessGetList();
-    _getController.clearBookingBusinessGetList1();
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     _getController.nextPagesUserDetails.value = 0;
@@ -586,7 +540,7 @@ class HistoryPage extends StatelessWidget {
                                                             ],
                                                           ),
                                                           onTap: () {
-                                                            showLoadingDialog(context, w);
+                                                            Loading.showLoading(context);
                                                             ApiController().deleteClientBooking(_getController.bookingBusinessGetList.value.res![index].id!,context).then((value) => {
                                                               if (value){
                                                                 ApiController().bookingClientGetList(''),
@@ -791,7 +745,7 @@ class HistoryPage extends StatelessWidget {
                                                               ],
                                                             ),
                                                             onTap: () {
-                                                              showLoadingDialog(context, w);
+                                                              Loading.showLoading(context);
                                                               ApiController().deleteClientBooking(_getController.bookingBusinessGetList.value.res![index].id!,context).then((value) => {
                                                                 if (value){
                                                                   ApiController().bookingClientGetList(''),
@@ -918,7 +872,7 @@ class HistoryPage extends StatelessWidget {
                       width: w * 0.6,
                       child: Center(
                         child: Text(
-                          'Obunachilar',
+                          'Eslatmalar',
                           style: TextStyle(
                             fontSize: w * 0.04,
                             fontWeight: FontWeight.w500,
@@ -932,7 +886,7 @@ class HistoryPage extends StatelessWidget {
                       width: w * 0.6,
                       child: Center(
                         child: Text(
-                          'Dostlar',
+                          'Mijozlaringiz',
                           style: TextStyle(
                             fontSize: w * 0.04,
                             fontWeight: FontWeight.w500,

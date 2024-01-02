@@ -410,7 +410,6 @@ class ApiController extends GetxController {
 
 
   Future<BookingBusinessGetList> bookingClientGetList(date) async {
-    //Loading.showLoading(context);
     var response = await http.get(
       Uri.parse(url + bookingClientGetListUrl + date),
       headers: {
@@ -418,12 +417,10 @@ class ApiController extends GetxController {
       },
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
-      //_getController.bookingBusinessGetList1.value = BookingBusinessGetList.fromJson(jsonDecode(response.body));
+      _getController.bookingBusinessGetList1.value = BookingBusinessGetList.fromJson(jsonDecode(response.body));
       _getController.changeBookingBusinessGetList(BookingBusinessGetList.fromJson(jsonDecode(response.body)));
-      //Loading.hideLoading(context);
       return BookingBusinessGetList.fromJson(jsonDecode(response.body));
     } else {
-      //Loading.hideLoading(context);
       return BookingBusinessGetList(res: [], status: false);
     }
   }
