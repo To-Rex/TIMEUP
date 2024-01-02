@@ -10,9 +10,8 @@ class HistoryPage extends StatelessWidget {
   HistoryPage({Key? key}) : super(key: key);
   final GetController _getController = Get.put(GetController());
   final TextEditingController _dateController = TextEditingController();
-  final PageController pageController = PageController();
-  final PageController pageSheetController = PageController();
   final TextEditingController _timeController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   late TabController _tabController;
 
@@ -347,6 +346,13 @@ class HistoryPage extends StatelessWidget {
                     child: Row(
                       children: [
                         InkWell(
+                          onTap: () {
+                            _scrollController.animateTo(
+                              _scrollController.offset - w * 0.3,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
+                          },
                           child: SizedBox(
                             width: w * 0.1,
                             child: Center(
@@ -358,44 +364,89 @@ class HistoryPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Expanded(child: Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Colors.grey,
+                        Expanded(
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 4,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  if (index == 3) {
+                                    showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(2000),
+                                      lastDate: DateTime(2025),
+                                    ).then((value) => {
+                                      _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
+                                      if (_tabController.index == 0) {
+                                        _getController.clearBookingBusinessGetList(),
+                                        ApiController().bookingClientGetList(_dateController.text),
+                                      } else {
+                                        _getController.clearBookingBusinessGetList(),
+                                        ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, _dateController.text),
+                                      }
+                                    });
+                                  }
+                                  _dateController.text = index == 0
+                                      ? ''
+                                      : index == 1
+                                      ? '${DateTime.now().day < 10 ? '0${DateTime.now().day}' : DateTime.now().day}/${DateTime.now().month < 10 ? '0${DateTime.now().month}' : DateTime.now().month}/${DateTime.now().year}'
+                                      : index == 2
+                                      ? '${DateTime.now().day + 1 < 10 ? '0${DateTime.now().day + 1}' : DateTime.now().day + 1}/${DateTime.now().month < 10 ? '0${DateTime.now().month}' : DateTime.now().month}/${DateTime.now().year}'
+                                      : '';
+
+                                  Loading.showLoading(context);
+                                  if (_tabController.index == 0) {
+                                    _getController.clearBookingBusinessGetList();
+                                    ApiController().bookingClientGetList(_dateController.text).then((value) => {
+                                      Loading.hideLoading(context)
+                                    });
+                                  } else {
+                                    _getController.clearBookingBusinessGetList();
+                                    ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, _dateController.text).then((value) => {
+                                      Loading.hideLoading(context)
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.symmetric(horizontal: w * 0.015, vertical: h * 0.01),
+                                  padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      index == 0
+                                          ? 'Hamma mijozlar'
+                                          : index == 1
+                                          ? 'Bugungi mijozlar'
+                                          : index == 2
+                                          ? 'Keyingi mijozlar'
+                                          : 'Tanlangan mijozlar',
+                                      style: TextStyle(
+                                        fontSize: w * 0.035,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              child: Text(
-                                'Bugungi mijozlar',
-                                style: TextStyle(
-                                  fontSize: w * 0.035,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: w * 0.03),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              child: Text(
-                                'Keyingi mijozlar',
-                                style: TextStyle(
-                                  fontSize: w * 0.035,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            )
-                          ],
-                        )),
+                              );
+                            },
+                          ),
+                        ),
                         InkWell(
+                          onTap: () {
+                            _scrollController.animateTo(
+                              _scrollController.offset + w * 0.3,
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeInOut,
+                            );
+                            },
                           child: SizedBox(
                             width: w * 0.1,
                             child: Center(
@@ -413,10 +464,10 @@ class HistoryPage extends StatelessWidget {
                   SizedBox(height: h * 0.03),
                   Expanded(
                     child: TabBarView(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       controller: _tabController,
                       children: [
-                        Obx(() => _getController.bookingBusinessGetList.value.res == null
+                        Obx(() => _getController.bookingBusinessGetList.value.res == null || _getController.bookingBusinessGetList.value.res!.isEmpty
                             ? Center(child: Text('Ma`lumot mavjud emas', style: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.black),))
                             : SizedBox(
                           height: h * 0.68,
@@ -621,7 +672,7 @@ class HistoryPage extends StatelessWidget {
                             },
                           ),
                         )),
-                        Obx(() => _getController.bookingBusinessGetList.value.res == null
+                        Obx(() => _getController.bookingBusinessGetList.value.res == null || _getController.bookingBusinessGetList.value.res!.isEmpty
                             ? Center(child: Text('Ma`lumot mavjud emas', style: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.black),))
                             : SizedBox(
                           height: h * 0.68,
