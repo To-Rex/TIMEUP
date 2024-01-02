@@ -379,168 +379,189 @@ class HistoryPage extends StatelessWidget {
       //ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, '');
     }
     _tabController = TabController(length: 2, vsync: Navigator.of(context));
-    return Column(
+    return Stack(
       children: [
-        SizedBox(height: h * 0.02),
-        Expanded(
-            child: SizedBox(
-          child: Stack(
-            children: [
-              Positioned(
-                top: h * 0.031,
-                child: Container(
-                  width: w,
-                  color: Colors.grey[50],
-                  child: Column(
-                    children: [
-                      SizedBox(height: h * 0.06),
-                      Container(
-                        height: h * 0.06,
-                        margin: EdgeInsets.symmetric(horizontal: w * 0.05),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 2,
-                              offset:
-                                  Offset(0, 2), // changes position of shadow
-                            ),
-                          ],
+        Positioned(
+            top: h * 0.06,
+            bottom: 0,
+            child: Container(
+              height: h * 0.5,
+              width: w,
+              color: Colors.grey[50],
+              child: Column(
+                children: [
+                  SizedBox(height: h * 0.05),
+                  Container(
+                    height: h * 0.06,
+                    width: w,
+                    margin: EdgeInsets.symmetric(horizontal: w * 0.05),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 2,
+                          blurRadius: 2,
+                          offset: const Offset(0, 2), // changes position of shadow
                         ),
-                        child: Row(
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        InkWell(
+                          child: SizedBox(
+                            width: w * 0.1,
+                            child: Center(
+                              child: HeroIcon(
+                                HeroIcons.chevronLeft,
+                                color: Colors.black,
+                                size: w * 0.06,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(child: Row(
                           children: [
-                            HeroIcon(
-                              HeroIcons.chevronLeft,
-                              color: Colors.grey,
-                              size: w * 0.06,
-                            ),
-                            SizedBox(width: w * 0.02),
-                            InkWell(
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    left: w * 0.02, right: w * 0.02, top: 5, bottom: 5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: Colors.grey,
-                                  ),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: Colors.grey,
                                 ),
-                                child: Text(
-                                  'Bugungi mijozlar',
-                                  style: TextStyle(
-                                    fontSize: w * 0.04,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                              ),
+                              child: Text(
+                                'Bugungi mijozlar',
+                                style: TextStyle(
+                                  fontSize: w * 0.035,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
-                            const Expanded(child: SizedBox()),
-                            SizedBox(width: w * 0.02),
-                            InkWell(
-                              onTap: () {
-                              },
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    left: w * 0.02, right: w * 0.02, top: 5, bottom: 5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                child: Text(
-                                  'Keyingi mijozlar',
-                                  style: TextStyle(
-                                    fontSize: w * 0.04,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                            SizedBox(width: w * 0.03),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: Colors.grey,
                                 ),
                               ),
-                            ),
-                            SizedBox(width: w * 0.02),
-                            HeroIcon(
-                              HeroIcons.chevronRight,
-                              color: Colors.grey,
-                              size: w * 0.06,
-                            ),
+                              child: Text(
+                                'Keyingi mijozlar',
+                                style: TextStyle(
+                                  fontSize: w * 0.035,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            )
                           ],
-                        ),
-                      ),
-                      SizedBox(height: h * 0.12),
-                    ],
+                        )),
+                        InkWell(
+                          child: SizedBox(
+                            width: w * 0.1,
+                            child: Center(
+                              child: HeroIcon(
+                                HeroIcons.chevronRight,
+                                color: Colors.black,
+                                size: w * 0.06,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
+                  SizedBox(height: h * 0.03),
+                  Expanded(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        Container(
+                          color: Colors.red,
+                          width: w,
+                        ),
+                        Container(
+                          color: Colors.blue,
+                          width: w,
+                        ),
+                      ]
+                    ),
+                  ),
+                ],
               ),
-              Container(
-                constraints: BoxConstraints.expand(height: h * 0.06),
-                margin: EdgeInsets.symmetric(horizontal: w * 0.05),
-                padding: EdgeInsets.all(w * 0.01),
-                decoration: BoxDecoration(
-                  color: Colors.white,
+            )
+        ),
+        Positioned(
+          top: h * 0.03,
+          child: SizedBox(
+            width: w,
+            height: h * 0.06,
+            child: Container(
+              constraints: BoxConstraints.expand(height: h * 0.06),
+              margin: EdgeInsets.symmetric(horizontal: w * 0.05),
+              padding: EdgeInsets.all(w * 0.015),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 2,
+                    blurRadius: 2,
+                    offset: const Offset(0, 2), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: TabBar(
+                indicatorSize: TabBarIndicatorSize.tab,
+                dividerColor: Colors.transparent,
+                controller: _tabController,
+                labelStyle: TextStyle(
+                  fontSize: w * 0.04,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white, // Selected text color
+                ),
+                unselectedLabelColor: Colors.blue, // Unselected text color
+                indicator: BoxDecoration(
+                  color: Colors.blue, // Background color for the selected tab
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 2,
-                      blurRadius: 2,
-                      offset: Offset(0, 2), // changes position of shadow
-                    ),
-                  ],
                 ),
-                child: TabBar(
-                  controller: _tabController,
-                  dividerColor: Colors.transparent,
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  labelStyle: TextStyle(
-                    fontSize: w * 0.04,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white, // Selected text color
-                  ),
-                  unselectedLabelColor: Colors.blue,
-                  // Unselected text color
-                  indicator: BoxDecoration(
-                    color: Colors.blue,
-                    // Background color for the selected tab
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  tabs: [
-                    Tab(
-                      child: Container(
-                        width: w * 0.6,
-                        child: Center(
-                          child: Text(
-                            'Obunachilar',
-                            style: TextStyle(
-                              fontSize: w * 0.04,
-                              fontWeight: FontWeight.w500,
-                            ),
+                tabs: [
+                  Tab(
+                    child: Container(
+                      width: w * 0.6,
+                      child: Center(
+                        child: Text(
+                          'Obunachilar',
+                          style: TextStyle(
+                            fontSize: w * 0.04,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
                     ),
-                    Tab(
-                      child: Container(
-                        width: w * 0.6,
-                        child: Center(
-                          child: Text(
-                            'Dostlar',
-                            style: TextStyle(
-                              fontSize: w * 0.04,
-                              fontWeight: FontWeight.w500,
-                            ),
+                  ),
+                  Tab(
+                    child: Container(
+                      width: w * 0.6,
+                      child: Center(
+                        child: Text(
+                          'Dostlar',
+                          style: TextStyle(
+                            fontSize: w * 0.04,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ))
+        ),
       ],
     );
   }
