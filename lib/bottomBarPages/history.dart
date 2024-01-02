@@ -122,8 +122,7 @@ class HistoryPage extends StatelessWidget {
                                     firstDate: DateTime(2000),
                                     lastDate: DateTime(2025),
                                   ).then((value) => {
-                                        _dateController.text =
-                                            '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
+                                        _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
                                       });
                                 },
                                 child: HeroIcon(
@@ -229,56 +228,28 @@ class HistoryPage extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             showLoadingDialog(context, w);
-                            ApiController()
-                                .updateBooking(id, _dateController.text,
-                                    _timeController.text, context)
-                                .then((value) => {
-                                      if (value)
-                                        {
-                                          if (_getController.meUsers.value.res
-                                                  ?.business ==
-                                              null)
-                                            {
-                                              ApiController()
-                                                  .bookingClientGetList(''),
+                            ApiController().updateBooking(id, _dateController.text, _timeController.text, context).then((value) => {
+                                      if (value){
+                                        if (_getController.meUsers.value.res?.business == null){
+                                              ApiController().bookingClientGetList(''),
                                               Navigator.pop(context)
-                                            }
-                                          else
-                                            {
-                                              if (_getController
-                                                      .nextPagesUserDetails
-                                                      .value ==
-                                                  1)
-                                                {
-                                                  ApiController()
-                                                      .bookingBusinessGetList(
-                                                          _getController
-                                                              .meUsers
-                                                              .value
-                                                              .res
-                                                              ?.business
-                                                              ?.id,
-                                                          ''),
+                                            } else {
+                                              if (_getController.nextPagesUserDetails.value == 1){
+                                                  ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, ''),
                                                   Navigator.pop(context)
-                                                }
-                                              else
-                                                {
-                                                  ApiController()
-                                                      .bookingClientGetList(''),
+                                                } else {
+                                                  ApiController().bookingClientGetList(''),
                                                   Navigator.pop(context)
                                                 }
                                             }
-                                        }
-                                      else
-                                        {
+                                        } else {
                                           Navigator.pop(context),
                                           showDialog(
                                             context: context,
                                             barrierDismissible: false,
                                             builder: (context) => AlertDialog(
                                               shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
+                                                borderRadius: BorderRadius.circular(10),
                                               ),
                                               surfaceTintColor: Colors.white,
                                               content: SizedBox(
@@ -291,9 +262,7 @@ class HistoryPage extends StatelessWidget {
                                                       'Xatolik yuz berdi',
                                                       style: TextStyle(
                                                         fontSize: w * 0.05,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color: Colors.red,
+                                                        fontWeight: FontWeight.w500, color: Colors.red,
                                                       ),
                                                     ),
                                                     SizedBox(height: h * 0.02),
@@ -301,8 +270,7 @@ class HistoryPage extends StatelessWidget {
                                                       'Iltimos qayta urinib ko`ring',
                                                       style: TextStyle(
                                                         fontSize: w * 0.04,
-                                                        fontWeight:
-                                                            FontWeight.w400,
+                                                        fontWeight: FontWeight.w400,
                                                       ),
                                                     ),
                                                     SizedBox(height: h * 0.02),
@@ -310,23 +278,11 @@ class HistoryPage extends StatelessWidget {
                                                       onPressed: () {
                                                         Navigator.pop(context);
                                                       },
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                        ),
-                                                        backgroundColor:
-                                                            Colors.blue,
-                                                      ),
-                                                      child: Text(
-                                                        'Ok',
+                                                      style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),), backgroundColor: Colors.blue,),
+                                                      child: Text('Ok',
                                                         style: TextStyle(
                                                           fontSize: w * 0.04,
-                                                          fontWeight:
-                                                              FontWeight.w500,
+                                                          fontWeight: FontWeight.w500,
                                                           color: Colors.white,
                                                         ),
                                                       ),
@@ -365,6 +321,15 @@ class HistoryPage extends StatelessWidget {
     );
   }
 
+  _onTap(int index) {
+    _getController.nextPagesUserDetails.value = index;
+    if (_getController.meUsers.value.res?.business == null) {
+      ApiController().bookingClientGetList('');
+    } else {
+      ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, '');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     _getController.clearBookingBusinessGetList();
@@ -379,6 +344,9 @@ class HistoryPage extends StatelessWidget {
       //ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, '');
     }
     _tabController = TabController(length: 2, vsync: Navigator.of(context));
+    _tabController.addListener(() {
+      print(_tabController.index);
+    });
     return Stack(
       children: [
         Positioned(
@@ -515,6 +483,7 @@ class HistoryPage extends StatelessWidget {
                 ],
               ),
               child: TabBar(
+                onTap: _onTap,
                 indicatorSize: TabBarIndicatorSize.tab,
                 dividerColor: Colors.transparent,
                 controller: _tabController,
