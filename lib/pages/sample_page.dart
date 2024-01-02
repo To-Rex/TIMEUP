@@ -28,21 +28,22 @@ class SamplePage extends StatelessWidget {
     return Obx(() => _getController.meUsers.value.status.toString().isEmpty
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
-      backgroundColor: _getController.index.value == 1
+      backgroundColor: _getController.index.value == 1 || _getController.index.value == 3
           ? Colors.blue
           : Colors.white,
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(h * 0.066),
           child: Obx(() => _getController.index.value != 5
               ? Container(
-            height: _getController.index.value == 1 ? h * 0.1 : h * 0.066,
-            color: _getController.index.value == 1
+            height: _getController.index.value == 1 || _getController.index.value == 3
+            ? h * 0.1 : h * 0.066,
+            color: _getController.index.value == 1 || _getController.index.value == 3
                 ? Colors.blue
                 : Colors.white,
-            margin: _getController.index.value == 1
+            margin: _getController.index.value == 1 || _getController.index.value == 3
                 ? const EdgeInsets.only(top: 0)
                 : EdgeInsets.only(top: h * 0.045),
-            padding: _getController.index.value == 1
+            padding: _getController.index.value == 1 || _getController.index.value == 3
                 ? EdgeInsets.only(top: h * 0.045)
                 : EdgeInsets.only(top: h * 0.01),
             child: Row(
@@ -52,7 +53,7 @@ class SamplePage extends StatelessWidget {
                   image: const AssetImage('assets/images/text.png'),
                   width: w * 0.2,
                   height: h * 0.05,
-                  color: _getController.index.value == 1
+                  color: _getController.index.value == 1 || _getController.index.value == 3
                       ? Colors.white
                       : Colors.blue,
                 ),
@@ -67,7 +68,7 @@ class SamplePage extends StatelessWidget {
                   child: HeroIcon(
                     HeroIcons.chatBubbleLeft,
                     size: w * 0.07,
-                    color: _getController.index.value == 1
+                    color: _getController.index.value == 1 || _getController.index.value == 3
                         ? Colors.white
                         : Colors.blue,
                   ),
