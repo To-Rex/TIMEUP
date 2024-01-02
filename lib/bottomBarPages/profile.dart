@@ -1202,6 +1202,147 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
+  //ish jadvali bottom sheet
+  showBottomSheetCalendar(context, businessId) {
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    ApiController().bookingBusinessGetList(businessId, '');
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.8,
+          width: w,
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: h * 0.02),
+                width: w * 0.2,
+                height: h * 0.005,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              SizedBox(height: h * 0.1),
+              Row(
+                children: [
+                  SizedBox(width: w * 0.05),
+                  const Text('kunni tanlang'),
+                ],
+              ),
+              SizedBox(
+                width: w * 0.9,
+                height: h * 0.07,
+                child: TextField(
+                  controller: _dateController,
+                  onChanged: (value) {
+                    if (value != '') {
+                      ApiController().bookingBusinessGetList(businessId, value).then((value) => getController.changeBookingBusinessGetList(value));
+                    }
+                  },
+                  decoration: InputDecoration(
+                    suffixIcon: InkWell(
+                        onTap: () {
+                          showDatePicker(
+                            context: context,
+                            initialDate: _dateController.text == ''
+                                ? DateTime.now()
+                                : DateTime.parse('${_dateController.text.substring(6, 10)}-${_dateController.text.substring(3, 5)}-${_dateController.text.substring(0, 2)}'),
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime(2025),
+                          ).then((value) => {
+                                if (value != null){
+                                    _dateController.text = '${value.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
+                                    ApiController().bookingBusinessGetList(businessId, _dateController.text).then((value) => getController.changeBookingBusinessGetList(value))
+                                  }
+                              });
+                        },
+                        child: HeroIcon(
+                          HeroIcons.calendar,
+                          color: Colors.black,
+                          size: w * 0.06,
+                        )),
+                    hintText: 'MM / DD / YYYY',
+                    hintStyle: TextStyle(
+                      fontSize: w * 0.04,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: h * 0.02),
+              Expanded(
+                child: Obx(() => getController.bookingBusinessGetList.value.res == null || getController.bookingBusinessGetList.value.res!.isEmpty
+                    ? const Center(child: Text('Ma\'lumotlar topilmadi'))
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: getController.bookingBusinessGetList.value.res!.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: w * 0.08,
+                                    child: Text(
+                                      '${index + 1}',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: w * 0.7,
+                                    child: Text(
+                                      'Ushbu mijoz'
+                                      ' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
+                                      '${getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Divider(),
+                            ],
+                          );
+                        }),
+              )),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
 
   final ImagePicker _picker = ImagePicker();
   var croppedImage;
@@ -1692,7 +1833,7 @@ class ProfilePage extends StatelessWidget {
                                   width: w * 0.9,
                                   child:ElevatedButton(
                                     onPressed: () {
-
+                                      showBottomSheetCalendar(context,getController.meUsers.value.res!.business?.id);
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.blue,
