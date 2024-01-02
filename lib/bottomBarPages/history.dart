@@ -486,9 +486,7 @@ class HistoryPage extends StatelessWidget {
                                     elevation: 4,
                                     child: InkWell(
                                       overlayColor: MaterialStateProperty.all(Colors.transparent),
-                                      onTap: () {
-                                        showBottomSheetList(context, _getController.bookingBusinessGetList.value.res![index].id);
-                                      },
+                                      onTap: () {},
                                       child:Column(
                                         children: [
                                           Row(
@@ -691,9 +689,7 @@ class HistoryPage extends StatelessWidget {
                                     elevation: 4,
                                     child: InkWell(
                                         overlayColor: MaterialStateProperty.all(Colors.transparent),
-                                        onTap: () {
-                                          showBottomSheetList(context, _getController.bookingBusinessGetList.value.res![index].id);
-                                        },
+                                        onTap: () {},
                                         child:Column(
                                           children: [
                                             Row(
@@ -763,53 +759,15 @@ class HistoryPage extends StatelessWidget {
                                                   child: Column(
                                                     crossAxisAlignment: CrossAxisAlignment.end,
                                                     children: [
-                                                      PopupMenuButton(
-                                                        icon: const Icon(Icons.more_vert),
-                                                        itemBuilder: (context) => [
-                                                          PopupMenuItem(
-                                                            child: Row(
-                                                              children: [
-                                                                HeroIcon(
-                                                                  HeroIcons.pencil,
-                                                                  size: w * 0.05,
-                                                                  color: Colors.blue,
-                                                                ),
-                                                                SizedBox(width: w * 0.02),
-                                                                Text('Tahrirlash',
-                                                                    style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
-                                                              ],
-                                                            ),
-                                                            onTap: () {
-                                                              _dateController.text = _getController.bookingBusinessGetList.value.res![index].date!;
-                                                              _timeController.text = _getController.bookingBusinessGetList.value.res![index].time!;
-                                                              showBottomSheetList(context,_getController.bookingBusinessGetList.value.res![index].id);
-                                                            },
-                                                          ),
-                                                          PopupMenuItem(
-                                                            child: Row(
-                                                              children: [
-                                                                HeroIcon(
-                                                                  HeroIcons.trash,
-                                                                  size: w * 0.05,
-                                                                  color: Colors.red,
-                                                                ),
-                                                                SizedBox(width: w * 0.02),
-                                                                Text('O`chirish',
-                                                                    style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
-                                                              ],
-                                                            ),
-                                                            onTap: () {
-                                                              Loading.showLoading(context);
-                                                              ApiController().deleteClientBooking(_getController.bookingBusinessGetList.value.res![index].id!,context).then((value) => {
-                                                                if (value){
-                                                                  ApiController().bookingClientGetList(''),
-                                                                },
-                                                                Navigator.pop(context)
-                                                              });
-
-                                                            },
-                                                          ),
-                                                        ],
+                                                      IconButton(
+                                                        onPressed: () {
+                                                          Toast.showToast(context, '${_getController.bookingBusinessGetList.value.res![index].fistName ?? ''} ${_getController.bookingBusinessGetList.value.res![index].lastName ?? ''} qabulingizga soat: ${_getController.bookingBusinessGetList.value.res![index].time ?? ''} da keladi.', Colors.blue, Colors.white);
+                                                        },
+                                                        icon: HeroIcon(
+                                                          HeroIcons.informationCircle,
+                                                          size: w * 0.06,
+                                                          color: Colors.black,
+                                                        ),
                                                       ),
                                                       SizedBox(height: h * 0.01),
                                                       Text(
