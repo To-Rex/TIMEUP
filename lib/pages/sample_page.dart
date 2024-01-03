@@ -28,22 +28,22 @@ class SamplePage extends StatelessWidget {
     return Obx(() => _getController.meUsers.value.status.toString().isEmpty
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
-      backgroundColor: _getController.index.value == 1 || _getController.index.value == 3
+      backgroundColor: _getController.index.value == 1 || _getController.index.value == 3 && _getController.meUsers.value.res?.business != null
           ? Colors.blue
           : Colors.white,
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(h * 0.066),
           child: Obx(() => _getController.index.value != 5
               ? Container(
-            height: _getController.index.value == 1 || _getController.index.value == 3
+            height: _getController.index.value == 1 || _getController.index.value == 3 && _getController.meUsers.value.res?.business != null
             ? h * 0.1 : h * 0.066,
-            color: _getController.index.value == 1 || _getController.index.value == 3
+            color: _getController.index.value == 1 || _getController.index.value == 3 && _getController.meUsers.value.res?.business != null
                 ? Colors.blue
                 : Colors.white,
-            margin: _getController.index.value == 1 || _getController.index.value == 3
+            margin: _getController.index.value == 1 || _getController.index.value == 3 && _getController.meUsers.value.res?.business != null
                 ? const EdgeInsets.only(top: 0)
                 : EdgeInsets.only(top: h * 0.045),
-            padding: _getController.index.value == 1 || _getController.index.value == 3
+            padding: _getController.index.value == 1 || _getController.index.value == 3 && _getController.meUsers.value.res?.business != null
                 ? EdgeInsets.only(top: h * 0.045)
                 : EdgeInsets.only(top: h * 0.01),
             child: Row(
