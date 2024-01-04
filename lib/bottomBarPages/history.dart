@@ -24,10 +24,10 @@ class HistoryPage extends StatelessWidget {
       showDragHandle: true,
       isDismissible: true,
       backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(w * 0.05),
-          topRight: Radius.circular(w * 0.05),
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
         ),
       ),
       builder: (context) {
@@ -1117,7 +1117,7 @@ class HistoryPage extends StatelessWidget {
           Obx(() => _getController.bookingBusinessGetList.value.res == null || _getController.bookingBusinessGetList.value.res!.isEmpty
               ? Center(child: Text('Ma`lumot mavjud emas', style: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.black),))
               : SizedBox(
-            height: h * 0.62,
+            height: h * 0.63,
             child: ListView.builder(
               itemCount: _getController.bookingBusinessGetList.value.res!.length,
               itemBuilder: (context, index) {
@@ -1205,6 +1205,9 @@ class HistoryPage extends StatelessWidget {
                                       children: [
                                         PopupMenuButton(
                                           icon: const Icon(Icons.more_vert),
+                                          surfaceTintColor: Colors.white,
+                                          color: Colors.white,
+                                          elevation: 4,
                                           itemBuilder: (context) => [
                                             PopupMenuItem(
                                               child: Row(
@@ -1234,8 +1237,7 @@ class HistoryPage extends StatelessWidget {
                                                     color: Colors.red,
                                                   ),
                                                   SizedBox(width: w * 0.02),
-                                                  Text('O`chirish',
-                                                      style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
+                                                  Text('O`chirish', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
                                                 ],
                                               ),
                                               onTap: () {
@@ -1246,7 +1248,6 @@ class HistoryPage extends StatelessWidget {
                                                   },
                                                   Navigator.pop(context)
                                                 });
-
                                               },
                                             ),
                                           ],
