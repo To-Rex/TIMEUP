@@ -416,6 +416,7 @@ class ApiController extends GetxController {
         'Authorization': 'Bearer ${GetStorage().read('token')}',
       },
     );
+    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       _getController.bookingBusinessGetList1.value = BookingBusinessGetList.fromJson(jsonDecode(response.body));
       _getController.changeBookingBusinessGetList(BookingBusinessGetList.fromJson(jsonDecode(response.body)));

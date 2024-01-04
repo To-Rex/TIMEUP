@@ -304,18 +304,23 @@ class HistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _tabController = TabController(length: 2, vsync: Navigator.of(context));
+    //_tabController = TabController(length: 2, vsync: Navigator.of(context));
+    _tabController = TabController(length: _getController.meUsers.value.res?.business == null ? 1 : 2, vsync: Navigator.of(context));
     _getController.clearBookingBusinessGetList();
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     _getController.nextPagesUserDetails.value = 0;
     if (_getController.meUsers.value.res?.business == null) {
+      print('null');
       ApiController().bookingClientGetList('');
-    } else {
-      ApiController().bookingClientGetList('');
-      //ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, '');
     }
-    return Stack(
+    else {
+      print('not null');
+      ApiController().bookingClientGetList('');
+    }
+
+    return Obx(() => _getController.meUsers.value.res?.business != null
+        ? Stack(
       children: [
         Positioned(
             top: h * 0.06,
@@ -446,7 +451,7 @@ class HistoryPage extends StatelessWidget {
                               duration: const Duration(milliseconds: 500),
                               curve: Curves.easeInOut,
                             );
-                            },
+                          },
                           child: SizedBox(
                             width: w * 0.1,
                             child: Center(
@@ -464,378 +469,378 @@ class HistoryPage extends StatelessWidget {
                   SizedBox(height: h * 0.03),
                   Expanded(
                     child: TabBarView(
-                      physics: const NeverScrollableScrollPhysics(),
-                      controller: _tabController,
-                      children: [
-                        Obx(() => _getController.bookingBusinessGetList.value.res == null || _getController.bookingBusinessGetList.value.res!.isEmpty
-                            ? Center(child: Text('Ma`lumot mavjud emas', style: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.black),))
-                            : SizedBox(
-                          height: h * 0.68,
-                          child: ListView.builder(
-                            itemCount: _getController.bookingBusinessGetList.value.res!.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  margin: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: h * 0.01),
-                                  child: Card(
-                                    color: Colors.white,
-                                    surfaceTintColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    shadowColor: Colors.grey.withOpacity(0.5),
-                                    elevation: 4,
-                                    child: InkWell(
-                                      overlayColor: MaterialStateProperty.all(Colors.transparent),
-                                      onTap: () {},
-                                      child:Column(
-                                        children: [
-                                          Row(
+                        physics: const NeverScrollableScrollPhysics(),
+                        controller: _tabController,
+                        children: [
+                          Obx(() => _getController.bookingBusinessGetList.value.res == null || _getController.bookingBusinessGetList.value.res!.isEmpty
+                              ? Center(child: Text('Ma`lumot mavjud emas', style: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.black),))
+                              : SizedBox(
+                            height: h * 0.68,
+                            child: ListView.builder(
+                              itemCount: _getController.bookingBusinessGetList.value.res!.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                    margin: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: h * 0.01),
+                                    child: Card(
+                                      color: Colors.white,
+                                      surfaceTintColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      shadowColor: Colors.grey.withOpacity(0.5),
+                                      elevation: 4,
+                                      child: InkWell(
+                                          overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                          onTap: () {},
+                                          child:Column(
                                             children: [
-                                              Container(
-                                                margin: EdgeInsets.symmetric(horizontal: w * 0.03, vertical: h * 0.01),
-                                                width: w * 0.15,
-                                                height: w * 0.15,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(100),
-                                                  image: DecorationImage(
-                                                    image: NetworkImage(_getController.bookingBusinessGetList.value.res![index].photoUrl!),
-                                                    fit: BoxFit.cover,
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    margin: EdgeInsets.symmetric(horizontal: w * 0.03, vertical: h * 0.01),
+                                                    width: w * 0.15,
+                                                    height: w * 0.15,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(100),
+                                                      image: DecorationImage(
+                                                        image: NetworkImage(_getController.bookingBusinessGetList.value.res![index].photoUrl!),
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: w * 0.43,
-                                                child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    SizedBox(height: h * 0.02),
-                                                    Text(
-                                                      '${_getController.bookingBusinessGetList.value.res![index].fistName!} ${_getController.bookingBusinessGetList.value.res![index].lastName!}',
-                                                      maxLines: 1,
-                                                      style: TextStyle(
-                                                        fontSize: w * 0.04,
-                                                        fontWeight: FontWeight.w500,
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: h * 0.02),
-                                                    Text(
-                                                      _getController.bookingBusinessGetList.value.res![index].userName!,
-                                                      maxLines: 1,
-                                                      style: TextStyle(
-                                                        fontSize: w * 0.04,
-                                                        fontWeight: FontWeight.w500,
-                                                        color: Colors.black,
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: h * 0.01),
-                                                    Row(
+                                                  SizedBox(
+                                                    width: w * 0.43,
+                                                    child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
-                                                        HeroIcon(
-                                                          HeroIcons.phone,
-                                                          size: w * 0.035,
-                                                          color: Colors.grey,
-                                                        ),
-                                                        SizedBox(width: w * 0.01),
+                                                        SizedBox(height: h * 0.02),
                                                         Text(
-                                                          _getController.bookingBusinessGetList.value.res![index].phoneNumber!,
+                                                          '${_getController.bookingBusinessGetList.value.res![index].fistName!} ${_getController.bookingBusinessGetList.value.res![index].lastName!}',
+                                                          maxLines: 1,
+                                                          style: TextStyle(
+                                                            fontSize: w * 0.04,
+                                                            fontWeight: FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: h * 0.02),
+                                                        Text(
+                                                          _getController.bookingBusinessGetList.value.res![index].userName!,
+                                                          maxLines: 1,
+                                                          style: TextStyle(
+                                                            fontSize: w * 0.04,
+                                                            fontWeight: FontWeight.w500,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: h * 0.01),
+                                                        Row(
+                                                          children: [
+                                                            HeroIcon(
+                                                              HeroIcons.phone,
+                                                              size: w * 0.035,
+                                                              color: Colors.grey,
+                                                            ),
+                                                            SizedBox(width: w * 0.01),
+                                                            Text(
+                                                              _getController.bookingBusinessGetList.value.res![index].phoneNumber!,
+                                                              style: TextStyle(
+                                                                fontSize: w * 0.035,
+                                                                fontWeight: FontWeight.w500,
+                                                                color: Colors.grey,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const Expanded(child: SizedBox()),
+                                                  Container(
+                                                    margin: EdgeInsets.only(right: w * 0.03, top: h * 0.01, bottom: h * 0.01),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                                      children: [
+                                                        PopupMenuButton(
+                                                          icon: const Icon(Icons.more_vert),
+                                                          itemBuilder: (context) => [
+                                                            PopupMenuItem(
+                                                              child: Row(
+                                                                children: [
+                                                                  HeroIcon(
+                                                                    HeroIcons.pencil,
+                                                                    size: w * 0.05,
+                                                                    color: Colors.blue,
+                                                                  ),
+                                                                  SizedBox(width: w * 0.02),
+                                                                  Text('Tahrirlash',
+                                                                      style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
+                                                                ],
+                                                              ),
+                                                              onTap: () {
+                                                                _dateController.text = _getController.bookingBusinessGetList.value.res![index].date!;
+                                                                _timeController.text = _getController.bookingBusinessGetList.value.res![index].time!;
+                                                                showBottomSheetList(context,_getController.bookingBusinessGetList.value.res![index].id);
+                                                              },
+                                                            ),
+                                                            PopupMenuItem(
+                                                              child: Row(
+                                                                children: [
+                                                                  HeroIcon(
+                                                                    HeroIcons.trash,
+                                                                    size: w * 0.05,
+                                                                    color: Colors.red,
+                                                                  ),
+                                                                  SizedBox(width: w * 0.02),
+                                                                  Text('O`chirish',
+                                                                      style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
+                                                                ],
+                                                              ),
+                                                              onTap: () {
+                                                                Loading.showLoading(context);
+                                                                ApiController().deleteClientBooking(_getController.bookingBusinessGetList.value.res![index].id!,context).then((value) => {
+                                                                  if (value){
+                                                                    ApiController().bookingClientGetList(''),
+                                                                  },
+                                                                  Navigator.pop(context)
+                                                                });
+
+                                                              },
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(height: h * 0.01),
+                                                        Text(
+                                                          _getController.bookingBusinessGetList.value.res![index].date!,
                                                           style: TextStyle(
                                                             fontSize: w * 0.035,
                                                             fontWeight: FontWeight.w500,
-                                                            color: Colors.grey,
+                                                            color: Colors.orange,
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: h * 0.01),
+                                                        Text(
+                                                          _getController.bookingBusinessGetList.value.res![index].time!,
+                                                          style: TextStyle(
+                                                            fontSize: w * 0.035,
+                                                            fontWeight: FontWeight.w500,
+                                                            color: Colors.orange,
                                                           ),
                                                         ),
                                                       ],
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
-                                              const Expanded(child: SizedBox()),
-                                              Container(
-                                                margin: EdgeInsets.only(right: w * 0.03, top: h * 0.01, bottom: h * 0.01),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                                  children: [
-                                                    PopupMenuButton(
-                                                      icon: const Icon(Icons.more_vert),
-                                                      itemBuilder: (context) => [
-                                                        PopupMenuItem(
-                                                          child: Row(
-                                                            children: [
-                                                              HeroIcon(
-                                                                HeroIcons.pencil,
-                                                                size: w * 0.05,
-                                                                color: Colors.blue,
-                                                              ),
-                                                              SizedBox(width: w * 0.02),
-                                                              Text('Tahrirlash',
-                                                                  style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
-                                                            ],
-                                                          ),
-                                                          onTap: () {
-                                                            _dateController.text = _getController.bookingBusinessGetList.value.res![index].date!;
-                                                            _timeController.text = _getController.bookingBusinessGetList.value.res![index].time!;
-                                                            showBottomSheetList(context,_getController.bookingBusinessGetList.value.res![index].id);
-                                                          },
+                                              Row(
+                                                children: [
+                                                  InkWell(
+                                                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                                      onTap: () {
+                                                        _launchPhone(context, _getController.bookingBusinessGetList.value.res![index].phoneNumber!);
+                                                      },
+                                                      child:Container(
+                                                        padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
+                                                        margin: EdgeInsets.only(left: w * 0.03, bottom: h * 0.01),
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10),
+                                                          color: Colors.green,
                                                         ),
-                                                        PopupMenuItem(
-                                                          child: Row(
-                                                            children: [
-                                                              HeroIcon(
-                                                                HeroIcons.trash,
-                                                                size: w * 0.05,
-                                                                color: Colors.red,
+                                                        child: Row(
+                                                          children: [
+                                                            HeroIcon(
+                                                              HeroIcons.phone,
+                                                              size: w * 0.035,
+                                                              color: Colors.white,
+                                                            ),
+                                                            SizedBox(width: w * 0.01),
+                                                            Text(
+                                                              'Qo`ng`iroq qilish',
+                                                              style: TextStyle(
+                                                                fontSize: w * 0.035,
+                                                                fontWeight: FontWeight.w500,
+                                                                color: Colors.white,
                                                               ),
-                                                              SizedBox(width: w * 0.02),
-                                                              Text('O`chirish',
-                                                                  style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
-                                                            ],
-                                                          ),
-                                                          onTap: () {
-                                                            Loading.showLoading(context);
-                                                            ApiController().deleteClientBooking(_getController.bookingBusinessGetList.value.res![index].id!,context).then((value) => {
-                                                              if (value){
-                                                                ApiController().bookingClientGetList(''),
-                                                              },
-                                                              Navigator.pop(context)
-                                                            });
-
-                                                          },
+                                                            ),
+                                                          ],
                                                         ),
-                                                      ],
-                                                    ),
-                                                    SizedBox(height: h * 0.01),
-                                                    Text(
-                                                      _getController.bookingBusinessGetList.value.res![index].date!,
-                                                      style: TextStyle(
-                                                        fontSize: w * 0.035,
-                                                        fontWeight: FontWeight.w500,
-                                                        color: Colors.orange,
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: h * 0.01),
-                                                    Text(
-                                                      _getController.bookingBusinessGetList.value.res![index].time!,
-                                                      style: TextStyle(
-                                                        fontSize: w * 0.035,
-                                                        fontWeight: FontWeight.w500,
-                                                        color: Colors.orange,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              InkWell(
-                                                  overlayColor: MaterialStateProperty.all(Colors.transparent),
-                                                  onTap: () {
-                                                    _launchPhone(context, _getController.bookingBusinessGetList.value.res![index].phoneNumber!);
-                                                  },
-                                                  child:Container(
-                                                padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
-                                                margin: EdgeInsets.only(left: w * 0.03, bottom: h * 0.01),
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                  color: Colors.green,
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    HeroIcon(
-                                                      HeroIcons.phone,
-                                                      size: w * 0.035,
-                                                      color: Colors.white,
-                                                    ),
-                                                    SizedBox(width: w * 0.01),
-                                                    Text(
-                                                      'Qo`ng`iroq qilish',
-                                                      style: TextStyle(
-                                                        fontSize: w * 0.035,
-                                                        fontWeight: FontWeight.w500,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
+                                                      )
+                                                  )
+                                                ],
                                               )
                                             ],
                                           )
-                                        ],
-                                      )
-                                    ),
-                                  ));
-                            },
-                          ),
-                        )),
-                        Obx(() => _getController.bookingBusinessGetList.value.res == null || _getController.bookingBusinessGetList.value.res!.isEmpty
-                            ? Center(child: Text('Ma`lumot mavjud emas', style: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.black),))
-                            : SizedBox(
-                          height: h * 0.68,
-                          child: ListView.builder(
-                            itemCount: _getController.bookingBusinessGetList.value.res!.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  margin: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: h * 0.01),
-                                  child: Card(
-                                    color: Colors.white,
-                                    surfaceTintColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    shadowColor: Colors.grey.withOpacity(0.5),
-                                    elevation: 4,
-                                    child: InkWell(
-                                        overlayColor: MaterialStateProperty.all(Colors.transparent),
-                                        onTap: () {},
-                                        child:Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  margin: EdgeInsets.symmetric(horizontal: w * 0.03, vertical: h * 0.01),
-                                                  width: w * 0.15,
-                                                  height: w * 0.15,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(100),
-                                                    image: DecorationImage(
-                                                      image: NetworkImage(_getController.bookingBusinessGetList.value.res![index].photoUrl!),
-                                                      fit: BoxFit.cover,
+                                      ),
+                                    ));
+                              },
+                            ),
+                          )),
+                          Obx(() => _getController.bookingBusinessGetList.value.res == null || _getController.bookingBusinessGetList.value.res!.isEmpty
+                              ? Center(child: Text('Ma`lumot mavjud emas', style: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.black),))
+                              : SizedBox(
+                            height: h * 0.68,
+                            child: ListView.builder(
+                              itemCount: _getController.bookingBusinessGetList.value.res!.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                    margin: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: h * 0.01),
+                                    child: Card(
+                                      color: Colors.white,
+                                      surfaceTintColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      shadowColor: Colors.grey.withOpacity(0.5),
+                                      elevation: 4,
+                                      child: InkWell(
+                                          overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                          onTap: () {},
+                                          child:Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    margin: EdgeInsets.symmetric(horizontal: w * 0.03, vertical: h * 0.01),
+                                                    width: w * 0.15,
+                                                    height: w * 0.15,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(100),
+                                                      image: DecorationImage(
+                                                        image: NetworkImage(_getController.bookingBusinessGetList.value.res![index].photoUrl!),
+                                                        fit: BoxFit.cover,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                  width: w * 0.43,
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      SizedBox(height: h * 0.02),
-                                                      Text(
-                                                        '${_getController.bookingBusinessGetList.value.res![index].fistName!} ${_getController.bookingBusinessGetList.value.res![index].lastName!}',
-                                                        maxLines: 1,
-                                                        style: TextStyle(
-                                                          fontSize: w * 0.04,
-                                                          fontWeight: FontWeight.w500,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: h * 0.02),
-                                                      Text(
-                                                        _getController.bookingBusinessGetList.value.res![index].userName!,
-                                                        maxLines: 1,
-                                                        style: TextStyle(
-                                                          fontSize: w * 0.04,
-                                                          fontWeight: FontWeight.w500,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: h * 0.01),
-                                                      Row(
-                                                        children: [
-                                                          HeroIcon(
-                                                            HeroIcons.phone,
-                                                            size: w * 0.035,
-                                                            color: Colors.grey,
+                                                  SizedBox(
+                                                    width: w * 0.43,
+                                                    child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        SizedBox(height: h * 0.02),
+                                                        Text(
+                                                          '${_getController.bookingBusinessGetList.value.res![index].fistName!} ${_getController.bookingBusinessGetList.value.res![index].lastName!}',
+                                                          maxLines: 1,
+                                                          style: TextStyle(
+                                                            fontSize: w * 0.04,
+                                                            fontWeight: FontWeight.w500,
                                                           ),
-                                                          SizedBox(width: w * 0.01),
-                                                          Text(
-                                                            _getController.bookingBusinessGetList.value.res![index].phoneNumber!,
-                                                            style: TextStyle(
-                                                              fontSize: w * 0.035,
-                                                              fontWeight: FontWeight.w500,
+                                                        ),
+                                                        SizedBox(height: h * 0.02),
+                                                        Text(
+                                                          _getController.bookingBusinessGetList.value.res![index].userName!,
+                                                          maxLines: 1,
+                                                          style: TextStyle(
+                                                            fontSize: w * 0.04,
+                                                            fontWeight: FontWeight.w500,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: h * 0.01),
+                                                        Row(
+                                                          children: [
+                                                            HeroIcon(
+                                                              HeroIcons.phone,
+                                                              size: w * 0.035,
                                                               color: Colors.grey,
                                                             ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
+                                                            SizedBox(width: w * 0.01),
+                                                            Text(
+                                                              _getController.bookingBusinessGetList.value.res![index].phoneNumber!,
+                                                              style: TextStyle(
+                                                                fontSize: w * 0.035,
+                                                                fontWeight: FontWeight.w500,
+                                                                color: Colors.grey,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                                const Expanded(child: SizedBox()),
-                                                Container(
-                                                  margin: EdgeInsets.only(right: w * 0.03, top: h * 0.01, bottom: h * 0.01),
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                                    children: [
-                                                      IconButton(
-                                                        onPressed: () {
-                                                          Toast.showToast(context, '${_getController.bookingBusinessGetList.value.res![index].fistName ?? ''} ${_getController.bookingBusinessGetList.value.res![index].lastName ?? ''} qabulingizga soat: ${_getController.bookingBusinessGetList.value.res![index].time ?? ''} da keladi.', Colors.blue, Colors.white);
-                                                        },
-                                                        icon: HeroIcon(
-                                                          HeroIcons.informationCircle,
-                                                          size: w * 0.06,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: h * 0.01),
-                                                      Text(
-                                                        _getController.bookingBusinessGetList.value.res![index].date!,
-                                                        style: TextStyle(
-                                                          fontSize: w * 0.035,
-                                                          fontWeight: FontWeight.w500,
-                                                          color: Colors.orange,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: h * 0.01),
-                                                      Text(
-                                                        _getController.bookingBusinessGetList.value.res![index].time!,
-                                                        style: TextStyle(
-                                                          fontSize: w * 0.035,
-                                                          fontWeight: FontWeight.w500,
-                                                          color: Colors.orange,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                InkWell(
-                                                    overlayColor: MaterialStateProperty.all(Colors.transparent),
-                                                    onTap: () {
-                                                      _launchPhone(context, _getController.bookingBusinessGetList.value.res![index].phoneNumber!);
-                                                    },
-                                                    child:Container(
-                                                      padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
-                                                      margin: EdgeInsets.only(left: w * 0.03, bottom: h * 0.01),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(10),
-                                                        color: Colors.green,
-                                                      ),
-                                                      child: Row(
-                                                        children: [
-                                                          HeroIcon(
-                                                            HeroIcons.phone,
-                                                            size: w * 0.035,
-                                                            color: Colors.white,
+                                                  const Expanded(child: SizedBox()),
+                                                  Container(
+                                                    margin: EdgeInsets.only(right: w * 0.03, top: h * 0.01, bottom: h * 0.01),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                                      children: [
+                                                        IconButton(
+                                                          onPressed: () {
+                                                            Toast.showToast(context, '${_getController.bookingBusinessGetList.value.res![index].fistName ?? ''} ${_getController.bookingBusinessGetList.value.res![index].lastName ?? ''} qabulingizga soat: ${_getController.bookingBusinessGetList.value.res![index].time ?? ''} da keladi.', Colors.blue, Colors.white);
+                                                          },
+                                                          icon: HeroIcon(
+                                                            HeroIcons.informationCircle,
+                                                            size: w * 0.06,
+                                                            color: Colors.black,
                                                           ),
-                                                          SizedBox(width: w * 0.01),
-                                                          Text(
-                                                            'Qo`ng`iroq qilish',
-                                                            style: TextStyle(
-                                                              fontSize: w * 0.035,
-                                                              fontWeight: FontWeight.w500,
+                                                        ),
+                                                        SizedBox(height: h * 0.01),
+                                                        Text(
+                                                          _getController.bookingBusinessGetList.value.res![index].date!,
+                                                          style: TextStyle(
+                                                            fontSize: w * 0.035,
+                                                            fontWeight: FontWeight.w500,
+                                                            color: Colors.orange,
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: h * 0.01),
+                                                        Text(
+                                                          _getController.bookingBusinessGetList.value.res![index].time!,
+                                                          style: TextStyle(
+                                                            fontSize: w * 0.035,
+                                                            fontWeight: FontWeight.w500,
+                                                            color: Colors.orange,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  InkWell(
+                                                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                                      onTap: () {
+                                                        _launchPhone(context, _getController.bookingBusinessGetList.value.res![index].phoneNumber!);
+                                                      },
+                                                      child:Container(
+                                                        padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
+                                                        margin: EdgeInsets.only(left: w * 0.03, bottom: h * 0.01),
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10),
+                                                          color: Colors.green,
+                                                        ),
+                                                        child: Row(
+                                                          children: [
+                                                            HeroIcon(
+                                                              HeroIcons.phone,
+                                                              size: w * 0.035,
                                                               color: Colors.white,
                                                             ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    )
-                                                )
-                                              ],
-                                            )
-                                          ],
-                                        )
-                                    ),
-                                  ));
-                            },
-                          ),
-                        )),
-                      ]
+                                                            SizedBox(width: w * 0.01),
+                                                            Text(
+                                                              'Qo`ng`iroq qilish',
+                                                              style: TextStyle(
+                                                                fontSize: w * 0.035,
+                                                                fontWeight: FontWeight.w500,
+                                                                color: Colors.white,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                  )
+                                                ],
+                                              )
+                                            ],
+                                          )
+                                      ),
+                                    ));
+                              },
+                            ),
+                          )),
+                        ]
                     ),
                   ),
                 ],
@@ -915,6 +920,406 @@ class HistoryPage extends StatelessWidget {
           ),
         ),
       ],
+    ) : Expanded(child:
+    Container(
+      color: Colors.grey[50],
+      child: Column(
+        children: [
+          SizedBox(
+            height: h * 0.12,
+            width: w,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  child: Container(
+                    width: w,
+                    height: h * 0.07,
+                    color: Colors.blue,
+                  ),
+                ),
+                Positioned(
+                  top: h * 0.1,
+                  child: Container(
+                    width: w,
+                    height: h * 0.05,
+                    color: Colors.grey[50],
+                  ),
+                ),
+                Positioned(
+                  top: h * 0.04,
+                  width: w,
+                  child: Container(
+                    width: w,
+                    height: h * 0.06,
+                    margin: EdgeInsets.symmetric(horizontal: w * 0.05),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.orange,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 2,
+                          blurRadius: 2,
+                          offset: const Offset(0, 2), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Eslatmalar',
+                        style: TextStyle(
+                          fontSize: w * 0.05,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Container(
+            height: h * 0.06,
+            width: w,
+            margin: EdgeInsets.only(bottom: h * 0.02, left: w * 0.05, right: w * 0.05),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  spreadRadius: 2,
+                  blurRadius: 2,
+                  offset: const Offset(0, 2), // changes position of shadow
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    _scrollController.animateTo(
+                      _scrollController.offset - w * 0.3,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  child: SizedBox(
+                    width: w * 0.1,
+                    child: Center(
+                      child: HeroIcon(
+                        HeroIcons.chevronLeft,
+                        color: Colors.black,
+                        size: w * 0.06,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 4,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          if (index == 3) {
+                            showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2025),
+                            ).then((value) => {
+                              _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
+                              if (_tabController.index == 0) {
+                                _getController.clearBookingBusinessGetList(),
+                                ApiController().bookingClientGetList(_dateController.text),
+                              } else {
+                                _getController.clearBookingBusinessGetList(),
+                                ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, _dateController.text),
+                              }
+                            });
+                          }
+                          _dateController.text = index == 0
+                              ? ''
+                              : index == 1
+                              ? '${DateTime.now().day < 10 ? '0${DateTime.now().day}' : DateTime.now().day}/${DateTime.now().month < 10 ? '0${DateTime.now().month}' : DateTime.now().month}/${DateTime.now().year}'
+                              : index == 2
+                              ? '${DateTime.now().day + 1 < 10 ? '0${DateTime.now().day + 1}' : DateTime.now().day + 1}/${DateTime.now().month < 10 ? '0${DateTime.now().month}' : DateTime.now().month}/${DateTime.now().year}'
+                              : '';
+
+                          Loading.showLoading(context);
+                          if (_tabController.index == 0) {
+                            _getController.clearBookingBusinessGetList();
+                            ApiController().bookingClientGetList(_dateController.text).then((value) => {
+                              Loading.hideLoading(context)
+                            });
+                          } else {
+                            _getController.clearBookingBusinessGetList();
+                            ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, _dateController.text).then((value) => {
+                              Loading.hideLoading(context)
+                            });
+                          }
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: w * 0.015, vertical: h * 0.01),
+                          padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              index == 0
+                                  ? 'Hamma mijozlar'
+                                  : index == 1
+                                  ? 'Bugungi mijozlar'
+                                  : index == 2
+                                  ? 'Keyingi mijozlar'
+                                  : 'Tanlangan mijozlar',
+                              style: TextStyle(
+                                fontSize: w * 0.035,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    _scrollController.animateTo(
+                      _scrollController.offset + w * 0.3,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  child: SizedBox(
+                    width: w * 0.1,
+                    child: Center(
+                      child: HeroIcon(
+                        HeroIcons.chevronRight,
+                        color: Colors.black,
+                        size: w * 0.06,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Obx(() => _getController.bookingBusinessGetList.value.res == null || _getController.bookingBusinessGetList.value.res!.isEmpty
+              ? Center(child: Text('Ma`lumot mavjud emas', style: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.black),))
+              : SizedBox(
+            height: h * 0.62,
+            child: ListView.builder(
+              itemCount: _getController.bookingBusinessGetList.value.res!.length,
+              itemBuilder: (context, index) {
+                return Container(
+                    margin: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: h * 0.01),
+                    child: Card(
+                      color: Colors.white,
+                      surfaceTintColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      shadowColor: Colors.grey.withOpacity(0.5),
+                      elevation: 4,
+                      child: InkWell(
+                          overlayColor: MaterialStateProperty.all(Colors.transparent),
+                          onTap: () {},
+                          child:Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.symmetric(horizontal: w * 0.03, vertical: h * 0.01),
+                                    width: w * 0.15,
+                                    height: w * 0.15,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(100),
+                                      image: DecorationImage(
+                                        image: NetworkImage(_getController.bookingBusinessGetList.value.res![index].photoUrl!),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: w * 0.43,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(height: h * 0.02),
+                                        Text(
+                                          '${_getController.bookingBusinessGetList.value.res![index].fistName!} ${_getController.bookingBusinessGetList.value.res![index].lastName!}',
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            fontSize: w * 0.04,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        SizedBox(height: h * 0.02),
+                                        Text(
+                                          _getController.bookingBusinessGetList.value.res![index].userName!,
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            fontSize: w * 0.04,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(height: h * 0.01),
+                                        Row(
+                                          children: [
+                                            HeroIcon(
+                                              HeroIcons.phone,
+                                              size: w * 0.035,
+                                              color: Colors.grey,
+                                            ),
+                                            SizedBox(width: w * 0.01),
+                                            Text(
+                                              _getController.bookingBusinessGetList.value.res![index].phoneNumber!,
+                                              style: TextStyle(
+                                                fontSize: w * 0.035,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const Expanded(child: SizedBox()),
+                                  Container(
+                                    margin: EdgeInsets.only(right: w * 0.03, top: h * 0.01, bottom: h * 0.01),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        PopupMenuButton(
+                                          icon: const Icon(Icons.more_vert),
+                                          itemBuilder: (context) => [
+                                            PopupMenuItem(
+                                              child: Row(
+                                                children: [
+                                                  HeroIcon(
+                                                    HeroIcons.pencil,
+                                                    size: w * 0.05,
+                                                    color: Colors.blue,
+                                                  ),
+                                                  SizedBox(width: w * 0.02),
+                                                  Text('Tahrirlash',
+                                                      style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
+                                                ],
+                                              ),
+                                              onTap: () {
+                                                _dateController.text = _getController.bookingBusinessGetList.value.res![index].date!;
+                                                _timeController.text = _getController.bookingBusinessGetList.value.res![index].time!;
+                                                showBottomSheetList(context,_getController.bookingBusinessGetList.value.res![index].id);
+                                              },
+                                            ),
+                                            PopupMenuItem(
+                                              child: Row(
+                                                children: [
+                                                  HeroIcon(
+                                                    HeroIcons.trash,
+                                                    size: w * 0.05,
+                                                    color: Colors.red,
+                                                  ),
+                                                  SizedBox(width: w * 0.02),
+                                                  Text('O`chirish',
+                                                      style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
+                                                ],
+                                              ),
+                                              onTap: () {
+                                                Loading.showLoading(context);
+                                                ApiController().deleteClientBooking(_getController.bookingBusinessGetList.value.res![index].id!,context).then((value) => {
+                                                  if (value){
+                                                    ApiController().bookingClientGetList(''),
+                                                  },
+                                                  Navigator.pop(context)
+                                                });
+
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: h * 0.01),
+                                        Text(
+                                          _getController.bookingBusinessGetList.value.res![index].date!,
+                                          style: TextStyle(
+                                            fontSize: w * 0.035,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.orange,
+                                          ),
+                                        ),
+                                        SizedBox(height: h * 0.01),
+                                        Text(
+                                          _getController.bookingBusinessGetList.value.res![index].time!,
+                                          style: TextStyle(
+                                            fontSize: w * 0.035,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.orange,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  InkWell(
+                                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                      onTap: () {
+                                        _launchPhone(context, _getController.bookingBusinessGetList.value.res![index].phoneNumber!);
+                                      },
+                                      child:Container(
+                                        padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
+                                        margin: EdgeInsets.only(left: w * 0.03, bottom: h * 0.01),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: Colors.green,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            HeroIcon(
+                                              HeroIcons.phone,
+                                              size: w * 0.035,
+                                              color: Colors.white,
+                                            ),
+                                            SizedBox(width: w * 0.01),
+                                            Text(
+                                              'Qo`ng`iroq qilish',
+                                              style: TextStyle(
+                                                fontSize: w * 0.035,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                  )
+                                ],
+                              )
+                            ],
+                          )
+                      ),
+                    ));
+              },
+            ),
+          )),
+        ],
+      ),
+    ))
     );
   }
 }
