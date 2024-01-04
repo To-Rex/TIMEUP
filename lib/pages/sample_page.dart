@@ -35,15 +35,15 @@ class SamplePage extends StatelessWidget {
           preferredSize: Size.fromHeight(h * 0.066),
           child: Obx(() => _getController.index.value != 5
               ? Container(
-            height: _getController.index.value == 1 || _getController.index.value == 3 && _getController.meUsers.value.res?.business != null
+            height: _getController.index.value == 1 || _getController.index.value == 3 && _getController.meUsers.value.res?.business != null || _getController.index.value == 2
             ? h * 0.1 : h * 0.066,
-            color: _getController.index.value == 1 || _getController.index.value == 3 && _getController.meUsers.value.res?.business != null
+            color: _getController.index.value == 1 || _getController.index.value == 3 && _getController.meUsers.value.res?.business != null || _getController.index.value == 2
                 ? Colors.blue
                 : Colors.white,
-            margin: _getController.index.value == 1 || _getController.index.value == 3 && _getController.meUsers.value.res?.business != null
+            margin: _getController.index.value == 1 || _getController.index.value == 3 && _getController.meUsers.value.res?.business != null || _getController.index.value == 2
                 ? const EdgeInsets.only(top: 0)
                 : EdgeInsets.only(top: h * 0.045),
-            padding: _getController.index.value == 1 || _getController.index.value == 3 && _getController.meUsers.value.res?.business != null
+            padding: _getController.index.value == 1 || _getController.index.value == 3 && _getController.meUsers.value.res?.business != null || _getController.index.value == 2
                 ? EdgeInsets.only(top: h * 0.045)
                 : EdgeInsets.only(top: h * 0.01),
             child: Row(
@@ -53,7 +53,7 @@ class SamplePage extends StatelessWidget {
                   image: const AssetImage('assets/images/text.png'),
                   width: w * 0.2,
                   height: h * 0.05,
-                  color: _getController.index.value == 1 || _getController.index.value == 3
+                  color: _getController.index.value == 1 || _getController.index.value == 3 && _getController.meUsers.value.res?.business != null || _getController.index.value == 2
                       ? Colors.white
                       : Colors.blue,
                 ),
@@ -68,7 +68,7 @@ class SamplePage extends StatelessWidget {
                   child: HeroIcon(
                     HeroIcons.chatBubbleLeft,
                     size: w * 0.07,
-                    color: _getController.index.value == 1 || _getController.index.value == 3
+                    color: _getController.index.value == 1 || _getController.index.value == 3 && _getController.meUsers.value.res?.business != null || _getController.index.value == 2
                         ? Colors.white
                         : Colors.blue,
                   ),
