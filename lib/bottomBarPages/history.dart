@@ -955,7 +955,7 @@ class HistoryPage extends StatelessWidget {
                     margin: EdgeInsets.symmetric(horizontal: w * 0.05),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colors.orange,
+                      color: Colors.white,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.2),
@@ -965,16 +965,25 @@ class HistoryPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: Center(
-                      child: Text(
-                        'Eslatmalar',
-                        style: TextStyle(
-                          fontSize: w * 0.05,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
+                    child: Container(
+                      width: w,
+                      height: h * 0.06,
+                      margin: EdgeInsets.symmetric(horizontal: w * 0.03, vertical: h * 0.005),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.blue,
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Eslatmalar',
+                          style: TextStyle(
+                            fontSize: w * 0.05,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
+                    )
                   ),
                 )
               ],
@@ -1115,7 +1124,11 @@ class HistoryPage extends StatelessWidget {
             ),
           ),
           Obx(() => _getController.bookingBusinessGetList.value.res == null || _getController.bookingBusinessGetList.value.res!.isEmpty
-              ? Center(child: Text('Ma`lumot mavjud emas', style: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.black),))
+              ? SizedBox(
+            height: h * 0.63,
+            width: w,
+            child: Center(child: Text('Ma`lumot mavjud emas', style: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.black),)),
+          )
               : SizedBox(
             height: h * 0.63,
             child: ListView.builder(
