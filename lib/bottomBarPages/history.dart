@@ -1127,7 +1127,7 @@ class HistoryPage extends StatelessWidget {
               ? SizedBox(
             height: h * 0.63,
             width: w,
-            child: Center(child: Text('Ma`lumot mavjud emas', style: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.black),)),
+            child: Center(child: Text('Ma`lumotlar mavjud emas', style: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.black),)),
           )
               : SizedBox(
             height: h * 0.63,
