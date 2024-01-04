@@ -310,14 +310,7 @@ class HistoryPage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     _getController.nextPagesUserDetails.value = 0;
-    if (_getController.meUsers.value.res?.business == null) {
-      print('null');
-      ApiController().bookingClientGetList('');
-    }
-    else {
-      print('not null');
-      ApiController().bookingClientGetList('');
-    }
+    ApiController().bookingClientGetList('');
 
     return Obx(() => _getController.meUsers.value.res?.business != null
         ? Stack(
@@ -1124,10 +1117,7 @@ class HistoryPage extends StatelessWidget {
             ),
           ),
           Obx(() => _getController.bookingBusinessGetList.value.res == null || _getController.bookingBusinessGetList.value.res!.isEmpty
-              ? SizedBox(
-            height: h * 0.63,
-            width: w,
-            child: Center(child: Text('Ma`lumotlar mavjud emas', style: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.black),)),
+              ? SizedBox(height: h * 0.63, width: w, child: Center(child: Text('Ma`lumotlar mavjud emas', style: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.black),)),
           )
               : SizedBox(
             height: h * 0.63,
