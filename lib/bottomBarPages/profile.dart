@@ -17,6 +17,7 @@ import '../elements/user_detials.dart';
 import '../pages/edit_post_details.dart';
 import '../pages/login_page.dart';
 import '../pages/make_business.dart';
+import '../pages/professions_list_details.dart';
 import '../pages/user_bussines_edit.dart';
 import '../pages/user_edit.dart';
 import '../res/getController.dart';
@@ -1202,7 +1203,6 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  //ish jadvali bottom sheet
   showBottomSheetCalendar(context, businessId) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
@@ -1795,34 +1795,46 @@ class ProfilePage extends StatelessWidget {
                                       scrollDirection: Axis.horizontal,
                                       itemCount: getController.getFollowing.value.res!.length,
                                       itemBuilder: (context, index) {
-                                        return Container(
-                                          margin: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                width: w * 0.15,
-                                                height: w * 0.15,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(w),
-                                                  image: DecorationImage(
-                                                    image: NetworkImage('${getController.getFollowing.value.res![index].photoUrl}'),
-                                                    fit: BoxFit.cover,
+                                        return InkWell(
+                                          overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                          onTap: () {
+                                            Loading.showLoading(context);
+                                            ApiController().profileById(int.parse(getController.getFollowing.value.res![index].id.toString())).then((value) => {
+                                                  getController.changeProfileById(value),
+                                                  getController.changeBookingBusinessGetListByID(int.parse(getController.getFollowing.value.res![index].id.toString())),
+                                                  Loading.hideLoading(context),
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()))
+                                                });
+                                          },
+                                          child: Container(
+                                            margin: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  width: w * 0.15,
+                                                  height: w * 0.15,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(w),
+                                                    image: DecorationImage(
+                                                      image: NetworkImage('${getController.getFollowing.value.res![index].photoUrl}'),
+                                                      fit: BoxFit.cover,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              SizedBox(height: h * 0.01),
-                                              SizedBox(
-                                                width: w * 0.17,
-                                                child: Text(
-                                                  '${getController.getFollowing.value.res![index].fistName}',
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                    fontSize: w * 0.04,
-                                                    fontWeight: FontWeight.w500,
+                                                SizedBox(height: h * 0.01),
+                                                SizedBox(
+                                                  width: w * 0.17,
+                                                  child: Text(
+                                                    '${getController.getFollowing.value.res![index].fistName}',
+                                                    maxLines: 1,
+                                                    style: TextStyle(
+                                                      fontSize: w * 0.04,
+                                                      fontWeight: FontWeight.w500,
+                                                    ),
                                                   ),
-                                                ),
-                                              )
-                                            ],
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         );
                                       },

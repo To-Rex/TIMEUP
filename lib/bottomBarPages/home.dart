@@ -190,8 +190,7 @@ class HomePage extends StatelessWidget {
       width: w,
       height: h * 0.9,
       child: Center(child: Text('Ma`lumotlar yo\'q',style: TextStyle(fontSize: w * 0.04, color: Colors.black))),
-    )
-        : Obx(() => _getController.getFollowPost.value.res!.isNotEmpty || _getController.getFollowPost.value.res != null
+    ) : Obx(() => _getController.getFollowPost.value.res!.isNotEmpty || _getController.getFollowPost.value.res != null
           ? Obx(() => _getController.uplAodVideo.value == true
           ? SizedBox(
         width: w,

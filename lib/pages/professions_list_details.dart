@@ -3,15 +3,19 @@ import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:time_up/elements/functions.dart';
 import 'package:time_up/pages/post_details.dart';
 import '../api/api_controller.dart';
+import '../elements/txt_business.dart';
 import '../elements/user_detials.dart';
 import '../models/booking_business_category_get.dart';
+import '../models/followers_model.dart';
 import '../res/getController.dart';
 import 'package:readmore/readmore.dart';
 
 class ProfessionsListDetails extends StatelessWidget {
   ProfessionsListDetails({Key? key}) : super(key: key);
+
 
   final GetController _getController = Get.put(GetController());
   final PageController pageController = PageController();
@@ -21,6 +25,7 @@ class ProfessionsListDetails extends StatelessWidget {
 
   final _scrollController = ScrollController();
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
+  late TabController _followTabController;
 
   showLoadingDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
@@ -627,6 +632,309 @@ class ProfessionsListDetails extends StatelessWidget {
     );
   }
 
+  showBottomSheetFollowers(context, businessId, tabIndex) {
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    _getController.changeFollowers(Followers(res: [], status: false));
+    ApiController().getMyFollowers(context,businessId);
+    _followTabController = TabController(length: 2, vsync: Navigator.of(context));
+    _followTabController.addListener(() {
+      if (_followTabController.index == 0) {
+        print('Obunachilar');
+        ApiController().getMyFollowers(context,businessId);
+      } else {
+        print('Dostlar');
+        ApiController().getMyFollowing(context,_getController.meUsers.value.res!.id!);
+      }
+    });
+    _followTabController.animateTo(tabIndex, duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.8,
+          width: w,
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
+          child: DefaultTabController(
+            length: 2,
+            initialIndex: 0,
+            animationDuration: const Duration(milliseconds: 300),
+            child: Column(
+              children: [
+                Container(
+                  width: w * 0.3,
+                  height: h * 0.005,
+                  margin: EdgeInsets.only(top: h * 0.02, bottom: h * 0.04),
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                Container(
+                  constraints: BoxConstraints.expand(height: h * 0.06),
+                  margin: EdgeInsets.symmetric(horizontal: w * 0.05),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: TabBar(
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    controller: _followTabController,
+                    labelStyle: TextStyle(
+                      fontSize: w * 0.04,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white, // Selected text color
+                    ),
+                    unselectedLabelColor: Colors.blue, // Unselected text color
+                    indicator: BoxDecoration(
+                      color: Colors.blue, // Background color for the selected tab
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    tabs: [
+                      Tab(
+                        child: Container(
+                          width: w * 0.6,
+                          child: Center(
+                            child: Text(
+                              'Obunachilar',
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Container(
+                          width: w * 0.6,
+                          child: Center(
+                            child: Text(
+                              'Dostlar',
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: TabBarView(
+                    controller: _followTabController,
+                    children: [
+                      Obx(() => _getController.getFollowers.value.res != null || _getController.getFollowers.value.res!.isNotEmpty || _getController.getFollowers.value.res! != []
+                          ? Container(
+                        margin: EdgeInsets.only(top: h * 0.05),
+                        padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _getController.getFollowers.value.res!.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              height: h * 0.08,
+                              padding: EdgeInsets.only(left: w * 0.01, right: w * 0.01),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey[200]!,
+                                    spreadRadius: 1,
+                                    blurRadius: 1,
+                                    offset: const Offset(0, 1), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              margin: EdgeInsets.only(bottom: h * 0.015),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: w * 0.12,
+                                    height: w * 0.12,
+                                    margin: EdgeInsets.only(right: w * 0.04, left: w * 0.02),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(w),
+                                      image: DecorationImage(
+                                        image: NetworkImage('${_getController.getFollowers.value.res![index].photoUrl}'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: w * 0.45,
+                                    child: Text(
+                                      '${_getController.getFollowers.value.res![index].userName}',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(child: SizedBox()),
+                                  //button OBuna
+                                  //if (getController.getFollowers.value.res![index].isFollowing == false)
+                                  InkWell(
+                                    onTap: () {
+                                      showLoadingDialog(context);
+                                    },
+                                    child: Container(
+                                      width: w * 0.2,
+                                      height: h * 0.04,
+                                      margin: EdgeInsets.only(right: w * 0.02),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.blue,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'Obuna',
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            fontSize: w * 0.035,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                          : SizedBox(
+                        child: Center(
+                          child: Text(
+                            'Obunachilar topilmadi',
+                            style: TextStyle(
+                              fontSize: w * 0.04,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      )
+                      ),
+
+                      Obx(() => _getController.getFollowing.value.res != null || _getController.getFollowing.value.res!.isNotEmpty || _getController.getFollowing.value.res! != []
+                          ? Container(
+                        margin: EdgeInsets.only(top: h * 0.05),
+                        padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _getController.getFollowing.value.res!.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              height: h * 0.08,
+                              padding: EdgeInsets.only(left: w * 0.01, right: w * 0.01),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey[200]!,
+                                    spreadRadius: 1,
+                                    blurRadius: 1,
+                                    offset: const Offset(0, 1), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              margin: EdgeInsets.only(bottom: h * 0.015),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: w * 0.12,
+                                    height: w * 0.12,
+                                    margin: EdgeInsets.only(right: w * 0.04, left: w * 0.02),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(w),
+                                      image: DecorationImage(
+                                        image: NetworkImage('${_getController.getFollowing.value.res![index].photoUrl}'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: w * 0.45,
+                                    child: Text(
+                                      '${_getController.getFollowing.value.res![index].userName}',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(child: SizedBox()),
+                                  //button Dostlar
+                                  InkWell(
+                                    onTap: () {
+                                      showLoadingDialog(context);
+                                    },
+                                    child: Container(
+                                      width: w * 0.2,
+                                      height: h * 0.04,
+                                      margin: EdgeInsets.only(right: w * 0.02),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.blue,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'Dostlar',
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            fontSize: w * 0.035,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ) : SizedBox(
+                        child: Container(
+                          child: Center(
+                            child: Text(
+                              'Dostlar topilmadi',
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                      ),
+
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   void _onRefresh() async {
     ApiController().getMePostList(_getController.getProfileById.value.res?.id).then((value) => _refreshController.refreshCompleted());
   }
@@ -653,8 +961,8 @@ class ProfessionsListDetails extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     _getController.show.value = false;
     ApiController().getMePostList(_getController.getProfileById.value.res?.id);
-    //ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '');
     ApiController().bookingListBookingAndBookingCategory(_getController.bookingBusinessGetListByID.value, '');
+    ApiController().getMyFollowing(context, _getController.meUsers.value.res!.id!);
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -670,65 +978,145 @@ class ProfessionsListDetails extends StatelessWidget {
         body: Obx(() => _getController.getProfileById.value.res == null
               ? const Expanded(child: Center(child: CircularProgressIndicator()))
               : Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppBar(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.black,
-                      surfaceTintColor: Colors.white,
-                      elevation: 0,
-                      leading: GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Icon(Icons.arrow_back_ios, size: w * 0.05),
-                      ),
-                      title: Obx(() => _getController.getProfileById.value.res == null
-                              ? Text('Ma\'lumotlar yo\'q',
-                                  style: TextStyle(
-                                    fontSize: w * 0.04,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                )
-                              : Text(_getController.getProfileById.value.res!.userName ?? '',
-                                  style: TextStyle(
-                                    fontSize: w * 0.05,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                )),
-                      centerTitle: true,
-                    ),
-                    Obx(() => _getController.getProfileById.value.res == null
-                          ? const Center(child: CircularProgressIndicator())
-                          : SizedBox(
-                              child: _getController.getProfileById.value.res!.photoUrl == null
-                                  ? SizedBox(
-                                      width: w,
-                                      child: InkWell(
-                                        hoverColor: Colors.transparent,
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () {
-                                          Navigator.push(context,
-                                            MaterialPageRoute(
-                                              builder: (context) => Scaffold(
-                                                appBar: AppBar(
-                                                  elevation: 0,
-                                                  backgroundColor: Colors.black,
-                                                  leading: IconButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    icon: const Icon(
-                                                        Icons.arrow_back_ios,
-                                                        color: Colors.white),
-                                                  ),
+          children: [
+            AppBar(
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              surfaceTintColor: Colors.white,
+              elevation: 0,
+              leading: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.arrow_back_ios, size: w * 0.05),
+              ),
+              title: Obx(() => _getController.getProfileById.value.res == null
+                  ? Text('Ma\'lumotlar yo\'q',
+                style: TextStyle(
+                  fontSize: w * 0.04,
+                  fontWeight: FontWeight.w500,
+                ),
+              )
+                  : Text(_getController.getProfileById.value.res!.userName ?? '',
+                style: TextStyle(
+                  fontSize: w * 0.05,
+                  fontWeight: FontWeight.w500,
+                ),
+              )),
+              centerTitle: true,
+            ),
+            Expanded(
+                flex: 1,
+                child: Container(
+                  //color: Colors.red[100],
+                  padding: EdgeInsets.only(top: h * 0.01, bottom: h * 0.01),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Obx(() => _getController.getProfileById.value.res == null
+                            ? const Center(child: CircularProgressIndicator())
+                            : SizedBox(
+                            child: _getController.getProfileById.value.res!.photoUrl == null
+                                ? SizedBox(
+                              width: w,
+                              child: InkWell(
+                                hoverColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () {
+                                  Navigator.push(context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Scaffold(
+                                        appBar: AppBar(
+                                          elevation: 0,
+                                          backgroundColor: Colors.black,
+                                          leading: IconButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            icon: const Icon(
+                                                Icons.arrow_back_ios,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                        backgroundColor: Colors.black,
+                                        body: PhotoView(
+                                          imageProvider: const AssetImage('assets/images/doctor.png'),
+                                          minScale: PhotoViewComputedScale.contained * 0.8,
+                                          maxScale: PhotoViewComputedScale.covered * 2,
+                                          initialScale: PhotoViewComputedScale.contained,
+                                          enableRotation: true,
+                                          loadingBuilder: (context, event) => Center(
+                                            child: SizedBox(
+                                              width: 20.0,
+                                              height: 20.0,
+                                              child: CircularProgressIndicator(
+                                                value: event == null ? 0 : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: CircleAvatar(
+                                  radius: w * 0.15,
+                                  backgroundImage: const AssetImage('assets/images/doctor.png'),
+                                ),
+                              ),
+                            ) : SizedBox(
+                              width: w,
+                              child: InkWell(
+                                hoverColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Scaffold(
+                                          appBar: AppBar(
+                                            elevation: 0,
+                                            backgroundColor: Colors.black,
+                                            leading: const SizedBox(),
+                                          ),
+                                          backgroundColor: Colors.black,
+                                          body: Column(
+                                            children: [
+                                              SizedBox(
+                                                height: h * 0.05,
+                                                child: Row(
+                                                  children: [
+                                                    SizedBox(width: w * 0.01),
+                                                    Container(alignment: Alignment.center,
+                                                      width: w * 0.1,
+                                                      height: h * 0.05,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius: BorderRadius.circular(w * 0.1),
+                                                      ),
+                                                      child: IconButton(
+                                                          color: Colors.white,
+                                                          onPressed: () {
+                                                            Navigator.pop(context);
+                                                          },
+                                                          icon: HeroIcon(
+                                                            HeroIcons.chevronLeft,
+                                                            color: Colors.black,
+                                                            size: w * 0.1,
+                                                          )),
+                                                    ),
+                                                  ],
                                                 ),
-                                                backgroundColor: Colors.black,
-                                                body: PhotoView(
-                                                  imageProvider: const AssetImage('assets/images/doctor.png'),
+                                              ),
+                                              Expanded(
+                                                child: PhotoView(
+                                                  imageProvider: NetworkImage("${_getController.getProfileById.value.res!.photoUrl}"),
                                                   minScale: PhotoViewComputedScale.contained * 0.8,
                                                   maxScale: PhotoViewComputedScale.covered * 2,
                                                   initialScale: PhotoViewComputedScale.contained,
@@ -738,634 +1126,566 @@ class ProfessionsListDetails extends StatelessWidget {
                                                       width: 20.0,
                                                       height: 20.0,
                                                       child: CircularProgressIndicator(
-                                                        value: event == null ? 0 : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
+                                                        value: event == null
+                                                            ? 0
+                                                            : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
                                                       ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          );
-                                        },
-                                        child: CircleAvatar(
-                                          radius: w * 0.15,
-                                          backgroundImage: const AssetImage('assets/images/doctor.png'),
-                                        ),
-                                      ),
-                                    )
-                                  : SizedBox(
-                                      width: w,
-                                      child: InkWell(
-                                        hoverColor: Colors.transparent,
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => Scaffold(
-                                                  appBar: AppBar(
-                                                    elevation: 0,
-                                                    backgroundColor: Colors.black,
-                                                    leading: const SizedBox(),
-                                                  ),
-                                                  backgroundColor: Colors.black,
-                                                  body: Column(
-                                                    children: [
-                                                      SizedBox(
-                                                        height: h * 0.05,
-                                                        child: Row(
-                                                          children: [
-                                                            SizedBox(width: w * 0.01),
-                                                            Container(alignment: Alignment.center,
-                                                              width: w * 0.1,
-                                                              height: h * 0.05,
-                                                              decoration: BoxDecoration(
-                                                                color: Colors.white,
-                                                                borderRadius: BorderRadius.circular(w * 0.1),
-                                                              ),
-                                                              child: IconButton(
-                                                                  color: Colors.white,
-                                                                  onPressed: () {
-                                                                    Navigator.pop(context);
-                                                                  },
-                                                                  icon: HeroIcon(
-                                                                    HeroIcons.chevronLeft,
-                                                                    color: Colors.black,
-                                                                    size: w * 0.1,
-                                                                  )),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: PhotoView(
-                                                          imageProvider: NetworkImage("${_getController.getProfileById.value.res!.photoUrl}"),
-                                                          minScale: PhotoViewComputedScale.contained * 0.8,
-                                                          maxScale: PhotoViewComputedScale.covered * 2,
-                                                          initialScale: PhotoViewComputedScale.contained,
-                                                          enableRotation: true,
-                                                          loadingBuilder: (context, event) => Center(
-                                                            child: SizedBox(
-                                                              width: 20.0,
-                                                              height: 20.0,
-                                                              child: CircularProgressIndicator(
-                                                                value: event == null
-                                                                    ? 0
-                                                                    : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )),
-                                            ),
-                                          );
-                                        },
-                                        //circular avatar with image from network and image cover with photo view
-                                        child: CircleAvatar(
-                                          radius: w * 0.15,
-                                          foregroundColor: Colors.transparent,
-                                          backgroundColor: Colors.transparent,
-                                          child: ClipOval(
-                                            child: Image.network(
-                                              "${_getController.getProfileById.value.res!.photoUrl}",
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )),
-                    ),
-                    SizedBox(height: h * 0.02),
-                    Center(child: Obx(() => _getController.getProfileById.value.res == null
-                              ? const SizedBox()
-                              : Text("${_getController.getProfileById.value.res!.fistName} ${_getController.getProfileById.value.res!.lastName}",
-                                  style: TextStyle(
-                                    fontSize: w * 0.05,
-                                    fontWeight: FontWeight.w500,
+                                            ],
+                                          )),
+                                    ),
+                                  );
+                                },
+                                //circular avatar with image from network and image cover with photo view
+                                child: CircleAvatar(
+                                  radius: w * 0.12,
+                                  foregroundColor: Colors.transparent,
+                                  backgroundColor: Colors.transparent,
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      "${_getController.getProfileById.value.res!.photoUrl}",
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
-                                )),
-                    ),
-                    SizedBox(height: h * 0.01),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Obx(() => _getController.getProfileById.value.res == null
+                                ),
+                              ),
+                            ))),
+                        SizedBox(height: h * 0.02),
+                        Center(child: Obx(() => _getController.getProfileById.value.res == null
+                            ? Text('Salom, Mehmon', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500))
+                            : Text('${_getController.getProfileById.value.res!.fistName} ${_getController.getProfileById.value.res!.lastName}',
+                            style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500)))),
+                        SizedBox(height: h * 0.02),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Obx(() => _getController.getProfileById.value.res == null
                                 ? const SizedBox()
-                                : UserDetIalWidget(
-                                    labelText: 'Post',
-                                    labelTextCount: '${_getController.getProfileById.value.res!.postsCount}',
-                                    icon: 1,
-                                  )),
-                        Obx(() => _getController.getProfileById.value.res == null
+                                : InkWell(
+                              overlayColor: MaterialStateProperty.all(Colors.transparent),
+                              onTap: () {
+                                showBottomSheetFollowers(context,_getController.getProfileById.value.res!.id,0);
+                              },
+                              child: UserDetIalWidget(labelText: 'Post', labelTextCount: '${_getController.meUsers.value.res?.business?.postsCount}',
+                                icon: 1,
+                              ),
+                            )
+                            ),
+                            Obx(() => _getController.getProfileById.value.res == null
                                 ? const SizedBox()
-                                : UserDetIalWidget(
-                                    labelText: 'Obunachilar',
-                                    labelTextCount: '${_getController.getProfileById.value.res!.followersCount}',
-                                    icon: 2,
-                                  )),
-                        Obx(() => _getController.getProfileById.value.res == null
+                                : InkWell(
+                              overlayColor: MaterialStateProperty.all(Colors.transparent),
+                              onTap: () {
+                                showBottomSheetFollowers(context,_getController.getProfileById.value.res!.id,0);
+                              },
+                              child: UserDetIalWidget(
+                                labelText: 'Obunachilar',
+                                labelTextCount: '${_getController.getProfileById.value.res?.followersCount}',
+                                icon: 2,
+                              ),
+                            )
+                            ),
+                            Obx(() => _getController.getProfileById.value.res == null
                                 ? const SizedBox()
-                                : UserDetIalWidget(
-                                    labelText: 'Do\'stlar',
-                                    labelTextCount: '${_getController.getProfileById.value.res!.followingCount}',
-                                    icon: 3,
-                                  )),
-                      ],
-                    ),
-                    SizedBox(height: h * 0.02),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Container(
-                            width: w,
-                            padding: EdgeInsets.only(left: w * 0.03, right: w * 0.03, bottom: h * 0.01),
-                            child: Obx(() => _getController.show.value == false
-                                ? Row(
+                                : InkWell(
+                              overlayColor: MaterialStateProperty.all(Colors.transparent),
+                              onTap: () {
+                                showBottomSheetFollowers(context,_getController.getProfileById.value.res!.id,1);
+                              },
+                              child: UserDetIalWidget(
+                                labelText: 'Do\'stlar',
+                                labelTextCount:
+                                '${_getController.getProfileById.value.res?.followingCount}',
+                                icon: 3,
+                              ),)
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, top: h * 0.02),
+                          child:  Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                'Foydalanuvchi haqida',
+                                style: TextStyle(
+                                  fontSize: w * 0.045,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const Expanded(child: SizedBox()),
+                              InkWell(
+                                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                  onTap: () {
+                                    showDialogValidation(context, 'Foydalanuvchi haqida', '${_getController.getProfileById.value.res?.bio}');
+                                  },
+                                  child: Row(
                                     children: [
-                                      HeroIcon(
-                                        HeroIcons.phone,
-                                        color: Colors.blue,
-                                        size: w * 0.05,
-                                      ),
-                                      SizedBox(
-                                        width: w * 0.02,
-                                      ),
-                                      Obx(() => _getController.getProfileById.value.res == null
-                                          ? const SizedBox()
-                                          : Text(_getController.getProfileById.value.res!.phoneNumber ?? '',
-                                              style: TextStyle(
-                                                fontSize: w * 0.04,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            )),
-                                      //show
-                                      SizedBox(width: w * 0.02),
-                                      InkWell(
-                                        onTap: () {
-                                          _getController.show.value = true;
-                                        },
-                                        child: Text(
-                                          'Ko\'proq',
-                                          style: TextStyle(
-                                            fontSize: w * 0.03,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.blue,
-                                          ),
+                                      Text(
+                                        'Batafsil',
+                                        style: TextStyle(
+                                          fontSize: w * 0.04,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.blue,
                                         ),
+                                      ),
+                                      SizedBox(width: w * 0.01),
+                                      HeroIcon(
+                                        HeroIcons.chevronRight,
+                                        color: Colors.blue,
+                                        size: w * 0.04,
                                       ),
                                     ],
                                   )
-                                : Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Obx(() => _getController.getProfileById.value.res == null
-                                              ? const SizedBox()
-                                              : Text(_getController.getProfileById.value.res!.categoryName ?? '',
-                                                  style: TextStyle(
-                                                    fontSize: w * 0.04,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Colors.grey[500],
-                                                  ),
-                                                )),
-                                          SizedBox(width: w * 0.02),
-                                          Obx(() => _getController.getProfileById.value.res == null
-                                              ? const SizedBox()
-                                              : Text("${_getController.getProfileById.value.res!.experience} yillik ish tajribasi",
-                                                  style: TextStyle(
-                                                    fontSize: w * 0.04,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                )),
-                                        ],
-                                      ),
-                                      SizedBox(height: h * 0.01),
-                                      SizedBox(height: h * 0.01),
-                                      Row(
-                                        children: [
-                                          HeroIcon(
-                                            HeroIcons.phone,
-                                            color: Colors.blue,
-                                            size: w * 0.05,
-                                          ),
-                                          SizedBox(
-                                            width: w * 0.02,
-                                          ),
-                                          Obx(() => _getController.getProfileById.value.res == null
-                                              ? const SizedBox()
-                                              : Text(
-                                                  _getController.getProfileById.value.res!.phoneNumber ?? '',
-                                                  style: TextStyle(
-                                                    fontSize: w * 0.04,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                )),
-                                        ],
-                                      ),
-                                      SizedBox(height: h * 0.01),
-                                      Row(
-                                        children: [
-                                          HeroIcon(
-                                            HeroIcons.mapPin,
-                                            color: Colors.blue,
-                                            size: w * 0.05,
-                                          ),
-                                          SizedBox(
-                                            width: w * 0.02,
-                                          ),
-                                          Obx(() => _getController.getProfileById.value.res == null
-                                              ? const SizedBox()
-                                              : Text(_getController.getProfileById.value.res!.address ?? '',
-                                                  style: TextStyle(
-                                                    fontSize: w * 0.04,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                )),
-                                        ],
-                                      ),
-                                      SizedBox(height: h * 0.01),
-                                      Row(
-                                        children: [
-                                          HeroIcon(
-                                            HeroIcons.briefcase,
-                                            color: Colors.blue,
-                                            size: w * 0.05,
-                                          ),
-                                          SizedBox(width: w * 0.02),
-                                          Obx(() => _getController.getProfileById.value.res == null
-                                              ? const SizedBox()
-                                              : Text(
-                                                  _getController.getProfileById.value.res!.officeName ?? '',
-                                                  style: TextStyle(
-                                                    fontSize: w * 0.04,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                )),
-                                          SizedBox(width: w * 0.02),
-                                          InkWell(
-                                            onTap: () {
-                                              _getController.show.value = false;
-                                            },
-                                            child: Text(
-                                              'Kamroq',
-                                              style: TextStyle(
-                                                fontSize: w * 0.03,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.blue,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  )),
+                              )
+                            ],
                           ),
-                          Container(
-                            width: w,
-                            height: h * 0.05,
-                            color: Colors.grey[300],
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () {
-                                      _getController.nextPagesUserDetails.value = 0;
-                                      pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
-                                    },
-                                    overlayColor: MaterialStateProperty.all(Colors.red),
-                                    child: Container(
-                                      color: _getController.nextPagesUserDetails.value == 0
-                                          ? Colors.blue
-                                          : Colors.grey[300],
-                                      alignment: Alignment.center,
-                                      child: Obx(() => _getController.nextPagesUserDetails.value == 0
-                                          ? Text('Post',
-                                              style: TextStyle(
-                                                fontSize: w * 0.04,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.white,
-                                              ),
-                                            )
-                                          : Text('Post',
-                                              style: TextStyle(
-                                                fontSize: w * 0.04,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black,
-                                              ),
-                                            )),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () {
-                                      _getController.changeSheetPages(0);
-                                      showBottomSheetList(context);
-                                    },
-                                    overlayColor: MaterialStateProperty.all(Colors.red),
-                                    child: Container(
-                                      color: _getController.nextPagesUserDetails.value == 3
-                                          ? Colors.blue
-                                          : Colors.grey[300],
-                                      alignment: Alignment.center,
-                                      child: Obx(() => _getController.nextPagesUserDetails.value == 3
-                                          ? Text('Booking',
-                                              style: TextStyle(
-                                                fontSize: w * 0.04,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.white,
-                                              ),
-                                            )
-                                          : Text('Booking',
-                                              style: TextStyle(
-                                                fontSize: w * 0.04,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black,
-                                              ),
-                                            )),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () {
-                                      _getController.nextPagesUserDetails.value = 21;
-                                      pageController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Curves.ease);
-                                    },
-                                    overlayColor: MaterialStateProperty.all(Colors.red),
-                                    child: Container(
-                                      color: _getController.nextPagesUserDetails.value == 1
-                                          ? Colors.blue
-                                          : Colors.grey[300],
-                                      alignment: Alignment.center,
-                                      child: Obx(() => _getController.nextPagesUserDetails.value == 1
-                                          ? Text('Bio',
-                                              style: TextStyle(
-                                                fontSize: w * 0.04,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.white,
-                                              ),
-                                            )
-                                          : Text('Bio',
-                                              style: TextStyle(
-                                                fontSize: w * 0.04,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black,
-                                              ),
-                                            )),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, top: h * 0.02),
+                          child: Text(
+                            '${_getController.getProfileById.value.res?.bio}',
+                            style: TextStyle(
+                              fontSize: w * 0.04,
+                              color: Colors.grey,
                             ),
                           ),
-                          Container(
-                            width: w,
-                            height: _getController.show.value ? h * 0.3 : h * 0.44,
-                            padding: EdgeInsets.only(left: w * 0.03, right: w * 0.03, top: h * 0.01),
-                            child: PageView(
-                              onPageChanged: (index) {
-                                _getController.nextPagesUserDetails.value = index;
-                              },
-                              controller: pageController,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, top: h * 0.02, bottom: h * 0.02),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                'Foydalanuvchi ma’lumotlari',
+                                style: TextStyle(
+                                  fontSize: w * 0.045,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const Expanded(child: SizedBox()),
+                              InkWell(
+                                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                  onTap: () {
+                                    showDialogValidation(context, 'Foydalanuvchi ma’lumotlari', ''
+                                        '${_getController.getProfileById.value.res?.phoneNumber}\n'
+                                        '${_getController.getProfileById.value.res?.officeAddress}\n'
+                                        '${_getController.getProfileById.value.res?.officeName}\n'
+                                        '${_getController.getProfileById.value.res?.experience}\n'
+                                        '${_getController.getProfileById.value.res?.categoryName}\n');
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Batafsil',
+                                        style: TextStyle(
+                                          fontSize: w * 0.04,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                      SizedBox(width: w * 0.01),
+                                      HeroIcon(
+                                        HeroIcons.chevronRight,
+                                        color: Colors.blue,
+                                        size: w * 0.04,
+                                      ),
+                                    ],
+                                  )
+                              )
+                            ],
+                          ),
+                        ),
+                        //Obx(() => _getController.meUsers.value.res?.business != null
+                        Obx(() => _getController.getProfileById.value.res != null
+                            ? Padding(
+                            padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, bottom: h * 0.02),
+                            child: Column(
                               children: [
-                                SizedBox(
-                                  width: w,
-                                  height: h * 0.2,
-                                  child: Obx(() => _getController.getPostList.value.res == null
-                                            ? Center(
-                                                child: Text(
-                                                'Ma\'lumotlar yo\'q',
-                                                style: TextStyle(
-                                                  fontSize: w * 0.04,
-                                                  fontWeight: FontWeight.w500,
+                                Row(
+                                  children: [
+                                    //Text(_getController.meUsers.value.res?.business?.categoryName ?? '',
+                                    Text(_getController.getProfileById.value.res?.categoryName ?? '',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    SizedBox(width: w * 0.02),
+                                    Text(
+                                      //_getController.meUsers.value.res?.business?.experience == null ? '' : '${_getController.meUsers.value.res?.business?.experience} yillik ish tajribasi',
+                                      _getController.getProfileById.value.res?.experience == null ? '' : '${_getController.getProfileById.value.res?.experience} yillik ish tajribasi',
+                                      style: TextStyle(
+                                        fontSize: w * 0.04,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: h * 0.01),
+                                TextEditButton(
+                                  //text: '${_getController.meUsers.value.res?.phoneNumber}',
+                                  text: '${_getController.getProfileById.value.res?.phoneNumber}',
+                                  color: Colors.blue,
+                                  icon: 'assets/images/user_call.png',
+                                ),
+                                TextEditButton(
+                                  //text: '${_getController.meUsers.value.res?.business?.officeAddress}',
+                                  text: '${_getController.getProfileById.value.res?.officeAddress}',
+                                  color: Colors.blue,
+                                  icon: 'assets/images/user_location.png',
+                                ),
+                                TextEditButton(
+                                  //text: '${_getController.meUsers.value.res?.business?.officeName}',
+                                  text: '${_getController.getProfileById.value.res?.officeName}',
+                                  color: Colors.blue,
+                                  icon: 'assets/images/user_work.png',
+                                ),
+                              ],
+                            )
+                        ) : const SizedBox()),
+                        Obx(() => _getController.getFollowing.value.res != null && _getController.getFollowing.value.res!.isNotEmpty
+                            ? Padding(
+                          padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, bottom: h * 0.02),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                'Dostlar',
+                                style: TextStyle(
+                                  fontSize: w * 0.045,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const Expanded(child: SizedBox()),
+                              InkWell(
+                                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                  onTap: () {
+                                    showBottomSheetFollowers(context,_getController.getProfileById.value.res!.id,1);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Batafsil',
+                                        style: TextStyle(
+                                          fontSize: w * 0.04,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                      SizedBox(width: w * 0.01),
+                                      HeroIcon(
+                                        HeroIcons.chevronRight,
+                                        color: Colors.blue,
+                                        size: w * 0.04,
+                                      ),
+                                    ],
+                                  )
+                              )
+                            ],
+                          ),
+                        ) : const SizedBox()),
+                        Obx(() => _getController.getFollowing.value.res != null && _getController.getFollowing.value.res!.isNotEmpty
+                            ? SizedBox(
+                          height: h * 0.15,
+                          width: w * 0.95,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: _getController.getFollowing.value.res!.length,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                onTap: () {
+                                  showLoadingDialog(context);
+                                  ApiController().profileById(int.parse(_getController.getFollowing.value.res![index].id.toString())).then((value) => {_getController.changeProfileById(value),
+                                    Navigator.pop(context),
+                                    _getController.changeBookingBusinessGetListByID(int.parse(_getController.getFollowing.value.res![index].id.toString())),
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()))
+                                  });
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: w * 0.15,
+                                        height: w * 0.15,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(w),
+                                          image: DecorationImage(
+                                            image: NetworkImage('${_getController.getFollowing.value.res![index].photoUrl}'),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: h * 0.01),
+                                      SizedBox(
+                                        width: w * 0.17,
+                                        child: Text(
+                                          '${_getController.getFollowing.value.res![index].fistName}',
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            fontSize: w * 0.04,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ) : const SizedBox()),
+                        //ish jadvali button
+                        Center(
+                          child: SizedBox(
+                            width: w * 0.9,
+                            child:ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              child: Text(
+                                'Ish jadvali',
+                                style: TextStyle(
+                                  fontSize: w * 0.04,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        //postlar
+                        //Obx(() => _getController.meUsers.value.res?.business != null
+                        Obx(() => _getController.getProfileById.value.res != null
+                            ? Padding(
+                          padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, bottom: h * 0.02, top: h * 0.02),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                'Postlar',
+                                style: TextStyle(
+                                  fontSize: w * 0.045,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const Expanded(child: SizedBox()),
+                            ],
+                          ),
+                        ) : const SizedBox()),
+                        Obx(() => _getController.getPostList.value.res == null || _getController.getPostList.value.res!.isEmpty
+                            ? SizedBox(
+                          width: w,
+                          height: h * 0.6,
+                          child: const Center(child: Text('Ma\'lumotlar topilmadi'),),
+                        ) : SizedBox(
+                          height: h * 0.6,
+                          child: SizedBox(
+                            width: w,
+                            child: SmartRefresher(
+                              enablePullDown: true,
+                              enablePullUp: true,
+                              header: CustomHeader(
+                                builder: (BuildContext
+                                context, RefreshStatus?mode) {
+                                  Widget body;
+                                  if (mode == RefreshStatus.idle) {
+                                    body = const Text("Ma`lumotlarni yangilash uchun tashlang");
+                                  } else if (mode == RefreshStatus.refreshing) {
+                                    body = const CircularProgressIndicator(
+                                      color: Colors.blue,
+                                      backgroundColor: Colors.white,
+                                      strokeWidth: 2,
+                                    );
+                                  } else if (mode == RefreshStatus.failed) {
+                                    body = const Text("Yuklashda xatolik");
+                                  } else if (mode == RefreshStatus.canRefresh) {
+                                    body = const Text("Ma`lumotlarni yangilash uchun tashlang");
+                                  } else {
+                                    body = const Text("Ma`lumotlar yangilandi");
+                                  }
+                                  return SizedBox(
+                                    height: h * 0.1,
+                                    child: Center(child: body),
+                                  );
+                                },
+                              ),
+                              footer: CustomFooter(
+                                builder: (BuildContext
+                                context, LoadStatus?mode) {
+                                  Widget body;
+                                  if (mode == LoadStatus.idle) {
+                                    body = const SizedBox();
+                                  } else if (mode == LoadStatus.loading) {
+                                    body = const CircularProgressIndicator(
+                                      color: Colors.blue,
+                                      backgroundColor:
+                                      Colors.white,
+                                      strokeWidth: 2,
+                                    );
+                                  } else if (mode == LoadStatus.failed) {
+                                    body = const Text("Yuklashda xatolik");
+                                  } else if (mode == LoadStatus.canLoading) {
+                                    body = const SizedBox();
+                                  } else {
+                                    body = const Text("Ma`lumotlar yangilandi");
+                                  }
+                                  return SizedBox(
+                                    height: h * 0.1,
+                                    child: Center(child: body),
+                                  );
+                                },
+                              ),
+                              controller:
+                              _refreshController,
+                              onRefresh: _onRefresh,
+                              onLoading: _onLoading,
+                              child:
+                              ListView.builder(
+                                  itemCount: _getController.getPostList.value.res!.length,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      onTap: () {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getPostList.value.res![index].id,)));
+                                      },
+                                      child:
+                                      Column(
+                                        children: [
+                                          Obx(() => _getController.getPostList.value.res![index].mediaType == 'video'
+                                              ? Stack(
+                                            children: [
+                                              if (_getController.getPostList.value.res![index].photo != '')
+                                                Container(
+                                                  width: w,
+                                                  height: h * 0.3,
+                                                  padding: EdgeInsets.all(w * 0.01),
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      image: NetworkImage('${_getController.getPostList.value.res![index].photo}'),
+                                                      fit: BoxFit.fitWidth,
+                                                    ),
+                                                  ),
                                                 ),
-                                              )): SmartRefresher(
-                                    enablePullDown: true,
-                                    enablePullUp: true,
-                                    header: CustomHeader(
-                                      builder:
-                                          (BuildContext context, RefreshStatus? mode) {
-                                        Widget body;
-                                        if (mode == RefreshStatus.idle) {
-                                          body = const Text(
-                                              "Ma`lumotlarni yangilash uchun tashlang");
-                                        } else if (mode == RefreshStatus.refreshing) {
-                                          body = const CircularProgressIndicator(
-                                            color: Colors.blue,
-                                            backgroundColor: Colors.white,
-                                            strokeWidth: 2,
-                                          );
-                                        } else if (mode == RefreshStatus.failed) {
-                                          body = const Text("Ex Nimadir Xato Ketdi", style: TextStyle( color: Colors.red));
-                                        } else if (mode == RefreshStatus.canRefresh) {
-                                          body = const Text(
-                                              "Ma`lumotlarni yangilash uchun tashlang");
-                                        } else {
-                                          body = const Text("Ma`lumotlar yangilandi");
-                                        }
-                                        return SizedBox(
-                                          height: h * 0.1,
-                                          child: Center(child: body),
-                                        );
-                                      },
-                                    ),
-                                    footer: CustomFooter(
-                                      builder: (BuildContext context, LoadStatus? mode) {
-                                        Widget body;
-                                        if (mode == LoadStatus.idle) {
-                                          body = const SizedBox();
-                                        } else if (mode == LoadStatus.loading) {
-                                          body = const CircularProgressIndicator(
-                                            color: Colors.blue,
-                                            backgroundColor: Colors.white,
-                                            strokeWidth: 2,
-                                          );
-                                        } else if (mode == LoadStatus.failed) {
-                                          body = const Text("Ex Nimadir Xato Ketdi", style: TextStyle( color: Colors.red));
-                                        } else if (mode == LoadStatus.canLoading) {
-                                          body = const SizedBox();
-                                        } else {
-                                          body = const Text("Ma`lumotlar yangilandi");
-                                        }
-                                        return SizedBox(
-                                          height: h * 0.1,
-                                          child: Center(child: body),
-                                        );
-                                      },
-                                    ),
-                                    controller: _refreshController,
-                                    onRefresh: _onRefresh,
-                                    onLoading: _onLoading,
-                                    child: ListView.builder(
-                                        itemCount: _getController.getPostList.value.res!.length,
-                                        itemBuilder: (context, index) {
-                                          return InkWell(
-                                            splashColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () {
-                                              Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getPostList.value.res![index].id,)));
-                                            },
-                                            child: Container(
-                                              padding: EdgeInsets.only(bottom: h * 0.01),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Obx(() => _getController.getPostList.value.res![index].mediaType == 'video'
-                                                      ? Stack(
-                                                    children: [
-                                                      Container(
-                                                        width: w * 0.28,
-                                                        height: h * 0.13,
-                                                        margin: EdgeInsets.only(right: w * 0.02),
-                                                        decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(3),
-                                                          image: DecorationImage(
-                                                            image: NetworkImage('${_getController.getPostList.value.res![index].photo}'),
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
+                                              if (_getController.getPostList.value.res![index].photo == '')
+                                                Container(
+                                                  width: w,
+                                                  height: h * 0.3,
+                                                  padding: EdgeInsets.all(w * 0.01),
+                                                  decoration: const BoxDecoration(
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              Positioned(
+                                                  width: w,
+                                                  height: h * 0.3,
+                                                  child: Center(
+                                                    child: Container(
+                                                      padding: EdgeInsets.all(w * 0.025),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.black.withOpacity(0.5),
+                                                        borderRadius: BorderRadius.circular(w * 0.1),
                                                       ),
-                                                      Positioned(
-                                                          width: w * 0.28,
-                                                          height: h * 0.13,
-                                                          child: Center(
-                                                            child: InkWell(
-                                                              splashColor: Colors.transparent,
-                                                              hoverColor: Colors.transparent,
-                                                              focusColor: Colors.transparent,
-                                                              highlightColor: Colors.transparent,
-                                                              onTap: () {
-                                                              Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getPostList.value.res![index].id,)));
-                                                            },
-                                                              child: Container(
-                                                                width: w * 0.1,
-                                                                height: h * 0.05,
-                                                                decoration: BoxDecoration(
-                                                                  color: Colors.black.withOpacity(0.5),
-                                                                  borderRadius: BorderRadius.circular(w * 0.1),
-                                                                ),
-                                                                child: Center(
-                                                                  child: Icon(
-                                                                    Icons.play_arrow,
-                                                                    color: Colors.white,
-                                                                    size: w * 0.05,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          )),
-                                                    ],
-                                                  )
-                                                      : Container(
-                                                    width: w * 0.28,
-                                                    height: h * 0.13,
-                                                    margin: EdgeInsets.only(right: w * 0.02),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(3),
-                                                      image: DecorationImage(
-                                                        image: NetworkImage('${_getController.getPostList.value.res![index].photo}'),
-                                                        fit: BoxFit.cover,
+                                                      child: HeroIcon(
+                                                        HeroIcons.play,
+                                                        color: Colors.white,
+                                                        size: w * 0.05,
                                                       ),
                                                     ),
                                                   )),
-                                                  Expanded(child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      SizedBox(
-                                                        height: h * 0.03,
-                                                        child: Text('${_getController.getPostList.value.res![index].title}',
-                                                          style: TextStyle(
-                                                            fontSize: w * 0.04,
-                                                            fontWeight: FontWeight.w500,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: h * 0.03,
-                                                        child: Text('${_getController.getPostList.value.res![index].description}',
-                                                          style: TextStyle(
-                                                            fontSize: w * 0.04,
-                                                            fontWeight: FontWeight.w500,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )),
-                                                ],
+                                            ],
+                                          ) : Container(
+                                            width: w,
+                                            height: h * 0.3,
+                                            padding: EdgeInsets.all(w * 0.01),
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: NetworkImage('${_getController.getPostList.value.res![index].photo}'),
+                                                fit: BoxFit.fitWidth,
                                               ),
                                             ),
-                                          );
-                                        }),
-                                  ),
-                                  ),
-                                ),
-                                Container(
-                                  width: w,
-                                  padding: EdgeInsets.only(
-                                      left: w * 0.02,
-                                      right: w * 0.02,
-                                      bottom: h * 0.01),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(3),
-                                    border: Border.all(color: Colors.grey),
-                                  ),
-                                  //text bio
-                                  child: Obx(() => _getController.getProfileById.value.res == null
-                                          ? const SizedBox()
-                                          : ReadMoreText(
-                                              _getController.getProfileById.value.res!.bio ?? '',
-                                              trimLines: 10,
-                                              colorClickableText: Colors.blue,
-                                              trimMode: TrimMode.Line,
-                                              trimCollapsedText: ' Ko\'proq',
-                                              trimExpandedText: ' Yashirish',
-                                              moreStyle: TextStyle(
-                                                fontSize: w * 0.03,
-                                              ),
-                                              lessStyle: TextStyle(
-                                                fontSize: w * 0.03,
-                                              ),
-                                              style: TextStyle(
-                                                fontSize: w * 0.04,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            )),
-                                ),
-                              ],
+                                          ),
+                                          ),
+                                          Container(
+                                            width: w,
+                                            padding: EdgeInsets.only(left: w * 0.04, top: h * 0.01, bottom: h * 0.01),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                    child: Column(
+                                                      children: [
+                                                        Obx(() => _getController.getPostList.value.res![index].title == '' && _getController.getPostList.value.res![index].description == ''
+                                                            ? const SizedBox()
+                                                            : SizedBox(
+                                                          width: w * 0.9,
+                                                          child: Text('${_getController.getPostList.value.res![index].title}',
+                                                            style: TextStyle(
+                                                              fontSize: w * 0.04,
+                                                              fontWeight: FontWeight.w500,
+                                                            ),
+                                                          ),
+                                                        )),
+                                                        Obx(() => _getController.getPostList.value.res![index].title == '' && _getController.getPostList.value.res![index].description == ''
+                                                            ? const SizedBox()
+                                                            : SizedBox(
+                                                          width: w * 0.9,
+                                                          child: ReadMoreText('${_getController.getPostList.value.res![index].description}',
+                                                            trimLines: 2,
+                                                            colorClickableText: Colors.blue,
+                                                            trimMode: TrimMode.Line,
+                                                            trimCollapsedText: ' Ko\'proq',
+                                                            trimExpandedText: ' Yashirish',
+                                                            style: TextStyle(
+                                                              fontSize: w * 0.04,
+                                                              fontWeight: FontWeight.w500,
+                                                            ),
+                                                            moreStyle: TextStyle(
+                                                              fontSize: w * 0.035,
+                                                              fontWeight: FontWeight.w500,
+                                                            ),
+                                                            lessStyle: TextStyle(
+                                                              fontSize: w * 0.035,
+                                                              fontWeight: FontWeight.w500,
+                                                            ),
+                                                          ),
+                                                        )),
+                                                      ],
+                                                    )),
+                                                SizedBox(
+                                                    child: IconButton(
+                                                      onPressed: () {
+                                                      },
+                                                      icon: HeroIcon(
+                                                        HeroIcons.ellipsisVertical,
+                                                        color: Colors.black,
+                                                        size: w * 0.05,
+                                                      ),
+                                                    ))
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }),
                             ),
                           ),
-                        ],
-                      ),
+                        )),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                )
+            )
+          ],
+        )
         ));
   }
 }

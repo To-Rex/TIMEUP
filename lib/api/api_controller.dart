@@ -68,9 +68,7 @@ class ApiController extends GetxController {
   var bookingCategoryListUrl = 'booking-category/list/';
   var bookingCategoryDeleteUrl = 'booking-category/delete/';
   var bookingCategoryListCreateUrl = 'booking-category/create';
-  //{{host}}/api/v1/following/list/following/1
   var followingListFollowingUrl = 'following/list/following/';
-  //{{host}}/api/v1/following/list/followers/36
   var followingListFollowersUrl = 'following/list/followers/';
 
   Future<String> sendSms(String phoneNumber) async {
@@ -152,23 +150,10 @@ class ApiController extends GetxController {
         final responseBody = await response.stream.bytesToString();
         return Register.fromJson(jsonDecode(responseBody));
       } else {
-        return Register(
-            res: Responses(user: User(id: 0, fistName: '', lastName: '', userName: '', phoneNumber: '', address: '', photoUrl: ''), token: ''),
-            status: false);
+        return Register(res: Responses(user: User(id: 0, fistName: '', lastName: '', userName: '', phoneNumber: '', address: '', photoUrl: ''), token: ''), status: false);
       }
     } catch (e) {
-      return Register(
-          res: Responses(
-              user: User(
-                  id: 0,
-                  fistName: '',
-                  lastName: '',
-                  userName: '',
-                  phoneNumber: '',
-                  address: '',
-                  photoUrl: ''),
-              token: ''),
-          status: false);
+      return Register(res: Responses(user: User(id: 0, fistName: '', lastName: '', userName: '', phoneNumber: '', address: '', photoUrl: ''), token: ''), status: false);
     }
   }
 
