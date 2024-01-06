@@ -52,11 +52,7 @@ class FireBaseApi {
     await messaging.requestPermission();
     await messaging.subscribeToTopic('some-topic');
     await messaging.subscribeToTopic('some-topic1');
-    await messaging.setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+    await messaging.setForegroundNotificationPresentationOptions(alert: true, badge: true, sound: true);
     final fcmToken = await messaging.getToken();
     print('fcmTokenssss: $fcmToken');
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
