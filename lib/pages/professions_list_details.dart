@@ -26,6 +26,7 @@ class ProfessionsListDetails extends StatelessWidget {
   final _scrollController = ScrollController();
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
   late TabController _followTabController;
+  late TabController _tabController;
 
   showLoadingDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
@@ -119,7 +120,7 @@ class ProfessionsListDetails extends StatelessWidget {
     );
   }
 
-  showBottomSheetList(context) {
+  showBottomSheetList1(context) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     showModalBottomSheet(
@@ -157,9 +158,7 @@ class ProfessionsListDetails extends StatelessWidget {
                           child: Obx(() => _getController.sheetPages.value == 0
                               ? Text('Ish jadvali',
                                   style: TextStyle(color: Colors.blue, fontSize: w * 0.04))
-                              : Text('Ish jadvali',
-                                  style: TextStyle(color: Colors.grey, fontSize: w * 0.04)))),
-                    ),
+                              : Text('Ish jadvali',style: TextStyle(color: Colors.grey, fontSize: w * 0.04)))),),
                     Container(
                       width: w * 0.005,
                       height: h * 0.03,
@@ -294,9 +293,6 @@ class ProfessionsListDetails extends StatelessWidget {
                                                 SizedBox(
                                                   width: w * 0.7,
                                                   child: Text(
-                                                    /*'Ushbu mijoz'
-                                                    ' ${_getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
-                                                    '${_getController.bookingBusinessGetList.value.res![index].time!} keladi',*/
                                                     'Ushbu mijoz '
                                                         '${_getController.getBookingBusinessGetListCategory.value.res?.bookings![index].date!.replaceAll('/', '-')} '
                                                         '${_getController.getBookingBusinessGetListCategory.value.res?.bookings![index].time!} keladi',
@@ -632,6 +628,332 @@ class ProfessionsListDetails extends StatelessWidget {
     );
   }
 
+  showBottomSheetList(context) {
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      //showDragHandle: true,
+      isDismissible: true,
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(w * 0.05),
+          topRight: Radius.circular(w * 0.05),
+        ),
+      ),
+      builder: (context) {
+        return SizedBox(
+            width: w,
+            height: MediaQuery.of(context).size.height * 0.8,
+            child: Stack(
+              children: [
+                Positioned(
+                    top: 0 ,
+                    child: Center(
+                      child: Container(
+                        width: w,
+                        height: h * 0.16,
+                        decoration: const BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                          ),
+                        ),
+                      ),
+                    )
+                ),
+                Positioned(
+                  top: h * 0.01,
+                  width: w,
+                  child: Center(
+                    child: Container(
+                      width: w * 0.3,
+                      height: h * 0.005,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+
+                ),
+                Positioned(
+                  top: h * 0.05,
+                  child: SizedBox(
+                    width: w,
+                    height: h * 0.06,
+                    child: Container(
+                      constraints: BoxConstraints.expand(height: h * 0.06),
+                      margin: EdgeInsets.symmetric(horizontal: w * 0.05),
+                      padding: EdgeInsets.all(w * 0.015),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 2,
+                            blurRadius: 2,
+                            offset: const Offset(0, 2), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: TabBar(
+                        onTap: (index) {
+                          //_onTap(index,context);
+                        },
+                        indicatorSize: TabBarIndicatorSize.tab,
+                        dividerColor: Colors.transparent,
+                        controller: _tabController,
+                        labelStyle: TextStyle(
+                          fontSize: w * 0.04,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white, // Selected text color
+                        ),
+                        unselectedLabelColor: Colors.blue, // Unselected text color
+                        indicator: BoxDecoration(
+                          color: Colors.blue, // Background color for the selected tab
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        tabs: [
+                          Tab(
+                            child: SizedBox(
+                              width: w * 0.6,
+                              child: Center(
+                                child: Text(
+                                  'Ish jadvali',
+                                  style: TextStyle(
+                                    fontSize: w * 0.04,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Tab(
+                            child: SizedBox(
+                              width: w * 0.6,
+                              child: Center(
+                                child: Text(
+                                  'Booking',
+                                  style: TextStyle(
+                                    fontSize: w * 0.04,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: h * 0.12,
+                  child: SizedBox(
+                    height: h * 0.08,
+                    width: w,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: h * 0.01),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 2,
+                            blurRadius: 2,
+                            offset: const Offset(0, 2), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              _scrollController.animateTo(
+                                _scrollController.offset - w * 0.3,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeInOut,
+                              );
+                            },
+                            child: SizedBox(
+                              width: w * 0.1,
+                              child: Center(
+                                child: HeroIcon(
+                                  HeroIcons.chevronLeft,
+                                  color: Colors.black,
+                                  size: w * 0.06,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              controller: _scrollController,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 4,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    if (index == 3) {
+                                      showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(2000),
+                                        lastDate: DateTime(2025),
+                                      ).then((value) => {
+                                        _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
+                                        if (_tabController.index == 0) {
+                                          _getController.clearBookingBusinessGetList(),
+                                          ApiController().bookingClientGetList(_dateController.text),
+                                        } else {
+                                          _getController.clearBookingBusinessGetList(),
+                                          ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, _dateController.text),
+                                        }
+                                      });
+                                    }
+                                    _dateController.text = index == 0
+                                        ? ''
+                                        : index == 1
+                                        ? '${DateTime.now().day < 10 ? '0${DateTime.now().day}' : DateTime.now().day}/${DateTime.now().month < 10 ? '0${DateTime.now().month}' : DateTime.now().month}/${DateTime.now().year}'
+                                        : index == 2
+                                        ? '${DateTime.now().day + 1 < 10 ? '0${DateTime.now().day + 1}' : DateTime.now().day + 1}/${DateTime.now().month < 10 ? '0${DateTime.now().month}' : DateTime.now().month}/${DateTime.now().year}'
+                                        : '';
+
+                                    Loading.showLoading(context);
+                                    if (_tabController.index == 0) {
+                                      _getController.clearBookingBusinessGetList();
+                                      ApiController().bookingClientGetList(_dateController.text).then((value) => {
+                                        Loading.hideLoading(context)
+                                      });
+                                    } else {
+                                      _getController.clearBookingBusinessGetList();
+                                      ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, _dateController.text).then((value) => {
+                                        Loading.hideLoading(context)
+                                      });
+                                    }
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(horizontal: w * 0.015, vertical: h * 0.01),
+                                    padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        index == 0
+                                            ? 'Hamma mijozlar'
+                                            : index == 1
+                                            ? 'Bugungi mijozlar'
+                                            : index == 2
+                                            ? 'Keyingi mijozlar'
+                                            : 'Tanlangan mijozlar',
+                                        style: TextStyle(
+                                          fontSize: w * 0.035,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              _scrollController.animateTo(
+                                _scrollController.offset + w * 0.3,
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.easeInOut,
+                              );
+                            },
+                            child: SizedBox(
+                              width: w * 0.1,
+                              child: Center(
+                                child: HeroIcon(
+                                  HeroIcons.chevronRight,
+                                  color: Colors.black,
+                                  size: w * 0.06,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ),
+                Positioned(
+                    top: h * 0.2,
+                    width: w,
+                    height: h * 0.6,
+                    child: SizedBox(
+                        child: Obx(() => _getController.getBookingBusinessGetListCategory.value.res == null || _getController.getBookingBusinessGetListCategory.value.res!.bookings!.isEmpty
+                            ? Center(
+                          child: Text(
+                            'Ma\'lumotlar mavjud emas',
+                            style: TextStyle(
+                              fontSize: w * 0.03,
+                            ),
+                          ),
+                        ) : ListView.builder(
+                            itemCount: _getController.getBookingBusinessGetListCategory.value.res?.bookings!.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: h * 0.01),
+                                    padding: EdgeInsets.only(left: w * 0.03, right: w * 0.02, top: h * 0.02, bottom: h * 0.02),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          spreadRadius: 2,
+                                          blurRadius: 2,
+                                          offset: const Offset(0, 2), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: w * 0.7,
+                                          child: Text(
+                                            'Ushbu mijoz '
+                                                '${_getController.getBookingBusinessGetListCategory.value.res?.bookings![index].date!.replaceAll('/', '-')} '
+                                                '${_getController.getBookingBusinessGetListCategory.value.res?.bookings![index].time!} keladi',
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                              fontSize: w * 0.04,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              );
+                            })),
+                    )
+                )
+              ],
+            )
+        );
+      },
+    );
+  }
+
   showBottomSheetFollowers(context, businessId, tabIndex) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
@@ -960,6 +1282,7 @@ class ProfessionsListDetails extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     _getController.show.value = false;
+    _tabController = TabController(length: 2, vsync: Navigator.of(context));
     ApiController().getMePostList(_getController.getProfileById.value.res?.id);
     ApiController().bookingListBookingAndBookingCategory(_getController.bookingBusinessGetListByID.value, '');
     ApiController().getMyFollowing(context, _getController.meUsers.value.res!.id!);
@@ -996,8 +1319,7 @@ class ProfessionsListDetails extends StatelessWidget {
                   fontSize: w * 0.04,
                   fontWeight: FontWeight.w500,
                 ),
-              )
-                  : Text(_getController.getProfileById.value.res!.userName ?? '',
+              ) : Text(_getController.getProfileById.value.res!.userName ?? '',
                 style: TextStyle(
                   fontSize: w * 0.05,
                   fontWeight: FontWeight.w500,
@@ -1171,8 +1493,7 @@ class ProfessionsListDetails extends StatelessWidget {
                               },
                               child: UserDetIalWidget(labelText: 'Post', labelTextCount: '${_getController.meUsers.value.res?.business?.postsCount}',
                                 icon: 1,
-                              ),
-                            )
+                              ),)
                             ),
                             Obx(() => _getController.getProfileById.value.res == null
                                 ? const SizedBox()
@@ -1446,7 +1767,9 @@ class ProfessionsListDetails extends StatelessWidget {
                           child: SizedBox(
                             width: w * 0.9,
                             child:ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                showBottomSheetList(context);
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blue,
                                 shape: RoundedRectangleBorder(
