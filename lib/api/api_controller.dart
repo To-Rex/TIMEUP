@@ -32,7 +32,8 @@ class ApiController extends GetxController {
   //var context;
 
   //var url = 'http://16.16.182.36:443/api/v1/';
-  var url = 'https://timeup.dizinfeksiya.uz/api/v1/';
+  //var url = 'https://timeup.dizinfeksiya.uz/api/v1/';
+  var url = 'http://139.162.30.106/api/v1/';
   var smsUrl = 'sms/send';
   var lastSmsUrl = 'sms/last-sent-sms';
   var verifyUrl = 'sms/verify';
@@ -140,12 +141,14 @@ class ApiController extends GetxController {
       'address': address,
       'birth_date': birthDate,
     });
-    request.files
-        .add(await http.MultipartFile.fromPath('profile_photo', profilePhoto));
+    request.files.add(await http.MultipartFile.fromPath('profile_photo', profilePhoto));
+    print(request.fields);
     try {
       http.StreamedResponse response = await request.send();
       print(response.statusCode);
       print(response.reasonPhrase);
+      //response body
+      print(await response.stream.bytesToString());
       if (response.statusCode == 200 || response.statusCode == 201) {
         final responseBody = await response.stream.bytesToString();
         return Register.fromJson(jsonDecode(responseBody));

@@ -111,16 +111,14 @@ class LoginUserData extends StatelessWidget {
                   onPressed: () {
                     _pickImage(ImageSource.gallery);
                   },
-                  icon: Obx(
-                    () => getController.image.value == ''
+                  icon: Obx(() => getController.image.value == ''
                         ? HeroIcon(
                             HeroIcons.userCircle,
                             color: Colors.blue,
                             size: w * 0.2 > 100 ? 100 : w * 0.2,
                           )
                         : CircleAvatar(
-                            backgroundImage:
-                                FileImage(File(getController.image.value)),
+                            backgroundImage: FileImage(File(getController.image.value)),
                             radius: 50,
                           ),
                   ),
@@ -208,17 +206,14 @@ class LoginUserData extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Obx(() => getController.getRegion.value.res == null
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
+                        ? const Center(child: CircularProgressIndicator())
                         : DropdownButtonHideUnderline(
                             child: DropdownButton(
                               value: getController.getRegion.value.res![getController.regionIndex.value],
                               onChanged: (String? newValue) {
                                 getController.changeRegionIndex(getController.getRegion.value.res!.indexOf(newValue!));
                               },
-                              items: getController.getRegion.value.res!
-                                  .map<DropdownMenuItem<String>>(
+                              items: getController.getRegion.value.res!.map<DropdownMenuItem<String>>(
                                 (String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
@@ -267,15 +262,7 @@ class LoginUserData extends StatelessWidget {
                       _dateController.text = '0${_dateController.text}';
                     }
                     showLoadingDialog(context, w);
-                    ApiController().registerUser(
-                      nameController.text.toString(),
-                      surnameController.text.toString(),
-                      nikNameController.text.toString(),
-                      phoneNumberController.text.toString(),
-                      getController.getRegion.value.res![getController.regionIndex.value],
-                      getController.image.value,
-                      _dateController.text.toString(),
-                    ).then((value) {
+                    ApiController().registerUser(nameController.text.toString(), surnameController.text.toString(), nikNameController.text.toString(), phoneNumberController.text.toString(), getController.getRegion.value.res![getController.regionIndex.value], getController.image.value, _dateController.text.toString(),).then((value) {
                       if (value.status == true) {
                         GetStorage().write('token', value.res?.token).then((value) => {
                           ApiController().getUserData().then((value) => {
@@ -293,9 +280,7 @@ class LoginUserData extends StatelessWidget {
                     shadowColor: Colors.transparent,
                     backgroundColor: Colors.blue,
                     minimumSize: Size(w * 0.9, h * 0.06),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
                   child: Text('Saqlash',
                     style: TextStyle(
