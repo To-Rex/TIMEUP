@@ -117,6 +117,11 @@ class GetController extends GetxController {
     getBookingBusinessGetListCategory.value = newGetBookingBusinessGetListCategory;
   }
 
+  //clear data BookingBusinessGetListCategory
+  void clearGetBookingBusinessGetListCategory() {
+    getBookingBusinessGetListCategory.value = BookingBusinessGetListCategory();
+  }
+
   //change GetBookingCategory
   void changeGetBookingCategory(GetBookingCategory newGetBookingCategory) {
     getBookingCategory.value = newGetBookingCategory;
