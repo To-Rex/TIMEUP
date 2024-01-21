@@ -48,6 +48,9 @@ class LoginUserData extends StatelessWidget {
       context: context,
       barrierColor: Colors.black.withOpacity(0.5),
       builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7),
+        ),
         content: SizedBox(
           width: w * 0.1,
           height: w * 0.2,
@@ -141,6 +144,52 @@ class LoginUserData extends StatelessWidget {
                   labelText: 'Familiya',
                 ),
                 SizedBox(height: h * 0.02),
+
+                Container(
+                  width: w,
+                  height: h * 0.04,
+                  padding: EdgeInsets.only(left: w * 0.02),
+                  child: Row(
+                    children: [
+                      //male or female checkbox
+                      Obx(() => Checkbox(
+                        value: getController.sendCode.value,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        activeColor: Colors.blue,
+                        onChanged: (value) {
+                          getController.sendCode.value = value!;
+                        },
+                      ),),
+                      Text('Erkak',
+                        style: TextStyle(
+                          fontSize: w * 0.04,
+                          color: Colors.black,
+                        ),
+                      ),
+
+                      SizedBox(width: w * 0.02),
+                      Obx(() => Checkbox(
+                        value: !getController.sendCode.value,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        activeColor: Colors.blue,
+                        onChanged: (value) {
+                          getController.sendCode.value = !value!;
+                        },
+                      ),),
+                      Text('Ayol',
+                        style: TextStyle(
+                          fontSize: w * 0.04,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: h * 0.02),
                 TextFildWidget(
                   controller: nikNameController,
                   labelText: 'Nikname',
@@ -171,7 +220,22 @@ class LoginUserData extends StatelessWidget {
                             initialDate: DateTime.now(),
                             firstDate: DateTime(1900),
                             lastDate: DateTime(2025),
-                          ).then((value) => _dateController.text = '${value!.day}/${value.month}/${value.year}');
+                          ).then((value) => {
+                            if (value!.day.toString().length == 1) {
+                              if (value.month.toString().length == 1) {
+                                _dateController.text = '0${value.day}/0${value.month}/${value.year}'
+                              } else {
+                                _dateController.text = '0${value.day}/${value.month}/${value.year}'
+                              }
+                            } else {
+                              if (value.month.toString().length == 1) {
+                                _dateController.text = '${value.day}/0${value.month}/${value.year}'
+                              } else {
+                                _dateController.text = '${value.day}/${value.month}/${value.year}'
+                              }
+                            }
+
+                          });
                         },
                         child: HeroIcon(
                           HeroIcons.calendar,
@@ -196,6 +260,8 @@ class LoginUserData extends StatelessWidget {
                     ),
                   ),
                 ),
+
+
                 SizedBox(height: h * 0.02),
                 Container(
                   height: h * 0.06,
@@ -262,15 +328,28 @@ class LoginUserData extends StatelessWidget {
                       _dateController.text = '0${_dateController.text}';
                     }
                     showLoadingDialog(context, w);
-                    ApiController().registerUser(nameController.text.toString(), surnameController.text.toString(), nikNameController.text.toString(), phoneNumberController.text.toString(), getController.getRegion.value.res![getController.regionIndex.value], getController.image.value, _dateController.text.toString(),).then((value) {
+                    /*ApiController().registerUser(nameController.text.toString(), surnameController.text.toString(), nikNameController.text.toString(), phoneNumberController.text.toString(), getController.getRegion.value.res![getController.regionIndex.value], getController.image.value, _dateController.text.toString(),).then((value) {
                       if (value.status == true) {
+                        print('111111111111----------');
                         GetStorage().write('token', value.res?.token).then((value) => {
                           ApiController().getUserData().then((value) => {
+                            print('222222222222----------'),
                             Navigator.pop(context),
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage())),
                           })
                         });
                       } else {
+                        print('000000000000----------');
+                        Toast.showToast(context, 'Exx Nimadur xato ketdi', Colors.red, Colors.white);
+                        Navigator.pop(context);
+                      }
+                    });*/
+                    ApiController().registerUser(nameController.text.toString(), surnameController.text.toString(), nikNameController.text.toString(), phoneNumberController.text.toString(), getController.getRegion.value.res![getController.regionIndex.value], getController.image.value, _dateController.text.toString(),).then((value) {
+                      if (value == true) {
+                        Navigator.pop(context);
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()));
+                      } else {
+                        print('000000000000----------');
                         Toast.showToast(context, 'Exx Nimadur xato ketdi', Colors.red, Colors.white);
                         Navigator.pop(context);
                       }

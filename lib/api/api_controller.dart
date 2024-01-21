@@ -124,14 +124,13 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<Register> registerUser(String fistName, String lastName, userName, phoneNumber, address, profilePhoto, birthDate) async {
+  Future<bool> registerUser(String fistName, String lastName, userName, phoneNumber, address, profilePhoto, birthDate) async {
     print(lastName);
     print(userName);
     print(phoneNumber);
     print(address);
     print(profilePhoto);
     print(birthDate);
-
     var request = http.MultipartRequest('POST', Uri.parse(url + registerUrl));
     request.fields.addAll({
       'fist_name': fistName,
@@ -143,22 +142,28 @@ class ApiController extends GetxController {
     });
     request.files.add(await http.MultipartFile.fromPath('profile_photo', profilePhoto));
     print(request.fields);
-    try {
-      http.StreamedResponse response = await request.send();
-      print(response.statusCode);
-      print(response.reasonPhrase);
-      //response body
-      print(await response.stream.bytesToString());
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final responseBody = await response.stream.bytesToString();
-        return Register.fromJson(jsonDecode(responseBody));
-      } else {
-        return Register(res: Responses(user: User(id: 0, fistName: '', lastName: '', userName: '', phoneNumber: '', address: '', photoUrl: ''), token: ''), status: false);
-      }
-    } catch (e) {
-      return Register(res: Responses(user: User(id: 0, fistName: '', lastName: '', userName: '', phoneNumber: '', address: '', photoUrl: ''), token: ''), status: false);
+
+    http.StreamedResponse response = await request.send();
+
+    print(response.statusCode);
+    print(response.reasonPhrase);
+
+    // Read the response stream only once and store it in a variable
+    String responseBody = await response.stream.bytesToString();
+    print('=====-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= $responseBody');
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      var jsonResponse = json.decode(responseBody);
+      _getController.changeWidgetOptions();
+      GetStorage().write('token', jsonResponse['res']['token']).then((value) => {
+        getUserData()
+      });
+      return true;
+    } else {
+      return false;
     }
   }
+
 
   Future<MeUser> getUserData() async {
     print(GetStorage().read('token'));
@@ -198,16 +203,7 @@ class ApiController extends GetxController {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return MeUser.fromJson(jsonDecode(response.body));
     } else {
-      return MeUser(
-          res: MeRes(
-            fistName: '',
-            lastName: '',
-            userName: '',
-            phoneNumber: '',
-            address: '',
-            photoUrl: '',
-          ),
-          status: false);
+      return MeUser(res: MeRes(fistName: '', lastName: '', userName: '', phoneNumber: '', address: '', photoUrl: '',), status: false);
     }
   }
 

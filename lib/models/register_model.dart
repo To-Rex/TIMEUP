@@ -8,15 +8,15 @@ class Register {
     res = json['res'] != null
         ? Responses.fromJson(json['res'])
         : Responses(
-            user: User(
-                id: 0,
-                fistName: '',
-                lastName: '',
-                userName: '',
-                phoneNumber: '',
-                address: '',
-                photoUrl: ''),
-            token: '');
+        user: User(
+            id: 0,
+            fistName: '',
+            lastName: '',
+            userName: '',
+            phoneNumber: '',
+            address: '',
+            photoUrl: ''),
+        token: '');
     status = json['status'] ?? false;
   }
 
@@ -51,13 +51,13 @@ class Responses {
     user = json['user'] != null
         ? User.fromJson(json['user'])
         : User(
-            id: 0,
-            fistName: '',
-            lastName: '',
-            userName: '',
-            phoneNumber: '',
-            address: '',
-            photoUrl: '');
+        id: 0,
+        fistName: '',
+        lastName: '',
+        userName: '',
+        phoneNumber: '',
+        address: '',
+        photoUrl: '');
     token = json['token'] ?? '';
   }
 
@@ -91,12 +91,12 @@ class User {
 
   User(
       {this.id,
-      this.fistName,
-      this.lastName,
-      this.userName,
-      this.phoneNumber,
-      this.address,
-      this.photoUrl});
+        this.fistName,
+        this.lastName,
+        this.userName,
+        this.phoneNumber,
+        this.address,
+        this.photoUrl});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'] ?? 0;
