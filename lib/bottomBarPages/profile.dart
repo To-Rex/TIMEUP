@@ -1494,7 +1494,6 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-
   final ImagePicker _picker = ImagePicker();
   var croppedImage;
 
