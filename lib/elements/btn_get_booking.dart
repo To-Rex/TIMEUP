@@ -21,6 +21,10 @@ class BookingGetSer extends StatelessWidget {
     return Container(
       width: w * 0.4,
       margin: EdgeInsets.only(top: h * 0.02),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(radius),
+
+      ),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
@@ -29,6 +33,7 @@ class BookingGetSer extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radius),
           ),
+          elevation: 6,
         ),
         child: Text(text,
           style: TextStyle(

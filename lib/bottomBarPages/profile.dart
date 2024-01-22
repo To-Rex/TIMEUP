@@ -959,6 +959,7 @@ class ProfilePage extends StatelessWidget {
                               ],
                             ),
                           ),
+                          SizedBox(height: h * 0.02),
                           TextFildWidget(
                             controller: _nameController,
                             labelText: 'Nomi',
@@ -975,12 +976,14 @@ class ProfilePage extends StatelessWidget {
                             controller: _durationController,
                             labelText: 'Davomiyligi',
                             keyboardType: TextInputType.number,
+                            suffixText: 'min',
                           ),
                           SizedBox(height: h * 0.02),
                           TextFildWidget(
                             controller: _priceController,
                             labelText: 'Narxi',
                             keyboardType: TextInputType.number,
+                            suffixText: 'so\'m',
                           ),
                           SizedBox(height: h * 0.02),
                           SizedBox(

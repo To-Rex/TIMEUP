@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 class TextFildWidget extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
-  //keyboard type
   final TextInputType? keyboardType;
+  final String? suffixText;
 
   const TextFildWidget(
       {super.key,
       required this.controller,
       required this.labelText,
-      this.keyboardType});
+      this.keyboardType,
+      this.suffixText
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -38,16 +40,17 @@ class TextFildWidget extends StatelessWidget {
         keyboardType: keyboardType,
         maxLines: 1,
         minLines: 1,
-
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           hintText: labelText,
-          hintStyle: const TextStyle(color: Colors.black54),
+          hintStyle: TextStyle(color: Colors.black54, fontSize: w * 0.035),
           border: InputBorder.none,
+          suffixText: suffixText,
+          suffixStyle: TextStyle(color: Colors.black54, fontSize: w * 0.035),
         ),
         style: TextStyle(
           color: Colors.black,
-          fontSize: w * 0.04 > 20 ? 20 : w * 0.04,
+          fontSize: w * 0.035 > 20 ? 20 : w * 0.035,
         ),
       ),
     );
