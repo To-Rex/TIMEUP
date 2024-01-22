@@ -1099,7 +1099,7 @@ class ProfilePage extends StatelessWidget {
                 top: h * 0.13,
                 width: w,
                 child: Container(
-                  height: h * 0.07,
+                  height: h * 0.06,
                   margin: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
                   padding: EdgeInsets.only(left: w * 0.05, right: w * 0.02),
                   decoration: BoxDecoration(
@@ -1117,12 +1117,18 @@ class ProfilePage extends StatelessWidget {
                   ),
                   child: TextField(
                     controller: _dateController,
+                    style: TextStyle(
+                      fontSize: w * 0.035,
+                      color: Colors.black,
+                    ),
                     onChanged: (value) {
                       if (value != '') {
-                        ApiController().bookingBusinessGetList(businessId, value).then((value) => getController.changeBookingBusinessGetList(value));
+                        ApiController().bookingBusinessGetList(businessId, value);
                       }
                     },
                     decoration: InputDecoration(
+                      //bottomline false
+                      border: InputBorder.none,
                       suffixIcon: InkWell(
                           onTap: () {
                             showDatePicker(
@@ -1145,7 +1151,6 @@ class ProfilePage extends StatelessWidget {
                       hintText: 'MM / DD / YYYY',
                       hintStyle: TextStyle(
                         fontSize: w * 0.035,
-                        fontWeight: FontWeight.w500,
                         color: Colors.grey,
                       ),
                     ),
