@@ -1494,6 +1494,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
+
   final ImagePicker _picker = ImagePicker();
   var croppedImage;
 
@@ -1568,8 +1569,8 @@ class ProfilePage extends StatelessWidget {
       },
       child: Obx(() => getController.meUsers.value.res != null
           ? SizedBox(
-              child: Obx(() => getController.entersUser.value == 0
-                  ? Obx(() => getController.meUsers.value.res?.business != null
+              child: getController.entersUser.value == 0
+                  ? getController.meUsers.value.res?.business != null
                   ? SizedBox(width: w, height: h,
                   child: Stack(
                     children: [
@@ -2438,18 +2439,16 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                     ),
-
                   ],
                 )
               )
-              ) : getController.entersUser.value == 1
+                : getController.entersUser.value == 1
                         ? getController.meUsers.value.res?.business == null
                             ? EditUserPage()
                             : EditBusinessUserPage()
                         : getController.entersUser.value == 2
                             ? MakeBusinessPage()
                             : const SizedBox(),
-              ),
             )
           : Center(
               child: Column(
@@ -2520,10 +2519,5 @@ class ProfilePage extends StatelessWidget {
               ),
             )),
     );
-  }
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('croppedImage', croppedImage));
   }
 }
