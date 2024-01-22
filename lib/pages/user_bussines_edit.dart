@@ -19,22 +19,11 @@ class EditBusinessUserPage extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController surnameController = TextEditingController();
   final TextEditingController experienceController = TextEditingController();
-  final TextEditingController nameInstitutionController =
-      TextEditingController();
+  final TextEditingController nameInstitutionController = TextEditingController();
 
-  //bio
   final TextEditingController bioController = TextEditingController();
-
-  //day off
   final TextEditingController dayOffController = TextEditingController();
-
-  //page controller
   final PageController pageController = PageController();
-
-  getUsers() async {
-    ApiController().getUserData();
-  }
-
   final ImagePicker _picker = ImagePicker();
   var croppedImage;
 
