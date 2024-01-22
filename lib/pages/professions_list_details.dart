@@ -1575,7 +1575,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                       onTap: () {
                                         showLoadingDialog(context);
                                         ApiController().follow(_getController.getFollowers.value.res![index].businessId).then((value) => {
-                                          if (value == true){
+                                          if (value.status == true){
                                             ApiController().getMyFollowers(context,businessId),
                                             Navigator.pop(context),
                                             showDialogValidation(context, 'Obuna qilindi', 'Obuna qilindi'),
@@ -1613,6 +1613,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                           ApiController().unFollow(_getController.getFollowers.value.res![index].businessId).then((value) => {
                                             if (value == true){
                                               ApiController().getMyFollowers(context,businessId),
+                                              ApiController().getMyFollowing(context,_getController.meUsers.value.res!.id!),
                                               Navigator.pop(context),
                                               showDialogValidation(context, 'Obuna bekor qilindi', 'Obuna bekor qilindi'),
                                             } else {
@@ -1697,7 +1698,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Container(
+                                  SizedBox(
                                     width: w * 0.45,
                                     child: Text(
                                       '${_getController.getFollowing.value.res![index].userName}',
@@ -1707,11 +1708,11 @@ class ProfessionsListDetails extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Expanded(child: SizedBox()),
+                                  const Expanded(child: SizedBox()),
                                   //button Dostlar
                                   InkWell(
                                     onTap: () {
-                                      showLoadingDialog(context);
+
                                     },
                                     child: Container(
                                       width: w * 0.2,
