@@ -12,6 +12,7 @@ class SamplePage extends StatelessWidget {
   final GetController _getController = Get.put(GetController());
 
   void _onItemTapped(int index) {
+    _getController.onScroll.value = false;
     _getController.changeSelectedDay(0);
     _getController.changeWidgetOptions();
     _getController.enters.value = 0;
