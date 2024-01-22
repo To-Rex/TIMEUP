@@ -915,9 +915,7 @@ class ProfilePage extends StatelessWidget {
         return Container(
           height: MediaQuery.of(context).size.height * 0.8,
           width: w,
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -1177,7 +1175,7 @@ class ProfilePage extends StatelessWidget {
                   controller: _followTabController,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    Obx(() => getController.getFollowers.value.res != null || getController.getFollowers.value.res!.isNotEmpty || getController.getFollowers.value.res! != []
+                    Obx(() => getController.getFollowers.value.res!.isNotEmpty
                         ? Container(
                       margin: EdgeInsets.only(top: h * 0.02),
                       padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
@@ -1308,17 +1306,15 @@ class ProfilePage extends StatelessWidget {
                       ),
                     )
                         : SizedBox(
-                      child: Center(
-                        child: Text(
+                      child: Center(child: Text(
                           'Obunachilar topilmadi',
                           style: TextStyle(
-                            fontSize: w * 0.04,
-                            fontWeight: FontWeight.w500,
-                          ),
+                              fontSize: w * 0.035,
+                              color: Colors.black,),
                         ),
                       ),
                     )),
-                    Obx(() => getController.getFollowing.value.res != null || getController.getFollowing.value.res!.isNotEmpty || getController.getFollowing.value.res! != []
+                    Obx(() => getController.getFollowing.value.res!.isNotEmpty
                         ? Container(
                       margin: EdgeInsets.only(top: h * 0.02),
                       padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
@@ -1399,14 +1395,12 @@ class ProfilePage extends StatelessWidget {
                         },
                       ),
                     ) : SizedBox(
-                      child: Container(
-                        child: Center(
-                          child: Text(
-                            'Dostlar topilmadi',
-                            style: TextStyle(
-                              fontSize: w * 0.04,
-                              fontWeight: FontWeight.w500,
-                            ),
+                      child: Center(
+                        child: Text(
+                          'Dostlar topilmadi',
+                          style: TextStyle(
+                            fontSize: w * 0.04,
+                            color: Colors.black,
                           ),
                         ),
                       ),
