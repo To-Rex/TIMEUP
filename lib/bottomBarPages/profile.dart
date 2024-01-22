@@ -904,7 +904,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  showBottomSheetCalendar(context, businessId) {
+  showBottomSheetCalendar1(context, businessId) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     ApiController().bookingBusinessGetList(businessId, '');
@@ -1035,6 +1035,126 @@ class ProfilePage extends StatelessWidget {
               )),
             ],
           ),
+        );
+      },
+    );
+  }
+
+  showBottomSheetCalendar(context, businessId) {
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    ApiController().bookingBusinessGetList(businessId, '');
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.8,
+          width: w,
+          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+          child: Stack(
+            children: [
+              Positioned(
+                top: 0,
+                  child: Container(
+                    width: w,
+                    height: h * 0.16,
+                    decoration: const BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10)
+                      ),
+                    ),
+                  )
+              ),
+              Positioned(
+                top: h * 0.02,
+                width: w,
+                child: Center(
+                  child: Container(
+                    width: w * 0.3,
+                    height: h * 0.005,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: h * 0.06,
+                width: w,
+                child: Center(
+                  child: Text('kunni tanlang',
+                    style: TextStyle(
+                      fontSize: w * 0.05,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: h * 0.13,
+                width: w,
+                child: Container(
+                  height: h * 0.07,
+                  margin: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
+                  padding: EdgeInsets.only(left: w * 0.05, right: w * 0.02),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    shape: BoxShape.rectangle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 2,
+                        blurRadius: 2,
+                        offset: const Offset(0, 2), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: _dateController,
+                    onChanged: (value) {
+                      if (value != '') {
+                        ApiController().bookingBusinessGetList(businessId, value).then((value) => getController.changeBookingBusinessGetList(value));
+                      }
+                    },
+                    decoration: InputDecoration(
+                      suffixIcon: InkWell(
+                          onTap: () {
+                            showDatePicker(
+                              context: context,
+                              initialDate: _dateController.text == '' ? DateTime.now() : DateTime.parse('${_dateController.text.substring(6, 10)}-${_dateController.text.substring(3, 5)}-${_dateController.text.substring(0, 2)}'),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime(2025),
+                            ).then((value) => {
+                                  if (value != null){
+                                      _dateController.text = '${value.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
+                                      ApiController().bookingBusinessGetList(businessId, _dateController.text).then((value) => getController.changeBookingBusinessGetList(value))
+                                    }
+                                });
+                          },
+                          child: HeroIcon(
+                            HeroIcons.calendar,
+                            color: Colors.black,
+                            size: w * 0.06,
+                          )),
+                      hintText: 'MM / DD / YYYY',
+                      hintStyle: TextStyle(
+                        fontSize: w * 0.035,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+
+                )
+              )
+            ],
+          )
         );
       },
     );
@@ -1464,8 +1584,6 @@ class ProfilePage extends StatelessWidget {
       ApiController().bookingCategoryList(getController.meUsers.value.res!.business?.id);
     }
     if (getController.meUsers.value.res != null && getController.meUsers.value.res?.business != null) ApiController().getMyFollowing(context,getController.meUsers.value.res!.id!);
-    //getcontroller().onScroll
-    //pastga qarab surilganda onScroll true bo'ladi aks holda false
     _scrollController.addListener(() {
       if (_scrollController.position.userScrollDirection == ScrollDirection.reverse) {
         getController.onScroll.value = true;
