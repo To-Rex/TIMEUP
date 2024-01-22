@@ -465,7 +465,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  showBottomSheetServices(context,businessId){
+  showBottomSheetServices1(context,businessId){
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     ApiController().bookingCategoryList(businessId);
@@ -535,7 +535,15 @@ class ProfilePage extends StatelessWidget {
                               padding: EdgeInsets.only(top: h * 0.01,bottom: h * 0.01,left: w * 0.05),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Colors.grey[200],
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 2,
+                                    blurRadius: 2,
+                                    offset: const Offset(0, 2), // changes position of shadow
+                                  ),
+                                ],
                               ),
                               child:  Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -713,6 +721,310 @@ class ProfilePage extends StatelessWidget {
               )),
             ],
           ),
+        );
+      }
+    );
+  }
+
+  showBottomSheetServices(context,businessId){
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    ApiController().bookingCategoryList(businessId);
+    getController.nextPagesUserDetails.value = 0;
+    showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.white,
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
+        side: BorderSide.none,
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+        ),
+      builder: (context){
+        return SizedBox(
+          height: MediaQuery.of(context).size.height * 0.85,
+          width: w,
+          child: Stack(
+            children: [
+              Positioned(
+                  top: 0,
+                  child: Container(
+                    width: w,
+                    height: h * 0.16,
+                    decoration: const BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10)
+                      ),
+                    ),
+                  )
+              ),
+              Positioned(
+                top: h * 0.02,
+                width: w,
+                child: Center(
+                  child: Container(
+                    width: w * 0.3,
+                    height: h * 0.005,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: h * 0.06,
+                width: w,
+                child: Center(
+                  child: Obx(() => getController.nextPagesUserDetails.value == 0
+                      ? Text('Xizmatlar', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.white),
+                  ): Text('Xizmat qo\'shish', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.white))),
+                ),
+              ),
+              Positioned(
+                  top: h * 0.13,
+                  bottom: 0,
+                  width: w,
+                  child:  PageView(
+                    onPageChanged: (index){
+                      getController.nextPagesUserDetails.value = index;
+                    },
+                    controller: pageControllerServices,
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            height: h * 0.06,
+                            margin: EdgeInsets.only(left: w * 0.05, right: w * 0.05, bottom: h * 0.02),
+                            padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: const BorderRadius.all(Radius.circular(10)),
+                              shape: BoxShape.rectangle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  spreadRadius: 2,
+                                  blurRadius: 2,
+                                  offset: const Offset(0, 2), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              children: [
+                                SizedBox(width: w * 0.05),
+                                Text('Xizmat qo\'shish', style: TextStyle(fontSize: w * 0.035, fontWeight: FontWeight.w500, color: Colors.black)),
+                                const Expanded(child: SizedBox()),
+                                IconButton(
+                                  highlightColor: Colors.blue[100],
+                                  onPressed: (){
+                                    pageControllerServices.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+                                  },
+                                  icon: HeroIcon(HeroIcons.plusCircle, color: Colors.blue, size: w * 0.06),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Obx(() => getController.getBookingCategory.value.res == null || getController.getBookingCategory.value.res!.isEmpty
+                              ? const Center(child: Text('Ma\'lumotlar topilmadi'))
+                              : Expanded(child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: getController.getBookingCategory.value.res!.length,
+                            itemBuilder: (context, index){
+                              return Container(
+                                width: w,
+                                margin: EdgeInsets.only(bottom: h * 0.01,right: w * 0.05,left: w * 0.05),
+                                padding: EdgeInsets.only(top: h * 0.01,bottom: h * 0.01,left: w * 0.05),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.2),
+                                      spreadRadius: 2,
+                                      blurRadius: 2,
+                                      offset: const Offset(0, 2), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
+                                child:  Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Expanded(child: Text('${getController.getBookingCategory.value.res![index].name}', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),),),
+                                        IconButton(
+                                          onPressed: (){
+                                            showLoadingDialog(context, w);
+                                            ApiController().bookingCategoryListDelete(businessId, getController.getBookingCategory.value.res![index].id, context
+                                            ).then((value) => {
+                                              if (value == true){
+                                                Navigator.pop(context),
+                                                Toast.showToast(context, 'Xizmat muvaffaqiyatli o\'chirildi', Colors.green, Colors.white)
+                                              } else {
+                                                Navigator.pop(context),
+                                                Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.white)
+                                              }
+                                            }
+                                            );
+                                          },
+                                          icon: HeroIcon(HeroIcons.trash, color: Colors.red, size: w * 0.06,),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: h * 0.01),
+                                    Row(
+                                      children: [
+                                        Container(
+                                            height: h * 0.03,
+                                            padding: EdgeInsets.only(left: w * 0.01,right: w * 0.01),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(5),
+                                              color: Colors.white,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                HeroIcon(HeroIcons.clock, color: Colors.blue, size: w * 0.04,),
+                                                SizedBox(width: w * 0.01),
+                                                Text(
+                                                  maxLines: 1,
+                                                  '${getController.getBookingCategory.value.res![index].duration.toString().length > 6 ? '${getController.getBookingCategory.value.res![index].duration.toString().substring(0, 3)}k' : '${getController.getBookingCategory.value.res![index].duration}'} min',
+                                                  style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),),
+                                              ],
+                                            )
+                                        ),
+                                        SizedBox(width: w * 0.02),
+                                        Container(
+                                            height: h * 0.03,
+                                            padding: EdgeInsets.only(left: w * 0.01,right: w * 0.01),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(3),
+                                              color: Colors.white,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                HeroIcon(HeroIcons.currencyDollar, color: Colors.blue, size: w * 0.04,),
+                                                SizedBox(width: w * 0.01),
+                                                Text(
+                                                  maxLines: 1,
+                                                  '${getController.getBookingCategory.value.res![index].price.toString().length > 6 ? '${getController.getBookingCategory.value.res![index].price.toString().substring(0, 3)}k' : '${getController.getBookingCategory.value.res![index].price}'} so`m',
+                                                  style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),),
+                                              ],
+                                            )
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: h * 0.01),
+                                    ReadMoreText(
+                                      '${getController.getBookingCategory.value.res![index].description}',
+                                      trimLines: 2,
+                                      colorClickableText: Colors.blue,
+                                      trimMode: TrimMode.Line,
+                                      trimCollapsedText: ' Koproq',
+                                      trimExpandedText: ' Yashirish',
+                                      style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black),
+                                      moreStyle: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.blue),
+                                      lessStyle: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.blue),
+                                    ),
+                                  ],
+                                ),
+
+                              );
+                            },
+                          ))),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          TextFildWidget(
+                            controller: _nameController,
+                            labelText: 'Nomi',
+                            keyboardType: TextInputType.name,
+                          ),
+                          SizedBox(height: h * 0.02),
+                          TextFildWidget(
+                            controller: _discriptionController,
+                            labelText: 'Qisqacha ma\'lumot',
+                            keyboardType: TextInputType.name,
+                          ),
+                          SizedBox(height: h * 0.02),
+                          TextFildWidget(
+                            controller: _durationController,
+                            labelText: 'Davomiyligi',
+                            keyboardType: TextInputType.number,
+                          ),
+                          SizedBox(height: h * 0.02),
+                          TextFildWidget(
+                            controller: _priceController,
+                            labelText: 'Narxi',
+                            keyboardType: TextInputType.number,
+                          ),
+                          SizedBox(height: h * 0.02),
+                          SizedBox(
+                            width: w * 0.9,
+                            child: Row(
+                              children: [
+                                BookingGetSer(
+                                  text: 'Bekor qilish',
+                                  color: Colors.grey,
+                                  radius: 6,
+                                  onPressed: (){
+                                    pageControllerServices.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+                                  },
+                                ),
+                                const Expanded(child: SizedBox()),
+                                BookingGetSer(
+                                  text: 'Saqlash',
+                                  color: Colors.blue,
+                                  radius: 6,
+                                  onPressed: (){
+                                    if (_nameController.text == ''){
+                                      showDialogValidation(context, 'Xatolik', 'Iltimos xizmat nomini kiriting');
+                                      return;
+                                    }
+                                    if (_discriptionController.text == ''){
+                                      showDialogValidation(context, 'Xatolik', 'Iltimos xizmat haqida qisqacha ma\'lumot kiriting');
+                                      return;
+                                    }
+                                    if (_durationController.text == ''){
+                                      showDialogValidation(context, 'Xatolik', 'Iltimos xizmat davomiyligini kiriting');
+                                      return;
+                                    }
+                                    if (_priceController.text == ''){
+                                      showDialogValidation(context, 'Xatolik', 'Iltimos xizmat narxini kiriting');
+                                      return;
+                                    }
+                                    showLoadingDialog(context, w);
+                                    ApiController().bookingCategoryListCreate(
+                                        businessId,
+                                        _nameController.text,
+                                        _discriptionController.text,
+                                        int.parse(_durationController.text),
+                                        int.parse(_priceController.text),
+                                        context
+                                    ).then((value) => {
+                                      if (value == true){
+                                        Navigator.pop(context),
+                                        pageControllerServices.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeIn),
+                                      } else {
+                                        Navigator.pop(context),
+                                        showDialogValidation(context, 'Xatolik', 'Xatolik yuz berdi'),
+                                      }
+                                    }
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+              ),
+            ],
+          )
         );
       }
     );
