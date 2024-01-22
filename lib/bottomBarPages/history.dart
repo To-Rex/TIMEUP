@@ -998,7 +998,7 @@ class HistoryPage extends StatelessWidget {
                       margin: EdgeInsets.symmetric(horizontal: w * 0.05),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.green,
+                        color: Colors.white,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.2),
@@ -1014,7 +1014,7 @@ class HistoryPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: w * 0.05,
                             fontWeight: FontWeight.w500,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                       ),
