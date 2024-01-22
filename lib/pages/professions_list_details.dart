@@ -1557,7 +1557,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Container(
+                                  SizedBox(
                                     width: w * 0.45,
                                     child: Text(
                                       '${_getController.getFollowers.value.res![index].userName}',
@@ -1567,12 +1567,23 @@ class ProfessionsListDetails extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Expanded(child: SizedBox()),
+                                  const Expanded(child: SizedBox()),
                                   //button OBuna
-                                  if (_getController.getFollowers.value.res![index].businessId == 0)
-                                    InkWell(
+                                  if (_getController.getFollowers.value.res![index].businessId != 0)
+                                    if (_getController.getFollowers.value.res![index].followed == false)
+                                      InkWell(
                                       onTap: () {
                                         showLoadingDialog(context);
+                                        ApiController().follow(_getController.getFollowers.value.res![index].businessId).then((value) => {
+                                          if (value == true){
+                                            ApiController().getMyFollowers(context,businessId),
+                                            Navigator.pop(context),
+                                            showDialogValidation(context, 'Obuna qilindi', 'Obuna qilindi'),
+                                          } else {
+                                            Navigator.pop(context),
+                                            showDialogValidation(context, 'Obuna qilinmadi', 'Obuna qilinmadi'),
+                                          }
+                                        });
                                       },
                                       child: Container(
                                         width: w * 0.2,
@@ -1595,7 +1606,42 @@ class ProfessionsListDetails extends StatelessWidget {
                                         ),
                                       ),
                                     )
-
+                                    else
+                                      InkWell(
+                                        onTap: () {
+                                          showLoadingDialog(context);
+                                          ApiController().unFollow(_getController.getFollowers.value.res![index].businessId).then((value) => {
+                                            if (value == true){
+                                              ApiController().getMyFollowers(context,businessId),
+                                              Navigator.pop(context),
+                                              showDialogValidation(context, 'Obuna bekor qilindi', 'Obuna bekor qilindi'),
+                                            } else {
+                                              Navigator.pop(context),
+                                              showDialogValidation(context, 'Obuna bekor qilinmadi', 'Obuna bekor qilinmadi'),
+                                            }
+                                          });
+                                        },
+                                        child: Container(
+                                          width: w * 0.2,
+                                          height: h * 0.04,
+                                          margin: EdgeInsets.only(right: w * 0.02),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: Colors.grey[400],
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              'Bekor',
+                                              maxLines: 1,
+                                              style: TextStyle(
+                                                fontSize: w * 0.035,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
                                 ],
                               ),
                             );
