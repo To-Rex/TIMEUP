@@ -1308,14 +1308,9 @@ class HistoryPage extends StatelessWidget {
                                             PopupMenuItem(
                                               child: Row(
                                                 children: [
-                                                  HeroIcon(
-                                                    HeroIcons.pencil,
-                                                    size: w * 0.05,
-                                                    color: Colors.blue,
-                                                  ),
+                                                  HeroIcon(HeroIcons.pencil, size: w * 0.05, color: Colors.blue),
                                                   SizedBox(width: w * 0.02),
-                                                  Text('Tahrirlash',
-                                                      style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
+                                                  Text('Tahrirlash', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
                                                 ],
                                               ),
                                               onTap: () {
@@ -1327,11 +1322,7 @@ class HistoryPage extends StatelessWidget {
                                             PopupMenuItem(
                                               child: Row(
                                                 children: [
-                                                  HeroIcon(
-                                                    HeroIcons.trash,
-                                                    size: w * 0.05,
-                                                    color: Colors.red,
-                                                  ),
+                                                  HeroIcon(HeroIcons.trash, size: w * 0.05, color: Colors.red),
                                                   SizedBox(width: w * 0.02),
                                                   Text('O`chirish', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500, fontSize: w * 0.04)),
                                                 ],
@@ -1351,21 +1342,10 @@ class HistoryPage extends StatelessWidget {
                                         SizedBox(height: h * 0.01),
                                         Text(
                                           _getController.bookingBusinessGetList.value.res![index].date!,
-                                          style: TextStyle(
-                                            fontSize: w * 0.035,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.orange,
-                                          ),
+                                          style: TextStyle(fontSize: w * 0.035, fontWeight: FontWeight.w500, color: Colors.orange),
                                         ),
                                         SizedBox(height: h * 0.01),
-                                        Text(
-                                          _getController.bookingBusinessGetList.value.res![index].time!,
-                                          style: TextStyle(
-                                            fontSize: w * 0.035,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.orange,
-                                          ),
-                                        ),
+                                        Text(_getController.bookingBusinessGetList.value.res![index].time!, style: TextStyle(fontSize: w * 0.035, fontWeight: FontWeight.w500, color: Colors.orange),),
                                       ],
                                     ),
                                   ),
@@ -1381,26 +1361,12 @@ class HistoryPage extends StatelessWidget {
                                       child:Container(
                                         padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
                                         margin: EdgeInsets.only(left: w * 0.03, bottom: h * 0.01),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          color: Colors.green,
-                                        ),
+                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.green),
                                         child: Row(
                                           children: [
-                                            HeroIcon(
-                                              HeroIcons.phone,
-                                              size: w * 0.035,
-                                              color: Colors.white,
-                                            ),
+                                            HeroIcon(HeroIcons.phone, size: w * 0.035, color: Colors.white),
                                             SizedBox(width: w * 0.01),
-                                            Text(
-                                              'Qo`ng`iroq qilish',
-                                              style: TextStyle(
-                                                fontSize: w * 0.035,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.white,
-                                              ),
-                                            ),
+                                            Text('Qo`ng`iroq qilish', style: TextStyle(fontSize: w * 0.035, fontWeight: FontWeight.w500, color: Colors.white),),
                                           ],
                                         ),
                                       )
