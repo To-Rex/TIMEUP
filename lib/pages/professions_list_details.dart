@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:photo_view/photo_view.dart';
@@ -27,6 +28,8 @@ class ProfessionsListDetails extends StatelessWidget {
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
   late TabController _followTabController;
   late TabController _tabController;
+
+  final ScrollController _scrollControllerPage = ScrollController();
 
   showLoadingDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
@@ -1792,6 +1795,15 @@ class ProfessionsListDetails extends StatelessWidget {
     ApiController().getMePostList(_getController.getProfileById.value.res?.id);
     ApiController().bookingListBookingAndBookingCategory(_getController.bookingBusinessGetListByID.value, '');
     ApiController().getMyFollowing(context, _getController.meUsers.value.res!.id!);
+    _scrollControllerPage.addListener(() {
+      if (_scrollControllerPage.position.userScrollDirection == ScrollDirection.reverse) {
+        print('+++++++');
+        _getController.onScroll.value = true;
+      } else {
+        print('-------');
+        _getController.onScroll.value = false;
+      }
+    });
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -1839,6 +1851,7 @@ class ProfessionsListDetails extends StatelessWidget {
                   //color: Colors.red[100],
                   padding: EdgeInsets.only(top: h * 0.01, bottom: h * 0.01),
                   child: SingleChildScrollView(
+                    controller: _scrollControllerPage,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -2514,7 +2527,45 @@ class ProfessionsListDetails extends StatelessWidget {
                 )
             )
           ],
-        )
-        ));
+        )),
+        // Obx(() => getController.onScroll.value == true
+      //                           ? Positioned(
+      //                         bottom: h * 0.03,
+      //                         right: w * 0.05,
+      //                         child: FloatingActionButton(
+      //                           shape: RoundedRectangleBorder(
+      //                             borderRadius: BorderRadius.circular(w * 0.1),
+      //                           ),
+      //                           onPressed: () {
+      //                             _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+      //                           },
+      //                           backgroundColor: Colors.blue,
+      //                           child: HeroIcon(
+      //                             HeroIcons.arrowUp,
+      //                             color: Colors.white,
+      //                             size: w * 0.05,
+      //                           ),
+      //                         ),
+      //                       )
+      //                           : const SizedBox()),
+
+      floatingActionButton: Obx(() => _getController.onScroll.value == true
+          ? FloatingActionButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(w * 0.1),
+              ),
+              onPressed: () {
+                _scrollControllerPage.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+              },
+              backgroundColor: Colors.blue,
+              child: HeroIcon(
+                HeroIcons.arrowUp,
+                color: Colors.white,
+                size: w * 0.05,
+              ),
+            )
+          : const SizedBox()),
+    );
+
   }
 }
