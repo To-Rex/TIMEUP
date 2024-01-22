@@ -53,45 +53,6 @@ class ProfilePage extends StatelessWidget {
 
   getUsers() async {ApiController().getUserData();}
 
-  showLoadingDialog(BuildContext context, w) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.5),
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        content: SizedBox(
-          width: w * 0.1,
-          height: w * 0.2,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Expanded(child: SizedBox()),
-              SizedBox(
-                width: w * 0.1,
-                height: w * 0.1,
-                child: CircularProgressIndicator(
-                  color: Colors.blue,
-                  backgroundColor: Colors.grey[300],
-                  strokeWidth: 2,
-                ),
-              ),
-              SizedBox(width: w * 0.07),
-              Text(
-                'Kuting...',
-                style: TextStyle(
-                  fontSize: w * 0.04,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const Expanded(child: SizedBox()),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   showDialogs(BuildContext context) {
     showDialog(
       context: context,
@@ -553,7 +514,7 @@ class ProfilePage extends StatelessWidget {
                                       Expanded(child: Text('${getController.getBookingCategory.value.res![index].name}', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),),),
                                       IconButton(
                                         onPressed: (){
-                                          showLoadingDialog(context, w);
+                                          Loading.showLoading(context);
                                           ApiController().bookingCategoryListDelete(businessId, getController.getBookingCategory.value.res![index].id, context
                                           ).then((value) => {
                                             if (value == true){
@@ -692,7 +653,7 @@ class ProfilePage extends StatelessWidget {
                                         showDialogValidation(context, 'Xatolik', 'Iltimos xizmat narxini kiriting');
                                         return;
                                       }
-                                      showLoadingDialog(context, w);
+                                      Loading.showLoading(context);
                                       ApiController().bookingCategoryListCreate(
                                           businessId,
                                           _nameController.text,
@@ -856,7 +817,7 @@ class ProfilePage extends StatelessWidget {
                                         Expanded(child: Text('${getController.getBookingCategory.value.res![index].name}', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),),),
                                         IconButton(
                                           onPressed: (){
-                                            showLoadingDialog(context, w);
+                                            Loading.showLoading(context);
                                             ApiController().bookingCategoryListDelete(businessId, getController.getBookingCategory.value.res![index].id, context
                                             ).then((value) => {
                                               if (value == true){
@@ -1005,27 +966,34 @@ class ProfilePage extends StatelessWidget {
                                   radius: 6,
                                   onPressed: (){
                                     if (_nameController.text == ''){
-                                      showDialogValidation(context, 'Xatolik', 'Iltimos xizmat nomini kiriting');
-                                      //showDialogWidget.show(context, title, message, () => null)
                                       showDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat nomini kiriting', () => null);
                                       return;
                                     }
                                     if (_discriptionController.text == ''){
-                                      //showDialogValidation(context, 'Xatolik', 'Iltimos xizmat haqida qisqacha ma\'lumot kiriting');
                                       showDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat haqida qisqacha ma\'lumot kiriting', () => null);
                                       return;
                                     }
                                     if (_durationController.text == ''){
-                                      //showDialogValidation(context, 'Xatolik', 'Iltimos xizmat davomiyligini kiriting');
                                       showDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat davomiyligini kiriting', () => null);
                                       return;
                                     }
                                     if (_priceController.text == ''){
-                                      //showDialogValidation(context, 'Xatolik', 'Iltimos xizmat narxini kiriting');
                                       showDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat narxini kiriting', () => null);
                                       return;
                                     }
-                                    showLoadingDialog(context, w);
+                                    try {
+                                      int.parse(_durationController.text);
+                                    } catch (e) {
+                                      showDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat davomiyligini raqamda kiriting', () => null);
+                                      return;
+                                    }
+                                    try {
+                                      int.parse(_priceController.text);
+                                    } catch (e) {
+                                      showDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat narxini raqamda kiriting', () => null);
+                                      return;
+                                    }
+                                    Loading.showLoading(context);
                                     ApiController().bookingCategoryListCreate(
                                         businessId,
                                         _nameController.text,
@@ -1039,7 +1007,7 @@ class ProfilePage extends StatelessWidget {
                                         pageControllerServices.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeIn),
                                       } else {
                                         Navigator.pop(context),
-                                        showDialogValidation(context, 'Xatolik', 'Xatolik yuz berdi'),
+                                        showDialogWidget.show(context, 'Xatolik', 'Xatolik yuz berdi', () => null),
                                       }
                                     }
                                     );
@@ -1185,7 +1153,7 @@ class ProfilePage extends StatelessWidget {
               SizedBox(height: h * 0.1),
               InkWell(
                 onTap: () {
-                  showLoadingDialog(context, w);
+                  Loading.showLoading(context);
                   ApiController().getByIdPost(id).then((value) => {
                         Navigator.pop(context),
                         Navigator.push(context, MaterialPageRoute(builder: (context) => EditPostDetails(postId: id))),
@@ -1673,7 +1641,7 @@ class ProfilePage extends StatelessWidget {
                                   if (getController.getFollowers.value.res![index].followed == false)
                                     InkWell(
                                       onTap: () {
-                                        showLoadingDialog(context,w);
+                                        Loading.showLoading(context);
                                         ApiController().follow(getController.getFollowers.value.res![index].businessId).then((value) => {
                                           if (value.status == true){
                                             ApiController().getMyFollowers(context,businessId),
@@ -1709,7 +1677,7 @@ class ProfilePage extends StatelessWidget {
                                   else
                                     InkWell(
                                       onTap: () {
-                                        showLoadingDialog(context, w);
+                                        Loading.showLoading(context);
                                         ApiController().unFollow(getController.getFollowers.value.res![index].businessId).then((value) => {
                                           if (value == true){
                                             ApiController().getMyFollowers(context,businessId),
