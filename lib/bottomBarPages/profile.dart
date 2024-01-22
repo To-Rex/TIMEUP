@@ -821,7 +821,7 @@ class ProfilePage extends StatelessWidget {
                                   onPressed: (){
                                     pageControllerServices.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
                                   },
-                                  icon: HeroIcon(HeroIcons.plusCircle, color: Colors.blue, size: w * 0.06),
+                                  icon: HeroIcon(HeroIcons.plusCircle, color: Colors.blue, size: w * 0.07),
                                 ),
                               ],
                             ),
@@ -878,7 +878,7 @@ class ProfilePage extends StatelessWidget {
                                       children: [
                                         Container(
                                             height: h * 0.03,
-                                            padding: EdgeInsets.only(left: w * 0.01,right: w * 0.01),
+                                            padding: EdgeInsets.only(right: w * 0.01),
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(5),
                                               color: Colors.white,
@@ -890,11 +890,10 @@ class ProfilePage extends StatelessWidget {
                                                 Text(
                                                   maxLines: 1,
                                                   '${getController.getBookingCategory.value.res![index].duration.toString().length > 6 ? '${getController.getBookingCategory.value.res![index].duration.toString().substring(0, 3)}k' : '${getController.getBookingCategory.value.res![index].duration}'} min',
-                                                  style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),),
+                                                  style: TextStyle(fontSize: w * 0.005, color: Colors.black)),
                                               ],
                                             )
                                         ),
-                                        SizedBox(width: w * 0.02),
                                         Container(
                                             height: h * 0.03,
                                             padding: EdgeInsets.only(left: w * 0.01,right: w * 0.01),
@@ -909,13 +908,12 @@ class ProfilePage extends StatelessWidget {
                                                 Text(
                                                   maxLines: 1,
                                                   '${getController.getBookingCategory.value.res![index].price.toString().length > 6 ? '${getController.getBookingCategory.value.res![index].price.toString().substring(0, 3)}k' : '${getController.getBookingCategory.value.res![index].price}'} so`m',
-                                                  style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),),
+                                                  style: TextStyle(fontSize: w * 0.035, color: Colors.black)),
                                               ],
                                             )
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: h * 0.01),
                                     ReadMoreText(
                                       '${getController.getBookingCategory.value.res![index].description}',
                                       trimLines: 2,
@@ -923,9 +921,9 @@ class ProfilePage extends StatelessWidget {
                                       trimMode: TrimMode.Line,
                                       trimCollapsedText: ' Koproq',
                                       trimExpandedText: ' Yashirish',
-                                      style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black),
-                                      moreStyle: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.blue),
-                                      lessStyle: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w500, color: Colors.blue),
+                                      style: TextStyle(fontSize: w * 0.04, color: Colors.black),
+                                      moreStyle: TextStyle(fontSize: w * 0.03, color: Colors.blue),
+                                      lessStyle: TextStyle(fontSize: w * 0.03, color: Colors.blue),
                                     ),
                                   ],
                                 ),
