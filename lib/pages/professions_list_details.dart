@@ -822,7 +822,6 @@ class ProfessionsListDetails extends StatelessWidget {
                                                 ),
                                               ],
                                             ));
-
                                           },
                                           child: HeroIcon(
                                             HeroIcons.calendar,
