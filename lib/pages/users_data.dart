@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -41,48 +42,6 @@ class LoginUserData extends StatelessWidget {
       compressFormat: ImageCompressFormat.jpg,
     );
     getController.changeImage(croppedImage.path);
-  }
-
-  showLoadingDialog(BuildContext context, w) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.5),
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(7),
-        ),
-        content: SizedBox(
-          width: w * 0.1,
-          height: w * 0.2,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Expanded(child: SizedBox()),
-              SizedBox(
-                width: w * 0.1,
-                height: w * 0.1,
-                child: const CircularProgressIndicator(
-                  color: Colors.blue,
-                  backgroundColor: Colors.white,
-                  strokeWidth: 2,
-                ),
-              ),
-              SizedBox(
-                width: w * 0.07,
-              ),
-              Text(
-                'Loading...',
-                style: TextStyle(
-                  fontSize: w * 0.04,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const Expanded(child: SizedBox()),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   @override
@@ -200,42 +159,79 @@ class LoginUserData extends StatelessWidget {
                   margin: EdgeInsets.only(top: h * 0.02),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7),
-                    color: Colors.grey[200],
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
                   ),
                   child: TextField(
                     controller: _dateController,
                     maxLines: 1,
                     keyboardType: TextInputType.datetime,
-                    onTap: () => showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1900),
-                      lastDate: DateTime(2025),
-                    ).then((value) => _dateController.text = '${value!.day}/${value.month}/${value.year}'),
                     decoration: InputDecoration(
                       suffixIcon: InkWell(
                         onTap: () {
-                          showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(1900),
-                            lastDate: DateTime(2025),
-                          ).then((value) => {
-                            if (value!.day.toString().length == 1) {
-                              if (value.month.toString().length == 1) {
-                                _dateController.text = '0${value.day}/0${value.month}/${value.year}'
-                              } else {
-                                _dateController.text = '0${value.day}/${value.month}/${value.year}'
-                              }
-                            } else {
-                              if (value.month.toString().length == 1) {
-                                _dateController.text = '${value.day}/0${value.month}/${value.year}'
-                              } else {
-                                _dateController.text = '${value.day}/${value.month}/${value.year}'
-                              }
-                            }
+                          showDialog(context: context, builder: (context) => AlertDialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            backgroundColor: Colors.white,
+                            surfaceTintColor: Colors.white,
+                            content: SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.3,
+                              child: CupertinoDatePicker(
+                                initialDateTime: DateTime.now(),
+                                dateOrder: DatePickerDateOrder.ymd,
+                                onDateTimeChanged: (DateTime newdate) {
+                                  _dateController.text = '${newdate.day < 10 ? '0${newdate.day}' : newdate.day}/${newdate.month < 10 ? '0${newdate.month}' : newdate.month}/${newdate.year}';
+                                },
+                                minimumYear: 1900,
+                                maximumYear: 2200,
+                                use24hFormat: true,
+                                mode: CupertinoDatePickerMode.date,
+                              ),
+                            ),
 
-                          });
+                            title: Text('Kunni tanlang',
+                              style: TextStyle(
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('Bekor qilish',
+                                    style: TextStyle(
+                                      fontSize: w * 0.035,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                    ),
+                                  )
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('Ok',
+                                    style: TextStyle(
+                                      fontSize: w * 0.035,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.blue,
+                                    ),
+                                  )
+                              ),
+                            ],
+                          ));
                         },
                         child: HeroIcon(
                           HeroIcons.calendar,
@@ -266,15 +262,38 @@ class LoginUserData extends StatelessWidget {
                 Container(
                   height: h * 0.06,
                   width: w * 0.9,
-                  padding: EdgeInsets.only(left: w * 0.02),
+                  padding: EdgeInsets.only(left: w * 0.05, right: w * 0.02),
                   decoration: BoxDecoration(
-                    color: Colors.grey[200],
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
                   ),
                   child: Obx(() => getController.getRegion.value.res == null
                         ? const Center(child: CircularProgressIndicator())
                         : DropdownButtonHideUnderline(
                             child: DropdownButton(
+                              dropdownColor: Colors.white,
+                              focusColor: Colors.white,
+                              selectedItemBuilder: (BuildContext context) {
+                                return getController.getRegion.value.res!.map<Widget>((String item) {
+                                  return Center(
+                                    child: Text(
+                                      item,
+                                      style: TextStyle(
+                                        fontSize: w * 0.035 > 20 ? 20 : w * 0.035,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  );
+                                }).toList();
+                              },
                               value: getController.getRegion.value.res![getController.regionIndex.value],
                               onChanged: (String? newValue) {
                                 getController.changeRegionIndex(getController.getRegion.value.res!.indexOf(newValue!));
@@ -327,7 +346,7 @@ class LoginUserData extends StatelessWidget {
                     if (_dateController.text.split('/')[0].length == 1) {
                       _dateController.text = '0${_dateController.text}';
                     }
-                    showLoadingDialog(context, w);
+                    Loading.showLoading(context);
                     /*ApiController().registerUser(nameController.text.toString(), surnameController.text.toString(), nikNameController.text.toString(), phoneNumberController.text.toString(), getController.getRegion.value.res![getController.regionIndex.value], getController.image.value, _dateController.text.toString(),).then((value) {
                       if (value.status == true) {
                         print('111111111111----------');
