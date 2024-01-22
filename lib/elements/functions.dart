@@ -71,7 +71,7 @@ class Loading {
 }
 
 
-class showDialogWidget {
+class ShowDialogWidget {
   static void show(BuildContext context, String title, String message, Function() onPressed) {
     final w = MediaQuery.of(context).size.width;
     showDialog(

@@ -635,31 +635,31 @@ class ProfilePage extends StatelessWidget {
                                   radius: 6,
                                   onPressed: (){
                                     if (_nameController.text == ''){
-                                      showDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat nomini kiriting', () => null);
+                                      ShowDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat nomini kiriting', () => null);
                                       return;
                                     }
                                     if (_discriptionController.text == ''){
-                                      showDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat haqida qisqacha ma\'lumot kiriting', () => null);
+                                      ShowDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat haqida qisqacha ma\'lumot kiriting', () => null);
                                       return;
                                     }
                                     if (_durationController.text == ''){
-                                      showDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat davomiyligini kiriting', () => null);
+                                      ShowDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat davomiyligini kiriting', () => null);
                                       return;
                                     }
                                     if (_priceController.text == ''){
-                                      showDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat narxini kiriting', () => null);
+                                      ShowDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat narxini kiriting', () => null);
                                       return;
                                     }
                                     try {
                                       int.parse(_durationController.text);
                                     } catch (e) {
-                                      showDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat davomiyligini raqamda kiriting', () => null);
+                                      ShowDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat davomiyligini raqamda kiriting', () => null);
                                       return;
                                     }
                                     try {
                                       int.parse(_priceController.text);
                                     } catch (e) {
-                                      showDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat narxini raqamda kiriting', () => null);
+                                      ShowDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat narxini raqamda kiriting', () => null);
                                       return;
                                     }
                                     Loading.showLoading(context);
@@ -676,7 +676,7 @@ class ProfilePage extends StatelessWidget {
                                         pageControllerServices.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeIn),
                                       } else {
                                         Navigator.pop(context),
-                                        showDialogWidget.show(context, 'Xatolik', 'Xatolik yuz berdi', () => null),
+                                        ShowDialogWidget.show(context, 'Xatolik', 'Xatolik yuz berdi', () => null),
                                       }
                                     }
                                     );
@@ -1315,10 +1315,10 @@ class ProfilePage extends StatelessWidget {
                                           if (value.status == true){
                                             ApiController().getMyFollowers(context,businessId),
                                             Navigator.pop(context),
-                                            showDialogWidget.show(context, 'Muvaffaqiyatli', 'Obuna qilindi', () => null),
+                                            ShowDialogWidget.show(context, 'Muvaffaqiyatli', 'Obuna qilindi', () => null),
                                           } else {
                                             Navigator.pop(context),
-                                            showDialogWidget.show(context, 'Xatolik', 'Obuna qilinmadi', () => null),
+                                            ShowDialogWidget.show(context, 'Xatolik', 'Obuna qilinmadi', () => null),
                                           }
                                         });
                                       },
@@ -1352,10 +1352,10 @@ class ProfilePage extends StatelessWidget {
                                             ApiController().getMyFollowers(context,businessId),
                                             ApiController().getMyFollowing(context,getController.meUsers.value.res!.id!),
                                             Navigator.pop(context),
-                                            showDialogWidget.show(context, 'Muvaffaqiyatli', 'Obuna bekor qilindi', () => null),
+                                            ShowDialogWidget.show(context, 'Muvaffaqiyatli', 'Obuna bekor qilindi', () => null),
                                           } else {
                                             Navigator.pop(context),
-                                            showDialogWidget.show(context, 'Xatolik', 'Obuna bekor qilinmadi', () => null),
+                                            ShowDialogWidget.show(context, 'Xatolik', 'Obuna bekor qilinmadi', () => null),
                                           }
                                         });
                                       },
@@ -1789,7 +1789,7 @@ class ProfilePage extends StatelessWidget {
                                             InkWell(
                                                 overlayColor: MaterialStateProperty.all(Colors.transparent),
                                                 onTap: () {
-                                                  showDialogWidget.show(context, 'Foydalanuvchi haqida', '${getController.meUsers.value.res?.business?.bio}', () => null);
+                                                  ShowDialogWidget.show(context, 'Foydalanuvchi haqida', '${getController.meUsers.value.res?.business?.bio}', () => null);
                                                 },
                                                 child: Row(
                                                   children: [
@@ -1839,7 +1839,7 @@ class ProfilePage extends StatelessWidget {
                                             InkWell(
                                                 overlayColor: MaterialStateProperty.all(Colors.transparent),
                                                 onTap: () {
-                                                  showDialogWidget.show(context, 'Foydalanuvchi ma’lumotlari', ''
+                                                  ShowDialogWidget.show(context, 'Foydalanuvchi ma’lumotlari', ''
                                                       '${getController.meUsers.value.res?.phoneNumber}\n'
                                                       '${getController.meUsers.value.res?.business?.officeAddress}\n'
                                                       '${getController.meUsers.value.res?.business?.officeName}\n'
