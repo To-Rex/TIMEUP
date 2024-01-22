@@ -370,6 +370,7 @@ class HistoryPage extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
+                                  _getController.changeSelectedDay(index);
                                   if (index == 3) {
                                     showDatePicker(
                                       context: context,
@@ -408,14 +409,15 @@ class HistoryPage extends StatelessWidget {
                                     });
                                   }
                                 },
-                                child: Container(
+                                child: Obx( () => Container(
                                   margin: EdgeInsets.symmetric(horizontal: w * 0.015, vertical: h * 0.01),
                                   padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
-                                      color: Colors.grey,
+                                      color: _getController.selectedDay.value == index ? Colors.blue : Colors.grey,
                                     ),
+                                    color: _getController.selectedDay.value == index ? Colors.blue : Colors.white,
                                   ),
                                   child: Center(
                                     child: Text(
@@ -428,11 +430,11 @@ class HistoryPage extends StatelessWidget {
                                           : 'Tanlangan mijozlar',
                                       style: TextStyle(
                                         fontSize: w * 0.035,
-                                        fontWeight: FontWeight.w500,
+                                        color: _getController.selectedDay.value == index ? Colors.white : Colors.black,
                                       ),
                                     ),
                                   ),
-                                ),
+                                ))
                               );
                             },
                           ),

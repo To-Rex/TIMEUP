@@ -26,6 +26,7 @@ class GetController extends GetxController {
   var sendCode = false.obs;
   var onFinished = false.obs;
   var onScroll = false.obs;
+  var selectedDay = 0.obs;
   var enters = 0.obs;
   var entersUser = 0.obs;
   var index = 0.obs;
@@ -38,6 +39,11 @@ class GetController extends GetxController {
   var postFile = ''.obs;
   var postVideoFile = ''.obs;
   var occupation = ''.obs;
+
+  //selectedDay
+  void changeSelectedDay(int newSelectedDay) {
+    selectedDay.value = newSelectedDay;
+  }
 
   void changeOccupation(String newOccupation) {
     occupation.value = newOccupation;
