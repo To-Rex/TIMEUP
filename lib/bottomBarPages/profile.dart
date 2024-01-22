@@ -1602,7 +1602,7 @@ class ProfilePage extends StatelessWidget {
                           ),
                           Obx(() => getController.meUsers.value.res?.business == null
                               ? const SizedBox()
-                              : Obx(() => getController.getBookingCategory.value.res!.isNotEmpty
+                              : Obx(() => getController.getBookingCategory.value.res == null || getController.getBookingCategory.value.res!.isNotEmpty
                               ? const SizedBox()
                               :Container(
                             width: w,
