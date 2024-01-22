@@ -909,9 +909,23 @@ class ProfessionsListDetails extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              //text current date 2023-04-08  mijozlar kelish vaqti
+                              Container(
+                                width: w,
+                                margin: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: h * 0.01),
+                                child: Center(
+                                  child: Text(
+                                    '${DateTime.now().year}-${DateTime.now().month < 10 ? '0${DateTime.now().month}' : DateTime.now().month}-${DateTime.now().day < 10 ? '0${DateTime.now().day}' : DateTime.now().day} mijozlar kelish vaqti',
+                                    style: TextStyle(
+                                      fontSize: w * 0.04,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ),
                               SizedBox(
                                 width: w,
-                                height: h * 0.6,
+                                height: h * 0.55,
                                 child: Obx(() => _getController.getBookingBusinessGetListCategory.value.res == null || _getController.getBookingBusinessGetListCategory.value.res!.bookings!.isEmpty
                                     ? Center(
                                   child: Text(
