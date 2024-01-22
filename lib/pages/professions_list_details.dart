@@ -1569,32 +1569,32 @@ class ProfessionsListDetails extends StatelessWidget {
                                   ),
                                   Expanded(child: SizedBox()),
                                   //button OBuna
-                                  //if (getController.getFollowers.value.res![index].isFollowing == false)
-                                  InkWell(
-                                    onTap: () {
-                                      showLoadingDialog(context);
-                                    },
-                                    child: Container(
-                                      width: w * 0.2,
-                                      height: h * 0.04,
-                                      margin: EdgeInsets.only(right: w * 0.02),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.blue,
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          'Obuna',
-                                          maxLines: 1,
-                                          style: TextStyle(
-                                            fontSize: w * 0.035,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white,
+                                  if (_getController.getFollowers.value.res![index].businessId == 0)
+                                    InkWell(
+                                      onTap: () {
+                                        showLoadingDialog(context);
+                                      },
+                                      child: Container(
+                                        width: w * 0.2,
+                                        height: h * 0.04,
+                                        margin: EdgeInsets.only(right: w * 0.02),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: Colors.blue,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            'Obuna',
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                              fontSize: w * 0.035,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  )
+                                    )
 
                                 ],
                               ),

@@ -32,6 +32,10 @@ class FollowersRes {
   String? phoneNumber;
   String? address;
   String? photoUrl;
+  //"followed": true,
+  //             "business_id": 2
+  bool? followed;
+  int? businessId;
 
   FollowersRes(
       {this.id,
@@ -40,7 +44,10 @@ class FollowersRes {
         this.userName,
         this.phoneNumber,
         this.address,
-        this.photoUrl});
+        this.photoUrl,
+        this.followed,
+        this.businessId
+      });
 
   FollowersRes.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -50,6 +57,8 @@ class FollowersRes {
     phoneNumber = json['phone_number'];
     address = json['address'];
     photoUrl = json['photo_url'];
+    followed = json['followed'];
+    businessId = json['business_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -61,6 +70,8 @@ class FollowersRes {
     data['phone_number'] = phoneNumber;
     data['address'] = address;
     data['photo_url'] = photoUrl;
+    data['followed'] = followed;
+    data['business_id'] = businessId;
     return data;
   }
 }
