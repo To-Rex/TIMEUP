@@ -206,7 +206,7 @@ class _AddPostPage extends State<AddPostPage> {
                     },
                     icon: const HeroIcon(
                       HeroIcons.bolt,
-                      color: Colors.white,
+                      color: Colors.blue,
                     ),
                   ),
                 ),
@@ -303,8 +303,8 @@ class _AddPostPage extends State<AddPostPage> {
               ],
             ),
           ),
-        ) : SingleChildScrollView(
-          child: SizedBox(
+        )
+            : SingleChildScrollView(child: SizedBox(
               height: h * 1.5,
               width: w,
               child: Column(
@@ -660,8 +660,7 @@ class _AddPostPage extends State<AddPostPage> {
                     ),
                   ),
                 ],
-              )),
-        )
+              )))
         ),
       );
   }

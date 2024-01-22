@@ -58,7 +58,7 @@ class SamplePage extends StatelessWidget {
                       : Colors.blue,
                 ),
                 Expanded(child: Container()),
-                InkWell(
+                /*InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
@@ -72,12 +72,11 @@ class SamplePage extends StatelessWidget {
                         ? Colors.white
                         : Colors.blue,
                   ),
-                ),
+                ),*/
                 SizedBox(width: w * 0.02),
               ],
             ),
           ) : Container(height: h * 0.03))),
-
       body: Obx(() => _getController.index.value == 3 || _getController.index.value == 4 || _getController.index.value == 1
           ? SizedBox(
         child: _getController.widgetOptions.elementAt(_getController.index.value),
