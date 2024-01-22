@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
@@ -1039,7 +1040,6 @@ class ProfilePage extends StatelessWidget {
       },
     );
   }
-
   showBottomSheetCalendar(context, businessId) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
@@ -1131,17 +1131,64 @@ class ProfilePage extends StatelessWidget {
                       border: InputBorder.none,
                       suffixIcon: InkWell(
                           onTap: () {
-                            showDatePicker(
-                              context: context,
-                              initialDate: _dateController.text == '' ? DateTime.now() : DateTime.parse('${_dateController.text.substring(6, 10)}-${_dateController.text.substring(3, 5)}-${_dateController.text.substring(0, 2)}'),
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime(2025),
-                            ).then((value) => {
-                                  if (value != null){
-                                      _dateController.text = '${value.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
-                                      ApiController().bookingBusinessGetList(businessId, _dateController.text).then((value) => getController.changeBookingBusinessGetList(value))
-                                    }
-                                });
+                            showDialog(context: context, builder: (context) => AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              backgroundColor: Colors.white,
+                              surfaceTintColor: Colors.white,
+                              content: SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height * 0.3,
+                                child: CupertinoDatePicker(
+                                  initialDateTime: DateTime.now(),
+                                  dateOrder: DatePickerDateOrder.ymd,
+                                  onDateTimeChanged: (DateTime newdate) {
+                                    _dateController.text = '${newdate.day < 10 ? '0${newdate.day}' : newdate.day}/${newdate.month < 10 ? '0${newdate.month}' : newdate.month}/${newdate.year}';
+                                    ApiController().bookingBusinessGetList(businessId, _dateController.text);
+                                  },
+                                  minimumYear: 1900,
+                                  maximumYear: 2200,
+                                  use24hFormat: true,
+                                  mode: CupertinoDatePickerMode.date,
+                                ),
+                              ),
+
+                              title: Text('Kunni tanlang',
+                                style: TextStyle(
+                                  fontSize: w * 0.04,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      _dateController.text = '';
+                                    },
+                                    child: Text('Bekor qilish',
+                                      style: TextStyle(
+                                        fontSize: w * 0.035,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ),
+                                    )
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Ok',
+                                      style: TextStyle(
+                                        fontSize: w * 0.035,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.blue,
+                                      ),
+                                    )
+                                ),
+                              ],
+                            ));
                           },
                           child: HeroIcon(
                             HeroIcons.calendar,
@@ -1157,6 +1204,49 @@ class ProfilePage extends StatelessWidget {
                   ),
 
                 )
+              ),
+              Positioned(
+                  top: h * 0.2,
+                  bottom: 0,
+                  width: w,
+                  child: Obx(() => getController.bookingBusinessGetList.value.res == null || getController.bookingBusinessGetList.value.res!.isEmpty
+                      ? Center(child: Text('Ma\'lumotlar topilmadi', style: TextStyle(color: Colors.black, fontSize: w * 0.035,),))
+                      : ListView.builder(
+                      itemCount: getController.bookingBusinessGetList.value.res!.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: w * 0.08,
+                                  child: Text(
+                                    '${index + 1}',
+                                    style: TextStyle(
+                                      fontSize: w * 0.04,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: w * 0.7,
+                                  child: Text(
+                                    'Ushbu mijoz'
+                                        ' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
+                                        '${getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                    style: TextStyle(
+                                      fontSize: w * 0.04,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Divider(),
+                          ],
+                        );
+                      }),
+                  )
               )
             ],
           )
