@@ -955,7 +955,7 @@ class ProfilePage extends StatelessWidget {
                             child: Row(
                               children: [
                                 SizedBox(width: w * 0.05),
-                                Text('Iltimos hamma maydonlarni to\'liq to\'ldiring', style: TextStyle(fontSize: w * 0.035, fontWeight: FontWeight.w500, color: Colors.black)),
+                                Text('Iltimos hamma maydonlarni to\'liq to\'ldiring!', style: TextStyle(fontSize: w * 0.035, fontWeight: FontWeight.w500, color: Colors.black)),
                               ],
                             ),
                           ),
@@ -1006,18 +1006,23 @@ class ProfilePage extends StatelessWidget {
                                   onPressed: (){
                                     if (_nameController.text == ''){
                                       showDialogValidation(context, 'Xatolik', 'Iltimos xizmat nomini kiriting');
+                                      //showDialogWidget.show(context, title, message, () => null)
+                                      showDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat nomini kiriting', () => null);
                                       return;
                                     }
                                     if (_discriptionController.text == ''){
-                                      showDialogValidation(context, 'Xatolik', 'Iltimos xizmat haqida qisqacha ma\'lumot kiriting');
+                                      //showDialogValidation(context, 'Xatolik', 'Iltimos xizmat haqida qisqacha ma\'lumot kiriting');
+                                      showDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat haqida qisqacha ma\'lumot kiriting', () => null);
                                       return;
                                     }
                                     if (_durationController.text == ''){
-                                      showDialogValidation(context, 'Xatolik', 'Iltimos xizmat davomiyligini kiriting');
+                                      //showDialogValidation(context, 'Xatolik', 'Iltimos xizmat davomiyligini kiriting');
+                                      showDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat davomiyligini kiriting', () => null);
                                       return;
                                     }
                                     if (_priceController.text == ''){
-                                      showDialogValidation(context, 'Xatolik', 'Iltimos xizmat narxini kiriting');
+                                      //showDialogValidation(context, 'Xatolik', 'Iltimos xizmat narxini kiriting');
+                                      showDialogWidget.show(context, 'Xatolik', 'Iltimos xizmat narxini kiriting', () => null);
                                       return;
                                     }
                                     showLoadingDialog(context, w);

@@ -69,3 +69,60 @@ class Loading {
     Navigator.pop(context);
   }
 }
+
+
+class showDialogWidget {
+  static void show(BuildContext context, String title, String message, Function() onPressed) {
+    final w = MediaQuery.of(context).size.width;
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        surfaceTintColor: Colors.white,
+        title: Text(
+          title,
+          style: TextStyle(
+            fontSize: w * 0.04,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        content: Text(
+          message,
+          style: TextStyle(
+            fontSize: w * 0.04,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        actions: [
+          Container(
+            width: w * 0.2,
+            height: w * 0.08,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.blue,
+            ),
+            child: TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                onPressed();
+              },
+              child: Center(
+                child: Text(
+                  'Ok',
+                  style: TextStyle(
+                    fontSize: w * 0.03,
+                    color: Colors.white,
+                  ),
+                ),
+              )
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
