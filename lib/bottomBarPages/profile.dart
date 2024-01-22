@@ -890,7 +890,7 @@ class ProfilePage extends StatelessWidget {
                                                 Text(
                                                   maxLines: 1,
                                                   '${getController.getBookingCategory.value.res![index].duration.toString().length > 6 ? '${getController.getBookingCategory.value.res![index].duration.toString().substring(0, 3)}k' : '${getController.getBookingCategory.value.res![index].duration}'} min',
-                                                  style: TextStyle(fontSize: w * 0.005, color: Colors.black)),
+                                                  style: TextStyle(fontSize: w * 0.035, color: Colors.black)),
                                               ],
                                             )
                                         ),
