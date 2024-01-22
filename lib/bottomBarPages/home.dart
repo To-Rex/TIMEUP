@@ -7,7 +7,6 @@ import 'package:time_up/elements/functions.dart';
 import '../pages/post_details.dart';
 import '../pages/professions_list_details.dart';
 import '../res/getController.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:readmore/readmore.dart';
 
 class HomePage extends StatelessWidget {
@@ -16,140 +15,6 @@ class HomePage extends StatelessWidget {
   final GetController _getController = Get.put(GetController());
   var _scrollController = ScrollController();
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
-
-  showDialogs(BuildContext context, text, disc, ok, int index) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Center(
-          child: Text(
-            text,
-            style:
-            TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04),
-          ),
-        ),
-        content: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.05,
-          child: Center(
-            child: Text(
-              disc,
-              style:
-              TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04),
-            ),
-          ),
-        ),
-        actions: [
-          Center(
-            child: Row(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.32,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 1,
-                        backgroundColor: Colors.grey[300],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text('Cancel',
-                          style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.035,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          ))),
-                ),
-                const Expanded(child: SizedBox()),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.32,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                      onPressed: () {
-                        if (index == 1) {
-                          FlutterPhoneDirectCaller.callNumber(text);
-                          Navigator.pop(context);
-                        } else if (index == 2) {
-                          Navigator.pop(context);
-                        } else {
-                          Navigator.pop(context);
-                        }
-                      },
-                      child: Row(
-                        children: [
-                          const Expanded(child: SizedBox()),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.02,
-                          ),
-                          Text(ok,
-                              style: TextStyle(
-                                fontSize:
-                                MediaQuery.of(context).size.width * 0.035,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                              )),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.02,
-                          ),
-                          const Icon(Icons.check, color: Colors.white),
-                          const Expanded(child: SizedBox()),
-                        ],
-                      )),
-                )
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  showLoadingDialog(BuildContext context, w) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.5),
-      builder: (context) => AlertDialog(
-        content: SizedBox(
-          width: w * 0.1,
-          height: w * 0.2,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Expanded(child: SizedBox()),
-              SizedBox(
-                width: w * 0.1,
-                height: w * 0.1,
-                child: const CircularProgressIndicator(
-                  color: Colors.blue,
-                  backgroundColor: Colors.white,
-                  strokeWidth: 2,
-                ),
-              ),
-              SizedBox(
-                width: w * 0.07,
-              ),
-              Text(
-                'Loading...',
-                style: TextStyle(
-                  fontSize: w * 0.04,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const Expanded(child: SizedBox()),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -161,14 +26,14 @@ class HomePage extends StatelessWidget {
     }
     ApiController().getFollowPostList(1000, 0);
 
-    void _onRefresh() async {
+    void onRefresh() async {
       _getController.getFollowPost.value.res?.clear();
       ApiController().getFollowPostList(1000, 0).then((value) => {
         _refreshController.refreshCompleted(),
       });
     }
 
-    void _onLoading() async {
+    void onLoading() async {
       _refreshController.loadComplete();
     }
 
@@ -176,11 +41,9 @@ class HomePage extends StatelessWidget {
       double maxScroll = _scrollController.position.maxScrollExtent;
       double currentScroll = _scrollController.position.pixels;
       if (currentScroll >= maxScroll) {
-        print('max');
       }
       double startScroll = _scrollController.position.minScrollExtent;
       if (currentScroll <= startScroll) {
-        print('start');
       }
     }
     _scrollController.addListener(onScroll);
@@ -205,7 +68,7 @@ class HomePage extends StatelessWidget {
                   if (_getController.getFollowPost.value.res?[index].posterPhotoUrl != null)
                     InkWell(
                       onTap: () {
-                        showLoadingDialog(context, w);
+                        Loading.showLoading(context);
                         ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {_getController.changeProfileById(value),
                           Navigator.pop(context),
                           _getController.changeBookingBusinessGetListByID(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())),
@@ -451,8 +314,8 @@ class HomePage extends StatelessWidget {
             },
           ),
           controller: _refreshController,
-          onRefresh: _onRefresh,
-          onLoading: _onLoading,
+          onRefresh: onRefresh,
+          onLoading: onLoading,
           child: ListView.builder(
               controller: _scrollController,
               itemCount: _getController.getFollowPost.value.res?.length ?? 0,
@@ -467,7 +330,7 @@ class HomePage extends StatelessWidget {
                         focusColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () {
-                          showLoadingDialog(context, w);
+                          Loading.showLoading(context);
                           ApiController().profileById(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())).then((value) => {_getController.changeProfileById(value),
                             Navigator.pop(context),
                             _getController.changeBookingBusinessGetListByID(int.parse(_getController.getFollowPost.value.res![index].businessId.toString())),
