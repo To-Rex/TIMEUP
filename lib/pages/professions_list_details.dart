@@ -284,10 +284,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      _scrollController.animateTo(
-                                        _scrollController.offset - w * 0.3,
-                                        duration: const Duration(milliseconds: 300),
-                                        curve: Curves.easeInOut,
+                                      _scrollController.animateTo(_scrollController.offset - w * 0.3, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut,
                                       );
                                     },
                                     child: SizedBox(
@@ -307,8 +304,9 @@ class ProfessionsListDetails extends StatelessWidget {
                                       scrollDirection: Axis.horizontal,
                                       itemCount: 4,
                                       itemBuilder: (context, index) {
-                                        return GestureDetector(
+                                        return Obx(() => GestureDetector(
                                           onTap: () {
+                                            _getController.changeSelectedDay(index);
                                             if (index == 3) {
                                               showDatePicker(
                                                 context: context,
@@ -353,8 +351,9 @@ class ProfessionsListDetails extends StatelessWidget {
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(10),
                                               border: Border.all(
-                                                color: Colors.grey,
+                                                color: _getController.selectedDay.value == index ? Colors.blue : Colors.grey,
                                               ),
+                                              color: _getController.selectedDay.value == index ? Colors.blue : Colors.white,
                                             ),
                                             child: Center(
                                               child: Text(
@@ -367,21 +366,18 @@ class ProfessionsListDetails extends StatelessWidget {
                                                     : 'Tanlangan mijozlar',
                                                 style: TextStyle(
                                                   fontSize: w * 0.035,
-                                                  fontWeight: FontWeight.w500,
+                                                  color: _getController.selectedDay.value == index ? Colors.white : Colors.black,
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        );
+                                        ));
                                       },
                                     ),
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      _scrollController.animateTo(
-                                        _scrollController.offset + w * 0.3,
-                                        duration: const Duration(milliseconds: 500),
-                                        curve: Curves.easeInOut,
+                                      _scrollController.animateTo(_scrollController.offset + w * 0.3, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut,
                                       );
                                     },
                                     child: SizedBox(
@@ -408,7 +404,6 @@ class ProfessionsListDetails extends StatelessWidget {
                                 '${DateTime.now().year}-${DateTime.now().month < 10 ? '0${DateTime.now().month}' : DateTime.now().month}-${DateTime.now().day < 10 ? '0${DateTime.now().day}' : DateTime.now().day} mijozlar kelish vaqti',
                                 style: TextStyle(
                                   fontSize: w * 0.04,
-                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),

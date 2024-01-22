@@ -348,11 +348,7 @@ class HistoryPage extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            _scrollController.animateTo(
-                              _scrollController.offset - w * 0.3,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeInOut,
-                            );
+                            _scrollController.animateTo(_scrollController.offset - w * 0.3, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut,);
                           },
                           child: SizedBox(
                             width: w * 0.1,
@@ -492,10 +488,7 @@ class HistoryPage extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            _scrollController.animateTo(
-                              _scrollController.offset + w * 0.3,
-                              duration: const Duration(milliseconds: 500),
-                              curve: Curves.easeInOut,
+                            _scrollController.animateTo(_scrollController.offset + w * 0.3, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut,
                             );
                           },
                           child: SizedBox(
