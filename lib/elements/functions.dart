@@ -93,7 +93,7 @@ class showDialogWidget {
         content: Text(
           message,
           style: TextStyle(
-            fontSize: w * 0.04,
+            fontSize: w * 0.035,
             fontWeight: FontWeight.w500,
           ),
         ),
