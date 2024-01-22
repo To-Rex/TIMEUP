@@ -896,15 +896,31 @@ class ProfessionsListDetails extends StatelessWidget {
                                                   mode: CupertinoDatePickerMode.time,
                                                   //maximumDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 21, 00),
                                                   //minimumDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 8, 00),
+                                                  backgroundColor: Colors.white,
                                                 ),
                                               ),
-
-                                              title: Text('Vaqtni tanlang',
-                                                style: TextStyle(
-                                                  fontSize: w * 0.04,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black,
-                                                ),
+                                              titleTextStyle: TextStyle(
+                                                fontSize: w * 0.04,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black,
+                                              ),
+                                              title: Row(
+                                                children: [
+                                                  HeroIcon(
+                                                    HeroIcons.clock,
+                                                    color: Colors.blue,
+                                                    size: w * 0.06,
+                                                  ),
+                                                  SizedBox(width: w * 0.02),
+                                                  Text('Vaqtni tanlang',
+                                                    style: TextStyle(
+                                                      fontSize: w * 0.04,
+                                                      fontWeight: FontWeight.w500,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  const Spacer(),
+                                                ],
                                               ),
                                               actions: [
                                                 TextButton(
