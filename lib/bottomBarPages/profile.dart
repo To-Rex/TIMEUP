@@ -935,6 +935,38 @@ class ProfilePage extends StatelessWidget {
                       ),
                       Column(
                         children: [
+                          Container(
+                            height: h * 0.06,
+                            margin: EdgeInsets.only(left: w * 0.05, right: w * 0.05, bottom: h * 0.02),
+                            padding: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: const BorderRadius.all(Radius.circular(10)),
+                              shape: BoxShape.rectangle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  spreadRadius: 2,
+                                  blurRadius: 2,
+                                  offset: const Offset(0, 2), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              children: [
+                                SizedBox(width: w * 0.05),
+                                Text('Xizmat qo\'shish', style: TextStyle(fontSize: w * 0.035, fontWeight: FontWeight.w500, color: Colors.black)),
+                                const Expanded(child: SizedBox()),
+                                IconButton(
+                                  highlightColor: Colors.blue[100],
+                                  onPressed: (){
+                                    pageControllerServices.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+                                  },
+                                  icon: HeroIcon(HeroIcons.plusCircle, color: Colors.blue, size: w * 0.07),
+                                ),
+                              ],
+                            ),
+                          ),
                           TextFildWidget(
                             controller: _nameController,
                             labelText: 'Nomi',
