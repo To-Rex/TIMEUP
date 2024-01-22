@@ -875,20 +875,67 @@ class ProfessionsListDetails extends StatelessWidget {
                                     decoration: InputDecoration(
                                       suffixIcon: InkWell(
                                           onTap: () {
-                                            showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.now(),
-                                              builder: (context, child) {
-                                                return MediaQuery(
-                                                  data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-                                                  child: child!,
-                                                );
-                                              },
-                                              initialEntryMode: TimePickerEntryMode.input,
-                                              hourLabelText: 'Soat',
-                                              minuteLabelText: 'Daqiqa',
-                                              helpText: 'Vaqtni tanlang',
-                                            ).then((value) => _timeController.text = '${value!.hour < 10 ? '0${value.hour}' : value.hour}:${value.minute < 10 ? '0${value.minute}' : value.minute}');
+                                            showDialog(context: context, builder: (context) => AlertDialog(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(10),
+                                              ),
+                                              backgroundColor: Colors.white,
+                                              surfaceTintColor: Colors.white,
+                                              content: SizedBox(
+                                                width: MediaQuery.of(context).size.width,
+                                                height: MediaQuery.of(context).size.height * 0.3,
+                                                child: CupertinoDatePicker(
+                                                  initialDateTime: DateTime.now(),
+                                                  dateOrder: DatePickerDateOrder.ymd,
+                                                  onDateTimeChanged: (DateTime newdate) {
+                                                    _timeController.text = '${newdate.hour < 10 ? '0${newdate.hour}' : newdate.hour}:${newdate.minute < 10 ? '0${newdate.minute}' : newdate.minute}';
+                                                  },
+                                                  minimumYear: 1900,
+                                                  maximumYear: 2200,
+                                                  use24hFormat: true,
+                                                  mode: CupertinoDatePickerMode.time,
+                                                  //maximumDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 21, 00),
+                                                  //minimumDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 8, 00),
+                                                ),
+                                              ),
+
+                                              title: Text('Vaqtni tanlang',
+                                                style: TextStyle(
+                                                  fontSize: w * 0.04,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('Bekor qilish',
+                                                      style: TextStyle(
+                                                        fontSize: w * 0.035,
+                                                        fontWeight: FontWeight.w500,
+                                                        color: Colors.black,
+                                                      ),
+                                                    )
+                                                ),
+                                                TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                      if (_timeController.text == '') {
+                                                        _timeController.text = '${DateTime.now().hour < 10 ? '0${DateTime.now().hour}' : DateTime.now().hour}:${DateTime.now().minute < 10 ? '0${DateTime.now().minute}' : DateTime.now().minute}';
+                                                      }
+                                                    },
+                                                    child: Text('Ok',
+                                                      style: TextStyle(
+                                                        fontSize: w * 0.035,
+                                                        fontWeight: FontWeight.w500,
+                                                        color: Colors.blue,
+                                                      ),
+                                                    )
+                                                ),
+                                              ],
+                                            ));
                                           },
                                           child: HeroIcon(
                                             HeroIcons.clock,
