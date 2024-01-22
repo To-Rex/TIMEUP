@@ -609,6 +609,10 @@ class HistoryPage extends StatelessWidget {
                                                       children: [
                                                         PopupMenuButton(
                                                           icon: const Icon(Icons.more_vert),
+                                                          surfaceTintColor: Colors.white,
+                                                          shape: RoundedRectangleBorder(
+                                                            borderRadius: BorderRadius.circular(10),
+                                                          ),
                                                           itemBuilder: (context) => [
                                                             PopupMenuItem(
                                                               child: Row(
