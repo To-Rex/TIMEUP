@@ -950,9 +950,7 @@ class ProfilePage extends StatelessWidget {
                         onTap: () {
                           showDatePicker(
                             context: context,
-                            initialDate: _dateController.text == ''
-                                ? DateTime.now()
-                                : DateTime.parse('${_dateController.text.substring(6, 10)}-${_dateController.text.substring(3, 5)}-${_dateController.text.substring(0, 2)}'),
+                            initialDate: _dateController.text == '' ? DateTime.now() : DateTime.parse('${_dateController.text.substring(6, 10)}-${_dateController.text.substring(3, 5)}-${_dateController.text.substring(0, 2)}'),
                             firstDate: DateTime(1900),
                             lastDate: DateTime(2025),
                           ).then((value) => {

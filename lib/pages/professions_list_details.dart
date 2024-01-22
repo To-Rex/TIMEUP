@@ -1530,7 +1530,7 @@ class ProfessionsListDetails extends StatelessWidget {
                     controller: _followTabController,
                     physics: const NeverScrollableScrollPhysics(),
                     children: [
-                      Obx(() => _getController.getFollowers.value.res != null || _getController.getFollowers.value.res!.isNotEmpty || _getController.getFollowers.value.res! != []
+                      Obx(() => _getController.getFollowers.value.res!.isNotEmpty
                           ? Container(
                         margin: EdgeInsets.only(top: h * 0.02),
                         padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
@@ -1665,13 +1665,13 @@ class ProfessionsListDetails extends StatelessWidget {
                           child: Text(
                             'Obunachilar topilmadi',
                             style: TextStyle(
-                              fontSize: w * 0.04,
-                              fontWeight: FontWeight.w500,
+                              fontSize: w * 0.035,
+                              color: Colors.black,
                             ),
                           ),
                         ),
                       )),
-                      Obx(() => _getController.getFollowing.value.res != null || _getController.getFollowing.value.res!.isNotEmpty || _getController.getFollowing.value.res! != []
+                      Obx(() => _getController.getFollowing.value.res!.isNotEmpty
                           ? Container(
                         margin: EdgeInsets.only(top: h * 0.02),
                         padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
@@ -1751,15 +1751,14 @@ class ProfessionsListDetails extends StatelessWidget {
                             );
                           },
                         ),
-                      ) : SizedBox(
-                        child: Container(
-                          child: Center(
-                            child: Text(
-                              'Dostlar topilmadi',
-                              style: TextStyle(
-                                fontSize: w * 0.04,
-                                fontWeight: FontWeight.w500,
-                              ),
+                      )
+                          : SizedBox(
+                        child: Center(
+                          child: Text(
+                            'Dostlar topilmadi',
+                            style: TextStyle(
+                              fontSize: w * 0.035,
+                              color: Colors.black,
                             ),
                           ),
                         ),
