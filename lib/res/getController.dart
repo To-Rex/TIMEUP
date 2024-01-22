@@ -25,6 +25,7 @@ class GetController extends GetxController {
   var fullName = 'Dilshodjon Haydarov'.obs;
   var sendCode = false.obs;
   var onFinished = false.obs;
+  var onScroll = false.obs;
   var enters = 0.obs;
   var entersUser = 0.obs;
   var index = 0.obs;
