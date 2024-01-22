@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class BookingGetSer extends StatelessWidget {
   String text;
-  late Color color;
+  var color;
   late double radius;
   Function()? onPressed;
 

@@ -18,22 +18,32 @@ class TextFildWidget extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     return Container(
       height: h * 0.06,
-      width: w * 0.9,
+      width: w,
+      margin: EdgeInsets.only(left: w * 0.05, right: w * 0.05,),
+      padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05,),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(7),
-        color: Colors.grey[200],
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 1,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
       child: TextField(
         controller: controller,
         keyboardType: keyboardType,
+        maxLines: 1,
+        minLines: 1,
+
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           hintText: labelText,
           hintStyle: const TextStyle(color: Colors.black54),
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(7)),
-            borderSide: BorderSide.none,
-          ),
+          border: InputBorder.none,
         ),
         style: TextStyle(
           color: Colors.black,

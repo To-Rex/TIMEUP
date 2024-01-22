@@ -955,15 +955,7 @@ class ProfilePage extends StatelessWidget {
                             child: Row(
                               children: [
                                 SizedBox(width: w * 0.05),
-                                Text('Xizmat qo\'shish', style: TextStyle(fontSize: w * 0.035, fontWeight: FontWeight.w500, color: Colors.black)),
-                                const Expanded(child: SizedBox()),
-                                IconButton(
-                                  highlightColor: Colors.blue[100],
-                                  onPressed: (){
-                                    pageControllerServices.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
-                                  },
-                                  icon: HeroIcon(HeroIcons.plusCircle, color: Colors.blue, size: w * 0.07),
-                                ),
+                                Text('Iltimos hamma maydonlarni to\'liq to\'ldiring', style: TextStyle(fontSize: w * 0.035, fontWeight: FontWeight.w500, color: Colors.black)),
                               ],
                             ),
                           ),
@@ -976,7 +968,7 @@ class ProfilePage extends StatelessWidget {
                           TextFildWidget(
                             controller: _discriptionController,
                             labelText: 'Qisqacha ma\'lumot',
-                            keyboardType: TextInputType.name,
+                            keyboardType: TextInputType.multiline,
                           ),
                           SizedBox(height: h * 0.02),
                           TextFildWidget(
