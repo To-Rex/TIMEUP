@@ -901,308 +901,6 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  showBottomSheetFollowers(context, businessId, tabIndex) {
-    var w = MediaQuery.of(context).size.width;
-    var h = MediaQuery.of(context).size.height;
-    ApiController().getMyFollowers(context,businessId);
-    _followTabController = TabController(length: 2, vsync: Navigator.of(context));
-    _followTabController.addListener(() {
-      if (_followTabController.index == 0) {
-        print('Obunachilar');
-        ApiController().getMyFollowers(context,businessId);
-      } else {
-        print('Dostlar');
-        ApiController().getMyFollowing(context,getController.meUsers.value.res!.id!);
-      }
-    });
-    _followTabController.animateTo(tabIndex, duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return Container(
-          height: MediaQuery.of(context).size.height * 0.8,
-          width: w,
-          decoration: BoxDecoration(
-            color: Colors.grey[100],
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-            ),
-          ),
-          child: DefaultTabController(
-            length: 2,
-            initialIndex: 0,
-            animationDuration: const Duration(milliseconds: 300),
-            child: Column(
-              children: [
-                Container(
-                  width: w * 0.3,
-                  height: h * 0.005,
-                  margin: EdgeInsets.only(top: h * 0.02, bottom: h * 0.04),
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                Container(
-                  constraints: BoxConstraints.expand(height: h * 0.06),
-                  margin: EdgeInsets.symmetric(horizontal: w * 0.05),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: TabBar(
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    controller: _followTabController,
-                    labelStyle: TextStyle(
-                      fontSize: w * 0.04,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white, // Selected text color
-                    ),
-                    unselectedLabelColor: Colors.blue, // Unselected text color
-                    indicator: BoxDecoration(
-                      color: Colors.blue, // Background color for the selected tab
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    tabs: [
-                      Tab(
-                        child: Container(
-                          width: w * 0.6,
-                          child: Center(
-                            child: Text(
-                              'Obunachilar',
-                              style: TextStyle(
-                                fontSize: w * 0.04,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Tab(
-                        child: Container(
-                          width: w * 0.6,
-                          child: Center(
-                            child: Text(
-                              'Dostlar',
-                              style: TextStyle(
-                                fontSize: w * 0.04,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: TabBarView(
-                    controller: _followTabController,
-                    children: [
-                      Obx(() => getController.getFollowers.value.res!.isNotEmpty || getController.getFollowers.value.res != null || getController.getFollowers.value.res! != []
-                          ? Container(
-                        margin: EdgeInsets.only(top: h * 0.05),
-                        padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: getController.getFollowers.value.res!.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              height: h * 0.08,
-                              padding: EdgeInsets.only(left: w * 0.01, right: w * 0.01),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey[200]!,
-                                    spreadRadius: 1,
-                                    blurRadius: 1,
-                                    offset: const Offset(0, 1), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              margin: EdgeInsets.only(bottom: h * 0.015),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: w * 0.12,
-                                    height: w * 0.12,
-                                    margin: EdgeInsets.only(right: w * 0.04, left: w * 0.02),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(w),
-                                      image: DecorationImage(
-                                        image: NetworkImage('${getController.getFollowers.value.res![index].photoUrl}'),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: w * 0.45,
-                                    child: Text(
-                                      '${getController.getFollowers.value.res![index].userName}',
-                                      style: TextStyle(
-                                        fontSize: w * 0.04,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(child: SizedBox()),
-                                  //button OBuna
-                                  //if (getController.getFollowers.value.res![index].isFollowing == false)
-                                  InkWell(
-                                    onTap: () {
-                                      showLoadingDialog(context, w);
-                                    },
-                                    child: Container(
-                                      width: w * 0.2,
-                                      height: h * 0.04,
-                                      margin: EdgeInsets.only(right: w * 0.02),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.blue,
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          'Obuna',
-                                          maxLines: 1,
-                                          style: TextStyle(
-                                            fontSize: w * 0.035,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      )
-                          : SizedBox(
-                        child: Center(
-                          child: Text(
-                            'Obunachilar topilmadi',
-                            style: TextStyle(
-                              fontSize: w * 0.04,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      )
-                      ),
-
-                      Obx(() => getController.getFollowing.value.res!.isNotEmpty || getController.getFollowing.value.res != null || getController.getFollowing.value.res! != []
-                          ? Container(
-                        margin: EdgeInsets.only(top: h * 0.05),
-                        padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: getController.getFollowing.value.res!.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              height: h * 0.08,
-                              padding: EdgeInsets.only(left: w * 0.01, right: w * 0.01),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey[200]!,
-                                    spreadRadius: 1,
-                                    blurRadius: 1,
-                                    offset: const Offset(0, 1), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              margin: EdgeInsets.only(bottom: h * 0.015),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: w * 0.12,
-                                    height: w * 0.12,
-                                    margin: EdgeInsets.only(right: w * 0.04, left: w * 0.02),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(w),
-                                      image: DecorationImage(
-                                        image: NetworkImage('${getController.getFollowing.value.res![index].photoUrl}'),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: w * 0.45,
-                                    child: Text(
-                                      '${getController.getFollowing.value.res![index].userName}',
-                                      style: TextStyle(
-                                        fontSize: w * 0.04,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(child: SizedBox()),
-                                  //button Dostlar
-                                  InkWell(
-                                    onTap: () {
-                                      showLoadingDialog(context, w);
-                                    },
-                                    child: Container(
-                                      width: w * 0.2,
-                                      height: h * 0.04,
-                                      margin: EdgeInsets.only(right: w * 0.02),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.blue,
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          'Dostlar',
-                                          maxLines: 1,
-                                          style: TextStyle(
-                                            fontSize: w * 0.035,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ) : SizedBox(
-                        child: Container(
-                          child: Center(
-                            child: Text(
-                              'Dostlar topilmadi',
-                              style: TextStyle(
-                                fontSize: w * 0.04,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                      ),
-
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   showBottomSheetCalendar(context, businessId) {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
@@ -1336,6 +1034,383 @@ class ProfilePage extends StatelessWidget {
                           );
                         }),
               )),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  showBottomSheetFollowers(context, businessId, tabIndex) {
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    ApiController().getMyFollowers(context,businessId);
+    _followTabController = TabController(length: 2, vsync: Navigator.of(context));
+    _followTabController.addListener(() {
+      if (_followTabController.index == 0) {
+        print('Obunachilar');
+        ApiController().getMyFollowers(context,businessId);
+      } else {
+        print('Dostlar');
+        ApiController().getMyFollowing(context,getController.meUsers.value.res!.id!);
+      }
+    });
+    _followTabController.animateTo(tabIndex, duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.8,
+          width: w,
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
+          child: Stack(
+            children: [
+              Positioned(child: Container(
+                width: w,
+                height: h * 0.16,
+                decoration: const BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
+                ),
+              )),
+              Positioned(
+                  width: w,
+                  top: h * 0.01,
+                  child: Center(
+                    child: Container(
+                      width: w * 0.3,
+                      height: h * 0.005,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  )),
+              Positioned(
+                top: h * 0.06,
+                child: SizedBox(
+                  width: w,
+                  height: h * 0.06,
+                  child: Container(
+                    constraints: BoxConstraints.expand(height: h * 0.06),
+                    margin: EdgeInsets.symmetric(horizontal: w * 0.05),
+                    padding: EdgeInsets.all(w * 0.015),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 2,
+                          blurRadius: 2,
+                          offset: const Offset(0, 2), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: TabBar(
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      dividerColor: Colors.transparent,
+                      controller: _followTabController,
+                      labelStyle: TextStyle(
+                        fontSize: w * 0.04,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white, // Selected text color
+                      ),
+                      unselectedLabelColor: Colors.blue, // Unselected text color
+                      indicator: BoxDecoration(
+                        color: Colors.blue, // Background color for the selected tab
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      tabs: [
+                        Tab(
+                          child: SizedBox(
+                            width: w * 0.6,
+                            child: Center(
+                              child: Text(
+                                'Obunachilar',
+                                style: TextStyle(
+                                  fontSize: w * 0.04,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Tab(
+                          child: SizedBox(
+                            width: w * 0.6,
+                            child: Center(
+                              child: Text(
+                                //Do`stlar
+                                'Do\'stlar',
+                                style: TextStyle(
+                                  fontSize: w * 0.04,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                width: w,
+                height: h * 0.7,
+                top: h * 0.12,
+                child: TabBarView(
+                  controller: _followTabController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    Obx(() => getController.getFollowers.value.res != null || getController.getFollowers.value.res!.isNotEmpty || getController.getFollowers.value.res! != []
+                        ? Container(
+                      margin: EdgeInsets.only(top: h * 0.02),
+                      padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: getController.getFollowers.value.res!.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            height: h * 0.08,
+                            padding: EdgeInsets.only(left: w * 0.01, right: w * 0.01),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey[200]!,
+                                  spreadRadius: 1,
+                                  blurRadius: 1,
+                                  offset: const Offset(0, 1), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            margin: EdgeInsets.only(bottom: h * 0.015),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: w * 0.12,
+                                  height: w * 0.12,
+                                  margin: EdgeInsets.only(right: w * 0.04, left: w * 0.02),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(w),
+                                    image: DecorationImage(
+                                      image: NetworkImage('${getController.getFollowers.value.res![index].photoUrl}'),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: w * 0.45,
+                                  child: Text(
+                                    '${getController.getFollowers.value.res![index].userName}',
+                                    style: TextStyle(
+                                      fontSize: w * 0.04,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                                const Expanded(child: SizedBox()),
+                                //button OBuna
+                                if (getController.getFollowers.value.res![index].businessId != 0)
+                                  if (getController.getFollowers.value.res![index].followed == false)
+                                    InkWell(
+                                      onTap: () {
+                                        showLoadingDialog(context,w);
+                                        ApiController().follow(getController.getFollowers.value.res![index].businessId).then((value) => {
+                                          if (value.status == true){
+                                            ApiController().getMyFollowers(context,businessId),
+                                            Navigator.pop(context),
+                                            showDialogValidation(context, 'Obuna qilindi', 'Obuna qilindi'),
+                                          } else {
+                                            Navigator.pop(context),
+                                            showDialogValidation(context, 'Obuna qilinmadi', 'Obuna qilinmadi'),
+                                          }
+                                        });
+                                      },
+                                      child: Container(
+                                        width: w * 0.2,
+                                        height: h * 0.04,
+                                        margin: EdgeInsets.only(right: w * 0.02),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: Colors.blue,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            'Obuna',
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                              fontSize: w * 0.035,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    InkWell(
+                                      onTap: () {
+                                        showLoadingDialog(context, w);
+                                        ApiController().unFollow(getController.getFollowers.value.res![index].businessId).then((value) => {
+                                          if (value == true){
+                                            ApiController().getMyFollowers(context,businessId),
+                                            ApiController().getMyFollowing(context,getController.meUsers.value.res!.id!),
+                                            Navigator.pop(context),
+                                            showDialogValidation(context, 'Obuna bekor qilindi', 'Obuna bekor qilindi'),
+                                          } else {
+                                            Navigator.pop(context),
+                                            showDialogValidation(context, 'Obuna bekor qilinmadi', 'Obuna bekor qilinmadi'),
+                                          }
+                                        });
+                                      },
+                                      child: Container(
+                                        width: w * 0.2,
+                                        height: h * 0.04,
+                                        margin: EdgeInsets.only(right: w * 0.02),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: Colors.grey[400],
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            'Bekor',
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                              fontSize: w * 0.035,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    )
+                        : SizedBox(
+                      child: Center(
+                        child: Text(
+                          'Obunachilar topilmadi',
+                          style: TextStyle(
+                            fontSize: w * 0.04,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    )),
+                    Obx(() => getController.getFollowing.value.res != null || getController.getFollowing.value.res!.isNotEmpty || getController.getFollowing.value.res! != []
+                        ? Container(
+                      margin: EdgeInsets.only(top: h * 0.02),
+                      padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: getController.getFollowing.value.res!.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            height: h * 0.08,
+                            padding: EdgeInsets.only(left: w * 0.01, right: w * 0.01),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey[200]!,
+                                  spreadRadius: 1,
+                                  blurRadius: 1,
+                                  offset: const Offset(0, 1), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            margin: EdgeInsets.only(bottom: h * 0.015),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: w * 0.12,
+                                  height: w * 0.12,
+                                  margin: EdgeInsets.only(right: w * 0.04, left: w * 0.02),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(w),
+                                    image: DecorationImage(
+                                      image: NetworkImage('${getController.getFollowing.value.res![index].photoUrl}'),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: w * 0.45,
+                                  child: Text(
+                                    '${getController.getFollowing.value.res![index].userName}',
+                                    style: TextStyle(
+                                      fontSize: w * 0.04,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                                const Expanded(child: SizedBox()),
+                                //button Dostlar
+                                InkWell(
+                                  onTap: () {
+
+                                  },
+                                  child: Container(
+                                    width: w * 0.2,
+                                    height: h * 0.04,
+                                    margin: EdgeInsets.only(right: w * 0.02),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.blue,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Dostlar',
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                          fontSize: w * 0.035,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ) : SizedBox(
+                      child: Container(
+                        child: Center(
+                          child: Text(
+                            'Dostlar topilmadi',
+                            style: TextStyle(
+                              fontSize: w * 0.04,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )),
+                  ],
+                ),
+              )
             ],
           ),
         );
