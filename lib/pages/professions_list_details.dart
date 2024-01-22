@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
@@ -308,7 +309,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                           onTap: () {
                                             _getController.changeSelectedDay(index);
                                             if (index == 3) {
-                                              showDatePicker(
+                                              /*showDatePicker(
                                                 context: context,
                                                 initialDate: DateTime.now(),
                                                 firstDate: DateTime(2000),
@@ -322,7 +323,66 @@ class ProfessionsListDetails extends StatelessWidget {
                                                   _getController.clearGetBookingBusinessGetListCategory(),
                                                   ApiController().bookingListBookingAndBookingCategory(_getController.bookingBusinessGetListByID.value, _dateController.text),
                                                 }
-                                              });
+                                              });*/
+
+                                              showDialog(context: context, builder: (context) => AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                                backgroundColor: Colors.white,
+                                                surfaceTintColor: Colors.white,
+                                                content: SizedBox(
+                                                  width: MediaQuery.of(context).size.width,
+                                                  height: MediaQuery.of(context).size.height * 0.3,
+                                                  child: CupertinoDatePicker(
+                                                    initialDateTime: DateTime.now(),
+                                                    dateOrder: DatePickerDateOrder.ymd,
+                                                    onDateTimeChanged: (DateTime newdate) {
+                                                      _dateController.text = '${newdate.day < 10 ? '0${newdate.day}' : newdate.day}/${newdate.month < 10 ? '0${newdate.month}' : newdate.month}/${newdate.year}';
+                                                    },
+                                                    minimumYear: 1900,
+                                                    maximumYear: 2200,
+                                                    use24hFormat: true,
+                                                    mode: CupertinoDatePickerMode.date,
+                                                  ),
+                                                ),
+
+                                                title: Text('Kunni tanlang',
+                                                  style: TextStyle(
+                                                    fontSize: w * 0.04,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Text('Bekor qilish',
+                                                        style: TextStyle(
+                                                          fontSize: w * 0.035,
+                                                          fontWeight: FontWeight.w500,
+                                                          color: Colors.black,
+                                                        ),
+                                                      )
+                                                  ),
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                        _getController.clearGetBookingBusinessGetListCategory();
+                                                        ApiController().bookingListBookingAndBookingCategory(_getController.bookingBusinessGetListByID.value, _dateController.text);
+                                                      },
+                                                      child: Text('Ok',
+                                                        style: TextStyle(
+                                                          fontSize: w * 0.035,
+                                                          fontWeight: FontWeight.w500,
+                                                          color: Colors.blue,
+                                                        ),
+                                                      )
+                                                  ),
+                                                ],
+                                              ));
                                             }
                                             _dateController.text = index == 0
                                                 ? ''
