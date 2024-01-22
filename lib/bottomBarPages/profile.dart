@@ -1214,36 +1214,44 @@ class ProfilePage extends StatelessWidget {
                       : ListView.builder(
                       itemCount: getController.bookingBusinessGetList.value.res!.length,
                       itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: w * 0.08,
-                                  child: Text(
-                                    '${index + 1}',
-                                    style: TextStyle(
-                                      fontSize: w * 0.04,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                        return Container(
+                          margin: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: h * 0.01),
+                          padding: EdgeInsets.only(left: w * 0.05, right: w * 0.04, top: h * 0.02, bottom: h * 0.02),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 2,
+                                blurRadius: 2,
+                                offset: const Offset(0, 2), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: w * 0.7,
+                                child: Text(
+                                  'Ushbu mijoz'
+                                      ' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
+                                      '${getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                    fontSize: w * 0.04,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                SizedBox(
-                                  width: w * 0.7,
-                                  child: Text(
-                                    'Ushbu mijoz'
-                                        ' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
-                                        '${getController.bookingBusinessGetList.value.res![index].time!} keladi',
-                                    style: TextStyle(
-                                      fontSize: w * 0.04,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Divider(),
-                          ],
+                              ),
+                              const Spacer(),
+                              HeroIcon(
+                                HeroIcons.arrowDownCircle,
+                                style: HeroIconStyle.solid,
+                                color: Colors.green,
+                                size: w * 0.06,)
+                            ],
+                          ),
                         );
                       }),
                   )
