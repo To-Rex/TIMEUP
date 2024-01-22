@@ -1579,7 +1579,6 @@ class ProfessionsListDetails extends StatelessWidget {
                                     ),
                                   ),
                                   const Expanded(child: SizedBox()),
-                                  //button OBuna
                                   if (_getController.getFollowers.value.res![index].businessId != 0)
                                     if (_getController.getFollowers.value.res![index].followed == false)
                                       InkWell(
