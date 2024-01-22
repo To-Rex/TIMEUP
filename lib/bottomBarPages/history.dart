@@ -963,7 +963,8 @@ class HistoryPage extends StatelessWidget {
           ),
         ),
       ],
-    ) : Expanded(child:
+    )
+        : Expanded(child:
     Container(
       color: Colors.grey[50],
       child: Column(
@@ -1052,11 +1053,7 @@ class HistoryPage extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    _scrollController.animateTo(
-                      _scrollController.offset - w * 0.3,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
+                    _scrollController.animateTo(_scrollController.offset - w * 0.3, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut,);
                   },
                   child: SizedBox(
                     width: w * 0.1,
@@ -1077,22 +1074,71 @@ class HistoryPage extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
+                          _getController.changeSelectedDay(index);
                           if (index == 3) {
-                            showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2025),
-                            ).then((value) => {
-                              _dateController.text = '${value!.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
-                              if (_tabController.index == 0) {
-                                _getController.clearBookingBusinessGetList(),
-                                ApiController().bookingClientGetList(_dateController.text),
-                              } else {
-                                _getController.clearBookingBusinessGetList(),
-                                ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, _dateController.text),
-                              }
-                            });
+                            showDialog(context: context, builder: (context) => AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              backgroundColor: Colors.white,
+                              surfaceTintColor: Colors.white,
+                              content: SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height * 0.3,
+                                child: CupertinoDatePicker(
+                                  initialDateTime: DateTime.now(),
+                                  dateOrder: DatePickerDateOrder.ymd,
+                                  onDateTimeChanged: (DateTime newdate) {
+                                    _dateController.text = '${newdate.day < 10 ? '0${newdate.day}' : newdate.day}/${newdate.month < 10 ? '0${newdate.month}' : newdate.month}/${newdate.year}';
+                                  },
+                                  minimumYear: 1900,
+                                  maximumYear: 2200,
+                                  use24hFormat: true,
+                                  mode: CupertinoDatePickerMode.date,
+                                ),
+                              ),
+
+                              title: Text('Kunni tanlang',
+                                style: TextStyle(
+                                  fontSize: w * 0.04,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Bekor qilish',
+                                      style: TextStyle(
+                                        fontSize: w * 0.035,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ),
+                                    )
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      if (_tabController.index == 0) {
+                                        _getController.clearBookingBusinessGetList();
+                                        ApiController().bookingClientGetList(_dateController.text);
+                                      } else {
+                                        _getController.clearBookingBusinessGetList();
+                                        ApiController().bookingBusinessGetList(_getController.meUsers.value.res?.business?.id, _dateController.text);
+                                      }
+                                    },
+                                    child: Text('Ok',
+                                      style: TextStyle(
+                                        fontSize: w * 0.035,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.blue,
+                                      ),
+                                    )
+                                ),
+                              ],
+                            ));
                           }
                           _dateController.text = index == 0
                               ? ''
@@ -1115,30 +1161,32 @@ class HistoryPage extends StatelessWidget {
                             });
                           }
                         },
-                        child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: w * 0.015, vertical: h * 0.01),
-                          padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: Colors.grey,
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              index == 0
-                                  ? 'Hamma mijozlar'
-                                  : index == 1
-                                  ? 'Bugungi mijozlar'
-                                  : index == 2
-                                  ? 'Keyingi mijozlar'
-                                  : 'Tanlangan mijozlar',
-                              style: TextStyle(
-                                fontSize: w * 0.035,
-                                fontWeight: FontWeight.w500,
+                        child:Obx(()=>  Container(
+                              margin: EdgeInsets.symmetric(horizontal: w * 0.015, vertical: h * 0.01),
+                              padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: _getController.selectedDay.value == index ? Colors.blue : Colors.grey,
+                                ),
+                                color: _getController.selectedDay.value == index ? Colors.blue : Colors.white,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  index == 0
+                                      ? 'Hamma mijozlar'
+                                      : index == 1
+                                      ? 'Bugungi mijozlar'
+                                      : index == 2
+                                      ? 'Keyingi mijozlar'
+                                      : 'Tanlangan mijozlar',
+                                  style: TextStyle(
+                                    fontSize: w * 0.035,
+                                    color: _getController.selectedDay.value == index ? Colors.white : Colors.black,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
                         ),
                       );
                     },
@@ -1146,11 +1194,7 @@ class HistoryPage extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    _scrollController.animateTo(
-                      _scrollController.offset + w * 0.3,
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.easeInOut,
-                    );
+                    _scrollController.animateTo(_scrollController.offset + w * 0.3, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut,);
                   },
                   child: SizedBox(
                     width: w * 0.1,
@@ -1373,7 +1417,6 @@ class HistoryPage extends StatelessWidget {
           )),
         ],
       ),
-    ))
-    );
+    )));
   }
 }
