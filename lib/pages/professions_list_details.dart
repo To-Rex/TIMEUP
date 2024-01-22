@@ -1000,11 +1000,9 @@ class ProfessionsListDetails extends StatelessWidget {
                                       }
                                       ApiController().createBookingClientCreate(_getController.getProfileById.value.res!.id ?? 0, _dateController.text, _timeController.text, id).then((value) => {
                                         if (value == true){
-                                          //ApiController().bookingBusinessGetList(_getController.bookingBusinessGetListByID.value, '').then((value) => _getController.changeBookingBusinessGetList(value)),
                                           ApiController().bookingListBookingAndBookingCategory(_getController.bookingBusinessGetListByID.value, ''),
                                           Navigator.pop(context),
                                           showDialogValidation(context, 'Booking yaratildi', 'Booking yaratildi'),
-                                          //pageSheetController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease)
                                           _tabController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.ease)
                                         } else {
                                           Navigator.pop(context),
