@@ -1181,6 +1181,7 @@ class ProfilePage extends StatelessWidget {
                                 TextButton(
                                     onPressed: () {
                                       Navigator.pop(context);
+                                      ApiController().bookingBusinessGetList(businessId, _dateController.text);
                                     },
                                     child: Text('Ok',
                                       style: TextStyle(
