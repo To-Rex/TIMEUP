@@ -1124,6 +1124,8 @@ class ProfilePage extends StatelessWidget {
                     onChanged: (value) {
                       if (value != '') {
                         ApiController().bookingBusinessGetList(businessId, value);
+                      }else{
+                        ApiController().bookingBusinessGetList(businessId, '');
                       }
                     },
                     decoration: InputDecoration(
@@ -1166,6 +1168,7 @@ class ProfilePage extends StatelessWidget {
                                     onPressed: () {
                                       Navigator.pop(context);
                                       _dateController.text = '';
+                                      ApiController().bookingBusinessGetList(businessId, '');
                                     },
                                     child: Text('Bekor qilish',
                                       style: TextStyle(
@@ -1206,7 +1209,19 @@ class ProfilePage extends StatelessWidget {
                 )
               ),
               Positioned(
-                  top: h * 0.2,
+                top: h * 0.21,
+                  width: w,
+                  child: Center(
+                    child: Text('${DateTime.now().day < 10 ? '0${DateTime.now().day}' : DateTime.now().day}-${DateTime.now().month < 10 ? '0${DateTime.now().month}' : DateTime.now().month}-${DateTime.now().year} mijozlar kelish vaqtlari',
+                      style: TextStyle(
+                        fontSize: w * 0.035,
+                        color: Colors.black,
+                      ),
+                    ),
+                  )
+              ),
+              Positioned(
+                  top: h * 0.25,
                   bottom: 0,
                   width: w,
                   child: Obx(() => getController.bookingBusinessGetList.value.res == null || getController.bookingBusinessGetList.value.res!.isEmpty
