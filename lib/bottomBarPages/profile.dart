@@ -1130,10 +1130,8 @@ class ProfilePage extends StatelessWidget {
     _followTabController = TabController(length: 2, vsync: Navigator.of(context));
     _followTabController.addListener(() {
       if (_followTabController.index == 0) {
-        print('Obunachilar');
         ApiController().getMyFollowers(context,businessId);
       } else {
-        print('Dostlar');
         ApiController().getMyFollowing(context,getController.meUsers.value.res!.id!);
       }
     });
@@ -2523,5 +2521,10 @@ class ProfilePage extends StatelessWidget {
               ),
             )),
     );
+  }
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('croppedImage', croppedImage));
   }
 }
