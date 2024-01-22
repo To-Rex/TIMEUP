@@ -964,9 +964,8 @@ class HistoryPage extends StatelessWidget {
         ),
       ],
     )
-        : Expanded(child:
-    Container(
-      color: Colors.grey[50],
+        : Container(
+      color: Colors.white,
       child: Column(
         children: [
           SizedBox(
@@ -994,28 +993,20 @@ class HistoryPage extends StatelessWidget {
                   top: h * 0.04,
                   width: w,
                   child: Container(
-                    width: w,
-                    height: h * 0.06,
-                    margin: EdgeInsets.symmetric(horizontal: w * 0.05),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 2,
-                          blurRadius: 2,
-                          offset: const Offset(0, 2), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: Container(
                       width: w,
                       height: h * 0.06,
-                      margin: EdgeInsets.symmetric(horizontal: w * 0.03, vertical: h * 0.005),
+                      margin: EdgeInsets.symmetric(horizontal: w * 0.05),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.blue,
+                        color: Colors.green,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 2,
+                            blurRadius: 2,
+                            offset: const Offset(0, 2), // changes position of shadow
+                          ),
+                        ],
                       ),
                       child: Center(
                         child: Text(
@@ -1027,7 +1018,6 @@ class HistoryPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                    )
                   ),
                 )
               ],
@@ -1162,31 +1152,31 @@ class HistoryPage extends StatelessWidget {
                           }
                         },
                         child:Obx(()=>  Container(
-                              margin: EdgeInsets.symmetric(horizontal: w * 0.015, vertical: h * 0.01),
-                              padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: _getController.selectedDay.value == index ? Colors.blue : Colors.grey,
-                                ),
-                                color: _getController.selectedDay.value == index ? Colors.blue : Colors.white,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  index == 0
-                                      ? 'Hamma mijozlar'
-                                      : index == 1
-                                      ? 'Bugungi mijozlar'
-                                      : index == 2
-                                      ? 'Keyingi mijozlar'
-                                      : 'Tanlangan mijozlar',
-                                  style: TextStyle(
-                                    fontSize: w * 0.035,
-                                    color: _getController.selectedDay.value == index ? Colors.white : Colors.black,
-                                  ),
-                                ),
+                          margin: EdgeInsets.symmetric(horizontal: w * 0.015, vertical: h * 0.01),
+                          padding: EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.005),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: _getController.selectedDay.value == index ? Colors.blue : Colors.grey,
+                            ),
+                            color: _getController.selectedDay.value == index ? Colors.blue : Colors.white,
+                          ),
+                          child: Center(
+                            child: Text(
+                              index == 0
+                                  ? 'Hamma mijozlar'
+                                  : index == 1
+                                  ? 'Bugungi mijozlar'
+                                  : index == 2
+                                  ? 'Keyingi mijozlar'
+                                  : 'Tanlangan mijozlar',
+                              style: TextStyle(
+                                fontSize: w * 0.035,
+                                color: _getController.selectedDay.value == index ? Colors.white : Colors.black,
                               ),
                             ),
+                          ),
+                        ),
                         ),
                       );
                     },
@@ -1382,6 +1372,6 @@ class HistoryPage extends StatelessWidget {
           )),
         ],
       ),
-    )));
+    ));
   }
 }
