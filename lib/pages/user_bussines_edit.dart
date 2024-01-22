@@ -311,7 +311,6 @@ class EditBusinessUserPage extends StatelessWidget {
                       ),
                       TextFildWidget(
                         controller: nameInstitutionController,
-                        //labelText: 'Name of the institution',
                         labelText: 'Shirkat (Tashkilot) nomi',
                       ),
                     ],
@@ -336,18 +335,27 @@ class EditBusinessUserPage extends StatelessWidget {
                       ),
                       SizedBox(height: h * 0.01),
                       Padding(
-                        padding: EdgeInsets.only(left: w * 0.05),
+                        padding: EdgeInsets.only(left: w * 0.07),
                         child: Text('O\'zingiz haqingizda ma\'lumot',
                           style: TextStyle(fontSize: w * 0.03),),
                       ),
                       Container(
                         width: w,
                         height: h * 0.2,
-                        margin: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
+                        margin: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
                         padding: EdgeInsets.only(right: w * 0.02, left: w * 0.02, bottom: h * 0.01),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Colors.grey[300]!),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 1,
+                              blurRadius: 7,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
                         ),
                         child: TextField(
                           maxLines: 10,
@@ -362,7 +370,7 @@ class EditBusinessUserPage extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: w * 0.05, top: h * 0.01),
+                        padding: EdgeInsets.only(left: w * 0.07, top: h * 0.01),
                         child: Text('Ish kunlaringizni kiriting',
                           style: TextStyle(fontSize: w * 0.03),
                         ),
@@ -370,11 +378,20 @@ class EditBusinessUserPage extends StatelessWidget {
                       Container(
                         width: w,
                         height: h * 0.25,
-                        margin: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
+                        margin: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
                         padding: EdgeInsets.only(right: w * 0.02, left: w * 0.02, bottom: h * 0.01),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Colors.grey[300]!),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 1,
+                              blurRadius: 7,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
                         ),
                         child: TextField(
                           maxLines: 10,
@@ -389,13 +406,11 @@ class EditBusinessUserPage extends StatelessWidget {
                       //Ish tajribangiz
                       SizedBox(height: h * 0.01),
                       Padding(
-                        padding: EdgeInsets.only(left: w * 0.05),
+                        padding: EdgeInsets.only(left: w * 0.07),
                         child: Text('Ish tajribangiz (yil)',
                           style: TextStyle(fontSize: w * 0.03),),
                       ),
-                      Center(child:
-                      TextFildWidget(
-                        //keyboardType: number keyboard not ',' and '.'
+                      Center(child: TextFildWidget(
                         keyboardType: TextInputType.number,
                         controller: experienceController,
                         labelText: 'Faqat raqamlar bilan',

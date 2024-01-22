@@ -21,8 +21,8 @@ class TextFildWidget extends StatelessWidget {
     return Container(
       height: h * 0.06,
       width: w,
-      margin: EdgeInsets.only(left: w * 0.05, right: w * 0.05,),
-      padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05,),
+      margin: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
+      padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(7),
         color: Colors.white,
