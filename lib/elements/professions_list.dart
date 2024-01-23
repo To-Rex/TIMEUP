@@ -10,10 +10,7 @@ import '../res/getController.dart';
 class ProfessionsList extends StatelessWidget {
   final Function(int) onTap;
 
-  ProfessionsList({
-    Key? key,
-    required this.onTap,
-  }) : super(key: key);
+  ProfessionsList({Key? key, required this.onTap}) : super(key: key);
 
   final GetController _getController = Get.put(GetController());
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
@@ -314,9 +311,9 @@ class ProfessionsList extends StatelessWidget {
                       ),
                     ))
                     : const Center(child: Text('No data')))),
-              ),),
-          ],
-        ),
+              ),)
+          ]
+        )
       )
     );
   }
