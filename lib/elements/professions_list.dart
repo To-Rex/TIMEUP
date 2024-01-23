@@ -173,12 +173,12 @@ class ProfessionsList extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: h * 0.15,
+              top: h * 0.12,
               bottom: 0,
               child: Container(
                 width: w,
                 margin: EdgeInsets.only(top: h * 0.15),
-                color: Colors.grey[50],
+                color: Colors.white,
                 child: Obx(() => _getController.category.value.res == null
                     ? const Center(child: Text('No data'))
                     : Obx(() => _getController.category.value.res!.isNotEmpty
