@@ -411,7 +411,7 @@ class ProfessionsListUsers extends StatelessWidget {
                               padding: EdgeInsets.symmetric(horizontal: w * 0.04),
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                borderRadius: const BorderRadius.all(Radius.circular(10)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey.withOpacity(0.5),

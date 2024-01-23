@@ -31,280 +31,163 @@ class ProfessionsListElements extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    ApiController().getSubCategory(index!.toInt()).then((value) => {
-          //_getController.changeTitleListElements(_getController.category.value.res![index!].name!)
-        });
-    /*return Column(
-      children: [
-        SizedBox(height: h * 0.06,
-          child: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: GestureDetector(
-              onTap: () {
-                _getController.clearSubCategory();
-                _getController.enters.value = 0;
-              },
-              child: Icon(Icons.arrow_back_ios, color: Colors.black, size: w * 0.05),
+    ApiController().getSubCategory(index!.toInt());
+    return Expanded(
+        child: SizedBox(
+          child: Stack(children: [
+            Positioned(
+                top: h * 0,
+                width: w,
+                child: AppBar(
+                  backgroundColor: Colors.blue,
+                  elevation: 0,
+                  leading: GestureDetector(
+                    onTap: () {
+                      _getController.clearSubCategory();
+                      _getController.enters.value = 0;
+                    },
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                      size: w * 0.06,
+                    ),
+                  ),
+                  title: Text(
+                    'Kategoriyalar',
+                    style: TextStyle(
+                      fontSize: w * 0.05,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                  centerTitle: true,
+                )
             ),
-            title: Obx(() => Text(
-              _getController.occupation.value,
-              style: TextStyle(
-                fontSize: w * 0.05,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
-            )),
-            centerTitle: true,
-          ),
-        ),
-
-        Obx(() => _getController.subCategory.value.res == null
-              ? Center(child: Text('Ma`lumotlar yo`q', style: TextStyle(fontSize: w * 0.04)))
-              : SizedBox(
-                  height: h * 0.74,
-                  width: w * 0.95,
-                  child: SmartRefresher(
-                      enablePullDown: true,
-                      enablePullUp: true,
-                      header: CustomHeader(
-                        builder: (BuildContext context, RefreshStatus? mode) {
-                          Widget body;
-                          if (mode == RefreshStatus.idle) {
-                            body = const Text("Ma`lumotlarni yangilash uchun tashlang");
-                          } else if (mode == RefreshStatus.refreshing) {
-                            body = const CircularProgressIndicator(
-                              color: Colors.blue,
-                              backgroundColor: Colors.white,
-                              strokeWidth: 2,
-                            );
-                          } else if (mode == RefreshStatus.failed) {
-                            body = const Text("Ex Nimadir Xato ketdi");
-                          } else if (mode == RefreshStatus.canRefresh) {
-                            body = const Text("Ma`lumotlarni yangilash uchun tashlang");
-                          } else {
-                            body = const Text("Ma`lumotlar yangilandi");
-                          }
-                          return SizedBox(
-                            height: h * 0.1,
-                            child: Center(child: body),
-                          );
-                        },
-                      ),
-                      footer: CustomFooter(
-                        builder: (BuildContext context, LoadStatus? mode) {
-                          Widget body;
-                          if (mode == LoadStatus.idle) {
-                            body = const SizedBox();
-                          } else if (mode == LoadStatus.loading) {
-                            body = const CircularProgressIndicator(
-                              color: Colors.blue,
-                              backgroundColor: Colors.white,
-                              strokeWidth: 2,
-                            );
-                          } else if (mode == LoadStatus.failed) {
-                            body = const Text("Ex Nimadir Xato ketdi");
-                          } else if (mode == LoadStatus.canLoading) {
-                            body = const SizedBox();
-                          } else {
-                            body = const Text("Ma`lumotlar yangilandi");
-                          }
-                          return SizedBox(
-                            height: h * 0.1,
-                            child: Center(child: body),
-                          );
-                        },
-                      ),
-                      controller: _refreshController,
-                      onRefresh: _onRefresh,
-                      onLoading: _onLoading,
-                      child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            splashColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () {
-                              _getController.categoryByID.value = _getController.subCategory.value.res![index].id!;
-                              _getController.enters.value = 2;
-                              _getController.changeTitleListElements(_getController.subCategory.value.res![index].name!);
-                            },
-                            child: Container(
-                              height: h * 0.04,
-                              width: w * 0.98,
-                              margin: EdgeInsets.only(bottom: h * 0.02),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Row(
-                                    children: [
-                                      SizedBox(width: w * 0.02),
-                                      Text(_getController.subCategory.value.res?[index].name ?? '',
-                                        style: TextStyle(
-                                          fontSize: w * 0.04,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                      const Expanded(child: SizedBox()),
-                                      Icon(Icons.arrow_forward_ios, size: w * 0.04),
-                                      SizedBox(width: w * 0.02),
-                                    ],
-                                  ),
-                                  SizedBox(height: h * 0.01),
-                                  Divider(
-                                    color: Colors.grey[300],
-                                    thickness: 1,
-                                    height: 1,
-                                  ),
-                                ],
-                              )
-                            ),
-                          );
-                        },
-                        itemCount: _getController.subCategory.value.res?.length,
-                        cacheExtent: w * 0.1,
-                        dragStartBehavior: DragStartBehavior.down,
-                        prototypeItem: Container(
-                          height: h * 0.04,
-                          margin: EdgeInsets.only(bottom: h * 0.02),
+            Positioned(
+                top: h * 0,
+                bottom: 0,
+                child: Container(
+                  margin: EdgeInsets.only(top: h * 0.26),
+                  height: h * 0.01,
+                  width: w,
+                  color: Colors.white,
+                )
+            ),
+            Positioned(
+              top: h * 0.04,
+              width: w,
+              child: Container(
+                height: h * 0.13,
+                margin: EdgeInsets.symmetric(horizontal: w * 0.04, vertical: h * 0.04),
+                child: SizedBox(
+                    height: h * 0.2,
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: w * 0.02, right: w * 0.02),
+                          height: h * 0.03,
+                          width: w * 0.06,
                           decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(w * 0.02),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(6),
                           ),
+                          child: InkWell(
+                            onTap: () {
+                              scrollController.animateTo(scrollController.offset - w * 0.3, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut,);
+                            },
+                            child: Center(child: HeroIcon(HeroIcons.chevronLeft, color: Colors.blue, size: w * 0.05))),
+                        ),
+                        Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.all(w * 0.01),
+                              child: Obx(() => _getController.getFollowPost.value.res!.isNotEmpty
+                                  ? SizedBox(
+                                height: h * 0.11,
+                                child: ListView(
+                                  controller: scrollController,
+                                  scrollDirection: Axis.horizontal,
+                                  semanticChildCount: _getController.getFollowPost.value.res!.length,
+                                  children: [
+                                    for (int i = 0; i < _getController.getFollowPost.value.res!.length; i++)
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getFollowPost.value.res?[i].id)));
+                                        },
+                                        child: Container(
+                                          height: h * 0.03,
+                                          width: w * 0.3,
+                                          margin: EdgeInsets.only(right: w * 0.02),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(6),
+                                            image: DecorationImage(
+                                              image: NetworkImage('${_getController.getFollowPost.value.res?[i].photo}'),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                  ])
+                              ) : const SizedBox()),
+                            )
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(right: w * 0.02, left: w * 0.02),
+                          height: h * 0.03,
+                          width: w * 0.06,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              scrollController.animateTo(scrollController.offset + w * 0.3, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut,);
+                            },
+                            child: Center(
+                              child: HeroIcon(HeroIcons.chevronRight, color: Colors.blue, size: w * 0.05),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                ),
+              )
+            ),
+            Positioned(
+                width: w,
+                height: h * 0.06,
+                top: h * 0.23,
+                child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: w * 0.04),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 0,
+                          blurRadius: 5,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    //appBar title
+                    child: Center(
+                      child: Obx(() => Text(
+                        _getController.occupation.value,
+                        style: TextStyle(
+                          fontSize: w * 0.045,
+                          color: Colors.black,
                         ),
                       )),
-                ),
-        ),
-      ],
-    );*/
-    return Expanded(
-        child: Stack(children: [
-          Positioned(
-            child: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: GestureDetector(
-              onTap: () {
-                _getController.clearSubCategory();
-                _getController.enters.value = 0;
-              },
-              child: Icon(Icons.arrow_back_ios, color: Colors.white, size: w * 0.05),
-            ),
-            title: Obx(() => Text(
-              _getController.occupation.value,
-              style: TextStyle(
-                fontSize: w * 0.05,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-              ),
-            )),
-            centerTitle: true),
-          ),
-          Positioned(
-              top: h * 0.04,
-              child: SizedBox(
-                height: h * 0.2,
-                width: w,
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: w * 0.05),
-                      height: h * 0.03,
-                      width: w * 0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          scrollController.animateTo(
-                            scrollController.offset - w * 0.3,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                          );
-                        },
-                        child: Center(
-                          child: HeroIcon(
-                            HeroIcons.chevronLeft,
-                            color: Colors.blue,
-                            size: w * 0.05,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(left: w * 0.05),
-                          child: Obx(() => _getController.getFollowPost.value.res!.isNotEmpty
-                              ? SizedBox(
-                            height: h * 0.11,
-                            child: ListView(
-                              controller: scrollController,
-                              scrollDirection: Axis.horizontal,
-                              semanticChildCount: _getController.getFollowPost.value.res!.length,
-                              children: [
-                                for (int i = 0; i < _getController.getFollowPost.value.res!.length; i++)
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getFollowPost.value.res?[i].id)));
-                                    },
-                                    child: Container(
-                                      height: h * 0.03,
-                                      width: w * 0.3,
-                                      margin: EdgeInsets.only(right: w * 0.02),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(6),
-                                        image: DecorationImage(
-                                          image: NetworkImage('${_getController.getFollowPost.value.res?[i].photo}'),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                              ],),
-                          ) : const SizedBox()
-                          ),
-                        )
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: w * 0.05, left: w * 0.05),
-                      height: h * 0.03,
-                      width: w * 0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          scrollController.animateTo(
-                            scrollController.offset + w * 0.3,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                          );
-                        },
-                        child: Center(
-                          child: HeroIcon(
-                            HeroIcons.chevronRight,
-                            color: Colors.blue,
-                            size: w * 0.05,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                    )
                 )
-              ),
             ),
-          Positioned(
-              top: h * 0.23,
+            Positioned(
+              top: h * 0.31,
               bottom: 0,
-              child: Container(
                 width: w,
-                color: Colors.white,
-                child: Obx(() => _getController.subCategory.value.res == null || _getController.subCategory.value.res!.isEmpty
+                child:  Obx(() => _getController.subCategory.value.res == null || _getController.subCategory.value.res!.isEmpty
                     ? SizedBox(
                   //height: h * 0.755,
                   width: w,
@@ -391,12 +274,13 @@ class ProfessionsListElements extends StatelessWidget {
                             margin: EdgeInsets.only(bottom: h * 0.02),
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(w * 0.02),
-                              boxShadow: const [
+                              borderRadius: const BorderRadius.all(Radius.circular(10)),
+                              boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black12,
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 0,
                                   blurRadius: 5,
-                                  offset: Offset(0, 1),
+                                  offset: const Offset(0, 3), // changes position of shadow
                                 ),
                               ],
                             ),
@@ -438,11 +322,10 @@ class ProfessionsListElements extends StatelessWidget {
                       },
                     ),
                   ),
-                ),
-                ),
-              )
-          )
-        ],
-    ));
+                )),
+            )
+          ],
+          ),
+        ));
   }
 }
