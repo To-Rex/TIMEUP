@@ -32,8 +32,7 @@ class ProfessionsListElements extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     ApiController().getSubCategory(index!.toInt()).then((value) => {
-          _getController.changeSubCategory(value),
-          _getController.changeTitleListElements(_getController.category.value.res![index!].name!)
+          //_getController.changeTitleListElements(_getController.category.value.res![index!].name!)
         });
     /*return Column(
       children: [
@@ -301,12 +300,13 @@ class ProfessionsListElements extends StatelessWidget {
             ),
           Positioned(
               top: h * 0.23,
+              bottom: 0,
               child: Container(
                 width: w,
                 color: Colors.white,
                 child: Obx(() => _getController.subCategory.value.res == null || _getController.subCategory.value.res!.isEmpty
                     ? SizedBox(
-                  height: h * 0.755,
+                  //height: h * 0.755,
                   width: w,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -317,9 +317,8 @@ class ProfessionsListElements extends StatelessWidget {
                       const Expanded(child: SizedBox()),
                     ],
                   ),
-                )
-                    : Container(
-                  height: h * 0.6,
+                ) : Container(
+                  //height: h * 0.6,
                   width: w * 0.9,
                   margin: EdgeInsets.only(top: h * 0.02),
                   padding: EdgeInsets.only(bottom: h * 0.03),

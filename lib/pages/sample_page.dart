@@ -80,9 +80,8 @@ class SamplePage extends StatelessWidget {
             ),
           ) : Container(height: h * 0.03))),
       body: Obx(() => _getController.index.value == 3 || _getController.index.value == 4 || _getController.index.value == 1
-          ? SizedBox(
-        child: _getController.widgetOptions.elementAt(_getController.index.value),
-      ) : Column(
+          ?  _getController.widgetOptions.elementAt(_getController.index.value)
+          : Column(
         children: [
           Obx(() => _getController.uplAodVideo.value == true
               ? Container(
