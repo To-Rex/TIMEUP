@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
@@ -57,7 +57,6 @@ class _MyHomePageState extends State<MyHomePage> {
   String? token = '';
   getToken() async {
     token = box.read('token');
-    print(token);
     return token;
   }
 
@@ -66,10 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
     getToken();
     Timer(const Duration(seconds: 3), () async {
       if (token != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => SamplePage()),
-        );
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()),);
       } else {
         if (GetStorage().read('token') != null) {
           ApiController().getUserData().then((value) => {
