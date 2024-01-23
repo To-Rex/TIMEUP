@@ -143,7 +143,7 @@ class EditUserPage extends StatelessWidget {
               ),
               child: Obx(() => getController.getRegion.value.res == null
                   ? const Center(child: CircularProgressIndicator(),)
-                  : DropdownButtonHideUnderline(child: DropdownButton(
+                  : DropdownButtonHideUnderline(child: DropdownButton(dropdownColor: Colors.white,
                   value: getController.getRegion.value.res![getController.regionIndex.value],
                   onChanged: (String? newValue) {
                     getController.changeRegionIndex(getController.getRegion.value.res!.indexOf(newValue!));

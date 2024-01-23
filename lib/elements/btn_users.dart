@@ -17,6 +17,7 @@ class EditButton extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.blue,
+          elevation: 6,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
