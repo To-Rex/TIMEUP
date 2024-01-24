@@ -3,10 +3,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:time_up/firebase_options.dart';
 
+import 'getController.dart';
+
 class FireBaseApi {
   static FirebaseMessaging messaging = FirebaseMessaging.instance;
   static String? token;
-
   Future<void> initNotification() async {
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
     await messaging.requestPermission();
@@ -48,10 +49,10 @@ class FireBaseApi {
 
   //initNotification topic get notification. topic name: some-topic
   Future<void> initNotificationTopic() async {
+    var myTopic = GetStorage().read('myTopic').toString();
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
     await messaging.requestPermission();
-    await messaging.subscribeToTopic('some-topic');
-    await messaging.subscribeToTopic('some-topic1');
+    await messaging.subscribeToTopic(myTopic);
     await messaging.setForegroundNotificationPresentationOptions(alert: true, badge: true, sound: true);
     final fcmToken = await messaging.getToken();
     print('fcmTokenssss: $fcmToken');

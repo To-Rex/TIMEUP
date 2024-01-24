@@ -173,6 +173,8 @@ class ApiController extends GetxController {
     print(response.body);
     print(response.statusCode);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      //myTopic save in GetStorage
+      GetStorage().write('myTopic', MeUser.fromJson(jsonDecode(response.body)).res?.id.toString());
       _getController.changeMeUser(MeUser.fromJson(jsonDecode(response.body)));
       _getController.changeWidgetOptions();
       return MeUser.fromJson(jsonDecode(response.body));
