@@ -1,10 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:time_up/res/firebase_api.dart';
 import '../res/getController.dart';
-import '../res/messaging_widget.dart';
 
 class SamplePage extends StatelessWidget {
   SamplePage({super.key});

@@ -18,8 +18,8 @@ main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FireBaseApi().initNotificationTopic();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  //await FireBaseApi().initNotificationTopic();
+  await InitNotification.initialize();
   runApp(const MyApp());
 }
 
@@ -85,34 +85,4 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return SplashScreen();
   }
-}
-
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async{
-  print('Handling a foreground message ${message.messageId}');
-  print('Handling a foreground message ${message.data}');
-  print('Handling a foreground message ${message.notification}');
-  print('Handling a foreground message ${message.notification!.body}');
-  print('Handling a foreground message ${message.notification!.title}');
-  print('Handling a foreground message ${message.notification!.android!.imageUrl}');
-  final box = GetStorage();
-  var list = box.read('notification');
-  print('buuuuuuu=======${GetStorage().read('notification')}');
-  var notification = NotificationModel(
-    title: message.notification!.title,
-    body: message.notification!.body,
-    token: message.data['token'],
-    image: message.notification!.android!.imageUrl,
-  );
-  if (list != null) {
-    list.add(notification.toJson());
-    box.write('notification', list);
-    print(list);
-  } else {
-    list = [];
-    list.add(notification.toJson());
-    box.write('notification', list);
-    print(list);
-  }
-  print(list);
-  return Future<void>.value();
 }
