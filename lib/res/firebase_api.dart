@@ -4,54 +4,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:time_up/firebase_options.dart';
 
-class FireBaseApi {
-  static FirebaseMessaging messaging = FirebaseMessaging.instance;
-  static String? token;
-  late AndroidNotificationChannel channel;
-
-
-  //initNotification topic get notification. topic name: some-topic
-  Future<void> initNotificationTopic() async {
-    var myTopic = GetStorage().read('myTopic').toString();
-    if (myTopic != null) {
-      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-      await messaging.requestPermission();
-      await messaging.subscribeToTopic(myTopic);
-      await messaging.setForegroundNotificationPresentationOptions(alert: true, badge: true, sound: true);
-      final fcmToken = await messaging.getToken();
-      print('fcmTokenssss: $fcmToken');
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-        print('oneeee ${message.messageId}');
-      });
-      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-        print('twoooo ${message.messageId}');
-      });
-      //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-      FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) async {
-        if (message != null) {
-          print('threeee ${message.messageId}');
-        }
-      });
-    }
-  }
-
-  Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-    await messaging.requestPermission();
-    await messaging.setForegroundNotificationPresentationOptions(alert: true, badge: true, sound: true);
-    print('Handling a background message ${message.messageId}');
-    print('Handling a background message ${message.data}');
-    print('Handling a background message ${message.notification}');
-    print('Handling a background message ${message.notification!.body}');
-    print('Handling a background message ${message.notification!.title}');
-    print('Handling a background message ${message.notification!.android!.imageUrl}');
-
-  }
-}
-
 class InitNotification {
   static Future<void> initialize() async {
+    //late AndroidNotificationChannel channel;
     var myTopic = GetStorage().read('myTopic').toString();
+    print('myTopic: $myTopic');
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
     await FirebaseMessaging.instance.requestPermission();
     await FirebaseMessaging.instance.subscribeToTopic(myTopic);
@@ -75,13 +32,11 @@ class InitNotification {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       print('twoooo ${message.messageId}');
     });
-    //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
     FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) async {
       if (message != null) {
         print('threeee ${message.messageId}');
       }
     });
-
     await _configureNotificationChannels();
   }
 
@@ -96,8 +51,8 @@ class InitNotification {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-  static Future<void> _firebaseMessagingBackgroundHandler(
-      RemoteMessage message) async {
+  static Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+    var myTopic = GetStorage().read('myTopic').toString();
     // Handle background message here
     await Firebase.initializeApp();
     await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -105,6 +60,7 @@ class InitNotification {
       badge: true,
       sound: true,
     );
+    await FirebaseMessaging.instance.subscribeToTopic(myTopic);
     if (message.notification!.body != null) {
       showNotification(message);
     } else {
