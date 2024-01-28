@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:time_up/api/api_controller.dart';
+import 'package:time_up/elements/functions.dart';
 import 'package:time_up/firebase_options.dart';
 
 import 'getController.dart';
@@ -50,39 +52,41 @@ class FireBaseApi {
   //initNotification topic get notification. topic name: some-topic
   Future<void> initNotificationTopic() async {
     var myTopic = GetStorage().read('myTopic').toString();
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-    await messaging.requestPermission();
-    await messaging.subscribeToTopic(myTopic);
-    await messaging.setForegroundNotificationPresentationOptions(alert: true, badge: true, sound: true);
-    final fcmToken = await messaging.getToken();
-    print('fcmTokenssss: $fcmToken');
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Handling a foreground message ${message.messageId}');
-      print('Handling a foreground message ${message.data}');
-      print('Handling a foreground message ${message.notification}');
-      print('Handling a foreground message ${message.notification!.body}');
-      print('Handling a foreground message ${message.notification!.title}');
-      print('Handling a foreground message ${message.notification!.android!.imageUrl}');
-      final box = GetStorage();
-      var list = box.read('notification');
-      var notification = NotificationModel(
-        title: message.notification!.title,
-        body: message.notification!.body,
-        token: message.data['token'],
-        image: message.notification!.android!.imageUrl,
-      );
-      if (list != null) {
-        list.add(notification.toJson());
-        box.write('notification', list);
+    if (myTopic != null) {
+      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+      await messaging.requestPermission();
+      await messaging.subscribeToTopic(myTopic);
+      await messaging.setForegroundNotificationPresentationOptions(alert: true, badge: true, sound: true);
+      final fcmToken = await messaging.getToken();
+      print('fcmTokenssss: $fcmToken');
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        print('Handling a foreground message ${message.messageId}');
+        print('Handling a foreground message ${message.data}');
+        print('Handling a foreground message ${message.notification}');
+        print('Handling a foreground message ${message.notification!.body}');
+        print('Handling a foreground message ${message.notification!.title}');
+        print('Handling a foreground message ${message.notification!.android!.imageUrl}');
+        final box = GetStorage();
+        var list = box.read('notification');
+        var notification = NotificationModel(
+          title: message.notification!.title,
+          body: message.notification!.body,
+          token: message.data['token'],
+          image: message.notification!.android!.imageUrl,
+        );
+        if (list != null) {
+          list.add(notification.toJson());
+          box.write('notification', list);
+          print(list);
+        } else {
+          list = [];
+          list.add(notification.toJson());
+          box.write('notification', list);
+          print(list);
+        }
         print(list);
-      } else {
-        list = [];
-        list.add(notification.toJson());
-        box.write('notification', list);
-        print(list);
-      }
-      print(list);
-    });
+      });
+    }
   }
 
 
