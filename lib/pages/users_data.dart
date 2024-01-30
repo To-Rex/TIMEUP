@@ -102,7 +102,6 @@ class LoginUserData extends StatelessWidget {
                   labelText: 'Familiya',
                 ),
                 SizedBox(height: h * 0.02),
-
                 Container(
                   width: w,
                   height: h * 0.04,
