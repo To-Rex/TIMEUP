@@ -4,7 +4,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:time_up/api/api_controller.dart';
 import 'package:time_up/elements/functions.dart';
-import '../models/get_follow_post.dart';
 import '../pages/post_details.dart';
 import '../pages/professions_list_details.dart';
 import '../res/getController.dart';
