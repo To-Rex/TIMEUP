@@ -110,19 +110,19 @@ class HomePage extends StatelessWidget {
                   if (_getController.getFollowPost.value.res?[index].photo != null)
                     SizedBox(
                       width: w,
-                      height: h * 0.33,
+                      height: h * 0.6,
                       child: Obx(() => _getController.getFollowPost.value.res?[index].mediaType == 'video'
                           ? Stack(
                         children: [
                           SizedBox(
                             width: w,
-                            height: h * 0.33,
+                            height: h * 0.6,
                             child: Image.network('${_getController.getFollowPost.value.res?[index].photo}',
                               fit: BoxFit.cover,
                             ),
                           ),
                           Positioned(
-                              height: h * 0.33,
+                              height: h * 0.6,
                               width: w,
                               child: Center(
                                 child: Container(
@@ -149,7 +149,7 @@ class HomePage extends StatelessWidget {
                         },
                         child: SizedBox(
                           width: w,
-                          height: h * 0.33,
+                          height: h * 0.6,
                           child: Image.network('${_getController.getFollowPost.value.res?[index].photo}', fit: BoxFit.cover,),
                         ),
                       )),
@@ -373,7 +373,7 @@ class HomePage extends StatelessWidget {
                     if (_getController.getFollowPost.value.res?[index].photo != null)
                       SizedBox(
                         width: w,
-                        height: h * 0.33,
+                        height: h * 0.6,
                         child:
                         Obx(() =>
                         _getController.getFollowPost.value.res?[index].mediaType == 'video'
@@ -381,14 +381,14 @@ class HomePage extends StatelessWidget {
                           children: [
                             SizedBox(
                               width: w,
-                              height: h * 0.33,
+                              height: h * 0.6,
                               child: Image.network(
                                 '${_getController.getFollowPost.value.res?[index].photo}',
                                 fit: BoxFit.cover,
                               ),
                             ),
                             Positioned(
-                                height: h * 0.33,
+                                height: h * 0.6,
                                 width: w,
                                 child: Center(
                                   child: Container(
@@ -417,7 +417,7 @@ class HomePage extends StatelessWidget {
                           },
                           child: SizedBox(
                             width: w,
-                            height: h * 0.33,
+                            height: h * 0.6,
                             child: Image.network(
                               '${_getController.getFollowPost.value.res?[index].photo}',
                               fit: BoxFit.cover,
