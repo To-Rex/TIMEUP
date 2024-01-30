@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:time_up/firebase_options.dart';
@@ -9,7 +8,6 @@ class InitNotification {
   static Future<void> initialize() async {
     //late AndroidNotificationChannel channel;
     var myTopic = GetStorage().read('myTopic').toString();
-    print('myTopic: $myTopic');
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
     await FirebaseMessaging.instance.requestPermission();
     await FirebaseMessaging.instance.subscribeToTopic(myTopic);
@@ -128,33 +126,4 @@ class InitNotification {
   }
 }
 
-class CustomNotificationLayout extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: Colors.white,
-      ),
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Custom Notification Title',
-            style: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 8.0),
-          Text(
-            'Custom Notification Body',
-            style: TextStyle(fontSize: 14.0),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
