@@ -149,26 +149,26 @@ class PostDetailsPage extends StatelessWidget {
               SizedBox(height: h * 0.02),
               Obx(() => getController.startVideo == true
                     ? SizedBox(
-                  height: h * 0.4,
+                  height: h * 0.6,
                   width: w,
                   child: CustomVideoPlayer(customVideoPlayerController: _customVideoPlayerController))
                     : Stack(
                   children: [
                     if (getController.getPostById.value.res!.photo != null)
                     SizedBox(
-                      height: h * 0.4,
+                      height: h * 0.6,
                       width: w,
                       child: Image.network(getController.getPostById.value.res!.photo!, fit: BoxFit.cover,),
                     ),
                     if (getController.getPostById.value.res!.photo == null)
                     Container(
-                      height: h * 0.4,
+                      height: h * 0.6,
                       width: w,
                       color: Colors.black,
                     ),
                     getController.getPostById.value.res!.mediaType == 'video'
                         ? Positioned(
-                        height: h * 0.4,
+                        height: h * 0.6,
                         width: w,
                         child: Center(
                           child: Container(
