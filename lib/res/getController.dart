@@ -39,6 +39,7 @@ class GetController extends GetxController {
   var postFile = ''.obs;
   var postVideoFile = ''.obs;
   var occupation = ''.obs;
+  var lengthList = 1.obs;
 
   //selectedDay
   void changeSelectedDay(int newSelectedDay) {
@@ -120,8 +121,10 @@ class GetController extends GetxController {
   }
 
   //BookingBusinessGetListCategory
-  void changeGetBookingBusinessGetListCategory(BookingBusinessGetListCategory newGetBookingBusinessGetListCategory) {
-    getBookingBusinessGetListCategory.value = newGetBookingBusinessGetListCategory;
+  void changeGetBookingBusinessGetListCategory(
+      BookingBusinessGetListCategory newGetBookingBusinessGetListCategory) {
+    getBookingBusinessGetListCategory.value =
+        newGetBookingBusinessGetListCategory;
   }
 
   //clear data BookingBusinessGetListCategory
@@ -145,6 +148,13 @@ class GetController extends GetxController {
 
   void changeGetFollowPost(GetFollowPost newGetFollowPost) {
     getFollowPost.value = newGetFollowPost;
+    lengthList.value = newGetFollowPost.res!.length;
+  }
+  //add getFollowPost in list getFollowPost
+  void addGetFollowPost(GetFollowPost newGetFollowPost) {
+    //getFollowPost.value.res!.add(newGetFollowPost.res![0]);
+    getFollowPost.value.res!.addAll(newGetFollowPost.res!);
+    lengthList.value = getFollowPost.value.res!.length;
   }
 
   void changeStartVideo() {

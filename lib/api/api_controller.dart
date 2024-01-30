@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:time_up/elements/functions.dart';
 import 'package:time_up/models/last_send_sms.dart';
-import 'package:time_up/models/register_model.dart';
 import '../models/booking_business_category_get.dart';
 import '../models/booking_business_get.dart';
 import '../models/booking_category_get.dart';
@@ -539,8 +537,15 @@ class ApiController extends GetxController {
     );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
-      _getController.changeGetFollowPost(
-          GetFollowPost.fromJson(jsonDecode(response.body)));
+      //_getController.changeGetFollowPost(GetFollowPost.fromJson(jsonDecode(response.body)));
+      //_getController.addGetFollowPost(GetFollowPost.fromJson(jsonDecode(response.body)));
+      if (offset == 0) {
+        _getController.changeGetFollowPost(GetFollowPost.fromJson(jsonDecode(response.body)));
+        print('offset = 0');
+      } else {
+        _getController.addGetFollowPost(GetFollowPost.fromJson(jsonDecode(response.body)));
+        print('offset != 0');
+      }
       return GetFollowPost.fromJson(jsonDecode(response.body));
     } else {
       _getController.changeGetFollowPost(GetFollowPost(res: [], status: false));
