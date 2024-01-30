@@ -2127,19 +2127,19 @@ class ProfilePage extends StatelessWidget {
                                                             if (getController.getPostList.value.res![index].photo != '')
                                                               Container(
                                                                 width: w,
-                                                                height: h * 0.3,
+                                                                height: h * 0.6,
                                                                 padding: EdgeInsets.all(w * 0.01),
                                                                 decoration: BoxDecoration(
                                                                   image: DecorationImage(
                                                                     image: NetworkImage('${getController.getPostList.value.res![index].photo}'),
-                                                                    fit: BoxFit.fitWidth,
+                                                                    fit: BoxFit.cover,
                                                                   ),
                                                                 ),
                                                               ),
                                                             if (getController.getPostList.value.res![index].photo == '')
                                                               Container(
                                                                 width: w,
-                                                                height: h * 0.3,
+                                                                height: h * 0.6,
                                                                 padding: EdgeInsets.all(w * 0.01),
                                                                 decoration: const BoxDecoration(
                                                                   color: Colors.black,
@@ -2147,7 +2147,7 @@ class ProfilePage extends StatelessWidget {
                                                               ),
                                                             Positioned(
                                                                 width: w,
-                                                                height: h * 0.3,
+                                                                height: h * 0.6,
                                                                 child: Center(
                                                                   child: Container(
                                                                     padding: EdgeInsets.all(w * 0.025),
@@ -2165,12 +2165,12 @@ class ProfilePage extends StatelessWidget {
                                                           ],
                                                         ) : Container(
                                                           width: w,
-                                                          height: h * 0.3,
+                                                          height: h * 0.6,
                                                           padding: EdgeInsets.all(w * 0.01),
                                                           decoration: BoxDecoration(
                                                             image: DecorationImage(
                                                               image: NetworkImage('${getController.getPostList.value.res![index].photo}'),
-                                                              fit: BoxFit.fitWidth,
+                                                              fit: BoxFit.cover
                                                             ),
                                                           ),
                                                         ),
@@ -2271,8 +2271,7 @@ class ProfilePage extends StatelessWidget {
                           : const SizedBox()),
                     ],
                   ),
-              )
-                  : SizedBox(
+              ) : SizedBox(
                   child: Column(
                   children: [
                     AppBar(

@@ -32,30 +32,6 @@ class ProfessionsListDetails extends StatelessWidget {
 
   final ScrollController _scrollControllerPage = ScrollController();
 
-  showLoadingDialog(BuildContext context) {
-    AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      content: Row(
-        children: [
-          const CircularProgressIndicator(),
-          SizedBox(width: MediaQuery.of(context).size.width * 0.05),
-          Container(
-              margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05),
-              child: Text("Kuting...", style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04, fontWeight: FontWeight.w500),)),
-        ],
-      ),
-    );
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
   showDialogValidation(BuildContext context,title,description) {
     showDialog(
       context: context,
@@ -991,7 +967,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                   height: h * 0.05,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      showLoadingDialog(context);
+                                      Loading.showLoading(context);
                                       int id = 0;
                                       if (_getController.getBookingBusinessGetListCategory.value.res!.bookingCategories!.isEmpty) {
                                         id = 0;
@@ -1228,7 +1204,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                     if (_getController.getFollowers.value.res![index].followed == false)
                                       InkWell(
                                       onTap: () {
-                                        showLoadingDialog(context);
+                                        Loading.showLoading(context);
                                         ApiController().follow(_getController.getFollowers.value.res![index].businessId).then((value) => {
                                           if (value.status == true){
                                             ApiController().getMyFollowers(context,businessId),
@@ -1264,7 +1240,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                     else
                                       InkWell(
                                         onTap: () {
-                                          showLoadingDialog(context);
+                                          Loading.showLoading(context);
                                           ApiController().unFollow(_getController.getFollowers.value.res![index].businessId).then((value) => {
                                             if (value == true){
                                               ApiController().getMyFollowers(context,businessId),
@@ -1890,7 +1866,7 @@ class ProfessionsListDetails extends StatelessWidget {
                               return InkWell(
                                 overlayColor: MaterialStateProperty.all(Colors.transparent),
                                 onTap: () {
-                                  showLoadingDialog(context);
+                                  Loading.showLoading(context);
                                   ApiController().profileById(int.parse(_getController.getFollowing.value.res![index].id.toString())).then((value) => {_getController.changeProfileById(value),
                                     Navigator.pop(context),
                                     _getController.changeBookingBusinessGetListByID(int.parse(_getController.getFollowing.value.res![index].id.toString())),
@@ -2058,7 +2034,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                               if (_getController.getPostList.value.res![index].photo != '')
                                                 Container(
                                                   width: w,
-                                                  height: h * 0.3,
+                                                  height: h * 0.6,
                                                   padding: EdgeInsets.all(w * 0.01),
                                                   decoration: BoxDecoration(
                                                     image: DecorationImage(
@@ -2070,7 +2046,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                               if (_getController.getPostList.value.res![index].photo == '')
                                                 Container(
                                                   width: w,
-                                                  height: h * 0.3,
+                                                  height: h * 0.6,
                                                   padding: EdgeInsets.all(w * 0.01),
                                                   decoration: const BoxDecoration(
                                                     color: Colors.black,
@@ -2078,7 +2054,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                                 ),
                                               Positioned(
                                                   width: w,
-                                                  height: h * 0.3,
+                                                  height: h * 0.6,
                                                   child: Center(
                                                     child: Container(
                                                       padding: EdgeInsets.all(w * 0.025),
@@ -2096,12 +2072,12 @@ class ProfessionsListDetails extends StatelessWidget {
                                             ],
                                           ) : Container(
                                             width: w,
-                                            height: h * 0.3,
+                                            height: h * 0.6,
                                             padding: EdgeInsets.all(w * 0.01),
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
                                                 image: NetworkImage('${_getController.getPostList.value.res![index].photo}'),
-                                                fit: BoxFit.fitWidth,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
                                           ),
