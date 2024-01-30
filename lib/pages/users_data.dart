@@ -344,22 +344,6 @@ class LoginUserData extends StatelessWidget {
                       _dateController.text = '0${_dateController.text}';
                     }
                     Loading.showLoading(context);
-                    /*ApiController().registerUser(nameController.text.toString(), surnameController.text.toString(), nikNameController.text.toString(), phoneNumberController.text.toString(), getController.getRegion.value.res![getController.regionIndex.value], getController.image.value, _dateController.text.toString(),).then((value) {
-                      if (value.status == true) {
-                        print('111111111111----------');
-                        GetStorage().write('token', value.res?.token).then((value) => {
-                          ApiController().getUserData().then((value) => {
-                            print('222222222222----------'),
-                            Navigator.pop(context),
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage())),
-                          })
-                        });
-                      } else {
-                        print('000000000000----------');
-                        Toast.showToast(context, 'Exx Nimadur xato ketdi', Colors.red, Colors.white);
-                        Navigator.pop(context);
-                      }
-                    });*/
                     ApiController().registerUser(
                       nameController.text.toString(),
                       surnameController.text.toString(),
