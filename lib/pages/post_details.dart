@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:time_up/api/api_controller.dart';
+import 'package:time_up/elements/functions.dart';
 import 'package:time_up/pages/professions_list_details.dart';
 import '../res/getController.dart';
 import 'edit_post_details.dart';
@@ -15,45 +16,6 @@ class PostDetailsPage extends StatelessWidget {
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
   late CustomVideoPlayerController _customVideoPlayerController;
-
-  showLoadingDialog(BuildContext context, w) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.5),
-      builder: (context) => AlertDialog(
-        content: SizedBox(
-          width: w * 0.1,
-          height: w * 0.2,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Expanded(child: SizedBox()),
-              SizedBox(
-                width: w * 0.1,
-                height: w * 0.1,
-                child: const CircularProgressIndicator(
-                  color: Colors.blue,
-                  backgroundColor: Colors.white,
-                  strokeWidth: 2,
-                ),
-              ),
-              SizedBox(
-                width: w * 0.07,
-              ),
-              Text(
-                'Loading...',
-                style: TextStyle(
-                  fontSize: w * 0.04,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const Expanded(child: SizedBox()),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +112,7 @@ class PostDetailsPage extends StatelessWidget {
                           Navigator.pop(context);
                           ApiController().getMePostList(getController.meUsers.value.res!.business?.id);
                         }else if (choice == 'Tahrirlash'){
-                          showLoadingDialog(context, w);
+                          Loading.showLoading(context);
                           ApiController().getByIdPost(postId).then((value) => {
                             Navigator.pop(context),
                             Navigator.push(context, MaterialPageRoute(builder: (context) => EditPostDetails(postId: postId))),
@@ -189,7 +151,7 @@ class PostDetailsPage extends StatelessWidget {
                     ? SizedBox(
                   height: h * 0.4,
                   width: w,
-                  child: CustomVideoPlayer(customVideoPlayerController: _customVideoPlayerController),)
+                  child: CustomVideoPlayer(customVideoPlayerController: _customVideoPlayerController))
                     : Stack(
                   children: [
                     if (getController.getPostById.value.res!.photo != null)
