@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -124,7 +125,7 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> registerUser(String fistName, String lastName, userName, phoneNumber, address, profilePhoto, birthDate) async {
+  Future<bool> registerUser(String fistName, String lastName, userName, phoneNumber, address, female, profilePhoto, birthDate) async {
     print(lastName);
     print(userName);
     print(phoneNumber);
@@ -138,6 +139,7 @@ class ApiController extends GetxController {
       'user_name': userName,
       'phone_number': phoneNumber,
       'address': address,
+      'female':  female.toString(),
       'birth_date': birthDate,
     });
     request.files.add(await http.MultipartFile.fromPath('profile_photo', profilePhoto));
@@ -151,7 +153,6 @@ class ApiController extends GetxController {
     // Read the response stream only once and store it in a variable
     String responseBody = await response.stream.bytesToString();
     print('=====-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= $responseBody');
-
     if (response.statusCode == 200 || response.statusCode == 201) {
       var jsonResponse = json.decode(responseBody);
       _getController.changeWidgetOptions();

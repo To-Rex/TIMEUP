@@ -112,13 +112,13 @@ class LoginUserData extends StatelessWidget {
                     children: [
                       //male or female checkbox
                       Obx(() => Checkbox(
-                        value: getController.sendCode.value,
+                        value: !getController.sendCode.value,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
                         activeColor: Colors.blue,
                         onChanged: (value) {
-                          getController.sendCode.value = value!;
+                          getController.sendCode.value = false;
                         },
                       ),),
                       Text('Erkak',
@@ -130,13 +130,13 @@ class LoginUserData extends StatelessWidget {
 
                       SizedBox(width: w * 0.02),
                       Obx(() => Checkbox(
-                        value: !getController.sendCode.value,
+                        value: getController.sendCode.value,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
                         activeColor: Colors.blue,
                         onChanged: (value) {
-                          getController.sendCode.value = !value!;
+                          getController.sendCode.value = true;
                         },
                       ),),
                       Text('Ayol',
@@ -256,8 +256,6 @@ class LoginUserData extends StatelessWidget {
                     ),
                   ),
                 ),
-
-
                 SizedBox(height: h * 0.02),
                 Container(
                   height: h * 0.06,
@@ -363,7 +361,14 @@ class LoginUserData extends StatelessWidget {
                         Navigator.pop(context);
                       }
                     });*/
-                    ApiController().registerUser(nameController.text.toString(), surnameController.text.toString(), nikNameController.text.toString(), phoneNumberController.text.toString(), getController.getRegion.value.res![getController.regionIndex.value], getController.image.value, _dateController.text.toString(),).then((value) {
+                    ApiController().registerUser(
+                      nameController.text.toString(),
+                      surnameController.text.toString(),
+                      nikNameController.text.toString(),
+                      phoneNumberController.text.toString(),
+                      getController.getRegion.value.res![getController.regionIndex.value],
+                      getController.sendCode.value,
+                      getController.image.value, _dateController.text.toString()).then((value) {
                       if (value == true) {
                         Navigator.pop(context);
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SamplePage()));
