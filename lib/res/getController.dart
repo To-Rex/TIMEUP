@@ -147,6 +147,7 @@ class GetController extends GetxController {
   }
 
   void changeGetFollowPost(GetFollowPost newGetFollowPost) {
+    lengthList.value = 0;
     getFollowPost.value = newGetFollowPost;
     lengthList.value = newGetFollowPost.res!.length;
   }
@@ -175,7 +176,14 @@ class GetController extends GetxController {
   }
 
   void changeGetPostList(GetMePost newGetPostList) {
+    lengthList.value = 0;
     getPostList.value = newGetPostList;
+    lengthList.value = newGetPostList.res!.length;
+  }
+
+  void addGetPostList(GetMePost newGetPostList) {
+    getPostList.value.res!.addAll(newGetPostList.res!);
+    lengthList.value = getPostList.value.res!.length;
   }
 
   //clear data GetPostList
@@ -239,8 +247,7 @@ class GetController extends GetxController {
     getByCategory.value = newGetByCategory;
   }
 
-  void changeBookingBusinessGetList(
-      BookingBusinessGetList newBookingBusinessGetList) {
+  void changeBookingBusinessGetList(BookingBusinessGetList newBookingBusinessGetList) {
     bookingBusinessGetList.value = newBookingBusinessGetList;
   }
 

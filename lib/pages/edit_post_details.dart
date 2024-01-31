@@ -44,10 +44,20 @@ class EditPostDetails extends StatelessWidget {
                   return PopupMenuItem<String>(
                     onTap: () {
                       if (choice == 'O`chirish') {
-                        ApiController().deletePost(getController.getPostById.value.res?.id);
-                        Navigator.pop(context);
-                        ApiController().getMePostList(getController.meUsers.value.res!.business?.id);
-                      }
+                        Loading.showLoading(context);
+                      ApiController().deletePost(getController.getPostById.value.res?.id).then((value) => {
+                        if (value == true){
+                          Navigator.pop(context),
+                            ApiController().getMePostList(getController.meUsers.value.res!.business?.id,3,0).then((value) => {
+                              Navigator.pop(context),
+                            })
+                          } else {
+                            Navigator.pop(context),
+                            Toast.showToast(context, 'Nimadir xato ketdi', Colors.red, Colors.white),
+                          }
+                        });
+
+                    }
                     },
                     value: choice,
                     child: Row(
@@ -176,18 +186,19 @@ class EditPostDetails extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.05,
                 child: ElevatedButton(
                   onPressed: () {
+                    Loading.showLoading(context);
                     ApiController().updatePost(postId, getController.meUsers.value.res!.business?.id, titleController.text, descriptionController.text).then((value) => {
                               if (value == true){
-                                  ApiController().getMePostList(getController.meUsers.value.res!.business?.id),
+                                Navigator.pop(context),
+                                ApiController().getMePostList(getController.meUsers.value.res!.business?.id,3,0).then((value) => {
                                   Navigator.pop(context),
-                                } else {
+                                })
+                              } else {
                                   Navigator.pop(context),
                                   Toast.showToast(context, 'Nimadir xato ketdi', Colors.red, Colors.white),
                                 }
                             });
-                    Navigator.pop(context);
-                    ApiController().getMePostList(getController.meUsers.value.res!.business?.id);
-                  },
+                    },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(

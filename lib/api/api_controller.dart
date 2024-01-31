@@ -163,7 +163,6 @@ class ApiController extends GetxController {
     }
   }
 
-
   Future<MeUser> getUserData() async {
     print(GetStorage().read('token'));
     var response = await http.get(Uri.parse(url + meUrl), headers: {
@@ -393,7 +392,6 @@ class ApiController extends GetxController {
     }
   }
 
-
   Future<BookingBusinessGetList> bookingClientGetList(date) async {
     var response = await http.get(
       Uri.parse(url + bookingClientGetListUrl + date),
@@ -476,16 +474,24 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<GetMePost> getMePostList(id) async {
+  Future<GetMePost> getMePostList(id,limit, offset) async {
     var response = await http.get(
-      Uri.parse('$url$postListUrl$id'),
+      Uri.parse('$url$postListUrl$id?limit=$limit&offset=$offset'),
       headers: {
         'Authorization': 'Bearer ${GetStorage().read('token')}',
       },
     );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
-      _getController.changeGetPostList(GetMePost.fromJson(jsonDecode(response.body)));
+      //_getController.changeGetPostList(GetMePost.fromJson(jsonDecode(response.body)));
+      //_getController.addGetPostList(GetMePost.fromJson(jsonDecode(response.body)));
+      if (offset == 0) {
+        _getController.changeGetPostList(GetMePost.fromJson(jsonDecode(response.body)));
+        print('offset = 0');
+      } else {
+        _getController.addGetPostList(GetMePost.fromJson(jsonDecode(response.body)));
+        print('offset != 0');
+      }
       return GetMePost.fromJson(jsonDecode(response.body));
     } else {
       _getController.changeGetPostList(GetMePost(res: [], status: false));
@@ -513,7 +519,24 @@ class ApiController extends GetxController {
   }
 
   Future<bool> deletePost(id) async {
-    var response = await http.delete(
+    try {
+      var response = await http.delete(
+        Uri.parse('$url$postDeleteUrl$id'),
+        headers: {
+          'Authorization': 'Bearer ${GetStorage().read('token')}',
+        },
+      );
+      print(response.body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        getMePostList(_getController.meUsers.value.res?.business?.id,1000,0);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+    /*var response = await http.delete(
       Uri.parse('$url$postDeleteUrl$id'),
       headers: {
         'Authorization': 'Bearer ${GetStorage().read('token')}',
@@ -521,11 +544,11 @@ class ApiController extends GetxController {
     );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
-      getMePostList(_getController.meUsers.value.res?.business?.id);
+      getMePostList(_getController.meUsers.value.res?.business?.id,1000,0);
       return true;
     } else {
       return false;
-    }
+    }*/
   }
 
   Future<GetFollowPost> getFollowPostList(limit, offset) async {
@@ -586,25 +609,29 @@ class ApiController extends GetxController {
   }
 
   Future<bool> updatePost(id, businessId, String title, String description) async {
-    _getController.uplAodVideo.value = true;
-    var headers = {
-      'Authorization': 'Bearer ${GetStorage().read('token')}',
-    };
-    var request =
-        http.MultipartRequest('PUT', Uri.parse('$url$postUpdateUrl$id'));
-    request.fields.addAll({
-      'title': title,
-      'description': description,
-      'business_id': businessId.toString(),
-    });
+    try {
+      _getController.uplAodVideo.value = true;
+      var headers = {
+        'Authorization': 'Bearer ${GetStorage().read('token')}',
+      };
+      var request =
+      http.MultipartRequest('PUT', Uri.parse('$url$postUpdateUrl$id'));
+      request.fields.addAll({
+        'title': title,
+        'description': description,
+        'business_id': businessId.toString(),
+      });
 
-    request.headers.addAll(headers);
-    http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
-      _getController.uplAodVideo.value = false;
-      return true;
-    } else {
-      _getController.uplAodVideo.value = false;
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        _getController.uplAodVideo.value = false;
+        return true;
+      } else {
+        _getController.uplAodVideo.value = false;
+        return false;
+      }
+    } catch (e) {
       return false;
     }
   }

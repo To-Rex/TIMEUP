@@ -38,8 +38,7 @@ class HomePage extends StatelessWidget {
       print('lengthList: ${_getController.getFollowPost.value.res!.length + 1}');
       print('lengthList: ${_getController.lengthList.value}');
 
-      ApiController().getFollowPostList(3,
-        _getController.lengthList.value + 2
+      ApiController().getFollowPostList(3, _getController.lengthList.value
       ).then((value) => {
         _refreshController.loadComplete(),
       });

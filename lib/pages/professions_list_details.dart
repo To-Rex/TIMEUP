@@ -1394,7 +1394,7 @@ class ProfessionsListDetails extends StatelessWidget {
   }
 
   void _onRefresh() async {
-    ApiController().getMePostList(_getController.getProfileById.value.res?.id).then((value) => _refreshController.refreshCompleted());
+    ApiController().getMePostList(_getController.getProfileById.value.res?.id,1000,0).then((value) => _refreshController.refreshCompleted());
   }
 
   void _onLoading() async {
@@ -1419,7 +1419,7 @@ class ProfessionsListDetails extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     _getController.show.value = false;
     _tabController = TabController(length: 2, vsync: Navigator.of(context));
-    ApiController().getMePostList(_getController.getProfileById.value.res?.id);
+    ApiController().getMePostList(_getController.getProfileById.value.res?.id,1000,0);
     ApiController().bookingListBookingAndBookingCategory(_getController.bookingBusinessGetListByID.value, '');
     ApiController().getMyFollowing(context, _getController.meUsers.value.res!.id!);
     _scrollControllerPage.addListener(() {

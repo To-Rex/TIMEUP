@@ -26,10 +26,10 @@ import '../res/getController.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:readmore/readmore.dart';
 
-class ProfilePage extends StatelessWidget {
-  ProfilePage({Key? key}) : super(key: key);
+class ProfilePage1 extends StatelessWidget {
+  ProfilePage1({Key? key}) : super(key: key);
 
-  final GetController _getController = Get.put(GetController());
+  final GetController getController = Get.put(GetController());
   final PageController pageControllerServices = PageController();
   final TextEditingController _dateController = TextEditingController();
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
@@ -104,8 +104,8 @@ class ProfilePage extends StatelessWidget {
                         ApiController().deleteMe().then((value) => {
                               if (value == true){
                                   GetStorage().remove('token'),
-                                  _getController.clearMeUser(),
-                                  _getController.clearCategory(),
+                                  getController.clearMeUser(),
+                                  getController.clearCategory(),
                                   Navigator.pop(context),
                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()),),
                                 } else {
@@ -183,8 +183,8 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        _getController.clearMeUser();
-                        _getController.clearCategory();
+                        getController.clearMeUser();
+                        getController.clearCategory();
                         GetStorage().remove('token');
                         Navigator.pushReplacement(
                           context,
@@ -251,7 +251,7 @@ class ProfilePage extends StatelessWidget {
                   controller: _dateController,
                   onChanged: (value) {
                     if (value != '') {
-                      ApiController().bookingBusinessGetList(_getController.meUsers.value.res!.business!.id!, '').then((value) => _getController.changeBookingBusinessGetList(value));
+                      ApiController().bookingBusinessGetList(getController.meUsers.value.res!.business!.id!, '').then((value) => getController.changeBookingBusinessGetList(value));
                     }
                   },
                   decoration: InputDecoration(
@@ -267,7 +267,7 @@ class ProfilePage extends StatelessWidget {
                           ).then((value) => {
                                 if (value != null){
                                     _dateController.text = '${value.day < 10 ? '0${value.day}' : value.day}/${value.month < 10 ? '0${value.month}' : value.month}/${value.year}',
-                                    ApiController().bookingBusinessGetList(_getController.meUsers.value.res!.business!.id!, _dateController.text).then((value) => _getController.changeBookingBusinessGetList(value))
+                                    ApiController().bookingBusinessGetList(getController.meUsers.value.res!.business!.id!, _dateController.text).then((value) => getController.changeBookingBusinessGetList(value))
                                   } else {
                                   _dateController.text = ''}
                               });
@@ -309,11 +309,11 @@ class ProfilePage extends StatelessWidget {
                   child: Padding(
                 padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
                 child: Obx(
-                  () => _getController.bookingBusinessGetList.value.res == null
+                  () => getController.bookingBusinessGetList.value.res == null
                       ? const Center(child: Text('Ma\'lumotlar topilmadi'))
                       : ListView.builder(
                           shrinkWrap: true,
-                          itemCount: _getController.bookingBusinessGetList.value.res!.length,
+                          itemCount: getController.bookingBusinessGetList.value.res!.length,
                           itemBuilder: (context, index) {
                             return Column(
                               children: [
@@ -333,8 +333,8 @@ class ProfilePage extends StatelessWidget {
                                       width: w * 0.7,
                                       child: Text(
                                         'Ushbu mijoz'
-                                        ' ${_getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
-                                        '${_getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                        ' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
+                                        '${getController.bookingBusinessGetList.value.res![index].time!} keladi',
                                         style: TextStyle(
                                           fontSize: w * 0.04,
                                           fontWeight: FontWeight.w500,
@@ -360,7 +360,7 @@ class ProfilePage extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     ApiController().bookingCategoryList(businessId);
-    _getController.nextPagesUserDetails.value = 0;
+    getController.nextPagesUserDetails.value = 0;
     showModalBottomSheet(
         context: context,
         backgroundColor: Colors.white,
@@ -407,7 +407,7 @@ class ProfilePage extends StatelessWidget {
                 top: h * 0.06,
                 width: w,
                 child: Center(
-                  child: Obx(() => _getController.nextPagesUserDetails.value == 0
+                  child: Obx(() => getController.nextPagesUserDetails.value == 0
                       ? Text('Xizmatlar', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.white),
                   ): Text('Xizmat qo\'shish', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.white))),
                 ),
@@ -418,7 +418,7 @@ class ProfilePage extends StatelessWidget {
                   width: w,
                   child:  PageView(
                     onPageChanged: (index){
-                      _getController.nextPagesUserDetails.value = index;
+                      getController.nextPagesUserDetails.value = index;
                     },
                     controller: pageControllerServices,
                     children: [
@@ -456,11 +456,11 @@ class ProfilePage extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Obx(() => _getController.getBookingCategory.value.res == null || _getController.getBookingCategory.value.res!.isEmpty
+                          Obx(() => getController.getBookingCategory.value.res == null || getController.getBookingCategory.value.res!.isEmpty
                               ? const Center(child: Text('Ma\'lumotlar topilmadi'))
                               : Expanded(child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount: _getController.getBookingCategory.value.res!.length,
+                            itemCount: getController.getBookingCategory.value.res!.length,
                             itemBuilder: (context, index){
                               return Container(
                                 width: w,
@@ -483,11 +483,11 @@ class ProfilePage extends StatelessWidget {
                                   children: [
                                     Row(
                                       children: [
-                                        Expanded(child: Text('${_getController.getBookingCategory.value.res![index].name}', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),),),
+                                        Expanded(child: Text('${getController.getBookingCategory.value.res![index].name}', style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w500, color: Colors.black,),),),
                                         IconButton(
                                           onPressed: (){
                                             Loading.showLoading(context);
-                                            ApiController().bookingCategoryListDelete(businessId, _getController.getBookingCategory.value.res![index].id, context
+                                            ApiController().bookingCategoryListDelete(businessId, getController.getBookingCategory.value.res![index].id, context
                                             ).then((value) => {
                                               if (value == true){
                                                 Navigator.pop(context),
@@ -519,7 +519,7 @@ class ProfilePage extends StatelessWidget {
                                                 SizedBox(width: w * 0.01),
                                                 Text(
                                                   maxLines: 1,
-                                                  '${_getController.getBookingCategory.value.res![index].duration.toString().length > 6 ? '${_getController.getBookingCategory.value.res![index].duration.toString().substring(0, 3)}k' : '${_getController.getBookingCategory.value.res![index].duration}'} min',
+                                                  '${getController.getBookingCategory.value.res![index].duration.toString().length > 6 ? '${getController.getBookingCategory.value.res![index].duration.toString().substring(0, 3)}k' : '${getController.getBookingCategory.value.res![index].duration}'} min',
                                                   style: TextStyle(fontSize: w * 0.035, color: Colors.black)),
                                               ],
                                             )
@@ -537,7 +537,7 @@ class ProfilePage extends StatelessWidget {
                                                 SizedBox(width: w * 0.01),
                                                 Text(
                                                   maxLines: 1,
-                                                  '${_getController.getBookingCategory.value.res![index].price.toString().length > 6 ? '${_getController.getBookingCategory.value.res![index].price.toString().substring(0, 3)}k' : '${_getController.getBookingCategory.value.res![index].price}'} so`m',
+                                                  '${getController.getBookingCategory.value.res![index].price.toString().length > 6 ? '${getController.getBookingCategory.value.res![index].price.toString().substring(0, 3)}k' : '${getController.getBookingCategory.value.res![index].price}'} so`m',
                                                   style: TextStyle(fontSize: w * 0.035, color: Colors.black)),
                                               ],
                                             )
@@ -545,7 +545,7 @@ class ProfilePage extends StatelessWidget {
                                       ],
                                     ),
                                     ReadMoreText(
-                                      '${_getController.getBookingCategory.value.res![index].description}',
+                                      '${getController.getBookingCategory.value.res![index].description}',
                                       trimLines: 2,
                                       colorClickableText: Colors.blue,
                                       trimMode: TrimMode.Line,
@@ -756,21 +756,21 @@ class ProfilePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    if (_getController.meUsers.value.res?.business != null)
+                    if (getController.meUsers.value.res?.business != null)
                       BottomEditButton(text: 'Xizmatlar va narxlar', onPressed: () {
                         Navigator.pop(context);
                         showBottomSheetServices(context,businessId);
                       },icon: HeroIcons.bolt,color: Colors.black,),
 
                     BottomEditButton(text: 'Profilni tahrirlash', onPressed: () {
-                      _getController.entersUser.value = 1;
+                      getController.entersUser.value = 1;
                       Navigator.pop(context);
                     },icon: HeroIcons.pencilSquare,color: Colors.blue,),
 
-                    Obx(() => _getController.meUsers.value.res?.business != null
+                    Obx(() => getController.meUsers.value.res?.business != null
                         ? const SizedBox()
                         : BottomEditButton(text: 'Biznes profilini yaratish', onPressed: () {
-                          _getController.entersUser.value = 2;
+                          getController.entersUser.value = 2;
                           Navigator.pop(context);
                         },icon: HeroIcons.pencilSquare,color: Colors.blue,)),
 
@@ -857,7 +857,7 @@ class ProfilePage extends StatelessWidget {
                               }
                           });
                   Navigator.pop(context);
-                  ApiController().getMePostList(_getController.meUsers.value.res!.business?.id,3,0);
+                  ApiController().getMePostList(getController.meUsers.value.res!.business?.id,3,0);
                 },
                 child: SizedBox(
                   width: w,
@@ -1069,10 +1069,10 @@ class ProfilePage extends StatelessWidget {
                   top: h * 0.25,
                   bottom: 0,
                   width: w,
-                  child: Obx(() => _getController.bookingBusinessGetList.value.res == null || _getController.bookingBusinessGetList.value.res!.isEmpty
+                  child: Obx(() => getController.bookingBusinessGetList.value.res == null || getController.bookingBusinessGetList.value.res!.isEmpty
                       ? Center(child: Text('Ma\'lumotlar topilmadi', style: TextStyle(color: Colors.black, fontSize: w * 0.035,),))
                       : ListView.builder(
-                      itemCount: _getController.bookingBusinessGetList.value.res!.length,
+                      itemCount: getController.bookingBusinessGetList.value.res!.length,
                       itemBuilder: (context, index) {
                         return Container(
                           margin: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: h * 0.01),
@@ -1095,8 +1095,8 @@ class ProfilePage extends StatelessWidget {
                                 width: w * 0.7,
                                 child: Text(
                                   'Ushbu mijoz'
-                                      ' ${_getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
-                                      '${_getController.bookingBusinessGetList.value.res![index].time!} keladi',
+                                      ' ${getController.bookingBusinessGetList.value.res![index].date!.replaceAll('/', '-')} '
+                                      '${getController.bookingBusinessGetList.value.res![index].time!} keladi',
                                   maxLines: 1,
                                   style: TextStyle(
                                     fontSize: w * 0.04,
@@ -1132,7 +1132,7 @@ class ProfilePage extends StatelessWidget {
       if (_followTabController.index == 0) {
         ApiController().getMyFollowers(context,businessId);
       } else {
-        ApiController().getMyFollowing(context,_getController.meUsers.value.res!.id!);
+        ApiController().getMyFollowing(context,getController.meUsers.value.res!.id!);
       }
     });
     _followTabController.animateTo(tabIndex, duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
@@ -1254,13 +1254,13 @@ class ProfilePage extends StatelessWidget {
                   controller: _followTabController,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    Obx(() => _getController.getFollowers.value.res!.isNotEmpty
+                    Obx(() => getController.getFollowers.value.res!.isNotEmpty
                         ? Container(
                       margin: EdgeInsets.only(top: h * 0.02),
                       padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
                       child: ListView.builder(
                         shrinkWrap: true,
-                        itemCount: _getController.getFollowers.value.res!.length,
+                        itemCount: getController.getFollowers.value.res!.length,
                         itemBuilder: (context, index) {
                           return Container(
                             height: h * 0.08,
@@ -1287,7 +1287,7 @@ class ProfilePage extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(w),
                                     image: DecorationImage(
-                                      image: NetworkImage('${_getController.getFollowers.value.res![index].photoUrl}'),
+                                      image: NetworkImage('${getController.getFollowers.value.res![index].photoUrl}'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -1295,7 +1295,7 @@ class ProfilePage extends StatelessWidget {
                                 SizedBox(
                                   width: w * 0.45,
                                   child: Text(
-                                    '${_getController.getFollowers.value.res![index].userName}',
+                                    '${getController.getFollowers.value.res![index].userName}',
                                     style: TextStyle(
                                       fontSize: w * 0.04,
                                       fontWeight: FontWeight.w500,
@@ -1304,12 +1304,12 @@ class ProfilePage extends StatelessWidget {
                                 ),
                                 const Expanded(child: SizedBox()),
                                 //button OBuna
-                                if (_getController.getFollowers.value.res![index].businessId != 0)
-                                  if (_getController.getFollowers.value.res![index].followed == false)
+                                if (getController.getFollowers.value.res![index].businessId != 0)
+                                  if (getController.getFollowers.value.res![index].followed == false)
                                     InkWell(
                                       onTap: () {
                                         Loading.showLoading(context);
-                                        ApiController().follow(_getController.getFollowers.value.res![index].businessId).then((value) => {
+                                        ApiController().follow(getController.getFollowers.value.res![index].businessId).then((value) => {
                                           if (value.status == true){
                                             ApiController().getMyFollowers(context,businessId),
                                             Navigator.pop(context),
@@ -1345,10 +1345,10 @@ class ProfilePage extends StatelessWidget {
                                     InkWell(
                                       onTap: () {
                                         Loading.showLoading(context);
-                                        ApiController().unFollow(_getController.getFollowers.value.res![index].businessId).then((value) => {
+                                        ApiController().unFollow(getController.getFollowers.value.res![index].businessId).then((value) => {
                                           if (value == true){
                                             ApiController().getMyFollowers(context,businessId),
-                                            ApiController().getMyFollowing(context,_getController.meUsers.value.res!.id!),
+                                            ApiController().getMyFollowing(context,getController.meUsers.value.res!.id!),
                                             Navigator.pop(context),
                                             ShowDialogWidget.show(context, 'Muvaffaqiyatli', 'Obuna bekor qilindi', () => null),
                                           } else {
@@ -1393,13 +1393,13 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                     )),
-                    Obx(() => _getController.getFollowing.value.res!.isNotEmpty
+                    Obx(() => getController.getFollowing.value.res!.isNotEmpty
                         ? Container(
                       margin: EdgeInsets.only(top: h * 0.02),
                       padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
                       child: ListView.builder(
                         shrinkWrap: true,
-                        itemCount: _getController.getFollowing.value.res!.length,
+                        itemCount: getController.getFollowing.value.res!.length,
                         itemBuilder: (context, index) {
                           return Container(
                             height: h * 0.08,
@@ -1426,7 +1426,7 @@ class ProfilePage extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(w),
                                     image: DecorationImage(
-                                      image: NetworkImage('${_getController.getFollowing.value.res![index].photoUrl}'),
+                                      image: NetworkImage('${getController.getFollowing.value.res![index].photoUrl}'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -1434,7 +1434,7 @@ class ProfilePage extends StatelessWidget {
                                 SizedBox(
                                   width: w * 0.45,
                                   child: Text(
-                                    '${_getController.getFollowing.value.res![index].userName}',
+                                    '${getController.getFollowing.value.res![index].userName}',
                                     style: TextStyle(
                                       fontSize: w * 0.04,
                                       fontWeight: FontWeight.w500,
@@ -1512,7 +1512,7 @@ class ProfilePage extends StatelessWidget {
       compressQuality: 100,
       compressFormat: ImageCompressFormat.jpg,
     );
-    _getController.changeImage(croppedImage.path);
+    getController.changeImage(croppedImage.path);
     ApiController().editUserPhoto(croppedImage.path).then((value) => {
           if (value == true){
               getUsers(),
@@ -1524,61 +1524,55 @@ class ProfilePage extends StatelessWidget {
   }
 
   void _onRefresh() async {
-    if (_getController.meUsers.value.res?.business == null) {
+    if (getController.meUsers.value.res?.business == null) {
       ApiController().getUserData().then((value) => _refreshController.refreshCompleted());
     } else {
-      ApiController().getMePostList(_getController.meUsers.value.res!.business?.id,3,0
+      ApiController().getMePostList(getController.meUsers.value.res!.business?.id,3,0
       ).then((value) => _refreshController.refreshCompleted());
     }
   }
 
   void _onLoading() async {
-    //ApiController().getFollowPostList(3, __getController.lengthList.value + 2
-    //       ).then((value) => {
-    //         _refreshController.loadComplete(),
-    //       });
-    ApiController().getMePostList(_getController.meUsers.value.res!.business?.id,3, _getController.lengthList.value).then((value) => _refreshController.loadComplete());
+
+    _refreshController.loadComplete();
   }
 
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    _getController.show.value = false;
-    ApiController().getMePostList(_getController.meUsers.value.res!.business?.id,3,0);
-    if (_getController.meUsers.value.res?.business != null) {
-      ApiController().bookingCategoryList(_getController.meUsers.value.res!.business?.id);
+    getController.show.value = false;
+    ApiController().getMePostList(getController.meUsers.value.res!.business?.id,3,0);
+    if (getController.meUsers.value.res?.business != null) {
+      ApiController().bookingCategoryList(getController.meUsers.value.res!.business?.id);
     }
-    if (_getController.meUsers.value.res != null && _getController.meUsers.value.res?.business != null) ApiController().getMyFollowing(context,_getController.meUsers.value.res!.id!);
+    if (getController.meUsers.value.res != null && getController.meUsers.value.res?.business != null) ApiController().getMyFollowing(context,getController.meUsers.value.res!.id!);
     _scrollController.addListener(() {
-      if (_scrollController.position.userScrollDirection == ScrollDirection.reverse && _scrollController.position.pixels > 0) {
-        _getController.onScroll.value = true;
+      if (_scrollController.position.userScrollDirection == ScrollDirection.reverse) {
+        getController.onScroll.value = true;
       } else {
-        _getController.onScroll.value = false;
-      }
-      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-        _getController.onScroll.value = true;
+        getController.onScroll.value = false;
       }
     });
 
     return WillPopScope(
       onWillPop: () async {
-        if (_getController.entersUser.value == 0) {
+        if (getController.entersUser.value == 0) {
           return true;
-        } else if (_getController.entersUser.value == 1) {
-          _getController.entersUser.value = 0;
+        } else if (getController.entersUser.value == 1) {
+          getController.entersUser.value = 0;
           return false;
-        } else if (_getController.entersUser.value == 2) {
-          _getController.entersUser.value = 1;
+        } else if (getController.entersUser.value == 2) {
+          getController.entersUser.value = 1;
           return false;
         } else {
           return false;
         }
       },
-      child: Obx(() => _getController.meUsers.value.res != null
+      child: Obx(() => getController.meUsers.value.res != null
           ? SizedBox(
-              child: _getController.entersUser.value == 0
-                  ? _getController.meUsers.value.res?.business != null
+              child: getController.entersUser.value == 0
+                  ? getController.meUsers.value.res?.business != null
                   ? SizedBox(width: w, height: h,
                   child: Stack(
                     children: [
@@ -1590,7 +1584,7 @@ class ProfilePage extends StatelessWidget {
                             elevation: 0,
                             surfaceTintColor: Colors.transparent,
                             centerTitle: true,
-                            title: Text(_getController.meUsers.value.res?.userName ?? '',
+                            title: Text(getController.meUsers.value.res?.userName ?? '',
                               style: TextStyle(
                                 fontSize: w * 0.04,
                                 color: Colors.black,
@@ -1599,7 +1593,7 @@ class ProfilePage extends StatelessWidget {
                             actions: [
                               IconButton(
                                 onPressed: () {
-                                  showBottomSheet(context,_getController.meUsers.value.res!.business?.id);
+                                  showBottomSheet(context,getController.meUsers.value.res!.business?.id);
                                 },
                                 icon: const Icon(
                                   Icons.menu,
@@ -1608,11 +1602,11 @@ class ProfilePage extends StatelessWidget {
                               ),
                             ],
                           ),
-                           _getController.meUsers.value.res?.business == null
+                          Obx(() => getController.meUsers.value.res?.business == null
                               ? const SizedBox()
-                              : _getController.getBookingCategory.value.res == null || _getController.getBookingCategory.value.res!.isNotEmpty
+                              : Obx(() => getController.getBookingCategory.value.res == null || getController.getBookingCategory.value.res!.isNotEmpty
                               ? const SizedBox()
-                              : Container(
+                              :Container(
                             width: w,
                             height: h * 0.05,
                             color: Colors.red,
@@ -1636,7 +1630,7 @@ class ProfilePage extends StatelessWidget {
                                 const Expanded(child: SizedBox()),
                                 IconButton(
                                   onPressed: () {
-                                    showBottomSheetServices(context,_getController.meUsers.value.res!.business?.id);
+                                    showBottomSheetServices(context,getController.meUsers.value.res!.business?.id);
                                   },
                                   icon: HeroIcon(
                                     HeroIcons.plusCircle,
@@ -1646,7 +1640,7 @@ class ProfilePage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          ),
+                          ))),
                           Expanded(
                               flex: 1,
                               child: Container(
@@ -1672,7 +1666,7 @@ class ProfilePage extends StatelessWidget {
                                                         body: Stack(
                                                           children: [
                                                             PhotoView(
-                                                              imageProvider: NetworkImage('${_getController.meUsers.value.res?.photoUrl}'),
+                                                              imageProvider: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),
                                                             ),
                                                             Positioned(
                                                               top: h * 0.05,
@@ -1702,7 +1696,7 @@ class ProfilePage extends StatelessWidget {
                                                 child: CircleAvatar(
                                                   radius: w * 0.12,
                                                   foregroundColor: Colors.blue,
-                                                  backgroundImage: NetworkImage('${_getController.meUsers.value.res?.photoUrl}'),
+                                                  backgroundImage: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),
                                                 ),
                                               ),
                                               Positioned(
@@ -1729,51 +1723,54 @@ class ProfilePage extends StatelessWidget {
                                         ],
                                       ),
                                       SizedBox(height: h * 0.02),
-                                      Center(child: _getController.meUsers.value.res?.fistName == null
+                                      Center(child: Obx(() => getController.meUsers.value.res?.fistName == null
                                           ? Text('Salom, Mehmon', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500))
-                                          : Text('${_getController.meUsers.value.res?.fistName} ${_getController.meUsers.value.res?.lastName}',
-                                          style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500))),
+                                          : Text('${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res?.lastName}',
+                                          style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500)))),
                                       SizedBox(height: h * 0.02),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [
-                                           _getController.meUsers.value.res?.business == null
+                                          Obx(() => getController.meUsers.value.res?.business == null
                                               ? const SizedBox()
                                               : InkWell(
                                             overlayColor: MaterialStateProperty.all(Colors.transparent),
                                             onTap: () {
-                                              _scrollController.animateTo(_scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
+                                              showBottomSheetFollowers(context,getController.meUsers.value.res!.business?.id,0);
                                             },
-                                            child: UserDetIalWidget(labelText: 'Post', labelTextCount: '${_getController.meUsers.value.res?.business?.postsCount}',
+                                            child: UserDetIalWidget(labelText: 'Post', labelTextCount: '${getController.meUsers.value.res?.business?.postsCount}',
                                               icon: 1,
                                             ),
+                                          )
                                           ),
-                                           _getController.meUsers.value.res?.business == null
+                                          Obx(() => getController.meUsers.value.res?.business == null
                                               ? const SizedBox()
                                               : InkWell(
                                             overlayColor: MaterialStateProperty.all(Colors.transparent),
                                             onTap: () {
-                                              showBottomSheetFollowers(context,_getController.meUsers.value.res!.business?.id,0);
+                                              showBottomSheetFollowers(context,getController.meUsers.value.res!.business?.id,0);
                                             },
                                             child: UserDetIalWidget(
                                               labelText: 'Obunachilar',
-                                              labelTextCount: '${_getController.meUsers.value.res?.business?.followersCount}',
+                                              labelTextCount: '${getController.meUsers.value.res?.business?.followersCount}',
                                               icon: 2,
                                             ),
+                                          )
                                           ),
-                                          _getController.meUsers.value.res?.business == null
+                                          Obx(() =>getController.meUsers.value.res?.business == null
                                               ? const SizedBox()
                                               : InkWell(
                                             overlayColor: MaterialStateProperty.all(Colors.transparent),
                                             onTap: () {
-                                              showBottomSheetFollowers(context,_getController.meUsers.value.res!.business?.id,1);
+                                              showBottomSheetFollowers(context,getController.meUsers.value.res!.business?.id,1);
                                             },
                                             child: UserDetIalWidget(
                                               labelText: 'Do\'stlar',
                                               labelTextCount:
-                                              '${_getController.meUsers.value.res?.followingCount}',
+                                              '${getController.meUsers.value.res?.followingCount}',
                                               icon: 3,
                                             ),)
+                                          ),
                                         ],
                                       ),
                                       Padding(
@@ -1792,7 +1789,7 @@ class ProfilePage extends StatelessWidget {
                                             InkWell(
                                                 overlayColor: MaterialStateProperty.all(Colors.transparent),
                                                 onTap: () {
-                                                  ShowDialogWidget.show(context, 'Foydalanuvchi haqida', '${_getController.meUsers.value.res?.business?.bio}', () => null);
+                                                  ShowDialogWidget.show(context, 'Foydalanuvchi haqida', '${getController.meUsers.value.res?.business?.bio}', () => null);
                                                 },
                                                 child: Row(
                                                   children: [
@@ -1819,7 +1816,7 @@ class ProfilePage extends StatelessWidget {
                                       Padding(
                                         padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, top: h * 0.02),
                                         child: Text(
-                                          '${_getController.meUsers.value.res?.business?.bio}',
+                                          '${getController.meUsers.value.res?.business?.bio}',
                                           style: TextStyle(
                                             fontSize: w * 0.04,
                                             color: Colors.grey,
@@ -1843,11 +1840,11 @@ class ProfilePage extends StatelessWidget {
                                                 overlayColor: MaterialStateProperty.all(Colors.transparent),
                                                 onTap: () {
                                                   ShowDialogWidget.show(context, 'Foydalanuvchi ma’lumotlari', ''
-                                                      '${_getController.meUsers.value.res?.phoneNumber}\n'
-                                                      '${_getController.meUsers.value.res?.business?.officeAddress}\n'
-                                                      '${_getController.meUsers.value.res?.business?.officeName}\n'
-                                                      '${_getController.meUsers.value.res?.business?.experience}\n'
-                                                      '${_getController.meUsers.value.res?.business?.categoryName}\n', () => null);
+                                                      '${getController.meUsers.value.res?.phoneNumber}\n'
+                                                      '${getController.meUsers.value.res?.business?.officeAddress}\n'
+                                                      '${getController.meUsers.value.res?.business?.officeName}\n'
+                                                      '${getController.meUsers.value.res?.business?.experience}\n'
+                                                      '${getController.meUsers.value.res?.business?.categoryName}\n', () => null);
                                                 },
                                                 child: Row(
                                                   children: [
@@ -1871,14 +1868,14 @@ class ProfilePage extends StatelessWidget {
                                           ],
                                         ),
                                       ),
-                                       _getController.meUsers.value.res?.business != null
+                                      Obx(() => getController.meUsers.value.res?.business != null
                                           ? Padding(
                                           padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, bottom: h * 0.02),
                                           child: Column(
                                             children: [
                                               Row(
                                                 children: [
-                                                  Text(_getController.meUsers.value.res?.business?.categoryName ?? '',
+                                                  Text(getController.meUsers.value.res?.business?.categoryName ?? '',
                                                     style: TextStyle(
                                                       fontSize: w * 0.04,
                                                       color: Colors.grey,
@@ -1886,7 +1883,7 @@ class ProfilePage extends StatelessWidget {
                                                   ),
                                                   SizedBox(width: w * 0.02),
                                                   Text(
-                                                    _getController.meUsers.value.res?.business?.experience == null ? '' : '${_getController.meUsers.value.res?.business?.experience} yillik ish tajribasi',
+                                                    getController.meUsers.value.res?.business?.experience == null ? '' : '${getController.meUsers.value.res?.business?.experience} yillik ish tajribasi',
                                                     style: TextStyle(
                                                       fontSize: w * 0.04,
                                                       color: Colors.black,
@@ -1896,24 +1893,24 @@ class ProfilePage extends StatelessWidget {
                                               ),
                                               SizedBox(height: h * 0.01),
                                               TextEditButton(
-                                                text: '${_getController.meUsers.value.res?.phoneNumber}',
+                                                text: '${getController.meUsers.value.res?.phoneNumber}',
                                                 color: Colors.blue,
                                                 icon: 'assets/images/user_call.png',
                                               ),
                                               TextEditButton(
-                                                text: '${_getController.meUsers.value.res?.business?.officeAddress}',
+                                                text: '${getController.meUsers.value.res?.business?.officeAddress}',
                                                 color: Colors.blue,
                                                 icon: 'assets/images/user_location.png',
                                               ),
                                               TextEditButton(
-                                                text: '${_getController.meUsers.value.res?.business?.officeName}',
+                                                text: '${getController.meUsers.value.res?.business?.officeName}',
                                                 color: Colors.blue,
                                                 icon: 'assets/images/user_work.png',
                                               ),
                                             ],
                                           )
-                                      ) : const SizedBox(),
-                                       _getController.getFollowing.value.res != null && _getController.getFollowing.value.res!.isNotEmpty
+                                      ) : const SizedBox()),
+                                      Obx(() => getController.getFollowing.value.res != null && getController.getFollowing.value.res!.isNotEmpty
                                           ? Padding(
                                         padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, bottom: h * 0.02),
                                         child: Row(
@@ -1930,7 +1927,7 @@ class ProfilePage extends StatelessWidget {
                                             InkWell(
                                                 overlayColor: MaterialStateProperty.all(Colors.transparent),
                                                 onTap: () {
-                                                  showBottomSheetFollowers(context,_getController.meUsers.value.res!.business?.id,1);
+                                                  showBottomSheetFollowers(context,getController.meUsers.value.res!.business?.id,1);
                                                 },
                                                 child: Row(
                                                   children: [
@@ -1953,23 +1950,23 @@ class ProfilePage extends StatelessWidget {
                                             )
                                           ],
                                         ),
-                                      ) : const SizedBox(),
-                                       _getController.getFollowing.value.res != null && _getController.getFollowing.value.res!.isNotEmpty
+                                      ) : const SizedBox()),
+                                      Obx(() => getController.getFollowing.value.res != null && getController.getFollowing.value.res!.isNotEmpty
                                           ? SizedBox(
                                         height: h * 0.15,
                                         width: w * 0.95,
                                         child: ListView.builder(
                                           shrinkWrap: true,
                                           scrollDirection: Axis.horizontal,
-                                          itemCount: _getController.getFollowing.value.res!.length,
+                                          itemCount: getController.getFollowing.value.res!.length,
                                           itemBuilder: (context, index) {
                                             return InkWell(
                                               overlayColor: MaterialStateProperty.all(Colors.transparent),
                                               onTap: () {
                                                 Loading.showLoading(context);
-                                                ApiController().profileById(int.parse(_getController.getFollowing.value.res![index].id.toString())).then((value) => {
-                                                  _getController.changeProfileById(value),
-                                                  _getController.changeBookingBusinessGetListByID(int.parse(_getController.getFollowing.value.res![index].id.toString())),
+                                                ApiController().profileById(int.parse(getController.getFollowing.value.res![index].id.toString())).then((value) => {
+                                                  getController.changeProfileById(value),
+                                                  getController.changeBookingBusinessGetListByID(int.parse(getController.getFollowing.value.res![index].id.toString())),
                                                   Loading.hideLoading(context),
                                                   Navigator.push(context, MaterialPageRoute(builder: (context) => ProfessionsListDetails()))
                                                 });
@@ -1984,7 +1981,7 @@ class ProfilePage extends StatelessWidget {
                                                       decoration: BoxDecoration(
                                                         borderRadius: BorderRadius.circular(w),
                                                         image: DecorationImage(
-                                                          image: NetworkImage('${_getController.getFollowing.value.res![index].photoUrl}'),
+                                                          image: NetworkImage('${getController.getFollowing.value.res![index].photoUrl}'),
                                                           fit: BoxFit.cover,
                                                         ),
                                                       ),
@@ -1993,7 +1990,7 @@ class ProfilePage extends StatelessWidget {
                                                     SizedBox(
                                                       width: w * 0.17,
                                                       child: Text(
-                                                        '${_getController.getFollowing.value.res![index].fistName}',
+                                                        '${getController.getFollowing.value.res![index].fistName}',
                                                         maxLines: 1,
                                                         style: TextStyle(
                                                           fontSize: w * 0.04,
@@ -2007,13 +2004,13 @@ class ProfilePage extends StatelessWidget {
                                             );
                                           },
                                         ),
-                                      ) : const SizedBox(),
+                                      ) : const SizedBox()),
                                       //ish jadvali button
                                       SizedBox(
                                         width: w * 0.9,
                                         child:ElevatedButton(
                                           onPressed: () {
-                                            showBottomSheetCalendar(context,_getController.meUsers.value.res!.business?.id);
+                                            showBottomSheetCalendar(context,getController.meUsers.value.res!.business?.id);
                                           },
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: Colors.blue,
@@ -2031,7 +2028,7 @@ class ProfilePage extends StatelessWidget {
                                         ),
                                       ),
                                       //postlar
-                                       _getController.meUsers.value.res?.business != null
+                                      Obx(() => getController.meUsers.value.res?.business != null
                                           ? Padding(
                                         padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, bottom: h * 0.02, top: h * 0.02),
                                         child: Row(
@@ -2047,14 +2044,13 @@ class ProfilePage extends StatelessWidget {
                                             const Expanded(child: SizedBox()),
                                           ],
                                         ),
-                                      ) : const SizedBox(),
-                                      _getController.getPostList.value.res == null || _getController.getPostList.value.res!.isEmpty
+                                      ) : const SizedBox()),
+                                      Obx(() => getController.getPostList.value.res == null || getController.getPostList.value.res!.isEmpty
                                           ? SizedBox(
                                         width: w,
                                         height: h * 0.6,
                                         child: const Center(child: Text('Ma\'lumotlar topilmadi'),),
-                                      )
-                                          : SizedBox(
+                                      ) : SizedBox(
                                         height: h * 0.6,
                                         child: SizedBox(
                                           width: w,
@@ -2118,32 +2114,31 @@ class ProfilePage extends StatelessWidget {
                                             onLoading: _onLoading,
                                             child:
                                             ListView.builder(
-                                                //itemCount: _getController.getPostList.value.res!.length,
-                                                itemCount: _getController.lengthList.value,
+                                                itemCount: getController.getPostList.value.res!.length,
                                                 itemBuilder: (context, index) {
                                                   return InkWell(
                                                     onTap: () {
-                                                      Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: _getController.getPostList.value.res![index].id,)));
+                                                      Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsPage(postId: getController.getPostList.value.res![index].id,)));
                                                     },
                                                     child:
                                                     Column(
                                                       children: [
-                                                        _getController.getPostList.value.res![index].mediaType == 'video'
+                                                        Obx(() => getController.getPostList.value.res![index].mediaType == 'video'
                                                             ? Stack(
                                                           children: [
-                                                            if (_getController.getPostList.value.res![index].photo != '')
+                                                            if (getController.getPostList.value.res![index].photo != '')
                                                               Container(
                                                                 width: w,
                                                                 height: h * 0.6,
                                                                 padding: EdgeInsets.all(w * 0.01),
                                                                 decoration: BoxDecoration(
                                                                   image: DecorationImage(
-                                                                    image: NetworkImage('${_getController.getPostList.value.res![index].photo}'),
+                                                                    image: NetworkImage('${getController.getPostList.value.res![index].photo}'),
                                                                     fit: BoxFit.cover,
                                                                   ),
                                                                 ),
                                                               ),
-                                                            if (_getController.getPostList.value.res![index].photo == '')
+                                                            if (getController.getPostList.value.res![index].photo == '')
                                                               Container(
                                                                 width: w,
                                                                 height: h * 0.6,
@@ -2170,17 +2165,17 @@ class ProfilePage extends StatelessWidget {
                                                                   ),
                                                                 )),
                                                           ]
-                                                        )
-                                                            : Container(
+                                                        ) : Container(
                                                           width: w,
                                                           height: h * 0.6,
                                                           padding: EdgeInsets.all(w * 0.01),
                                                           decoration: BoxDecoration(
                                                             image: DecorationImage(
-                                                              image: NetworkImage('${_getController.getPostList.value.res![index].photo}'),
+                                                              image: NetworkImage('${getController.getPostList.value.res![index].photo}'),
                                                               fit: BoxFit.cover
                                                             ),
                                                           )),
+                                                        ),
                                                         Container(
                                                           width: w,
                                                           padding: EdgeInsets.only(left: w * 0.04, top: h * 0.01, bottom: h * 0.01),
@@ -2189,22 +2184,22 @@ class ProfilePage extends StatelessWidget {
                                                               Expanded(
                                                                   child: Column(
                                                                     children: [
-                                                                      _getController.getPostList.value.res![index].title == '' && _getController.getPostList.value.res![index].description == ''
+                                                                      Obx(() => getController.getPostList.value.res![index].title == '' && getController.getPostList.value.res![index].description == ''
                                                                           ? const SizedBox()
                                                                           : SizedBox(
                                                                         width: w * 0.9,
-                                                                        child: Text('${_getController.getPostList.value.res![index].title}',
+                                                                        child: Text('${getController.getPostList.value.res![index].title}',
                                                                           style: TextStyle(
                                                                             fontSize: w * 0.04,
                                                                             fontWeight: FontWeight.w500,
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                      _getController.getPostList.value.res![index].title == '' && _getController.getPostList.value.res![index].description == ''
+                                                                      )),
+                                                                      Obx(() => getController.getPostList.value.res![index].title == '' && getController.getPostList.value.res![index].description == ''
                                                                           ? const SizedBox()
                                                                           : SizedBox(
                                                                         width: w * 0.9,
-                                                                        child: ReadMoreText('${_getController.getPostList.value.res![index].description}',
+                                                                        child: ReadMoreText('${getController.getPostList.value.res![index].description}',
                                                                           trimLines: 2,
                                                                           colorClickableText: Colors.blue,
                                                                           trimMode: TrimMode.Line,
@@ -2223,13 +2218,13 @@ class ProfilePage extends StatelessWidget {
                                                                             fontWeight: FontWeight.w500,
                                                                           ),
                                                                         ),
-                                                                      ),
+                                                                      )),
                                                                     ],
                                                                   )),
                                                               SizedBox(
                                                                   child: IconButton(
                                                                     onPressed: () {
-                                                                      showBottomSheetEllips(context, _getController.getPostList.value.res![index].id);
+                                                                      showBottomSheetEllips(context, getController.getPostList.value.res![index].id);
                                                                     },
                                                                     icon: HeroIcon(
                                                                       HeroIcons.ellipsisVertical,
@@ -2246,7 +2241,7 @@ class ProfilePage extends StatelessWidget {
                                                 }),
                                           ),
                                         ),
-                                      ),
+                                      )),
                                     ],
                                   ),
                                 ),
@@ -2255,7 +2250,7 @@ class ProfilePage extends StatelessWidget {
                           //if getcontroller onScroll true floating butto
                         ],
                       )),
-                      _getController.onScroll.value == true
+                      Obx(() => getController.onScroll.value == true
                           ? Positioned(
                         bottom: h * 0.03,
                         right: w * 0.05,
@@ -2274,7 +2269,7 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                       )
-                          : const SizedBox(),
+                          : const SizedBox()),
                     ],
                   ),
               ) : SizedBox(
@@ -2285,7 +2280,7 @@ class ProfilePage extends StatelessWidget {
                       elevation: 0,
                       surfaceTintColor: Colors.transparent,
                       centerTitle: true,
-                      title: Text(_getController.meUsers.value.res?.userName ?? '',
+                      title: Text(getController.meUsers.value.res?.userName ?? '',
                         style: TextStyle(
                           fontSize: w * 0.04,
                           color: Colors.black,
@@ -2294,7 +2289,7 @@ class ProfilePage extends StatelessWidget {
                       actions: [
                         IconButton(
                           onPressed: () {
-                            showBottomSheet(context,_getController.meUsers.value.res!.business?.id);
+                            showBottomSheet(context,getController.meUsers.value.res!.business?.id);
                           },
                           icon: const Icon(
                             Icons.menu,
@@ -2320,7 +2315,7 @@ class ProfilePage extends StatelessWidget {
                                       body: Stack(
                                         children: [
                                           PhotoView(
-                                            imageProvider: NetworkImage('${_getController.meUsers.value.res?.photoUrl}'),
+                                            imageProvider: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),
                                           ),
                                           Positioned(
                                             top: h * 0.05,
@@ -2350,7 +2345,7 @@ class ProfilePage extends StatelessWidget {
                               child: CircleAvatar(
                                 radius: w * 0.12,
                                 foregroundColor: Colors.blue,
-                                backgroundImage: NetworkImage('${_getController.meUsers.value.res?.photoUrl}'),
+                                backgroundImage: NetworkImage('${getController.meUsers.value.res?.photoUrl}'),
                               ),
                             ),
                             Positioned(
@@ -2377,16 +2372,16 @@ class ProfilePage extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: h * 0.02),
-                    Center(child: _getController.meUsers.value.res?.fistName == null
+                    Center(child: Obx(() => getController.meUsers.value.res?.fistName == null
                         ? Text('Salom, Mehmon', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500))
-                        : Text('${_getController.meUsers.value.res?.fistName} ${_getController.meUsers.value.res?.lastName}',
-                        style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500))),
+                        : Text('${getController.meUsers.value.res?.fistName} ${getController.meUsers.value.res?.lastName}',
+                        style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500)))),
                     SizedBox(height: h * 0.02),
                     //phone
                     Padding(
                       padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, top: h * 0.02),
                       child: TextEditButton(
-                        text: '${_getController.meUsers.value.res?.phoneNumber}',
+                        text: '${getController.meUsers.value.res?.phoneNumber}',
                         color: Colors.blue,
                         icon: 'assets/images/user_call.png',
                       ),
@@ -2395,7 +2390,7 @@ class ProfilePage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
                       child: TextEditButton(
-                        text: '${_getController.meUsers.value.res?.address}',
+                        text: '${getController.meUsers.value.res?.address}',
                         color: Colors.blue,
                         icon: 'assets/images/user_location.png',
                       ),
@@ -2405,7 +2400,7 @@ class ProfilePage extends StatelessWidget {
                       width: w * 0.9,
                       child:ElevatedButton(
                         onPressed: () {
-                          _getController.entersUser.value = 1;
+                          getController.entersUser.value = 1;
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
@@ -2427,7 +2422,7 @@ class ProfilePage extends StatelessWidget {
                       width: w * 0.9,
                       child:ElevatedButton(
                         onPressed: () {
-                          _getController.entersUser.value = 2;
+                          getController.entersUser.value = 2;
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
@@ -2446,11 +2441,12 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ],
                 )
-              ) : _getController.entersUser.value == 1
-                        ? _getController.meUsers.value.res?.business == null
+              )
+                : getController.entersUser.value == 1
+                        ? getController.meUsers.value.res?.business == null
                             ? EditUserPage()
                             : EditBusinessUserPage()
-                        : _getController.entersUser.value == 2
+                        : getController.entersUser.value == 2
                             ? MakeBusinessPage()
                             : const SizedBox(),
             )
@@ -2464,7 +2460,7 @@ class ProfilePage extends StatelessWidget {
                     elevation: 0,
                     surfaceTintColor: Colors.transparent,
                     centerTitle: true,
-                    title: Text(_getController.meUsers.value.res?.userName ?? '',
+                    title: Text(getController.meUsers.value.res?.userName ?? '',
                       style: TextStyle(
                         fontSize: w * 0.04,
                         color: Colors.black,

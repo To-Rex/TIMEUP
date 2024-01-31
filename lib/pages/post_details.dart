@@ -108,9 +108,18 @@ class PostDetailsPage extends StatelessWidget {
                     return PopupMenuItem<String>(
                       onTap: () {
                         if (choice == 'O\'chirish') {
-                          ApiController().deletePost(getController.getPostById.value.res?.id);
-                          Navigator.pop(context);
-                          ApiController().getMePostList(getController.meUsers.value.res!.business?.id);
+                          Loading.showLoading(context);
+                          ApiController().deletePost(getController.getPostById.value.res?.id).then((value) => {
+                            if (value == true){
+                              Navigator.pop(context),
+                              ApiController().getMePostList(getController.meUsers.value.res!.business?.id,3,0).then((value) => {
+                                Navigator.pop(context),
+                              })
+                            }else{
+                              Navigator.pop(context),
+                              Toast.showToast(context, 'Xatolik yuz berdi', Colors.red, Colors.white)
+                            }
+                          });
                         }else if (choice == 'Tahrirlash'){
                           Loading.showLoading(context);
                           ApiController().getByIdPost(postId).then((value) => {
