@@ -1394,23 +1394,11 @@ class ProfessionsListDetails extends StatelessWidget {
   }
 
   void _onRefresh() async {
-    ApiController().getMePostList(_getController.getProfileById.value.res?.id,1000,0).then((value) => _refreshController.refreshCompleted());
+    ApiController().getMePostList(_getController.getProfileById.value.res?.id,3,0).then((value) => _refreshController.refreshCompleted());
   }
 
   void _onLoading() async {
-    _refreshController.loadComplete();
-  }
-
-  void onScroll() {
-    double maxScroll = _scrollController.position.maxScrollExtent;
-    double currentScroll = _scrollController.position.pixels;
-    if (currentScroll >= maxScroll) {
-      print('max');
-    }
-    double startScroll = _scrollController.position.minScrollExtent;
-    if (currentScroll <= startScroll) {
-      print('start');
-    }
+    ApiController().getMePostList(_getController.getProfileById.value.res?.id, 3, _getController.lengthList.value).then((value) => _refreshController.loadComplete());
   }
 
   @override
@@ -1419,17 +1407,19 @@ class ProfessionsListDetails extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     _getController.show.value = false;
     _tabController = TabController(length: 2, vsync: Navigator.of(context));
-    ApiController().getMePostList(_getController.getProfileById.value.res?.id,1000,0);
+    ApiController().getMePostList(_getController.getProfileById.value.res?.id,3,0);
     ApiController().bookingListBookingAndBookingCategory(_getController.bookingBusinessGetListByID.value, '');
     ApiController().getMyFollowing(context, _getController.meUsers.value.res!.id!);
     _scrollControllerPage.addListener(() {
       if (_scrollControllerPage.position.userScrollDirection == ScrollDirection.reverse) {
-        print('+++++++');
         _getController.onScroll.value = true;
       } else {
-        print('-------');
         _getController.onScroll.value = false;
       }
+      if (_scrollControllerPage.position.pixels == _scrollControllerPage.position.maxScrollExtent) {
+        _getController.onScroll.value = true;
+      }
+
     });
     return Scaffold(
         backgroundColor: Colors.white,
@@ -1458,18 +1448,18 @@ class ProfessionsListDetails extends StatelessWidget {
                 },
                 child: Icon(Icons.arrow_back_ios, size: w * 0.05),
               ),
-              title: Obx(() => _getController.getProfileById.value.res == null
+              title:  _getController.getProfileById.value.res == null
                   ? Text('Ma\'lumotlar yo\'q',
                 style: TextStyle(
                   fontSize: w * 0.04,
                   fontWeight: FontWeight.w500,
-                ),
-              ) : Text(_getController.getProfileById.value.res!.userName ?? '',
+                ))
+                  : Text(_getController.getProfileById.value.res!.userName ?? '',
                 style: TextStyle(
                   fontSize: w * 0.05,
                   fontWeight: FontWeight.w500,
-                ),
-              )),
+                )
+              ),
               centerTitle: true,
             ),
             Expanded(
@@ -1482,7 +1472,7 @@ class ProfessionsListDetails extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Obx(() => _getController.getProfileById.value.res == null
+                        _getController.getProfileById.value.res == null
                             ? const Center(child: CircularProgressIndicator())
                             : SizedBox(
                             child: _getController.getProfileById.value.res!.photoUrl == null
@@ -1535,7 +1525,8 @@ class ProfessionsListDetails extends StatelessWidget {
                                   backgroundImage: const AssetImage('assets/images/doctor.png'),
                                 ),
                               ),
-                            ) : SizedBox(
+                            )
+                                : SizedBox(
                               width: w,
                               child: InkWell(
                                 hoverColor: Colors.transparent,
@@ -1619,28 +1610,27 @@ class ProfessionsListDetails extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            ))),
+                            )),
                         SizedBox(height: h * 0.02),
-                        Center(child: Obx(() => _getController.getProfileById.value.res == null
+                        Center(child:_getController.getProfileById.value.res == null
                             ? Text('Salom, Mehmon', style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500))
                             : Text('${_getController.getProfileById.value.res!.fistName} ${_getController.getProfileById.value.res!.lastName}',
-                            style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500)))),
+                            style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w500))),
                         SizedBox(height: h * 0.02),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Obx(() => _getController.getProfileById.value.res == null
+                             _getController.getProfileById.value.res == null
                                 ? const SizedBox()
                                 : InkWell(
                               overlayColor: MaterialStateProperty.all(Colors.transparent),
                               onTap: () {
-                                showBottomSheetFollowers(context,_getController.getProfileById.value.res!.id,0);
+                                _scrollControllerPage.animateTo(_scrollControllerPage.position.maxScrollExtent, duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
                               },
                               child: UserDetIalWidget(labelText: 'Post', labelTextCount: '${_getController.meUsers.value.res?.business?.postsCount}',
                                 icon: 1,
-                              ),)
-                            ),
-                            Obx(() => _getController.getProfileById.value.res == null
+                              ),),
+                             _getController.getProfileById.value.res == null
                                 ? const SizedBox()
                                 : InkWell(
                               overlayColor: MaterialStateProperty.all(Colors.transparent),
@@ -1652,9 +1642,8 @@ class ProfessionsListDetails extends StatelessWidget {
                                 labelTextCount: '${_getController.getProfileById.value.res?.followersCount}',
                                 icon: 2,
                               ),
-                            )
                             ),
-                            Obx(() => _getController.getProfileById.value.res == null
+                             _getController.getProfileById.value.res == null
                                 ? const SizedBox()
                                 : InkWell(
                               overlayColor: MaterialStateProperty.all(Colors.transparent),
@@ -1666,8 +1655,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                 labelTextCount:
                                 '${_getController.getProfileById.value.res?.followingCount}',
                                 icon: 3,
-                              ),)
-                            ),
+                              ),),
                           ],
                         ),
                         Padding(
@@ -1766,8 +1754,8 @@ class ProfessionsListDetails extends StatelessWidget {
                           ),
                         ),
                         //Obx(() => _getController.meUsers.value.res?.business != null
-                        Obx(() => _getController.getProfileById.value.res != null
-                            ? Padding(
+                         _getController.getProfileById.value.res != null
+                             ? Padding(
                             padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, bottom: h * 0.02),
                             child: Column(
                               children: [
@@ -1812,9 +1800,10 @@ class ProfessionsListDetails extends StatelessWidget {
                                 ),
                               ],
                             )
-                        ) : const SizedBox()),
-                        Obx(() => _getController.getFollowing.value.res != null && _getController.getFollowing.value.res!.isNotEmpty
-                            ? Padding(
+                        )
+                             : const SizedBox(),
+                         _getController.getFollowing.value.res != null && _getController.getFollowing.value.res!.isNotEmpty
+                             ? Padding(
                           padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, bottom: h * 0.02),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1853,8 +1842,9 @@ class ProfessionsListDetails extends StatelessWidget {
                               )
                             ],
                           ),
-                        ) : const SizedBox()),
-                        Obx(() => _getController.getFollowing.value.res != null && _getController.getFollowing.value.res!.isNotEmpty
+                        )
+                             : const SizedBox(),
+                         _getController.getFollowing.value.res != null && _getController.getFollowing.value.res!.isNotEmpty
                             ? SizedBox(
                           height: h * 0.15,
                           width: w * 0.95,
@@ -1906,7 +1896,8 @@ class ProfessionsListDetails extends StatelessWidget {
                               );
                             },
                           ),
-                        ) : const SizedBox()),
+                        )
+                             : const SizedBox(),
                         //ish jadvali button
                         Center(
                           child: SizedBox(
@@ -1933,7 +1924,7 @@ class ProfessionsListDetails extends StatelessWidget {
                         ),
                         //postlar
                         //Obx(() => _getController.meUsers.value.res?.business != null
-                        Obx(() => _getController.getProfileById.value.res != null
+                         _getController.getProfileById.value.res != null
                             ? Padding(
                           padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05, bottom: h * 0.02, top: h * 0.02),
                           child: Row(
@@ -1949,13 +1940,15 @@ class ProfessionsListDetails extends StatelessWidget {
                               const Expanded(child: SizedBox()),
                             ],
                           ),
-                        ) : const SizedBox()),
-                        Obx(() => _getController.getPostList.value.res == null || _getController.getPostList.value.res!.isEmpty
-                            ? SizedBox(
+                        )
+                             : const SizedBox(),
+                         _getController.getPostList.value.res == null || _getController.getPostList.value.res!.isEmpty
+                             ? SizedBox(
                           width: w,
                           height: h * 0.6,
                           child: const Center(child: Text('Ma\'lumotlar topilmadi'),),
-                        ) : SizedBox(
+                        )
+                             : SizedBox(
                           height: h * 0.6,
                           child: SizedBox(
                             width: w,
@@ -2019,7 +2012,8 @@ class ProfessionsListDetails extends StatelessWidget {
                               onLoading: _onLoading,
                               child:
                               ListView.builder(
-                                  itemCount: _getController.getPostList.value.res!.length,
+                                  //itemCount: _getController.getPostList.value.res!.length,
+                                  itemCount: _getController.lengthList.value,
                                   itemBuilder: (context, index) {
                                     return InkWell(
                                       onTap: () {
@@ -2028,8 +2022,8 @@ class ProfessionsListDetails extends StatelessWidget {
                                       child:
                                       Column(
                                         children: [
-                                          Obx(() => _getController.getPostList.value.res![index].mediaType == 'video'
-                                              ? Stack(
+                                           _getController.getPostList.value.res![index].mediaType == 'video'
+                                               ? Stack(
                                             children: [
                                               if (_getController.getPostList.value.res![index].photo != '')
                                                 Container(
@@ -2070,7 +2064,8 @@ class ProfessionsListDetails extends StatelessWidget {
                                                     ),
                                                   )),
                                             ],
-                                          ) : Container(
+                                          )
+                                               : Container(
                                             width: w,
                                             height: h * 0.6,
                                             padding: EdgeInsets.all(w * 0.01),
@@ -2081,7 +2076,6 @@ class ProfessionsListDetails extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          ),
                                           Container(
                                             width: w,
                                             padding: EdgeInsets.only(left: w * 0.04, top: h * 0.01, bottom: h * 0.01),
@@ -2090,7 +2084,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                                 Expanded(
                                                     child: Column(
                                                       children: [
-                                                        Obx(() => _getController.getPostList.value.res![index].title == '' && _getController.getPostList.value.res![index].description == ''
+                                                         _getController.getPostList.value.res![index].title == '' && _getController.getPostList.value.res![index].description == ''
                                                             ? const SizedBox()
                                                             : SizedBox(
                                                           width: w * 0.9,
@@ -2100,8 +2094,8 @@ class ProfessionsListDetails extends StatelessWidget {
                                                               fontWeight: FontWeight.w500,
                                                             ),
                                                           ),
-                                                        )),
-                                                        Obx(() => _getController.getPostList.value.res![index].title == '' && _getController.getPostList.value.res![index].description == ''
+                                                        ),
+                                                         _getController.getPostList.value.res![index].title == '' && _getController.getPostList.value.res![index].description == ''
                                                             ? const SizedBox()
                                                             : SizedBox(
                                                           width: w * 0.9,
@@ -2124,7 +2118,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                                               fontWeight: FontWeight.w500,
                                                             ),
                                                           ),
-                                                        )),
+                                                        ),
                                                       ],
                                                     )),
                                                 SizedBox(
@@ -2146,7 +2140,7 @@ class ProfessionsListDetails extends StatelessWidget {
                                   }),
                             ),
                           ),
-                        )),
+                        ),
                       ],
                     ),
                   ),

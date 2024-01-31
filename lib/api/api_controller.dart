@@ -475,6 +475,7 @@ class ApiController extends GetxController {
   }
 
   Future<GetMePost> getMePostList(id,limit, offset) async {
+    print('$url$postListUrl$id?limit=$limit&offset=$offset');
     var response = await http.get(
       Uri.parse('$url$postListUrl$id?limit=$limit&offset=$offset'),
       headers: {

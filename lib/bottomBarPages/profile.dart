@@ -1533,10 +1533,6 @@ class ProfilePage extends StatelessWidget {
   }
 
   void _onLoading() async {
-    //ApiController().getFollowPostList(3, __getController.lengthList.value + 2
-    //       ).then((value) => {
-    //         _refreshController.loadComplete(),
-    //       });
     ApiController().getMePostList(_getController.meUsers.value.res!.business?.id,3, _getController.lengthList.value).then((value) => _refreshController.loadComplete());
   }
 

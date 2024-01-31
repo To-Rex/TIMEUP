@@ -38,8 +38,7 @@ class HomePage extends StatelessWidget {
       print('lengthList: ${_getController.getFollowPost.value.res!.length + 1}');
       print('lengthList: ${_getController.lengthList.value}');
 
-      ApiController().getFollowPostList(3, _getController.lengthList.value
-      ).then((value) => {
+      ApiController().getFollowPostList(3, _getController.lengthList.value).then((value) => {
         _refreshController.loadComplete(),
       });
     }
@@ -49,7 +48,8 @@ class HomePage extends StatelessWidget {
       width: w,
       height: h * 0.9,
       child: Center(child: Text('Ma`lumotlar yo\'q',style: TextStyle(fontSize: w * 0.04, color: Colors.black))),
-    ) : Obx(() => _getController.getFollowPost.value.res!.isNotEmpty || _getController.getFollowPost.value.res != null
+    )
+        : _getController.getFollowPost.value.res!.isNotEmpty || _getController.getFollowPost.value.res != null
         ? _getController.uplAodVideo.value == true
         ? SizedBox(
       width: w,
@@ -464,11 +464,12 @@ class HomePage extends StatelessWidget {
               );
             }),
       )
-    ) : SizedBox(
+    )
+        : SizedBox(
       width: w,
       height: h * 0.9,
       child: Center(child: Text('Ma`lumotlar yo\'q', style: TextStyle(fontSize: w * 0.05, color: Colors.black))),
     )
-    ));
+    );
   }
 }
